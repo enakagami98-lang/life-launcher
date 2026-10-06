@@ -19,6 +19,7 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -119,11 +120,14 @@ fun LauncherApp(store: Store, homeSignal: Int, resumeSignal: Int) {
                 beyondViewportPageCount = 1,
                 modifier = Modifier.fillMaxSize().systemBarsPadding(),
             ) { page ->
-                when (page % PAGES) {
-                    0 -> LifePage(store, today, apps, lifeList)
-                    1 -> AppsPage(store, apps, query, onQuery = { query = it })
-                    2 -> ItemsPage(store, kind = "goals", title = "目標")
-                    else -> ItemsPage(store, kind = "habits", title = "習慣")
+                // ホームに戻るたびに作り直し、開きっぱなしの入力画面やメニューを必ず閉じる
+                key(homeSignal) {
+                    when (page % PAGES) {
+                        0 -> LifePage(store, today, apps, lifeList)
+                        1 -> AppsPage(store, apps, query, onQuery = { query = it })
+                        2 -> ItemsPage(store, kind = "goals", title = "目標")
+                        else -> ItemsPage(store, kind = "habits", title = "習慣")
+                    }
                 }
             }
         }
