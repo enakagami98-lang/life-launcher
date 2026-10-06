@@ -49,7 +49,15 @@ fun SettingsDialog(store: Store, apps: List<AppInfo>, onDismiss: () -> Unit) {
 
     val parsed = runCatching { LocalDate.of(year.toInt(), month.toInt(), day.toInt()) }.getOrNull()
     val lifeNum = life.toIntOrNull()
-    val valid = parsed != null && !parsed.isAfter(LocalDate.now()) && lifeNum != null && lifeNum in 1..150
+    val birthOk = parsed != null && parsed.year >= 1900 && !parsed.isAfter(LocalDate.now())
+    val lifeOk = lifeNum != null && lifeNum in 1..150 && (parsed == null || parsed.plusYears(lifeNum.toLong()).isAfter(LocalDate.now()))
+    val valid = birthOk && lifeOk
+    val error = when {
+        year.isEmpty() || month.isEmpty() || day.isEmpty() -> null
+        !birthOk -> "生年月日を正しく入力してください（例：1999年4月29日）"
+        life.isNotEmpty() && !lifeOk -> "寿命は今の年齢より大きい数にしてください"
+        else -> null
+    }
 
     Dialog(onDismissRequest = onDismiss, properties = DialogProperties(usePlatformDefaultWidth = false)) {
         Surface(Modifier.fillMaxSize(), color = Bg) {
@@ -67,6 +75,10 @@ fun SettingsDialog(store: Store, apps: List<AppInfo>, onDismiss: () -> Unit) {
                     }
                     Spacer(Modifier.height(12.dp))
                     NumberField("寿命（歳）", life, { life = it }, Modifier.fillMaxWidth())
+                    if (error != null) {
+                        Spacer(Modifier.height(8.dp))
+                        Text(error, color = Danger, fontSize = 13.sp)
+                    }
                     Spacer(Modifier.height(16.dp))
                     Button(
                         onClick = { store.saveProfile(parsed!!, lifeNum!!); onDismiss() },

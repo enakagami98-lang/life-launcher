@@ -13,7 +13,7 @@ declare -A K=( [1]="140 1724" [2]="404 1724" [3]="672 1724" [4]="140 1880" [5]="
   [q]="60 1720" [w]="164 1720" [e]="272 1720" [r]="380 1720" [t]="488 1720" [y]="596 1720" [u]="704 1720" [i]="812 1720" [o]="920 1720" [p]="1028 1720"
   [a]="112 1868" [s]="220 1868" [d]="328 1868" [f]="432 1868" [g]="540 1868" [h]="648 1868" [j]="756 1868" [k]="864 1868" [l]="968 1868"
   [z]="220 2024" [x]="328 2024" [c]="432 2024" [v]="540 2024" [b]="648 2024" [n]="756 2024" [m]="860 2024" [ENTER]="992 2180" [DEL]="1000 2024" )
-soft() { for ch in "$@"; do adb shell input tap ${K[$ch]}; sleep 0.4; done; }
+soft() { for ch in "$@"; do adb shell input tap ${K[$ch]}; sleep 1; done; }
 softword() { w=$1; for ((i=0;i<${#w};i++)); do soft "${w:$i:1}"; done; }
 key() { adb shell input keyevent "$@"; sleep 2; }
 next_page() { adb shell input swipe 950 1200 150 1200 400; sleep 2; }
@@ -38,13 +38,19 @@ $UI tap "月" >/dev/null; sleep 1; softword 4
 $UI tap "日" >/dev/null; sleep 1; softword 29
 $UI tap "寿命（歳）" >/dev/null; sleep 1; soft BS BS BS; softword 30
 sleep 1; snap settings_typed
-expect_text "年の入力" "1999"; expect_text "寿命の入力" "30"
+expect_text "年の入力" "1999"; expect_text "寿命の入力" "30"; expect_no_text "エラー表示なし" "生年月日を正しく入力してください（例：1999年4月29日）"
 $UI tap "保存" >/dev/null; sleep 2; snap after_save
 expect_text "保存後は寿命画面のまま" "人生の進捗"
 EXP=$(python3 -c "import datetime;print('{:,}'.format((datetime.date(2029,4,29)-datetime.date.today()).days))")
 expect_text "残り日数（計算上の正解 $EXP）" "$EXP"
 expect_text "命日" "2029年4月29日"
 expect_text "現在の年齢" "現在 27歳"
+
+log "== 2b. ありえない誕生日（199年）は保存できない"
+$UI tap "設定" >/dev/null; sleep 2; $UI tap "1999" >/dev/null; sleep 1; soft BS; sleep 1; snap invalid_year
+expect_text "エラーが表示される" "生年月日を正しく入力してください（例：1999年4月29日）"
+$UI tap "保存" >/dev/null; sleep 2; expect_text "保存されず設定画面のまま" "生年月日と寿命"
+$UI tap "閉じる" >/dev/null; sleep 2; expect_text "閉じると元の設定（936日）のまま" "$EXP"
 
 log "== 3. アプリ検索"
 next_page; snap swipe1; expect_text "1回スワイプでアプリ一覧" "アプリ"
@@ -101,7 +107,7 @@ key KEYCODE_HOME
 
 log "== 11. 目標の追加"
 next_page; next_page; $UI tap "追加" >/dev/null; sleep 1; $UI tapclass android.widget.EditText >/dev/null; sleep 1; softword toeic; sleep 1; $UI tap "保存" >/dev/null; sleep 2; snap goal_added
-expect_text "目標が追加される" "Toeic"; expect_text "目標画面のまま" "目標"
+expect_text "目標が追加される" "toeic"; expect_text "目標画面のまま" "目標"
 key KEYCODE_HOME
 
 log "== 12. 再起動（電源を入れ直す）"
@@ -109,6 +115,6 @@ adb reboot; adb wait-for-device
 for i in $(seq 1 60); do [ "$(adb shell getprop sys.boot_completed | tr -d '\r')" = "1" ] && break; sleep 3; done
 sleep 20; key KEYCODE_WAKEUP; adb shell wm dismiss-keyguard; sleep 5; snap after_reboot
 expect_app "再起動後はLifeLauncher" $PKG; expect_text "設定が残っている" "人生の進捗"
-next_page; next_page; expect_text "目標が残っている" "Toeic"
+next_page; next_page; expect_text "目標が残っている" "toeic"
 
 log "== 結果: PASS $(grep -c '^PASS' $R) / FAIL $(grep -c '^FAIL' $R)"
