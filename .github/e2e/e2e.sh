@@ -6,8 +6,15 @@ UI="python3 .github/e2e/ui.py"
 N=0
 log() { echo "$*" | tee -a $R; }
 top() { adb shell dumpsys activity activities | grep -m1 topResumedActivity | grep -o '[a-z0-9.]*/[A-Za-z0-9.]*' | head -1; }
-page() { for t in 設定 目標を追加 寿命 アプリ 目標 習慣; do $UI has "$t" >/dev/null && { echo "$t"; return; }; done; echo "?"; }
+page() { for t in 生年月日と寿命 目標を追加 寿命 アプリ 目標 習慣; do $UI has "$t" >/dev/null && { echo "$t"; return; }; done; echo "?"; }
 snap() { N=$((N+1)); f=$(printf "%02d_%s" $N "$1"); adb exec-out screencap -p > $OUT/$f.png; log "   [撮影 $f] 表示中アプリ=$(top) 画面=$(page)"; }
+# 画面キーボード（Gboard）のキーを指でタップして入力する
+declare -A K=( [1]="140 1724" [2]="404 1724" [3]="672 1724" [4]="140 1880" [5]="404 1880" [6]="672 1880" [7]="140 2036" [8]="404 2036" [9]="672 2036" [0]="404 2192" [BS]="944 2036"
+  [q]="60 1720" [w]="164 1720" [e]="272 1720" [r]="380 1720" [t]="488 1720" [y]="596 1720" [u]="704 1720" [i]="812 1720" [o]="920 1720" [p]="1028 1720"
+  [a]="112 1868" [s]="220 1868" [d]="328 1868" [f]="432 1868" [g]="540 1868" [h]="648 1868" [j]="756 1868" [k]="864 1868" [l]="968 1868"
+  [z]="220 2024" [x]="328 2024" [c]="432 2024" [v]="540 2024" [b]="648 2024" [n]="756 2024" [m]="860 2024" [ENTER]="992 2180" [DEL]="1000 2024" )
+soft() { for ch in "$@"; do adb shell input tap ${K[$ch]}; sleep 0.4; done; }
+softword() { w=$1; for ((i=0;i<${#w};i++)); do soft "${w:$i:1}"; done; }
 key() { adb shell input keyevent "$@"; sleep 2; }
 next_page() { adb shell input swipe 950 1200 150 1200 400; sleep 2; }
 prev_page() { adb shell input swipe 150 1200 950 1200 400; sleep 2; }
@@ -26,25 +33,26 @@ key KEYCODE_HOME; expect_app "ホームボタンでLifeLauncher" $PKG; expect_te
 
 log "== 2. 寿命の設定（1999/4/29生まれ・寿命30歳）"
 $UI tap "設定" >/dev/null; sleep 2; snap settings_open
-$UI tap "年" >/dev/null; adb shell input text 1999
-$UI tap "月" >/dev/null; adb shell input text 4
-$UI tap "日" >/dev/null; adb shell input text 29
-$UI tap "寿命（歳）" >/dev/null; adb shell input keyevent KEYCODE_MOVE_END KEYCODE_DEL KEYCODE_DEL KEYCODE_DEL; adb shell input text 30
+$UI tap "年" >/dev/null; sleep 1; snap keyboard_shown; softword 1999
+$UI tap "月" >/dev/null; sleep 1; softword 4
+$UI tap "日" >/dev/null; sleep 1; softword 29
+$UI tap "寿命（歳）" >/dev/null; sleep 1; soft BS BS BS; softword 30
 sleep 1; snap settings_typed
-key KEYCODE_BACK; snap after_back_closes_keyboard
+expect_text "年の入力" "1999"; expect_text "寿命の入力" "30"
 $UI tap "保存" >/dev/null; sleep 2; snap after_save
+expect_text "保存後は寿命画面のまま" "人生の進捗"
 EXP=$(python3 -c "import datetime;print('{:,}'.format((datetime.date(2029,4,29)-datetime.date.today()).days))")
 expect_text "残り日数（計算上の正解 $EXP）" "$EXP"
 expect_text "命日" "2029年4月29日"
 expect_text "現在の年齢" "現在 27歳"
 
 log "== 3. アプリ検索"
-next_page; snap swipe1; expect_text "1回スワイプでアプリ一覧" "アプリ名で検索"
-$UI tap "アプリ名で検索" >/dev/null; sleep 1; adb shell input text Sett; sleep 1; snap search_typed
+next_page; snap swipe1; expect_text "1回スワイプでアプリ一覧" "アプリ"
+$UI tapclass android.widget.EditText >/dev/null; sleep 1; snap search_keyboard; softword sett; sleep 1; snap search_typed
 expect_text "検索結果にSettings" "Settings"
 expect_no_text "関係ないアプリは消える" "Chrome"
-key KEYCODE_ENTER; sleep 2; snap after_enter
-expect_app "Enterで先頭の検索結果(Settings)が開く" com.android.settings
+soft ENTER; sleep 3; snap after_enter
+expect_app "キーボードの決定キーで先頭の検索結果(Settings)が開く" com.android.settings
 
 log "== 4. 他アプリ→ホームボタン"
 key KEYCODE_HOME; snap home_from_settings
@@ -68,7 +76,7 @@ key KEYCODE_HOME; snap home_while_dialog
 expect_no_text "入力画面が閉じる" "目標を追加"; expect_text "寿命画面" "人生の進捗"
 
 log "== 8. 4枚で一周"
-next_page; expect_text "1回目→アプリ" "アプリ名で検索"
+next_page; expect_text "1回目→アプリ" "アプリ"
 next_page; expect_text "2回目→目標" "目標"
 next_page; expect_text "3回目→習慣" "習慣"
 next_page; expect_text "4回目→寿命に戻る" "人生の進捗"; snap loop_back
@@ -85,14 +93,15 @@ key KEYCODE_HOME
 log "== 10. 非表示"
 next_page; expect_text "一覧にContactsがある" "Contacts"
 $UI long "Contacts" >/dev/null; sleep 1; $UI tap "非表示にする" >/dev/null; sleep 1; snap hidden
-expect_text "アプリ一覧にいる" "アプリ名で検索"; expect_no_text "一覧から消える" "Contacts"
-$UI tap "アプリ名で検索" >/dev/null; adb shell input text Cont; sleep 1; snap hidden_search
+expect_text "アプリ一覧にいる" "アプリ"; expect_no_text "一覧から消える" "Contacts"
+$UI tapclass android.widget.EditText >/dev/null; sleep 1; softword cont; sleep 1; snap hidden_search
+expect_text "検索中もアプリ一覧のまま" "アプリ"
 expect_no_text "検索でも出ない" "Contacts"
 key KEYCODE_HOME
 
 log "== 11. 目標の追加"
-next_page; next_page; $UI tap "追加" >/dev/null; sleep 1; adb shell input text "TOEIC%s900"; sleep 1; $UI tap "保存" >/dev/null; sleep 1; snap goal_added
-expect_text "目標が追加される" "TOEIC 900"
+next_page; next_page; $UI tap "追加" >/dev/null; sleep 1; $UI tapclass android.widget.EditText >/dev/null; sleep 1; softword toeic; sleep 1; $UI tap "保存" >/dev/null; sleep 2; snap goal_added
+expect_text "目標が追加される" "Toeic"; expect_text "目標画面のまま" "目標"
 key KEYCODE_HOME
 
 log "== 12. 再起動（電源を入れ直す）"
@@ -100,6 +109,6 @@ adb reboot; adb wait-for-device
 for i in $(seq 1 60); do [ "$(adb shell getprop sys.boot_completed | tr -d '\r')" = "1" ] && break; sleep 3; done
 sleep 20; key KEYCODE_WAKEUP; adb shell wm dismiss-keyguard; sleep 5; snap after_reboot
 expect_app "再起動後はLifeLauncher" $PKG; expect_text "設定が残っている" "人生の進捗"
-next_page; next_page; expect_text "目標が残っている" "TOEIC 900"
+next_page; next_page; expect_text "目標が残っている" "Toeic"
 
 log "== 結果: PASS $(grep -c '^PASS' $R) / FAIL $(grep -c '^FAIL' $R)"

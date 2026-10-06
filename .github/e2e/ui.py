@@ -33,7 +33,12 @@ cmd, text = sys.argv[1], sys.argv[2] if len(sys.argv) > 2 else ""
 if cmd == "texts":
     print(" | ".join(n.get("text") for n in nodes() if n.get("text")))
     sys.exit(0)
-n = find(text, exact=(cmd == "has"))
+if cmd == "tapclass":
+    ns = [n for n in nodes() if n.get("class") == text]
+    if not ns:
+        print(f"NOTFOUND: {text}"); sys.exit(1)
+    x, y = center(ns[0]); adb("shell", "input", "tap", str(x), str(y)); print("FOUND"); sys.exit(0)
+n = find(text, exact=(cmd in ("has", "tap", "long")))
 if n is None:
     print(f"NOTFOUND: {text}")
     sys.exit(1)
