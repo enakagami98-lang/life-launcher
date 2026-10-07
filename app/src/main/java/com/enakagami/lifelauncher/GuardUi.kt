@@ -45,7 +45,9 @@ data class GuardRequest(val pkg: String, val key: String?, val reason: String, v
 @Composable
 fun GuardDialog(req: GuardRequest, label: String, onLaunch: (Int) -> Unit, onClose: () -> Unit) {
     val limit = Guard.limits[req.pkg] ?: 0
-    val remainMin = ((Guard.remainingMs(req.pkg) + 59_999) / 60_000).toInt()
+    val remainMs = Guard.remainingMs(req.pkg)
+    // 残り30秒未満は「使い切った」扱い（数秒だけ延長しても意味がないため）
+    val remainMin = if (remainMs < 30_000) 0 else ((remainMs + 59_999) / 60_000).toInt()
     val expired = req.reason == "session" && Guard.hadSession(req.pkg)
     var progress by remember(req.id) { mutableFloatStateOf(0f) }
     LaunchedEffect(req.id) {

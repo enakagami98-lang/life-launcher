@@ -24,14 +24,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TimeInput
-import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -44,6 +41,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -242,7 +241,7 @@ private fun RangeEditor(name: String, range: LockRange, onChange: (LockRange) ->
     Column(Modifier.padding(horizontal = 20.dp, vertical = 10.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(name, color = Ink, fontSize = 18.sp, fontWeight = FontWeight.Bold, modifier = Modifier.weight(1f))
-            AccentSwitch(range.enabled) { onChange(range.copy(enabled = it)) }
+            AccentSwitch(range.enabled, "${name}をオンにする") { onChange(range.copy(enabled = it)) }
         }
         Row(verticalAlignment = Alignment.CenterVertically) {
             TimeText("${name}の開始", range.start) { editing = "start" }
@@ -286,18 +285,46 @@ private fun TimeText(description: String, minutes: Int, onClick: () -> Unit) {
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun TimeDialog(title: String, initial: Int, onPick: (Int) -> Unit, onDismiss: () -> Unit) {
-    val state = rememberTimePickerState(initialHour = initial / 60, initialMinute = initial % 60, is24Hour = true)
+    var hour by remember { mutableStateOf(initial / 60) }
+    var minute by remember { mutableStateOf(initial % 60 / 5 * 5) }
     AlertDialog(
         onDismissRequest = onDismiss,
         containerColor = Bg,
-        title = { Text(title, fontWeight = FontWeight.Bold) },
-        text = { TimeInput(state = state) },
-        confirmButton = { TextButton(onClick = { onPick(state.hour * 60 + state.minute) }) { Text("決定", fontWeight = FontWeight.Bold) } },
+        title = { Text("$title  ${minutesText(hour * 60 + minute)}", fontWeight = FontWeight.Bold) },
+        text = {
+            Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                Text("時", color = SubInk, fontSize = 13.sp)
+                (0 until 24).chunked(6).forEach { row ->
+                    Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                        row.forEach { h -> GridChip("${h}時", hour == h, Modifier.weight(1f)) { hour = h } }
+                    }
+                }
+                Spacer(Modifier.height(6.dp))
+                Text("分", color = SubInk, fontSize = 13.sp)
+                (0 until 60 step 5).chunked(6).forEach { row ->
+                    Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                        row.forEach { m -> GridChip("%02d分".format(m), minute == m, Modifier.weight(1f)) { minute = m } }
+                    }
+                }
+            }
+        },
+        confirmButton = { TextButton(onClick = { onPick(hour * 60 + minute) }) { Text("決定", fontWeight = FontWeight.Bold) } },
         dismissButton = { TextButton(onClick = onDismiss) { Text("キャンセル") } },
     )
+}
+
+@Composable
+private fun GridChip(text: String, selected: Boolean, modifier: Modifier, onClick: () -> Unit) {
+    Box(
+        modifier
+            .clip(RoundedCornerShape(10.dp))
+            .background(if (selected) Blue else CardBg)
+            .clickable(onClick = onClick)
+            .padding(vertical = 8.dp),
+        contentAlignment = Alignment.Center,
+    ) { Text(text, color = if (selected) OnAccent else Ink, fontSize = 12.sp, maxLines = 1) }
 }
 
 // ======================== 共通の部品 ========================
@@ -321,15 +348,16 @@ private fun SwitchRow(label: String, checked: Boolean, onChange: (Boolean) -> Un
     Row(Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 10.dp), verticalAlignment = Alignment.CenterVertically) {
         Text(label, color = Ink, fontSize = 15.sp, lineHeight = 21.sp, modifier = Modifier.weight(1f))
         Spacer(Modifier.width(12.dp))
-        AccentSwitch(checked, onChange)
+        AccentSwitch(checked, label, onChange)
     }
 }
 
 @Composable
-private fun AccentSwitch(checked: Boolean, onChange: (Boolean) -> Unit) {
+private fun AccentSwitch(checked: Boolean, description: String, onChange: (Boolean) -> Unit) {
     Switch(
         checked = checked,
         onCheckedChange = onChange,
+        modifier = Modifier.semantics { contentDescription = description },
         colors = SwitchDefaults.colors(checkedTrackColor = Blue, checkedThumbColor = OnAccent),
     )
 }

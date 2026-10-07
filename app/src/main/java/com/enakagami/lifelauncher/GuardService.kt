@@ -123,7 +123,7 @@ class GuardService : Service() {
         }
         Guard.addUsage(pkg, dt)
         val remain = Guard.remainingMs(pkg)
-        if (remain <= 0) { hideBar(); openLauncher(pkg, "session"); return }
+        if (remain < 30_000) { hideBar(); openLauncher(pkg, "session"); return }
         warnIfNeeded(pkg, remain)
         if (Guard.floatingBar) showBar(Guard.sessionFraction(pkg)) else hideBar()
     }
@@ -183,13 +183,13 @@ class GuardService : Service() {
         }
     }
 
-    private fun overlayParams(w: Int, h: Int, gravity: Int, y: Int = 0) = WindowManager.LayoutParams(
+    private fun overlayParams(w: Int, h: Int, gravity: Int, y: Int = 0, name: String = "LifeLauncherOverlay") = WindowManager.LayoutParams(
         w, h,
         WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
         WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE or
             WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
         PixelFormat.TRANSLUCENT,
-    ).apply { this.gravity = gravity; this.y = y }
+    ).apply { this.gravity = gravity; this.y = y; title = name }
 
     private fun dp(v: Int) = (v * resources.displayMetrics.density).toInt()
 
@@ -205,7 +205,7 @@ class GuardService : Service() {
             background = GradientDrawable().apply { cornerRadius = dp(24).toFloat(); setColor(0xE6202024.toInt()) }
         }
         runCatching {
-            wm.addView(tv, overlayParams(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT, Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL, dp(72)))
+            wm.addView(tv, overlayParams(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT, Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL, dp(72), "LifeLauncherPill"))
             handler.postDelayed({ runCatching { wm.removeView(tv) } }, 5000)
         }
     }
@@ -220,7 +220,7 @@ class GuardService : Service() {
                 addView(fill, FrameLayout.LayoutParams(0, FrameLayout.LayoutParams.MATCH_PARENT))
             }
             runCatching {
-                wm.addView(frame, overlayParams(WindowManager.LayoutParams.MATCH_PARENT, dp(4), Gravity.BOTTOM))
+                wm.addView(frame, overlayParams(WindowManager.LayoutParams.MATCH_PARENT, dp(4), Gravity.BOTTOM, name = "LifeLauncherBar"))
                 bar = frame; barFill = fill
             }
         }
@@ -241,7 +241,7 @@ class GuardService : Service() {
         if (anchor != null || !Guard.hasOverlay(this)) return
         val v = View(this)
         runCatching {
-            wm.addView(v, overlayParams(1, 1, Gravity.TOP or Gravity.START))
+            wm.addView(v, overlayParams(1, 1, Gravity.TOP or Gravity.START, name = "LifeLauncherAnchor"))
             anchor = v
         }
     }
