@@ -37,9 +37,9 @@ def visible_center(text, exact=True):
             adb("shell", "input", "swipe", "540", "1700", "540", "1000", "400"); time.sleep(1)
             continue
         x, y = center(n)
-        if 250 <= y <= 2050:
+        if 140 <= y <= 2150:
             return x, y
-        if y > 2050:
+        if y > 2150:
             adb("shell", "input", "swipe", "540", "1700", "540", "1000", "400")
         else:
             adb("shell", "input", "swipe", "540", "900", "540", "1600", "400")
