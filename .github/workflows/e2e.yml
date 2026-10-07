@@ -2,6 +2,13 @@ name: 仮想スマホで動作確認
 
 on:
   workflow_dispatch:
+    inputs:
+      only:
+        description: "scroll ならスクロールの確認だけ（Android 15のみ）"
+        default: "all"
+      tag:
+        description: "試すAPKのリリース名（空なら最新）"
+        default: ""
 
 jobs:
   e2e:
@@ -10,11 +17,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        api: [34, 35]
+        api: ${{ fromJSON(inputs.only == 'scroll' && '[35]' || '[34, 35]') }}
     steps:
       - uses: actions/checkout@v4
       - name: 最新のAPKを取得
-        run: gh release download --pattern LifeLauncher.apk
+        run: gh release download ${{ inputs.tag }} --pattern LifeLauncher.apk
         env:
           GH_TOKEN: ${{ github.token }}
       - run: pip install pillow
@@ -30,7 +37,7 @@ jobs:
           arch: x86_64
           profile: pixel_6
           disable-animations: true
-          script: bash .github/e2e/e2e.sh
+          script: bash .github/e2e/${{ inputs.only == 'scroll' && 'scroll' || 'e2e' }}.sh
       - uses: actions/upload-artifact@v4
         if: always()
         with:
