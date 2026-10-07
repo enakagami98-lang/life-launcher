@@ -149,7 +149,7 @@ fun LimitChooser(pkg: String, onBack: () -> Unit, onDone: () -> Unit) {
 fun ReminderItems(pkg: String, onChoose: () -> Unit, close: (() -> Unit) -> Unit) {
     val limit = Guard.limits[pkg]
     if (limit == null) {
-        SheetItem(Icons.Filled.Notifications, "使いすぎ防止に追加", "開く前に少し待ち、使う時間を決めるようにします", onClick = onChoose)
+        SheetItem(Icons.Filled.Notifications, "使いすぎ防止に追加", "開く前に少し待ち、使う時間を決めます", onClick = onChoose)
     } else {
         SheetItem(Icons.Filled.Notifications, "1日の上限を変更", "今は1日 ${limit}分", onClick = onChoose)
         SheetItem(Icons.Filled.Clear, "使いすぎ防止から外す", onClick = { close { Guard.removeLimit(pkg) } })
@@ -170,7 +170,7 @@ fun AppActionSheet(app: AppInfo, store: Store, onDismiss: () -> Unit) {
                 close { if (fav) store.removeFavorite(app.key) else store.addFavorite(app.key, app.label) }
             }
             ReminderItems(app.pkg, onChoose = { choosing = true }, close = close)
-            SheetItem(Icons.Filled.Close, "非表示にする", "一覧と検索に出なくなります（設定から戻せます）", danger = true) {
+            SheetItem(Icons.Filled.Close, "非表示にする", "一覧と検索から隠します（設定で戻せます）", danger = true) {
                 close { store.hide(app.pkg) }
             }
         }
