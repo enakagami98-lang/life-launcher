@@ -117,4 +117,80 @@ sleep 20; key KEYCODE_WAKEUP; adb shell wm dismiss-keyguard; sleep 5; snap after
 expect_app "再起動後はLifeLauncher" $PKG; expect_text "設定が残っている" "人生の進捗"
 next_page; next_page; expect_text "目標が残っている" "toeic"
 
+log "== 13. 色の変更"
+key KEYCODE_HOME
+$UI tap "設定" >/dev/null; sleep 2
+$UI tap "背景の色" >/dev/null; sleep 2; snap color_dialog
+$UI tap "黒" >/dev/null; sleep 1; expect_text "見本の黒を選ぶとカラーコードが#000000" "#000000"
+$UI tap "決定" >/dev/null; sleep 1
+$UI tap "アクセントの色（数字・ボタン）" >/dev/null; sleep 2
+$UI tap "色の四角" >/dev/null; sleep 1; snap color_square_tapped
+if $UI has "#000000" >/dev/null || $UI has "#1043E5" >/dev/null; then ng "四角をタップすると色が変わる"; else ok "四角をタップすると色が変わる ($($UI texts | grep -o '#[0-9A-F]\{6\}' | head -1))"; fi
+$UI tap "オレンジ" >/dev/null; sleep 1; expect_text "見本のオレンジ" "#F28C28"
+$UI tap "決定" >/dev/null; sleep 1
+$UI tap "閉じる" >/dev/null; sleep 2; snap dark_theme
+adb exec-out screencap -p > $OUT/px.png
+PX=$(python3 -c "from PIL import Image; im=Image.open('$OUT/px.png').convert('RGB'); print(im.getpixel((540,700)))")
+if [ "$PX" = "(0, 0, 0)" ]; then ok "背景が黒になった $PX"; else ng "背景が黒になった $PX"; fi
+next_page; snap dark_apps; prev_page
+
+log "== 14. アプリリマインダーの設定（Chrome・1日5分・待ち5秒）"
+adb shell appops set $PKG GET_USAGE_STATS allow
+adb shell appops set $PKG SYSTEM_ALERT_WINDOW allow
+key KEYCODE_HOME
+$UI tap "設定" >/dev/null; sleep 2
+$UI tap "＋ アプリを追加" >/dev/null; sleep 2; snap app_picker
+$UI tap "Chrome" >/dev/null; sleep 2
+$UI tap "1日 30分 ▾" >/dev/null; sleep 1; $UI tap "5分" >/dev/null; sleep 1
+expect_text "Chromeが1日5分で登録" "1日 5分 ▾"
+$UI tap "5秒" >/dev/null; sleep 1; snap reminder_settings
+$UI tap "閉じる" >/dev/null; sleep 2
+
+log "== 15. 履歴・通知のつもりで直接Chromeを開く → 待ち画面に戻される"
+adb shell am start -n com.android.chrome/com.google.android.apps.chrome.Main >/dev/null; sleep 6; snap bypass
+expect_app "直接開いてもLifeLauncherに戻される" $PKG
+expect_text "待ち画面" "Chromeを本当に開きますか？"
+sleep 6; snap choose_minutes; expect_text "待つと時間の選択肢が出る" "Chromeにどのくらいの時間を使いますか？"
+$UI tap "5" >/dev/null; sleep 8; snap chrome_with_bar
+expect_app "5分を選ぶとChromeが開く" com.android.chrome
+log "   重ねて表示中の部品: $(adb shell dumpsys window windows | grep -c 'Window{.*com.enakagami.lifelauncher}')個（目印・進捗バー・お知らせ）"
+
+log "== 16. 1日の残り1分のお知らせ → 時間切れ"
+sleep 200; snap one_minute_before; sleep 50; snap one_minute_left
+sleep 70; snap time_over
+expect_app "時間切れでLifeLauncherに戻される" $PKG
+if $UI hasp "使い切りました" >/dev/null; then ok "「使い切りました」が表示"; else ng "「使い切りました」が無い / $($UI texts | paste -sd" " | cut -c1-150)"; fi
+$UI tap "閉じる" >/dev/null; sleep 1
+adb shell am start -n com.android.chrome/com.google.android.apps.chrome.Main >/dev/null; sleep 6
+expect_app "使い切った後に直接開いても戻される" $PKG; snap reopen_after_limit
+$UI tap "閉じる" >/dev/null
+
+log "== 17. アプリを開いたまま画面を消す → つけると寿命画面"
+adb shell am start -a android.settings.SETTINGS >/dev/null; sleep 3
+key KEYCODE_POWER; sleep 3; key KEYCODE_WAKEUP; adb shell wm dismiss-keyguard; sleep 3; snap screen_off_from_app
+expect_app "設定アプリを開いたまま消しても寿命画面から" $PKG
+
+log "== 18. 使えない時間帯（今の時刻を含む夜の時間を設定）"
+H=$(adb shell date +%H | sed "s/[^0-9]//g"); E=$(printf "%02d" $(( (10#$H + 2) % 24 )))
+log "   端末の時刻 $(adb shell date +%H:%M | sed "s/[^0-9:]//g") → 夜を ${H}:00〜${E}:00 にする"
+key KEYCODE_HOME
+$UI tap "設定" >/dev/null; sleep 2
+$UI tap "23:00" >/dev/null; sleep 2; snap time_dialog
+$UI tapclass android.widget.EditText 0 >/dev/null; sleep 1; soft BS BS; softword $H
+$UI tapclass android.widget.EditText 1 >/dev/null; sleep 1; soft BS BS; softword 00; sleep 1; snap time_typed
+$UI tap "決定" >/dev/null; sleep 1
+$UI tap "06:00" >/dev/null; sleep 2
+$UI tapclass android.widget.EditText 0 >/dev/null; sleep 1; soft BS BS; softword $E
+$UI tapclass android.widget.EditText 1 >/dev/null; sleep 1; soft BS BS; softword 00; sleep 1
+$UI tap "決定" >/dev/null; sleep 1; snap night_times
+expect_text "開始時刻" "${H}:00"; expect_text "終了時刻" "${E}:00"
+$UI tapnear "夜" android.widget.Switch >/dev/null; sleep 3; snap locked
+expect_text "ロック画面が出る" "夜のおやすみ時間"
+expect_text "解除時刻" "${E}:00 まではスマホを使えません"
+next_page; expect_text "スワイプしてもロック画面のまま" "夜のおやすみ時間"
+adb shell am start -a android.settings.SETTINGS >/dev/null; sleep 5
+expect_app "設定アプリは使える" com.android.settings
+adb shell am start -n com.google.android.deskclock/com.android.deskclock.DeskClock >/dev/null 2>&1 || adb shell monkey -p com.google.android.deskclock 1 >/dev/null 2>&1; sleep 6; snap clock_blocked
+expect_app "時計アプリは閉じられる" $PKG
+
 log "== 結果: PASS $(grep -c '^PASS' $R) / FAIL $(grep -c '^FAIL' $R)"

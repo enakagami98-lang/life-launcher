@@ -6,13 +6,18 @@ on:
 jobs:
   e2e:
     runs-on: ubuntu-latest
-    timeout-minutes: 40
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        api: [34, 35]
     steps:
       - uses: actions/checkout@v4
       - name: 最新のAPKを取得
         run: gh release download --pattern LifeLauncher.apk
         env:
           GH_TOKEN: ${{ github.token }}
+      - run: pip install pillow
       - name: KVMを有効化
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
@@ -20,7 +25,7 @@ jobs:
           sudo udevadm trigger --name-match=kvm
       - uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 34
+          api-level: ${{ matrix.api }}
           target: google_apis
           arch: x86_64
           profile: pixel_6
@@ -29,5 +34,5 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: e2e-out
+          name: e2e-out-${{ matrix.api }}
           path: e2e-out
