@@ -137,6 +137,7 @@ fun LockScreen(name: String, until: String, now: LocalTime) {
             modifier = Modifier
                 .border(1.5.dp, Ink, RoundedCornerShape(24.dp))
                 .clickable {
+                    Guard.allowUntil = System.currentTimeMillis() + 10 * 60_000
                     runCatching { context.startActivity(Intent(Intent.ACTION_DIAL).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) }
                 }
                 .padding(horizontal = 28.dp, vertical = 12.dp),

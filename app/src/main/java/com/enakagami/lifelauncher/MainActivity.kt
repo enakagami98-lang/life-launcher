@@ -96,9 +96,17 @@ class MainActivity : ComponentActivity() {
 
     override fun onResume() {
         super.onResume()
+        Guard.launcherResumed = true
+        // 簡易モードでは、ホームに戻ってきたら今回の利用は終わり（次に開くときはまた待つ）
+        if (!Guard.hasUsageAccess(this)) Guard.endCurrentSession()
         resumeSignal.intValue++
         // 見守りサービスを動かす（すでに動いていれば何もしない）
         runCatching { startForegroundService(Intent(this, GuardService::class.java)) }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Guard.launcherResumed = false
     }
 
     // 他のアプリを開いた・画面を消したときは、次に戻ってきたら必ず寿命の画面から始める

@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       only:
-        description: "scroll ならスクロールの確認だけ（Android 15のみ）"
+        description: "all=全部 / scroll=スクロールだけ / simple=簡易モードと長押しパネル（scroll・simpleはAndroid 15のみ）"
         default: "all"
       tag:
         description: "試すAPKのリリース名（空なら最新）"
@@ -17,7 +17,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        api: ${{ fromJSON(inputs.only == 'scroll' && '[35]' || '[34, 35]') }}
+        api: ${{ fromJSON(inputs.only == 'all' && '[34, 35]' || '[35]') }}
     steps:
       - uses: actions/checkout@v4
       - name: 最新のAPKを取得
@@ -37,7 +37,7 @@ jobs:
           arch: x86_64
           profile: pixel_6
           disable-animations: true
-          script: bash .github/e2e/${{ inputs.only == 'scroll' && 'scroll' || 'e2e' }}.sh
+          script: bash .github/e2e/${{ inputs.only == 'all' && 'e2e' || inputs.only }}.sh
       - uses: actions/upload-artifact@v4
         if: always()
         with:

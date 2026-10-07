@@ -22,7 +22,10 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.DropdownMenu
@@ -52,6 +55,7 @@ fun LifePage(store: Store, today: LocalDate, apps: List<AppInfo>, openSettings: 
     // スクロール位置は画面ごとに持つ（1つを使い回すと、見えていない寿命画面にスクロールが行ってしまう）
     val listState = rememberLazyListState()
     var renaming by remember { mutableStateOf<Fav?>(null) }
+    var sheetFav by remember { mutableStateOf<Int?>(null) }
     val context = LocalContext.current
     val openApp = LocalOpenApp.current
 
@@ -102,24 +106,28 @@ fun LifePage(store: Store, today: LocalDate, apps: List<AppInfo>, openSettings: 
             }
         }
         itemsIndexed(favs, key = { _, f -> f.key }) { index, fav ->
-            FavoriteRow(
-                fav = fav,
-                canUp = index > 0,
-                canDown = index < favs.lastIndex,
-                onOpen = { openApp(fav.key) },
-                onRename = { renaming = fav },
-                onMove = { delta ->
-                    val from = store.favorites.indexOf(fav)
-                    val target = favs.getOrNull(index + delta) ?: return@FavoriteRow
-                    store.moveFavorite(from, store.favorites.indexOf(target))
-                },
-                onRemove = { store.removeFavorite(fav.key) },
-            )
+            FavoriteRow(fav = fav, onOpen = { openApp(fav.key) }, onLongPress = { sheetFav = index })
         }
         item { Spacer(Modifier.height(48.dp)) }
     }
     }
 
+    sheetFav?.let { index ->
+        favs.getOrNull(index)?.let { fav ->
+            FavoriteActionSheet(
+                fav = fav,
+                canUp = index > 0,
+                canDown = index < favs.lastIndex,
+                onRename = { renaming = fav },
+                onMove = { delta ->
+                    val target = favs.getOrNull(index + delta)
+                    if (target != null) store.moveFavorite(store.favorites.indexOf(fav), store.favorites.indexOf(target))
+                },
+                onRemove = { store.removeFavorite(fav.key) },
+                onDismiss = { sheetFav = null },
+            )
+        }
+    }
     renaming?.let { fav ->
         TextInputDialog(
             title = "表示名を変更",
@@ -220,31 +228,39 @@ private fun SmallStat(label: String, value: String, unit: String, modifier: Modi
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun FavoriteRow(
+private fun FavoriteRow(fav: Fav, onOpen: () -> Unit, onLongPress: () -> Unit) {
+    Text(
+        fav.label,
+        fontSize = 26.sp,
+        color = Ink,
+        modifier = Modifier
+            .fillMaxWidth()
+            .combinedClickable(onClick = onOpen, onLongClick = onLongPress)
+            .padding(horizontal = 24.dp, vertical = 16.dp),
+    )
+}
+
+@Composable
+private fun FavoriteActionSheet(
     fav: Fav,
     canUp: Boolean,
     canDown: Boolean,
-    onOpen: () -> Unit,
     onRename: () -> Unit,
     onMove: (Int) -> Unit,
     onRemove: () -> Unit,
+    onDismiss: () -> Unit,
 ) {
-    var menu by remember { mutableStateOf(false) }
-    Box {
-        Text(
-            fav.label,
-            fontSize = 26.sp,
-            color = Ink,
-            modifier = Modifier
-                .fillMaxWidth()
-                .combinedClickable(onClick = onOpen, onLongClick = { menu = true })
-                .padding(horizontal = 24.dp, vertical = 16.dp),
-        )
-        DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
-            DropdownMenuItem(text = { Text("名前を変更") }, onClick = { menu = false; onRename() })
-            if (canUp) DropdownMenuItem(text = { Text("上へ移動") }, onClick = { menu = false; onMove(-1) })
-            if (canDown) DropdownMenuItem(text = { Text("下へ移動") }, onClick = { menu = false; onMove(1) })
-            DropdownMenuItem(text = { Text("お気に入りから外す", color = Danger) }, onClick = { menu = false; onRemove() })
+    val pkg = fav.key.substringBefore('/')
+    var choosing by remember { mutableStateOf(false) }
+    ActionSheet(fav.label, Guard.limits[pkg]?.let { "使いすぎ防止：1日 ${it}分" }, onDismiss) { close ->
+        if (choosing) {
+            LimitChooser(pkg, onBack = { choosing = false }, onDone = { close {} })
+        } else {
+            SheetItem(Icons.Filled.Edit, "名前を変更", "寿命画面での表示名を変えます") { close(onRename) }
+            if (canUp) SheetItem(Icons.Filled.KeyboardArrowUp, "上へ移動") { close { onMove(-1) } }
+            if (canDown) SheetItem(Icons.Filled.KeyboardArrowDown, "下へ移動") { close { onMove(1) } }
+            ReminderItems(pkg, onChoose = { choosing = true }, close = close)
+            SheetItem(Icons.Filled.Close, "お気に入りから外す", danger = true) { close(onRemove) }
         }
     }
 }

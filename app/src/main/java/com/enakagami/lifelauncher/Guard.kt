@@ -137,10 +137,33 @@ object Guard {
         return ((end - System.currentTimeMillis()).toFloat() / len).coerceIn(0f, 1f)
     }
 
+    // ---- 簡易モード（使用状況データの許可がないとき）用 ----
+    /** このアプリから最後に開いた、使用中のリマインダー対象アプリ */
+    var currentPkg: String? = null
+    /** ホーム画面（このアプリ）が今表示されているか */
+    var launcherResumed = false
+    /** ロック画面の「電話をかける」を押してから、この時刻までは閉じない */
+    var allowUntil = 0L
+
+    /** 簡易モードで、ホームに戻ってきたら今回の利用を終わりにする */
+    fun endCurrentSession() {
+        val pkg = currentPkg ?: return
+        if (sessionActive(pkg)) {
+            sessionEnd[pkg] = System.currentTimeMillis()
+            saveSessions()
+        }
+        currentPkg = null
+    }
+
     fun startSession(pkg: String, minutes: Int) {
+        currentPkg = pkg
         val len = minOf(minutes * 60_000L, remainingMs(pkg)).coerceAtLeast(0)
         sessionEnd[pkg] = System.currentTimeMillis() + len
         sessionLen[pkg] = len.coerceAtLeast(1)
+        saveSessions()
+    }
+
+    private fun saveSessions() {
         val o = JSONObject()
         sessionEnd.forEach { (k, v) -> o.put(k, JSONArray().put(v).put(sessionLen[k] ?: 1)) }
         prefs.edit().putString("sessions", o.toString()).apply()

@@ -18,7 +18,9 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
@@ -46,6 +48,9 @@ fun AppsPage(store: Store, apps: List<AppInfo>, query: String, onQuery: (String)
     val visible = apps.filter { it.pkg !in store.hidden }
     val shown = if (query.isBlank()) visible
     else visible.filter { it.label.contains(query.trim(), ignoreCase = true) }
+
+    var sheetApp by remember { mutableStateOf<AppInfo?>(null) }
+    sheetApp?.let { app -> AppActionSheet(app, store, onDismiss = { sheetApp = null }) }
 
     Column(Modifier.fillMaxSize().imePadding()) {
         PageHeader("アプリ")
@@ -77,16 +82,7 @@ fun AppsPage(store: Store, apps: List<AppInfo>, query: String, onQuery: (String)
         Spacer(Modifier.height(8.dp))
         LazyColumn(Modifier.fillMaxSize()) {
             items(shown, key = { it.key }) { app ->
-                AppRow(
-                    app = app,
-                    isFavorite = store.isFavorite(app.key),
-                    onOpen = { openApp(app.key) },
-                    onToggleFavorite = {
-                        if (store.isFavorite(app.key)) store.removeFavorite(app.key)
-                        else store.addFavorite(app.key, app.label)
-                    },
-                    onHide = { store.hide(app.pkg) },
-                )
+                AppRow(app = app, onOpen = { openApp(app.key) }, onLongPress = { sheetApp = app })
             }
             item { Spacer(Modifier.height(48.dp)) }
         }
@@ -95,34 +91,20 @@ fun AppsPage(store: Store, apps: List<AppInfo>, query: String, onQuery: (String)
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun AppRow(
-    app: AppInfo,
-    isFavorite: Boolean,
-    onOpen: () -> Unit,
-    onToggleFavorite: () -> Unit,
-    onHide: () -> Unit,
-) {
-    var menu by remember { mutableStateOf(false) }
-    Box {
-        Text(
-            app.label,
-            fontSize = 24.sp,
-            color = Ink,
-            maxLines = 1,
-            modifier = Modifier
-                .fillMaxWidth()
-                .combinedClickable(onClick = onOpen, onLongClick = { menu = true })
-                .padding(horizontal = 24.dp, vertical = 14.dp),
-        )
-        DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
-            DropdownMenuItem(
-                text = { Text(if (isFavorite) "お気に入りから外す" else "お気に入りに追加") },
-                onClick = { menu = false; onToggleFavorite() },
-            )
-            DropdownMenuItem(
-                text = { Text("非表示にする", color = Danger) },
-                onClick = { menu = false; onHide() },
-            )
+private fun AppRow(app: AppInfo, onOpen: () -> Unit, onLongPress: () -> Unit) {
+    val limited = Guard.isLimited(app.pkg)
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .combinedClickable(onClick = onOpen, onLongClick = onLongPress)
+            .padding(horizontal = 24.dp, vertical = 14.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(app.label, fontSize = 24.sp, color = Ink, maxLines = 1, modifier = Modifier.weight(1f, fill = false))
+        // 使いすぎ防止に入っているアプリには小さな印
+        if (limited) {
+            Spacer(Modifier.width(10.dp))
+            Icon(Icons.Filled.Notifications, "使いすぎ防止", tint = SubInk, modifier = Modifier.size(16.dp))
         }
     }
 }

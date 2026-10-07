@@ -105,8 +105,10 @@ class GuardService : Service() {
         val dt = (now - lastTick).coerceIn(0, 5000)
         lastTick = now
         if (!getSystemService(PowerManager::class.java).isInteractive) return
+        // ロック解除の画面（パスワード入力中）は何もしない
+        if (getSystemService(android.app.KeyguardManager::class.java).isKeyguardLocked) return
         ensureAnchor()
-        if (!Guard.hasUsageAccess(this)) return
+        if (!Guard.hasUsageAccess(this)) { simpleCheck(dt); return }
         updateForeground(now)
         val pkg = fg
         if (pkg == null || pkg == packageName) { hideBar(); return }
@@ -125,6 +127,28 @@ class GuardService : Service() {
         val remain = Guard.remainingMs(pkg)
         if (remain < 30_000) { hideBar(); openLauncher(pkg, "session"); return }
         warnIfNeeded(pkg, remain)
+        if (Guard.floatingBar) showBar(Guard.sessionFraction(pkg)) else hideBar()
+    }
+
+    /**
+     * 簡易モード：使用状況データの許可がないとき。
+     * 「このアプリから開いて、まだホームに戻ってきていない間」をそのアプリの使用時間とみなす。
+     */
+    private fun simpleCheck(dt: Long) {
+        val now = System.currentTimeMillis()
+        if (Guard.launcherResumed) { hideBar(); return }
+        // 使えない時間帯：電話中・電話を許した直後以外は、何を開いてもホームに戻す
+        if (Guard.activeLock() != null) {
+            hideBar()
+            if (!inCall() && now > Guard.allowUntil) openLauncher(null, "lock")
+            return
+        }
+        val pkg = Guard.currentPkg ?: run { hideBar(); return }
+        if (!Guard.sessionActive(pkg) || Guard.remainingMs(pkg) < 30_000) {
+            hideBar(); Guard.currentPkg = null; openLauncher(pkg, "session"); return
+        }
+        Guard.addUsage(pkg, dt)
+        warnIfNeeded(pkg, Guard.remainingMs(pkg))
         if (Guard.floatingBar) showBar(Guard.sessionFraction(pkg)) else hideBar()
     }
 

@@ -112,21 +112,41 @@ fun ReminderSection(apps: List<AppInfo>) {
     Section("アプリリマインダー")
     Column(cardPad.fillMaxWidth().card().padding(vertical = 12.dp)) {
         Text(
-            "使いすぎてしまうアプリを選ぶと、開く前に少し待ってから、使う時間（5・10・15分）を決めるようになります。時間が来たら、もう一度待ってから延長するか決めます。1日の残りが5分・1分になると画面の下でお知らせします。",
+            "アプリ一覧で長押し→「使いすぎ防止に追加」でも登録できます。使いすぎてしまうアプリを選ぶと、開く前に少し待ってから、使う時間（5・10・15分）を決めるようになります。時間が来たら、もう一度待ってから延長するか決めます。1日の残りが5分・1分になると画面の下でお知らせします。",
             color = SubInk, fontSize = 14.sp, lineHeight = 21.sp, modifier = Modifier.padding(horizontal = 20.dp),
         )
-        if (!usageOk || !overlayOk) {
-            Spacer(Modifier.height(12.dp))
-            Text("使うには、次の2つの許可が必要です", color = Danger, fontWeight = FontWeight.Bold, fontSize = 14.sp, modifier = Modifier.padding(horizontal = 20.dp))
-            PermissionRow("使用状況へのアクセス", usageOk) {
-                context.startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
-            }
-            PermissionRow("他のアプリの上に重ねて表示", overlayOk) {
-                context.startActivity(
-                    Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:${context.packageName}"))
-                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                )
-            }
+        Spacer(Modifier.height(12.dp))
+        // 必須：重ねて表示（お知らせ・進捗バー・時間切れでホームに戻すため）
+        if (!overlayOk) {
+            Text("使うには、次の許可が必要です", color = Danger, fontWeight = FontWeight.Bold, fontSize = 14.sp, modifier = Modifier.padding(horizontal = 20.dp))
+        }
+        PermissionRow("他のアプリの上に重ねて表示（必須）", overlayOk) {
+            context.startActivity(
+                Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:${context.packageName}"))
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            )
+        }
+        // 任意：使用状況へのアクセス（履歴・通知から直接開いた場合も見張れる）
+        PermissionRow("使用状況へのアクセス（任意）", usageOk) {
+            context.startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+        }
+        if (!usageOk) {
+            Text(
+                "今は「簡易モード」です。このホーム画面から開いたときだけ見張ります（履歴や通知から直接開いた場合は見張れません）。\n\n" +
+                    "「使用状況へのアクセス」がスマホの保護で許可できない場合：\n" +
+                    "① 下のボタンで「アプリ情報」を開く\n② 右上の「︙」→「制限付き設定を許可」\n③ もう一度「許可する」を押す",
+                color = SubInk, fontSize = 13.sp, lineHeight = 19.sp,
+                modifier = Modifier.padding(horizontal = 20.dp, vertical = 4.dp),
+            )
+            TextButton(
+                onClick = {
+                    context.startActivity(
+                        Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:${context.packageName}"))
+                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    )
+                },
+                modifier = Modifier.padding(start = 8.dp),
+            ) { Text("アプリ情報を開く") }
         }
         Spacer(Modifier.height(8.dp))
         Guard.limits.toList()
@@ -217,15 +237,15 @@ private fun AppPickerDialog(apps: List<AppInfo>, onPick: (AppInfo) -> Unit, onDi
 fun LockSection() {
     val context = LocalContext.current
     val resume = LocalResumeSignal.current
-    val ok = remember(resume) { Guard.hasUsageAccess(context) && Guard.hasOverlay(context) }
+    val ok = remember(resume) { Guard.hasOverlay(context) }
     Section("使えない時間帯")
     Column(cardPad.fillMaxWidth().card().padding(vertical = 12.dp)) {
         Text(
-            "設定した時間は、ホーム画面の代わりに「使えません」の画面が出ます。アプリを開いてもすぐ閉じます（電話と設定アプリは使えます）。今の時刻が入る時間にすると、すぐに始まります。",
+            "設定した時間は、ホーム画面の代わりに「使えません」の画面が出ます。アプリを開いてもすぐ閉じます（電話は使えます）。今の時刻が入る時間にすると、すぐに始まります。",
             color = SubInk, fontSize = 14.sp, lineHeight = 21.sp, modifier = Modifier.padding(horizontal = 20.dp),
         )
         if (!ok) {
-            Text("※ アプリを閉じるには、上の「アプリリマインダー」にある2つの許可が必要です", color = Danger, fontSize = 13.sp, modifier = Modifier.padding(horizontal = 20.dp, vertical = 6.dp))
+            Text("※ アプリを閉じるには、上の「他のアプリの上に重ねて表示」の許可が必要です", color = Danger, fontSize = 13.sp, modifier = Modifier.padding(horizontal = 20.dp, vertical = 6.dp))
         }
         RangeEditor("朝", Guard.morning) { Guard.updateMorning(it) }
         RangeEditor("夜", Guard.night) { Guard.updateNight(it) }
