@@ -18,7 +18,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -48,7 +48,9 @@ import java.time.temporal.ChronoUnit
 import java.util.Locale
 
 @Composable
-fun LifePage(store: Store, today: LocalDate, apps: List<AppInfo>, listState: LazyListState, openSettings: () -> Unit) {
+fun LifePage(store: Store, today: LocalDate, apps: List<AppInfo>, openSettings: () -> Unit) {
+    // スクロール位置は画面ごとに持つ（1つを使い回すと、見えていない寿命画面にスクロールが行ってしまう）
+    val listState = rememberLazyListState()
     var renaming by remember { mutableStateOf<Fav?>(null) }
     val context = LocalContext.current
     val openApp = LocalOpenApp.current

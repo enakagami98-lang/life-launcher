@@ -9,7 +9,6 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.systemBarsPadding
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.MaterialTheme
@@ -136,7 +135,6 @@ fun LauncherApp(
     val lock = Guard.activeLock(now)
 
     val pager = rememberPagerState(initialPage = START_PAGE) { PAGES * 2000 }
-    val lifeList = rememberLazyListState()
     var query by remember { mutableStateOf("") }
     // 設定画面は、許可を出しに別の画面へ行って戻っても閉じないよう、ここで管理する
     var showSettings by remember { mutableStateOf(false) }
@@ -146,7 +144,6 @@ fun LauncherApp(
         query = ""
         focus.clearFocus()
         pager.scrollToPage(START_PAGE)
-        lifeList.scrollToItem(0)
     }
 
     LaunchedEffect(homeSignal) { if (homeSignal > 0) goHome() }
@@ -205,7 +202,7 @@ fun LauncherApp(
                     // ホームに戻るたびに作り直し、開きっぱなしの入力画面やメニューを必ず閉じる
                     key(homeSignal) {
                         when (page % PAGES) {
-                            0 -> LifePage(store, today, apps, lifeList, openSettings = { showSettings = true })
+                            0 -> LifePage(store, today, apps, openSettings = { showSettings = true })
                             1 -> AppsPage(store, apps, query, onQuery = { query = it })
                             2 -> ItemsPage(store, kind = "goals", title = "目標")
                             else -> ItemsPage(store, kind = "habits", title = "習慣")
