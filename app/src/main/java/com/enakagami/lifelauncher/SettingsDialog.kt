@@ -84,9 +84,13 @@ fun SettingsDialog(store: Store, apps: List<AppInfo>, onDismiss: () -> Unit) {
                         onClick = { store.saveProfile(parsed!!, lifeNum!!); onDismiss() },
                         enabled = valid,
                         modifier = Modifier.fillMaxWidth().height(50.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = Blue),
+                        colors = ButtonDefaults.buttonColors(containerColor = Blue, contentColor = OnAccent),
                     ) { Text("保存", fontWeight = FontWeight.Bold, fontSize = 16.sp) }
                 }
+
+                ColorSection(store)
+                ReminderSection(apps)
+                LockSection()
 
                 Section("ホームアプリ")
                 Column(Modifier.padding(horizontal = 20.dp).fillMaxWidth().card().padding(20.dp)) {
@@ -103,7 +107,7 @@ fun SettingsDialog(store: Store, apps: List<AppInfo>, onDismiss: () -> Unit) {
                             }
                         },
                         modifier = Modifier.fillMaxWidth().height(50.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = Blue),
+                        colors = ButtonDefaults.buttonColors(containerColor = Blue, contentColor = OnAccent),
                     ) { Text("ホームアプリの設定を開く", fontWeight = FontWeight.Bold) }
                 }
 
@@ -134,7 +138,7 @@ fun SettingsDialog(store: Store, apps: List<AppInfo>, onDismiss: () -> Unit) {
 }
 
 @Composable
-private fun Section(title: String) {
+fun Section(title: String) {
     Text(
         title,
         fontSize = 14.sp,

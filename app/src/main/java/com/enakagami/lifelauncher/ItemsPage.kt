@@ -48,7 +48,7 @@ fun ItemsPage(store: Store, kind: String, title: String) {
 
     Column(Modifier.fillMaxSize()) {
         PageHeader(title) {
-            RoundButton(Icons.Filled.Add, "追加", Blue, Bg) { adding = true }
+            RoundButton(Icons.Filled.Add, "追加", Blue, OnAccent) { adding = true }
         }
         if (list.isEmpty()) {
             Text(

@@ -41,6 +41,7 @@ import androidx.compose.foundation.background
 @Composable
 fun AppsPage(store: Store, apps: List<AppInfo>, query: String, onQuery: (String) -> Unit) {
     val context = LocalContext.current
+    val openApp = LocalOpenApp.current
     // 非表示にしたアプリは一覧にも検索にも出さない
     val visible = apps.filter { it.pkg !in store.hidden }
     val shown = if (query.isBlank()) visible
@@ -63,7 +64,7 @@ fun AppsPage(store: Store, apps: List<AppInfo>, query: String, onQuery: (String)
                         textStyle = TextStyle(fontSize = 20.sp, color = Ink),
                         cursorBrush = SolidColor(Blue),
                         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Go),
-                        keyboardActions = KeyboardActions(onGo = { shown.firstOrNull()?.let { launchApp(context, it.key) } }),
+                        keyboardActions = KeyboardActions(onGo = { shown.firstOrNull()?.let { openApp(it.key) } }),
                         modifier = Modifier.fillMaxWidth(),
                     )
                 }
@@ -79,7 +80,7 @@ fun AppsPage(store: Store, apps: List<AppInfo>, query: String, onQuery: (String)
                 AppRow(
                     app = app,
                     isFavorite = store.isFavorite(app.key),
-                    onOpen = { launchApp(context, app.key) },
+                    onOpen = { openApp(app.key) },
                     onToggleFavorite = {
                         if (store.isFavorite(app.key)) store.removeFavorite(app.key)
                         else store.addFavorite(app.key, app.label)

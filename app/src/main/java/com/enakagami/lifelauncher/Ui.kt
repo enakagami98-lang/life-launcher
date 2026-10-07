@@ -24,21 +24,39 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.lerp
+import androidx.compose.ui.graphics.luminance
+import androidx.compose.runtime.ReadOnlyComposable
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-// 添付画像1〜3の配色：白背景＋薄いグレーのカード＋濃い青
-val Blue = Color(0xFF1043E5)
-val Bg = Color(0xFFFFFFFF)
-val CardBg = Color(0xFFF2F3F7)
-val Ink = Color(0xFF1A1A1F)
-val SubInk = Color(0xFF55565E)
-val Danger = Color(0xFFD93025)
+// 色は設定で自由に変えられる。背景の明るさから、カードや文字の色を自動で決める
+data class Palette(val bg: Color, val accent: Color) {
+    val dark = bg.luminance() < 0.4f
+    val card = if (dark) lerp(bg, Color.White, 0.10f) else lerp(bg, Color.Black, 0.05f)
+    val ink = if (dark) Color(0xFFF2F3F7) else Color(0xFF1A1A1F)
+    val subInk = ink.copy(alpha = 0.62f)
+    val onAccent = if (accent.luminance() > 0.55f) Color(0xFF1A1A1F) else Color.White
+}
+
+val DefaultBg = Color(0xFFFFFFFF)
+val DefaultAccent = Color(0xFF1043E5)
+val LocalPalette = staticCompositionLocalOf { Palette(DefaultBg, DefaultAccent) }
+
+val Blue: Color @Composable @ReadOnlyComposable get() = LocalPalette.current.accent
+val OnAccent: Color @Composable @ReadOnlyComposable get() = LocalPalette.current.onAccent
+val Bg: Color @Composable @ReadOnlyComposable get() = LocalPalette.current.bg
+val CardBg: Color @Composable @ReadOnlyComposable get() = LocalPalette.current.card
+val Ink: Color @Composable @ReadOnlyComposable get() = LocalPalette.current.ink
+val SubInk: Color @Composable @ReadOnlyComposable get() = LocalPalette.current.subInk
+val Danger = Color(0xFFE5484D)
 
 val CardShape = RoundedCornerShape(22.dp)
 
+@Composable
 fun Modifier.card(): Modifier = this.background(CardBg, CardShape)
 
 /** 画面上部の見出し（左にタイトル、右にボタン） */

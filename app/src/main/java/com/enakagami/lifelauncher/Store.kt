@@ -27,6 +27,17 @@ class Store(context: Context) {
     var lifespan by mutableIntStateOf(prefs.getInt("lifespan", 80))
         private set
 
+    var bgColor by mutableIntStateOf(prefs.getInt("bg", 0xFFFFFFFF.toInt()))
+        private set
+    var accentColor by mutableIntStateOf(prefs.getInt("accent", 0xFF1043E5.toInt()))
+        private set
+
+    fun saveColors(bg: Int, accent: Int) {
+        bgColor = bg
+        accentColor = accent
+        prefs.edit().putInt("bg", bg).putInt("accent", accent).apply()
+    }
+
     val goals = mutableStateListOf<Item>().apply { addAll(loadItems("goals")) }
     val habits = mutableStateListOf<Item>().apply { addAll(loadItems("habits")) }
     val favorites = mutableStateListOf<Fav>().apply { addAll(loadFavs()) }

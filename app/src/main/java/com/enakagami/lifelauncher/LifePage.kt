@@ -48,10 +48,10 @@ import java.time.temporal.ChronoUnit
 import java.util.Locale
 
 @Composable
-fun LifePage(store: Store, today: LocalDate, apps: List<AppInfo>, listState: LazyListState) {
-    var showSettings by remember { mutableStateOf(false) }
+fun LifePage(store: Store, today: LocalDate, apps: List<AppInfo>, listState: LazyListState, openSettings: () -> Unit) {
     var renaming by remember { mutableStateOf<Fav?>(null) }
     val context = LocalContext.current
+    val openApp = LocalOpenApp.current
 
     // アンインストール済みのアプリはお気に入りに出さない（一覧の読み込み前は全部出す）
     val installed = remember(apps) { apps.map { it.key }.toSet() }
@@ -67,9 +67,9 @@ fun LifePage(store: Store, today: LocalDate, apps: List<AppInfo>, listState: Laz
                 verticalArrangement = Arrangement.SpaceBetween,
             ) {
                 PageHeader("寿命") {
-                    RoundButton(Icons.Filled.Settings, "設定", CardBg, Ink) { showSettings = true }
+                    RoundButton(Icons.Filled.Settings, "設定", CardBg, Ink) { openSettings() }
                 }
-                LifeCards(store.birth, store.lifespan, today) { showSettings = true }
+                LifeCards(store.birth, store.lifespan, today) { openSettings() }
                 Column(
                     Modifier.fillMaxWidth().padding(bottom = 12.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -104,7 +104,7 @@ fun LifePage(store: Store, today: LocalDate, apps: List<AppInfo>, listState: Laz
                 fav = fav,
                 canUp = index > 0,
                 canDown = index < favs.lastIndex,
-                onOpen = { launchApp(context, fav.key) },
+                onOpen = { openApp(fav.key) },
                 onRename = { renaming = fav },
                 onMove = { delta ->
                     val from = store.favorites.indexOf(fav)
@@ -118,9 +118,6 @@ fun LifePage(store: Store, today: LocalDate, apps: List<AppInfo>, listState: Laz
     }
     }
 
-    if (showSettings) {
-        SettingsDialog(store, apps, onDismiss = { showSettings = false })
-    }
     renaming?.let { fav ->
         TextInputDialog(
             title = "表示名を変更",
