@@ -50,6 +50,10 @@ cmd = sys.argv[1]
 text = sys.argv[2] if len(sys.argv) > 2 else ""
 if cmd == "texts":
     print(" | ".join(n.get("text") for n in nodes() if n.get("text")))
+elif cmd == "y":
+    # 文字の中心の高さ（見つからなければ -1）。並び順の確認に使う
+    n = find(text)
+    print(center(n)[1] if n is not None else -1)
 elif cmd == "tapclass":
     idx = int(sys.argv[3]) if len(sys.argv) > 3 else 0
     ns = [n for n in nodes() if n.get("class") == text]

@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import org.json.JSONArray
@@ -148,5 +149,22 @@ class Store(context: Context) {
 
     private fun saveHidden() {
         prefs.edit().putStringSet("hidden", hidden.toSet()).apply()
+    }
+
+    // ---- 今日の調子（日付ごとの記録） ----
+    val days = mutableStateMapOf<LocalDate, DayLog>().apply {
+        val o = JSONObject(prefs.getString("days", "{}") ?: "{}")
+        o.keys().forEach { k ->
+            runCatching { put(LocalDate.parse(k), DayLog.fromJson(o.getJSONObject(k))) }
+        }
+    }
+
+    fun day(date: LocalDate) = days[date] ?: DayLog()
+
+    fun saveDay(date: LocalDate, log: DayLog) {
+        if (log.isEmpty()) days.remove(date) else days[date] = log
+        val o = JSONObject()
+        days.forEach { (d, l) -> o.put(d.toString(), l.toJson()) }
+        prefs.edit().putString("days", o.toString()).apply()
     }
 }

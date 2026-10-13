@@ -1,8 +1,7 @@
 package com.enakagami.lifelauncher
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -25,11 +24,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -40,7 +36,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -49,6 +46,8 @@ import java.time.LocalDate
 import java.time.Period
 import java.time.temporal.ChronoUnit
 import java.util.Locale
+import sh.calvin.reorderable.ReorderableItem
+import sh.calvin.reorderable.rememberReorderableLazyListState
 
 @Composable
 fun LifePage(store: Store, today: LocalDate, apps: List<AppInfo>, openSettings: () -> Unit) {
@@ -56,12 +55,25 @@ fun LifePage(store: Store, today: LocalDate, apps: List<AppInfo>, openSettings: 
     val listState = rememberLazyListState()
     var renaming by remember { mutableStateOf<Fav?>(null) }
     var sheetFav by remember { mutableStateOf<Int?>(null) }
-    val context = LocalContext.current
     val openApp = LocalOpenApp.current
+    val haptic = LocalHapticFeedback.current
+    // 長押し中に1度でも動かしたか（動かさずに離したら、いつものメニューを出す）
+    var moved by remember { mutableStateOf(false) }
 
     // アンインストール済みのアプリはお気に入りに出さない（一覧の読み込み前は全部出す）
     val installed = remember(apps) { apps.map { it.key }.toSet() }
     val favs = store.favorites.filter { apps.isEmpty() || it.key in installed }
+
+    // お気に入りの長押しドラッグ並べ替え（寿命の欄や見出しには入らない）
+    val reorder = rememberReorderableLazyListState(listState) { from, to ->
+        val a = store.favorites.indexOfFirst { it.key == from.key }
+        val b = store.favorites.indexOfFirst { it.key == to.key }
+        if (a >= 0 && b >= 0) {
+            store.moveFavorite(a, b)
+            moved = true
+            haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+        }
+    }
 
     BoxWithConstraints(Modifier.fillMaxSize()) {
     val screenHeight = maxHeight
@@ -105,24 +117,38 @@ fun LifePage(store: Store, today: LocalDate, apps: List<AppInfo>, openSettings: 
                 )
             }
         }
-        itemsIndexed(favs, key = { _, f -> f.key }) { index, fav ->
-            FavoriteRow(fav = fav, onOpen = { openApp(fav.key) }, onLongPress = { sheetFav = index })
+        itemsIndexed(favs, key = { _, f -> f.key }) { _, fav ->
+            ReorderableItem(reorder, key = fav.key) { dragging ->
+                Text(
+                    fav.label,
+                    fontSize = 26.sp,
+                    color = Ink,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .then(if (dragging) Modifier.padding(horizontal = 8.dp).card() else Modifier)
+                        .longPressDraggableHandle(
+                            onDragStarted = {
+                                moved = false
+                                haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                            },
+                            onDragStopped = {
+                                if (!moved) sheetFav = store.favorites.indexOfFirst { it.key == fav.key }
+                            },
+                        )
+                        .clickable { openApp(fav.key) }
+                        .padding(horizontal = if (dragging) 16.dp else 24.dp, vertical = 16.dp),
+                )
+            }
         }
         item { Spacer(Modifier.height(48.dp)) }
     }
     }
 
     sheetFav?.let { index ->
-        favs.getOrNull(index)?.let { fav ->
+        store.favorites.getOrNull(index)?.let { fav ->
             FavoriteActionSheet(
                 fav = fav,
-                canUp = index > 0,
-                canDown = index < favs.lastIndex,
                 onRename = { renaming = fav },
-                onMove = { delta ->
-                    val target = favs.getOrNull(index + delta)
-                    if (target != null) store.moveFavorite(store.favorites.indexOf(fav), store.favorites.indexOf(target))
-                },
                 onRemove = { store.removeFavorite(fav.key) },
                 onDismiss = { sheetFav = null },
             )
@@ -226,27 +252,10 @@ private fun SmallStat(label: String, value: String, unit: String, modifier: Modi
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
-@Composable
-private fun FavoriteRow(fav: Fav, onOpen: () -> Unit, onLongPress: () -> Unit) {
-    Text(
-        fav.label,
-        fontSize = 26.sp,
-        color = Ink,
-        modifier = Modifier
-            .fillMaxWidth()
-            .combinedClickable(onClick = onOpen, onLongClick = onLongPress)
-            .padding(horizontal = 24.dp, vertical = 16.dp),
-    )
-}
-
 @Composable
 private fun FavoriteActionSheet(
     fav: Fav,
-    canUp: Boolean,
-    canDown: Boolean,
     onRename: () -> Unit,
-    onMove: (Int) -> Unit,
     onRemove: () -> Unit,
     onDismiss: () -> Unit,
 ) {
@@ -257,8 +266,6 @@ private fun FavoriteActionSheet(
             LimitChooser(pkg, onBack = { choosing = false }, onDone = { close {} })
         } else {
             SheetItem(Icons.Filled.Edit, "名前を変更", "寿命画面での表示名を変えます") { close(onRename) }
-            if (canUp) SheetItem(Icons.Filled.KeyboardArrowUp, "上へ移動") { close { onMove(-1) } }
-            if (canDown) SheetItem(Icons.Filled.KeyboardArrowDown, "下へ移動") { close { onMove(1) } }
             ReminderItems(pkg, onChoose = { choosing = true }, close = close)
             SheetItem(Icons.Filled.Close, "お気に入りから外す", danger = true) { close(onRemove) }
         }

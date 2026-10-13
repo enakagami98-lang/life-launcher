@@ -39,8 +39,8 @@ import kotlinx.coroutines.withContext
 import java.time.LocalDate
 import java.time.LocalDateTime
 
-/** 4枚の画面：0=寿命＋お気に入り / 1=アプリ一覧 / 2=目標 / 3=習慣 */
-const val PAGES = 4
+/** 5枚の画面：0=寿命＋お気に入り / 1=アプリ一覧 / 2=目標 / 3=習慣 / 4=今日の調子（寿命の1つ手前） */
+const val PAGES = 5
 private const val START_PAGE = PAGES * 1000
 
 /** アプリを開く処理（リマインダー対象なら、待ち画面をはさむ） */
@@ -213,7 +213,8 @@ fun LauncherApp(
                             0 -> LifePage(store, today, apps, openSettings = { showSettings = true })
                             1 -> AppsPage(store, apps, query, onQuery = { query = it })
                             2 -> ItemsPage(store, kind = "goals", title = "目標")
-                            else -> ItemsPage(store, kind = "habits", title = "習慣")
+                            3 -> ItemsPage(store, kind = "habits", title = "習慣")
+                            else -> ConditionPage(store, today)
                         }
                     }
                 }
