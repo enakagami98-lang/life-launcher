@@ -1,8 +1,7 @@
 package com.enakagami.lifelauncher
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -50,7 +49,6 @@ import java.util.Locale
 import sh.calvin.reorderable.ReorderableItem
 import sh.calvin.reorderable.rememberReorderableLazyListState
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun LifePage(store: Store, today: LocalDate, apps: List<AppInfo>, openSettings: () -> Unit) {
     // スクロール位置は画面ごとに持つ（1つを使い回すと、見えていない寿命画面にスクロールが行ってしまう）
@@ -61,6 +59,9 @@ fun LifePage(store: Store, today: LocalDate, apps: List<AppInfo>, openSettings: 
     val haptic = LocalHapticFeedback.current
     // 長押し中に1度でも動かしたか（動かさずに離したら、いつものメニューを出す）
     var moved by remember { mutableStateOf(false) }
+    // 長押し中、または離した直後か（長押しのあと指を離したとき、タップ扱いでアプリが開かないようにする）
+    var holding by remember { mutableStateOf(false) }
+    var releasedAt by remember { mutableStateOf(0L) }
 
     // アンインストール済みのアプリはお気に入りに出さない（一覧の読み込み前は全部出す）
     val installed = remember(apps) { apps.map { it.key }.toSet() }
@@ -131,14 +132,18 @@ fun LifePage(store: Store, today: LocalDate, apps: List<AppInfo>, openSettings: 
                         .longPressDraggableHandle(
                             onDragStarted = {
                                 moved = false
+                                holding = true
                                 haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                             },
                             onDragStopped = {
+                                holding = false
+                                releasedAt = System.currentTimeMillis()
                                 if (!moved) sheetFav = store.favorites.indexOfFirst { it.key == fav.key }
                             },
                         )
-                        // 長押しはドラッグ用。離したときにタップ扱いでアプリが開かないよう onLongClick で受け止める
-                        .combinedClickable(onClick = { openApp(fav.key) }, onLongClick = {})
+                        .clickable {
+                            if (!holding && System.currentTimeMillis() - releasedAt > 400) openApp(fav.key)
+                        }
                         .padding(horizontal = if (dragging) 16.dp else 24.dp, vertical = 16.dp),
                 )
             }
