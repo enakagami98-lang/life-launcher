@@ -1,7 +1,8 @@
 package com.enakagami.lifelauncher
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -49,6 +50,7 @@ import java.util.Locale
 import sh.calvin.reorderable.ReorderableItem
 import sh.calvin.reorderable.rememberReorderableLazyListState
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun LifePage(store: Store, today: LocalDate, apps: List<AppInfo>, openSettings: () -> Unit) {
     // スクロール位置は画面ごとに持つ（1つを使い回すと、見えていない寿命画面にスクロールが行ってしまう）
@@ -135,7 +137,8 @@ fun LifePage(store: Store, today: LocalDate, apps: List<AppInfo>, openSettings: 
                                 if (!moved) sheetFav = store.favorites.indexOfFirst { it.key == fav.key }
                             },
                         )
-                        .clickable { openApp(fav.key) }
+                        // 長押しはドラッグ用。離したときにタップ扱いでアプリが開かないよう onLongClick で受け止める
+                        .combinedClickable(onClick = { openApp(fav.key) }, onLongClick = {})
                         .padding(horizontal = if (dragging) 16.dp else 24.dp, vertical = 16.dp),
                 )
             }

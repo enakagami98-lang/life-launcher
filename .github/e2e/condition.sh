@@ -63,17 +63,20 @@ key KEYCODE_HOME; prev_page
 expect_text "ホームに戻っても記録が残る" "7.5時間"
 
 log "== 5. 傾向とAI用の質問文"
-$UI tap "質問文をコピー" >/dev/null; sleep 1; snap copied
+$UI tap "質問文をコピー" >/dev/null; snap copied
 expect_text "コピーできた" "コピーしました"
 expect_text "傾向の案内" "いま 1日"
+for i in 1 2 3; do adb shell input swipe 540 600 540 1900 300; sleep 1; done
 $UI tap "前の日" >/dev/null; sleep 1; snap yesterday
 expect_text "前の日に切り替わる" "昨日"
-expect_text "前の日は未入力" "未入力"
+expect_text "前の日の睡眠時間は未入力" "未入力"
+$UI tap "次の日" >/dev/null; sleep 1
+expect_text "今日に戻ると記録がある" "7.5時間"
 
 log "== 6. 5枚で一周"
 key KEYCODE_HOME
 for i in 1 2 3 4; do next_page; done
 expect_text "4回進むと今日の調子" "今日の調子"
-next_page; expect_text "もう1回で寿命に戻る" "人生の進捗"
+next_page; expect_text "もう1回で寿命に戻る" "まずは誕生日と寿命を設定"
 
 log "== 結果: PASS $(grep -c '^PASS' $R) / FAIL $(grep -c '^FAIL' $R)"

@@ -184,7 +184,7 @@ private fun ScoreRow(title: String, hint: String, value: Int?, onChange: (Int?) 
         Text(title, fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Ink)
         Spacer(Modifier.width(8.dp))
         Text(hint, fontSize = 12.sp, color = SubInk, modifier = Modifier.weight(1f))
-        Text(value?.toString() ?: "–", fontSize = 22.sp, fontWeight = FontWeight.Black, color = Blue)
+        Text(value?.toString() ?: "未入力", fontSize = if (value == null) 13.sp else 22.sp, fontWeight = FontWeight.Black, color = if (value == null) SubInk else Blue)
     }
     Spacer(Modifier.height(10.dp))
     Row(horizontalArrangement = Arrangement.spacedBy(3.dp)) {
@@ -331,7 +331,7 @@ private fun AiPromptCard(store: Store) {
     val clipboard = LocalClipboardManager.current
     val context = LocalContext.current
     var copied by remember { mutableStateOf(false) }
-    LaunchedEffect(copied) { if (copied) { delay(3000); copied = false } }
+    LaunchedEffect(copied) { if (copied) { delay(5000); copied = false } }
     val count = store.days.size
 
     Column(Modifier.fillMaxWidth().card().padding(20.dp)) {
@@ -355,7 +355,7 @@ private fun AiPromptCard(store: Store) {
             if (copied) {
                 Icon(Icons.Filled.Check, null, modifier = Modifier.size(20.dp))
                 Spacer(Modifier.width(6.dp))
-                Text("コピーしました。AIに貼り付けてください", fontWeight = FontWeight.Bold)
+                Text("コピーしました", fontWeight = FontWeight.Bold, fontSize = 16.sp)
             } else {
                 Text("質問文をコピー", fontWeight = FontWeight.Bold, fontSize = 16.sp)
             }
