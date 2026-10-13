@@ -31,3 +31,14 @@
 - 簡易モードの使えない時間帯は、電話中・ロック画面の「電話をかける」から10分以外は何を開いてもホームに戻す
 - 長押しメニューは ModalBottomSheet（丸アイコン＋項目名＋1行の説明）。説明文は1行に収まる長さにする
 - `gh workflow run e2e.yml -f only=simple` で簡易モードとパネルの確認（約10分）→ 18/18 合格
+
+## 2026-10-14 新アイコン・お気に入りドラッグ・今日の調子（v1.0.17）
+- アイコン: 元画像は `design/icon_source.png`、変換は `design/make_icon.py`（Pillow）。アダプティブアイコンの前景PNGを各解像度で作る。絵は108dp中76dpに置くと丸型マスクでも左上のスマホの絵が欠けない
+- 画面は5枚に（4=今日の調子。寿命から指を左→右へスワイプ）。`PAGES` を変えたら e2e.sh の「一周」テストも直す
+- お気に入りの並べ替えは reorderable の longPressDraggableHandle。動かさずに離したら onDragStopped でメニューを出す
+- 学び: longPressDraggableHandle と clickable を並べると、動かさずに長押し→離したときに clickable も発火してアプリが開く
+- 学び: combinedClickable(onLongClick) で受け止めると、長押し後の指の動きまで吸われてドラッグが効かなくなる → clickable のまま「長押し中・離して400ms以内のタップは無視」で解決
+- 「今日の調子」は SharedPreferences の "days"（日付→JSON）。AI用の質問文は `buildAiPrompt()`（直近120日・CSV形式＋目標・習慣）
+- Better Than Yesterday の元コードは手元・GitHub・Artifactのどこにも無かった（要件だけで作った）
+- `gh workflow run e2e.yml -f only=condition` で並べ替えと今日の調子の確認（約8分）→ 21/21 合格
+- e2e の学び: LazyColumn の画面外の項目は uiautomator に出ない → 上の項目を押す前に下向きスワイプで先頭に戻す
