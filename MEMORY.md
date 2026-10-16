@@ -42,3 +42,13 @@
 - Better Than Yesterday の元コードは手元・GitHub・Artifactのどこにも無かった（要件だけで作った）
 - `gh workflow run e2e.yml -f only=condition` で並べ替えと今日の調子の確認（約8分）→ 21/21 合格
 - e2e の学び: LazyColumn の画面外の項目は uiautomator に出ない → 上の項目を押す前に下向きスワイプで先頭に戻す
+
+## 2026-10-16 使用時間・今何してる？・今日のタスク（v1.0.19）
+- 画面は6枚に（4=今日のタスク、5=今日の調子）。PAGES を変えたら e2e.sh と condition.sh の「一周」も直す
+- スマホ使用時間は UsageStats を使わず、見守りサービスが「画面オン＋ロック解除中」の2秒ごとの tick を足して数える（簡易モードでも動くため）。Guard.screenMs（日付→ms）、30秒ごと＋画面オフ時に保存
+- ロック解除の検知は check() 内の wasActive（画面オフ/ロック中→解除の変化）。USER_PRESENT/SCREEN_ON でも check() を即実行
+- 「今何してる？」は Guard.askPending の間、MainActivity が AskScreen をページの代わりに出す。他アプリへ逃げたら openLauncher(null,"ask") で戻す（電話中は除く）。前の答えから5分は聞かない
+- 今日のタスクは Store.tasks（doneDate 付き）。前日までに完了したものは pruneTasks で消え、未完了は残る（=持ち越し）
+- `gh workflow run e2e.yml -f only=tasks`（約15分、5分待ちを含む）→ 24/24 合格
+- e2e の学び: 1回目のキーボード表示は遅い → 入力欄タップ後4秒待つ。誕生日未設定の寿命画面は「人生の進捗」ではなく「まずは誕生日と寿命を設定」
+- 全体テスト（all）: Android 15 は 67/68（残り1つは待ち画面の撮影タイミング）。Android 34 は途中でエミュレーターが落ちた（adb: device offline、既知）
