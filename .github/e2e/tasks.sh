@@ -20,7 +20,7 @@ expect_app() { sleep 1; t=$(top); if echo "$t" | grep -q "$2"; then ok "$1 ($t)"
 expect_text() { if $UI hasp "$2" >/dev/null; then ok "$1 「$2」あり"; else ng "$1 「$2」なし / 画面の文字: $($UI texts | paste -sd' ' | cut -c1-150)"; fi; }
 expect_no_text() { if $UI hasp "$2" >/dev/null; then ng "$1 「$2」が出ている"; else ok "$1 「$2」なし"; fi; }
 unlock() { key KEYCODE_POWER; sleep 3; key KEYCODE_WAKEUP; adb shell wm dismiss-keyguard; sleep 4; }
-add_task() { $UI tap "追加" >/dev/null; sleep 1; $UI tapclass android.widget.EditText >/dev/null; sleep 1; softword $1; sleep 1; $UI tap "保存" >/dev/null; sleep 2; }
+add_task() { $UI tap "追加" >/dev/null; sleep 2; $UI tapclass android.widget.EditText >/dev/null; sleep 4; softword $1; sleep 1; $UI tap "保存" >/dev/null; sleep 2; }
 
 adb install -r LifeLauncher.apk >/dev/null && log "インストール成功"
 adb shell cmd package set-home-activity $PKG/.MainActivity >/dev/null
@@ -68,7 +68,7 @@ expect_text "ホームボタンでも質問のまま" "今何してる？"
 log "== 5. 2タップで答える"
 $UI tap "勉強" >/dev/null; sleep 1; $UI tap "SNS" >/dev/null; sleep 2; snap answered
 expect_no_text "答えると質問が消える" "今何してる？"
-expect_text "寿命画面に戻る" "人生の進捗"
+expect_text "寿命画面に戻る" "まずは誕生日と寿命を設定"
 adb shell monkey -p com.android.chrome -c android.intent.category.LAUNCHER 1 >/dev/null; sleep 8
 expect_app "答えた後は他のアプリを使える" com.android.chrome
 key KEYCODE_HOME
