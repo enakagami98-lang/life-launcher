@@ -8,6 +8,7 @@ import android.os.Process
 import android.provider.Settings
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -31,6 +32,9 @@ data class LockRange(val enabled: Boolean, val start: Int, val end: Int, val day
 
 fun minutesText(m: Int) = "%02d:%02d".format(m / 60, m % 60)
 
+/** ロック解除時の質問への答え1件。time はミリ秒 */
+data class UnlockLog(val time: Long, val doing: String, val purpose: String)
+
 /**
  * アプリリマインダーと使えない時間帯の設定・記録。
  * ホーム画面と見守りサービスは同じプロセスで動くので、このオブジェクトを共有する。
@@ -53,6 +57,20 @@ object Guard {
     private val sessionEnd = mutableMapOf<String, Long>()
     private val sessionLen = mutableMapOf<String, Long>()
 
+    // スマホ全体の使用時間（日付 → ミリ秒）とロック解除の回数（日付 → 回）
+    val screenMs = mutableStateMapOf<String, Long>()
+    val unlocks = mutableStateMapOf<String, Int>()
+    private var screenSavedAt = 0L
+
+    // ロック解除時の質問
+    var askEnabled by mutableStateOf(false)
+        private set
+    /** true の間は質問に答えるまでホーム画面（質問）に戻し続ける */
+    var askPending by mutableStateOf(false)
+        private set
+    private var lastAnswerAt = 0L
+    val unlockLogs = mutableStateListOf<UnlockLog>()
+
     fun init(context: Context) {
         if (ready) return
         ready = true
@@ -67,6 +85,17 @@ object Guard {
         JSONObject(prefs.getString("usage", "{}")!!).let { o -> o.keys().forEach { usage[it] = o.getLong(it) } }
         JSONObject(prefs.getString("sessions", "{}")!!).let { o ->
             o.keys().forEach { k -> val a = o.getJSONArray(k); sessionEnd[k] = a.getLong(0); sessionLen[k] = a.getLong(1) }
+        }
+        JSONObject(prefs.getString("screen", "{}")!!).let { o -> o.keys().forEach { screenMs[it] = o.getLong(it) } }
+        JSONObject(prefs.getString("unlocks", "{}")!!).let { o -> o.keys().forEach { unlocks[it] = o.getInt(it) } }
+        askEnabled = prefs.getBoolean("askEnabled", false)
+        askPending = askEnabled && prefs.getBoolean("askPending", false)
+        lastAnswerAt = prefs.getLong("lastAnswerAt", 0)
+        JSONArray(prefs.getString("unlockLogs", "[]")).let { a ->
+            for (i in 0 until a.length()) {
+                val o = a.getJSONObject(i)
+                unlockLogs.add(UnlockLog(o.getLong("t"), o.optString("doing"), o.optString("purpose")))
+            }
         }
     }
 
@@ -167,6 +196,77 @@ object Guard {
         val o = JSONObject()
         sessionEnd.forEach { (k, v) -> o.put(k, JSONArray().put(v).put(sessionLen[k] ?: 1)) }
         prefs.edit().putString("sessions", o.toString()).apply()
+    }
+
+    // ---- スマホ全体の使用時間 ----
+    /** 画面がついていて、ロックが解除されている間に呼ばれる */
+    fun addScreenTime(ms: Long) {
+        val today = LocalDate.now().toString()
+        screenMs[today] = (screenMs[today] ?: 0) + ms
+        // 書き込みは30秒に1回で十分（画面を消したときにも保存する）
+        if (System.currentTimeMillis() - screenSavedAt > 30_000) saveScreen()
+    }
+
+    fun saveScreen() {
+        screenSavedAt = System.currentTimeMillis()
+        // 古い記録は400日分だけ残す
+        val keep = LocalDate.now().minusDays(400).toString()
+        screenMs.keys.filter { it < keep }.forEach { screenMs.remove(it) }
+        unlocks.keys.filter { it < keep }.forEach { unlocks.remove(it) }
+        val s = JSONObject(); screenMs.forEach { (k, v) -> s.put(k, v) }
+        val u = JSONObject(); unlocks.forEach { (k, v) -> u.put(k, v) }
+        prefs.edit().putString("screen", s.toString()).putString("unlocks", u.toString()).apply()
+    }
+
+    fun screenMinutes(date: LocalDate) = ((screenMs[date.toString()] ?: 0) / 60_000).toInt()
+    fun unlockCount(date: LocalDate) = unlocks[date.toString()] ?: 0
+
+    // ---- ロック解除時の質問 ----
+    /** 前の答えからこの時間は聞かない */
+    private const val ASK_GAP_MS = 5 * 60_000L
+
+    fun updateAskEnabled(v: Boolean) {
+        askEnabled = v
+        if (!v) setPending(false)
+        prefs.edit().putBoolean("askEnabled", v).apply()
+    }
+
+    /** ロックを解除したときに見守りサービスから呼ばれる。質問を出すなら true */
+    fun onUnlock(): Boolean {
+        val today = LocalDate.now().toString()
+        unlocks[today] = (unlocks[today] ?: 0) + 1
+        saveScreen()
+        if (!askEnabled || askPending) return askPending
+        if (System.currentTimeMillis() - lastAnswerAt < ASK_GAP_MS) return false
+        // 使えない時間帯は、そもそもスマホを使えないので聞かない
+        if (activeLock() != null) return false
+        setPending(true)
+        return true
+    }
+
+    fun answer(doing: String, purpose: String) {
+        val now = System.currentTimeMillis()
+        lastAnswerAt = now
+        unlockLogs.add(UnlockLog(now, doing, purpose))
+        // 古い答えは120日分だけ残す
+        val keep = now - 120 * 86_400_000L
+        unlockLogs.removeAll { it.time < keep }
+        val a = JSONArray()
+        unlockLogs.forEach { a.put(JSONObject().put("t", it.time).put("doing", it.doing).put("purpose", it.purpose)) }
+        prefs.edit().putString("unlockLogs", a.toString()).putLong("lastAnswerAt", now).apply()
+        setPending(false)
+    }
+
+    private fun setPending(v: Boolean) {
+        askPending = v
+        prefs.edit().putBoolean("askPending", v).apply()
+    }
+
+    fun logsOn(date: LocalDate): List<UnlockLog> {
+        val zone = java.time.ZoneId.systemDefault()
+        val from = date.atStartOfDay(zone).toInstant().toEpochMilli()
+        val to = date.plusDays(1).atStartOfDay(zone).toInstant().toEpochMilli()
+        return unlockLogs.filter { it.time in from until to }.sortedBy { it.time }
     }
 
     // ---- 許可の確認 ----

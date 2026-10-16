@@ -14,6 +14,9 @@ import java.time.LocalDate
 /** 目標・習慣の1行 */
 data class Item(val id: Long, val text: String)
 
+/** 今日のタスク。doneDate は完了した日（未完了は null） */
+data class Task(val id: Long, val text: String, val doneDate: String? = null)
+
 /** お気に入りアプリ（label はユーザーが変えた表示名） */
 data class Fav(val key: String, val label: String)
 
@@ -149,6 +152,57 @@ class Store(context: Context) {
 
     private fun saveHidden() {
         prefs.edit().putStringSet("hidden", hidden.toSet()).apply()
+    }
+
+    // ---- 今日のタスク ----
+    // 終わったタスクは次の日に消え、終わらなかったタスクは次の日に持ち越す
+    val tasks = mutableStateListOf<Task>().apply {
+        val arr = JSONArray(prefs.getString("tasks", "[]"))
+        for (i in 0 until arr.length()) {
+            val o = arr.getJSONObject(i)
+            add(Task(o.getLong("id"), o.getString("text"), if (o.isNull("done")) null else o.optString("done")))
+        }
+    }
+
+    /** 前の日までに終わったタスクを片づける */
+    fun pruneTasks(today: LocalDate) {
+        val t = today.toString()
+        if (tasks.removeAll { it.doneDate != null && it.doneDate < t }) saveTasks()
+    }
+
+    fun addTask(text: String) {
+        tasks.add(Task(System.currentTimeMillis(), text))
+        saveTasks()
+    }
+
+    fun toggleTask(id: Long, today: LocalDate) {
+        val i = tasks.indexOfFirst { it.id == id }
+        if (i < 0) return
+        tasks[i] = tasks[i].copy(doneDate = if (tasks[i].doneDate == null) today.toString() else null)
+        saveTasks()
+    }
+
+    fun updateTask(id: Long, text: String) {
+        val i = tasks.indexOfFirst { it.id == id }
+        if (i >= 0) tasks[i] = tasks[i].copy(text = text)
+        saveTasks()
+    }
+
+    fun deleteTask(id: Long) {
+        tasks.removeAll { it.id == id }
+        saveTasks()
+    }
+
+    fun moveTask(from: Int, to: Int) {
+        if (from !in tasks.indices || to !in tasks.indices) return
+        tasks.add(to, tasks.removeAt(from))
+        saveTasks()
+    }
+
+    private fun saveTasks() {
+        val arr = JSONArray()
+        tasks.forEach { arr.put(JSONObject().put("id", it.id).put("text", it.text).put("done", it.doneDate ?: JSONObject.NULL)) }
+        prefs.edit().putString("tasks", arr.toString()).apply()
     }
 
     // ---- 今日の調子（日付ごとの記録） ----

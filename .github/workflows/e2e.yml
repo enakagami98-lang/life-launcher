@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       only:
-        description: "all=全部 / scroll=スクロールだけ / simple=簡易モードと長押しパネル / condition=お気に入りの並べ替えと今日の調子（all以外はAndroid 15のみ）"
+        description: "all=全部 / scroll=スクロールだけ / simple=簡易モードと長押しパネル / condition=お気に入りの並べ替えと今日の調子 / tasks=今日のタスク・使用時間・今何してる？（all以外はAndroid 15のみ）"
         default: "all"
       tag:
         description: "試すAPKのリリース名（空なら最新）"

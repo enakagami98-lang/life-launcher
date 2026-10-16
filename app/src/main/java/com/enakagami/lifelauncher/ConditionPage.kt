@@ -34,6 +34,8 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -46,6 +48,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -115,6 +119,7 @@ fun ConditionPage(store: Store, today: LocalDate) {
                 DateSwitcher(date, today, onChange = { date = it })
             }
         }
+        item { ScreenTimeCard(date, today) }
         item {
             ScoreCard("今日の調子", "1日を振り返って総合的に", log.overall) { save(log.copy(overall = it)) }
         }
@@ -140,6 +145,7 @@ fun ConditionPage(store: Store, today: LocalDate) {
                 MemoField("メモ（運動・出来事・飲んだものなど）", log.memo) { save(log.copy(memo = it)) }
             }
         }
+        item { UnlockLogCard(date) }
         item { TrendCard(store.days) }
         item { AiPromptCard(store) }
     }
@@ -169,6 +175,112 @@ private fun DateSwitcher(date: LocalDate, today: LocalDate, onChange: (LocalDate
 }
 
 private fun weekday(d: DayOfWeek) = d.getDisplayName(TextStyle.SHORT, Locale.JAPANESE)
+
+/** 192 → 「3時間12分」 */
+fun durationText(minutes: Int) = if (minutes < 60) "${minutes}分" else "${minutes / 60}時間${minutes % 60}分"
+
+// ---- スマホの使用時間 ----
+
+@Composable
+private fun ScreenTimeCard(date: LocalDate, today: LocalDate) {
+    val minutes = Guard.screenMinutes(date)
+    val prev = Guard.screenMinutes(date.minusDays(1))
+    val unlocks = Guard.unlockCount(date)
+    Column(Modifier.fillMaxWidth().card().padding(20.dp)) {
+        Text(
+            if (date == today) "今日のスマホ使用時間" else "この日のスマホ使用時間",
+            fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Ink,
+        )
+        Spacer(Modifier.height(4.dp))
+        Row(verticalAlignment = Alignment.Bottom) {
+            if (minutes >= 60) {
+                Text("${minutes / 60}", fontSize = 64.sp, fontWeight = FontWeight.Black, color = Blue, lineHeight = 64.sp)
+                Text("時間", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Blue, modifier = Modifier.padding(bottom = 10.dp, end = 8.dp))
+            }
+            Text("${minutes % 60}", fontSize = 64.sp, fontWeight = FontWeight.Black, color = Blue, lineHeight = 64.sp)
+            Text("分", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Blue, modifier = Modifier.padding(bottom = 10.dp))
+        }
+        Spacer(Modifier.height(4.dp))
+        val diff = minutes - prev
+        val compare = when {
+            prev == 0 -> null
+            diff > 0 -> "前の日より ${durationText(diff)} 多い"
+            diff < 0 -> "前の日より ${durationText(-diff)} 少ない"
+            else -> "前の日と同じ"
+        }
+        Text(
+            "ロック解除 ${unlocks}回" + (compare?.let { "　・　$it" } ?: ""),
+            fontSize = 14.sp, fontWeight = FontWeight.Bold, color = SubInk,
+        )
+        Spacer(Modifier.height(6.dp))
+        Text(
+            "画面をつけてロックを解除していた時間です（このアプリの見守りが動いている間だけ数えます）。",
+            fontSize = 11.sp, color = SubInk, lineHeight = 16.sp,
+        )
+    }
+}
+
+// ---- ロック解除時の質問の記録 ----
+
+@Composable
+private fun UnlockLogCard(date: LocalDate) {
+    val context = LocalContext.current
+    val resume = LocalResumeSignal.current
+    val overlayOk = remember(resume) { Guard.hasOverlay(context) }
+    val logs = Guard.logsOn(date)
+
+    Column(Modifier.fillMaxWidth().card().padding(20.dp)) {
+        Text("スマホを開いた記録", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Ink)
+        Spacer(Modifier.height(6.dp))
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                "ロック解除のたびに「今何してる？」を聞く",
+                fontSize = 14.sp, color = Ink, lineHeight = 20.sp, modifier = Modifier.weight(1f),
+            )
+            Spacer(Modifier.width(8.dp))
+            Switch(
+                checked = Guard.askEnabled,
+                onCheckedChange = { Guard.updateAskEnabled(it) },
+                modifier = Modifier.semantics { contentDescription = "今何してるを聞く" },
+                colors = SwitchDefaults.colors(checkedTrackColor = Blue, checkedThumbColor = OnAccent),
+            )
+        }
+        Text(
+            "オンの間は、答えるまでスマホを使えません（電話は使えます）。前の答えから5分以内は聞きません。原因が分かったらオフにしてOK。",
+            fontSize = 12.sp, color = SubInk, lineHeight = 18.sp,
+        )
+        if (Guard.askEnabled && !overlayOk) {
+            Spacer(Modifier.height(6.dp))
+            Text(
+                "※ 他のアプリを開いたときに質問へ戻すには、設定の「他のアプリの上に重ねて表示」の許可が必要です",
+                fontSize = 12.sp, color = Danger, lineHeight = 18.sp,
+            )
+        }
+        Spacer(Modifier.height(12.dp))
+        if (logs.isEmpty()) {
+            Text("この日の記録はまだありません。", fontSize = 13.sp, color = SubInk)
+            return@Column
+        }
+        // 多かった理由（無駄に気づくため）
+        val top = logs.groupingBy { it.purpose }.eachCount().entries.sortedByDescending { it.value }.take(3)
+        Text(
+            "多かった理由：" + top.joinToString("　") { "${it.key} ${it.value}回" },
+            fontSize = 13.sp, fontWeight = FontWeight.Bold, color = Blue, lineHeight = 19.sp,
+        )
+        Spacer(Modifier.height(8.dp))
+        val fmt = java.time.format.DateTimeFormatter.ofPattern("H:mm")
+        val zone = java.time.ZoneId.systemDefault()
+        logs.forEach { l ->
+            Row(Modifier.fillMaxWidth().padding(vertical = 5.dp)) {
+                Text(
+                    java.time.Instant.ofEpochMilli(l.time).atZone(zone).format(fmt),
+                    fontSize = 14.sp, fontWeight = FontWeight.Black, color = Ink, modifier = Modifier.width(52.dp),
+                )
+                Text("${l.doing} → ${l.purpose}", fontSize = 14.sp, color = Ink, lineHeight = 20.sp)
+            }
+        }
+    }
+}
 
 @Composable
 private fun ScoreCard(title: String, hint: String, value: Int?, onChange: (Int?) -> Unit) {
@@ -379,31 +491,49 @@ private fun AiPromptCard(store: Store) {
 
 /** 記録を、そのままAIに貼れる質問文にする（直近120日分まで） */
 fun buildAiPrompt(store: Store): String {
-    val rows = store.days.entries.sortedBy { it.key }.takeLast(120)
+    // 調子を記録した日と、スマホの使用時間がある日をあわせる
+    val dates = (store.days.keys + Guard.screenMs.keys.mapNotNull { runCatching { LocalDate.parse(it) }.getOrNull() })
+        .toSortedSet().toList().takeLast(120)
     fun cell(s: String) = s.replace(",", "、").replace("\n", " ").trim()
     fun n(x: Int?) = x?.toString() ?: ""
-    val csv = rows.joinToString("\n") { (d, l) ->
+    val csv = dates.joinToString("\n") { d ->
+        val l = store.day(d)
+        val screen = Guard.screenMinutes(d)
         listOf(
             d.toString(), weekday(d.dayOfWeek), n(l.overall),
             l.sleepHours?.let { String.format(Locale.US, "%.1f", it) } ?: "",
             n(l.sleep), n(l.focus), n(l.mood),
+            if (screen > 0) "$screen" else "", Guard.unlockCount(d).takeIf { it > 0 }?.toString() ?: "",
             cell(l.breakfast), cell(l.lunch), cell(l.dinner), cell(l.memo),
         ).joinToString(",")
     }
+    // ロック解除時の質問の答え（直近14日分）
+    val since = System.currentTimeMillis() - 14 * 86_400_000L
+    val logFmt = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd,HH:mm")
+    val zone = java.time.ZoneId.systemDefault()
+    val unlockCsv = Guard.unlockLogs.filter { it.time >= since }.sortedBy { it.time }.joinToString("\n") {
+        java.time.Instant.ofEpochMilli(it.time).atZone(zone).format(logFmt) + "," + cell(it.doing) + "," + cell(it.purpose)
+    }
+    val unlockSection = if (unlockCsv.isBlank()) "" else """
+
+# スマホを開いたときの記録（直近14日。ロック解除のたびに答えたもの）
+日付,時刻,そのとき何をしていたか,スマホを開いた理由
+$unlockCsv"""
     val goals = store.goals.joinToString("、") { it.text }.ifBlank { "（未登録）" }
     val habits = store.habits.joinToString("、") { it.text }.ifBlank { "（未登録）" }
-    val from = rows.firstOrNull()?.key
-    val to = rows.lastOrNull()?.key
+    val from = dates.firstOrNull()
+    val to = dates.lastOrNull()
 
     return """
 あなたは生活習慣とコンディション管理にくわしいコーチです。
-以下は、私が毎日スマホで記録している「今日の調子」のデータです（${rows.size}日分、$from 〜 $to）。
+以下は、私が毎日スマホで記録している「今日の調子」のデータです（${dates.size}日分、$from 〜 $to）。
 このデータをもとに、私が「どういう時に調子がいいのか」を分析してください。
 
 # 記録の項目
 - 調子：その日の総合的な調子（0〜10の自己評価。10が最高）
 - 睡眠時間：前の晩に眠った時間（時間）
 - 睡眠の質・集中度・気分：0〜10の自己評価
+- スマホ(分)：その日にスマホの画面をつけて使っていた時間。解除回数：ロックを解除した回数
 - 朝・昼・夜：食べたもの
 - メモ：運動・出来事・飲んだものなど
 - 空欄は「記録していない」という意味です（0点ではありません）
@@ -413,13 +543,13 @@ fun buildAiPrompt(store: Store): String {
 - 習慣：$habits
 
 # データ（CSV）
-日付,曜日,調子,睡眠時間,睡眠の質,集中度,気分,朝,昼,夜,メモ
-$csv
+日付,曜日,調子,睡眠時間,睡眠の質,集中度,気分,スマホ(分),解除回数,朝,昼,夜,メモ
+$csv$unlockSection
 
 # お願いしたいこと
-1. 調子がいい日と悪い日で、何が違うか（睡眠・食事・曜日・メモの出来事など）。できるだけ具体的な数字で示してください
+1. 調子がいい日と悪い日で、何が違うか（睡眠・食事・スマホの使用時間・曜日・メモの出来事など）。できるだけ具体的な数字で示してください
 2. 「こういう時に調子がいい」というパターンを3つまで
-3. 調子を下げていそうな習慣や組み合わせ
+3. 調子を下げていそうな習慣や組み合わせ（スマホを開いた記録があれば、無駄になっていそうな時間帯・理由も）
 4. 明日から試せる、小さく始められる行動を3つ
 5. データが少ない・偏っているなど注意すべき点と、今後追加で記録するとよい項目
 

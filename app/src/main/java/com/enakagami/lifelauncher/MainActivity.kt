@@ -39,8 +39,8 @@ import kotlinx.coroutines.withContext
 import java.time.LocalDate
 import java.time.LocalDateTime
 
-/** 5枚の画面：0=寿命＋お気に入り / 1=アプリ一覧 / 2=目標 / 3=習慣 / 4=今日の調子（寿命の1つ手前） */
-const val PAGES = 5
+/** 6枚の画面：0=寿命＋お気に入り / 1=アプリ一覧 / 2=目標 / 3=習慣 / 4=今日のタスク / 5=今日の調子（寿命の1つ手前） */
+const val PAGES = 6
 private const val START_PAGE = PAGES * 1000
 
 /** アプリを開く処理（リマインダー対象なら、待ち画面をはさむ） */
@@ -201,6 +201,9 @@ fun LauncherApp(
             Surface(Modifier.fillMaxSize(), color = palette.bg) {
                 if (lock != null) {
                     LockScreen(lock.first, lock.second, now.toLocalTime())
+                } else if (Guard.askPending) {
+                    // ロック解除時の「今何してる？」。答えるまでホーム画面の代わりに出す
+                    AskScreen(now.toLocalTime())
                 } else {
                 HorizontalPager(
                     state = pager,
@@ -214,6 +217,7 @@ fun LauncherApp(
                             1 -> AppsPage(store, apps, query, onQuery = { query = it })
                             2 -> ItemsPage(store, kind = "goals", title = "目標")
                             3 -> ItemsPage(store, kind = "habits", title = "習慣")
+                            4 -> TasksPage(store, today)
                             else -> ConditionPage(store, today)
                         }
                     }

@@ -54,13 +54,20 @@ class GuardService : Service() {
         }
     }
 
+    /** 前回の確認のとき、画面がついていてロックも解除されていたか（false→true がロック解除） */
+    private var wasActive = true
+
     private val screenReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             if (intent.action == Intent.ACTION_SCREEN_OFF) {
                 hideBar()
+                Guard.saveScreen()
                 if (Guard.homeOnScreenOff && !inCall() && fg != packageName) {
                     openLauncher(null, null)
                 }
+            } else {
+                // 画面がついた・ロックが解除された → 2秒待たずにすぐ確認する
+                handler.post { runCatching { check() } }
             }
         }
     }
@@ -72,7 +79,11 @@ class GuardService : Service() {
         Guard.init(this)
         wm = getSystemService(WindowManager::class.java)
         startAsForeground()
-        registerReceiver(screenReceiver, IntentFilter(Intent.ACTION_SCREEN_OFF))
+        registerReceiver(screenReceiver, IntentFilter().apply {
+            addAction(Intent.ACTION_SCREEN_OFF)
+            addAction(Intent.ACTION_SCREEN_ON)
+            addAction(Intent.ACTION_USER_PRESENT)
+        })
         lastQuery = System.currentTimeMillis() - 60_000
         lastTick = System.currentTimeMillis()
         handler.post(tick)
@@ -104,12 +115,26 @@ class GuardService : Service() {
         val now = System.currentTimeMillis()
         val dt = (now - lastTick).coerceIn(0, 5000)
         lastTick = now
-        if (!getSystemService(PowerManager::class.java).isInteractive) return
+        if (!getSystemService(PowerManager::class.java).isInteractive) { wasActive = false; return }
         // ロック解除の画面（パスワード入力中）は何もしない
-        if (getSystemService(android.app.KeyguardManager::class.java).isKeyguardLocked) return
+        if (getSystemService(android.app.KeyguardManager::class.java).isKeyguardLocked) { wasActive = false; return }
         ensureAnchor()
-        if (!Guard.hasUsageAccess(this)) { simpleCheck(dt); return }
-        updateForeground(now)
+        Guard.addScreenTime(dt)
+        if (!wasActive) {
+            wasActive = true
+            // ロックを解除した瞬間：「今何してる？」を出す
+            if (Guard.onUnlock()) { hideBar(); openLauncher(null, "ask"); return }
+        }
+        val usage = Guard.hasUsageAccess(this)
+        if (usage) updateForeground(now)
+        // 質問に答えるまでは、電話以外のアプリを開いてもホーム画面（質問）に戻す
+        if (Guard.askPending) {
+            hideBar()
+            val away = if (usage) fg != null && fg != packageName && isBlockable(fg!!) else !Guard.launcherResumed
+            if (away && !inCall()) openLauncher(null, "ask")
+            return
+        }
+        if (!usage) { simpleCheck(dt); return }
         val pkg = fg
         if (pkg == null || pkg == packageName) { hideBar(); return }
 
