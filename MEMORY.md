@@ -52,3 +52,12 @@
 - `gh workflow run e2e.yml -f only=tasks`（約15分、5分待ちを含む）→ 24/24 合格
 - e2e の学び: 1回目のキーボード表示は遅い → 入力欄タップ後4秒待つ。誕生日未設定の寿命画面は「人生の進捗」ではなく「まずは誕生日と寿命を設定」
 - 全体テスト（all）: Android 15 は 67/68（残り1つは待ち画面の撮影タイミング）。Android 34 は途中でエミュレーターが落ちた（adb: device offline、既知）
+
+## 2026-10-19 トップ画面の作り変え・支払額（v1.0.22）
+- 理由：寿命画面のデザインが参考アプリの丸写しで公開できないため。残り日数だけ残し、週数・月数・進捗バー・命日は削除。左上の見出しは「寿命」→今日の日付
+- 残り日数の下は TopWidgets.kt の部品（motto/screen/tasks/spend）。並びと表示は Store.widgets（"widgets" に カンマ区切り）。「表示する項目を編集」で変更
+- 今月の支払額は Spend.kt：NotificationListenerService（PaymentListener）で通知文から金額を読む。支払いの語＋金額があり、受け取り/チャージ/返金/広告の語が無いものだけ。LINE等のチャットアプリは除外。10分以内の同額は1件（アプリ通知とメールの二重計上防止）
+- 通知へのアクセスも「制限付き設定」の対象 → 許可できないときは アプリ情報→︙→制限付き設定を許可
+- 現在地の表示はユーザーが「後で考える」とした（未実装）
+- e2e: `gh workflow run e2e.yml -f only=top`（約10分）→ 20/20。通知は `adb shell cmd notification post -t タイトル tag 本文`、許可は `cmd notification allow_listener PKG/PKG.PaymentListener`
+- 全体テスト Android 15 は 66/68。2件は撮影タイミング（「残り5分」のお知らせは撮影画像には出ていた）。Android 34 はまたエミュレーターが途中で落ちた
