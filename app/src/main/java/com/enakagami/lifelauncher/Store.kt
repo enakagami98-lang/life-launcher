@@ -14,6 +14,14 @@ import java.time.LocalDate
 /** 目標・習慣の1行 */
 data class Item(val id: Long, val text: String)
 
+/** トップ画面に置ける部品（id → 名前） */
+val ALL_WIDGETS = linkedMapOf(
+    "motto" to "人生のモットー",
+    "screen" to "今日のスマホ使用時間",
+    "tasks" to "今日のタスク",
+    "spend" to "今月の支払額",
+)
+
 /** 今日のタスク。doneDate は完了した日（未完了は null） */
 data class Task(val id: Long, val text: String, val doneDate: String? = null)
 
@@ -152,6 +160,25 @@ class Store(context: Context) {
 
     private fun saveHidden() {
         prefs.edit().putStringSet("hidden", hidden.toSet()).apply()
+    }
+
+    // ---- トップ画面の部品（残り日数の下に並べるもの） ----
+    /** 表示する部品の id を上から順に。motto / screen / tasks / spend */
+    val widgets = mutableStateListOf<String>().apply {
+        addAll((prefs.getString("widgets", null) ?: "motto,screen,tasks,spend").split(',').filter { it in ALL_WIDGETS })
+    }
+
+    fun saveWidgets(list: List<String>) {
+        widgets.clear(); widgets.addAll(list)
+        prefs.edit().putString("widgets", list.joinToString(",")).apply()
+    }
+
+    var motto by mutableStateOf(prefs.getString("motto", "") ?: "")
+        private set
+
+    fun saveMotto(text: String) {
+        motto = text
+        prefs.edit().putString("motto", text).apply()
     }
 
     // ---- 今日のタスク ----

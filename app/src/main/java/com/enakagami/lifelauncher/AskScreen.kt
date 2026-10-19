@@ -36,8 +36,8 @@ import androidx.compose.ui.unit.sp
 import java.time.LocalDate
 import java.time.LocalTime
 
-private val DoingOptions = listOf("勉強", "仕事・作業", "授業・会議", "移動中", "食事中", "休憩中", "家でくつろぎ", "寝る前", "起きた直後")
-private val PurposeOptions = listOf("連絡（LINEなど）", "SNS", "動画", "調べもの", "予定・メモ", "時間を見るだけ", "通知が来た", "ゲーム", "なんとなく")
+private val DoingOptions = listOf("勉強", "仕事・作業", "授業・会議", "移動中", "食事中", "休憩中", "家でくつろぎ", "買い物", "音楽を聴く", "寝る前", "起きた直後")
+private val PurposeOptions = listOf("連絡（LINEなど）", "SNS", "動画", "調べもの", "支払い", "予定・メモ", "時間を見るだけ", "通知が来た", "ゲーム", "なんとなく")
 
 /**
  * ロック解除時の「今何してる？」。答えるまでホーム画面の代わりに出し続ける。

@@ -62,6 +62,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         Guard.init(this)
+        Spend.init(this)
         val store = Store(this)
         handleGuardIntent(intent)
         setContent {

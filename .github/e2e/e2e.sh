@@ -6,7 +6,7 @@ UI="python3 .github/e2e/ui.py"
 N=0
 log() { echo "$*" | tee -a $R; }
 top() { adb shell dumpsys activity activities | grep -m1 topResumedActivity | grep -o '[a-z0-9.]*/[A-Za-z0-9.]*' | head -1; }
-page() { for t in 生年月日と寿命 目標を追加 寿命 アプリ 目標 習慣 今日のタスク 今日の調子; do $UI has "$t" >/dev/null && { echo "$t"; return; }; done; echo "?"; }
+page() { for t in 生年月日と寿命 目標を追加 お気に入り アプリ 目標 習慣 今日のタスク 今日の調子; do $UI has "$t" >/dev/null && { echo "$t"; return; }; done; echo "?"; }
 snap() { N=$((N+1)); f=$(printf "%02d_%s" $N "$1"); adb exec-out screencap -p > $OUT/$f.png; log "   [撮影 $f] 表示中アプリ=$(top) 画面=$(page)"; }
 # 画面キーボード（Gboard）のキーを指でタップして入力する
 declare -A K=( [1]="140 1724" [2]="404 1724" [3]="672 1724" [4]="140 1880" [5]="404 1880" [6]="672 1880" [7]="140 2036" [8]="404 2036" [9]="672 2036" [0]="404 2192" [BS]="944 2036"
@@ -29,7 +29,7 @@ adb shell cmd package set-home-activity $PKG/.MainActivity >/dev/null
 log "ホームアプリに登録: $(adb shell cmd package resolve-activity --brief -a android.intent.action.MAIN -c android.intent.category.HOME | tail -1 | tr -d '\r')"
 
 log "== 1. ホームボタン"
-key KEYCODE_HOME; expect_app "ホームボタンでLifeLauncher" $PKG; expect_text "寿命画面" "寿命"; snap home
+key KEYCODE_HOME; expect_app "ホームボタンでLifeLauncher" $PKG; expect_text "寿命画面" "お気に入り"; snap home
 
 log "== 2. 寿命の設定（1999/4/29生まれ・寿命30歳）"
 $UI tap "設定" >/dev/null; sleep 2; snap settings_open
@@ -40,10 +40,10 @@ $UI tap "寿命（歳）" >/dev/null; sleep 1; soft BS BS BS; softword 30
 sleep 1; snap settings_typed
 expect_text "年の入力" "1999"; expect_text "寿命の入力" "30"; expect_no_text "エラー表示なし" "生年月日を正しく入力してください（例：1999年4月29日）"
 $UI tap "保存" >/dev/null; sleep 2; snap after_save
-expect_text "保存後は寿命画面のまま" "人生の進捗"
+expect_text "保存後は寿命画面のまま" "残りの日数"
 EXP=$(python3 -c "import datetime;print('{:,}'.format((datetime.date(2029,4,29)-datetime.date.today()).days))")
 expect_text "残り日数（計算上の正解 $EXP）" "$EXP"
-expect_text "命日" "2029年4月29日"
+expect_text "左上は日付" "$(python3 -c "import datetime;d=datetime.date.today();w='月火水木金土日'[d.weekday()];print(f'{d.month}月{d.day}日（{w}）')")"
 expect_text "現在の年齢" "現在 27歳"
 
 log "== 2b. ありえない誕生日（199年）は保存できない"
@@ -62,24 +62,24 @@ expect_app "キーボードの決定キーで先頭の検索結果(Settings)が�
 
 log "== 4. 他アプリ→ホームボタン"
 key KEYCODE_HOME; snap home_from_settings
-expect_app "LifeLauncherに戻る" $PKG; expect_text "寿命画面に戻る" "人生の進捗"
+expect_app "LifeLauncherに戻る" $PKG; expect_text "寿命画面に戻る" "残りの日数"
 
 log "== 5. 他アプリ→戻るボタン"
 next_page; $UI tap "Chrome" >/dev/null; sleep 4; snap chrome_opened
 expect_app "一覧タップでChromeが開く" com.android.chrome
 for i in 1 2 3 4; do [ "$(top | cut -d/ -f1)" = "$PKG" ] && break; key KEYCODE_BACK; done
 snap back_from_chrome
-expect_app "戻るボタンでLifeLauncherに戻る" $PKG; expect_text "アプリ一覧ではなく寿命画面" "人生の進捗"
+expect_app "戻るボタンでLifeLauncherに戻る" $PKG; expect_text "アプリ一覧ではなく寿命画面" "残りの日数"
 
 log "== 6. 目標画面にいる状態でロック→解除"
 next_page; next_page; snap before_lock; expect_text "目標画面にいる" "目標"
 key KEYCODE_POWER; sleep 3; key KEYCODE_WAKEUP; adb shell wm dismiss-keyguard; sleep 3; snap after_unlock
-expect_app "解除後はLifeLauncher" $PKG; expect_text "解除後は寿命画面" "人生の進捗"
+expect_app "解除後はLifeLauncher" $PKG; expect_text "解除後は寿命画面" "残りの日数"
 
 log "== 7. 目標の入力画面を開いたままホームボタン"
 next_page; next_page; $UI tap "追加" >/dev/null; sleep 1; snap goal_dialog_open
 key KEYCODE_HOME; snap home_while_dialog
-expect_no_text "入力画面が閉じる" "目標を追加"; expect_text "寿命画面" "人生の進捗"
+expect_no_text "入力画面が閉じる" "目標を追加"; expect_text "寿命画面" "残りの日数"
 
 log "== 8. 6枚で一周"
 next_page; expect_text "1回目→アプリ" "アプリ"
@@ -87,7 +87,7 @@ next_page; expect_text "2回目→目標" "目標"
 next_page; expect_text "3回目→習慣" "習慣"
 next_page; expect_text "4回目→今日のタスク" "今日のタスク"
 next_page; expect_text "5回目→今日の調子" "今日の調子"
-next_page; expect_text "6回目→寿命に戻る" "人生の進捗"; snap loop_back
+next_page; expect_text "6回目→寿命に戻る" "残りの日数"; snap loop_back
 prev_page; expect_text "逆方向→今日の調子" "今日の調子"
 key KEYCODE_HOME
 

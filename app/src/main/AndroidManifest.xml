@@ -50,5 +50,16 @@
                 android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
                 android:value="Screen time reminders and focus hours for this home app" />
         </service>
+
+        <!-- 今月の支払額：支払いの通知から金額を読む（ユーザーが「通知へのアクセス」を許可したときだけ動く） -->
+        <service
+            android:name=".PaymentListener"
+            android:exported="true"
+            android:label="今月の支払額"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
+        </service>
     </application>
 </manifest>

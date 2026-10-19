@@ -1,28 +1,21 @@
 package com.enakagami.lifelauncher
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.Settings
@@ -45,6 +38,7 @@ import androidx.compose.ui.unit.sp
 import java.time.LocalDate
 import java.time.Period
 import java.time.temporal.ChronoUnit
+import java.time.format.TextStyle
 import java.util.Locale
 import sh.calvin.reorderable.ReorderableItem
 import sh.calvin.reorderable.rememberReorderableLazyListState
@@ -87,10 +81,14 @@ fun LifePage(store: Store, today: LocalDate, apps: List<AppInfo>, openSettings: 
                 Modifier.heightIn(min = screenHeight).fillMaxWidth(),
                 verticalArrangement = Arrangement.SpaceBetween,
             ) {
-                PageHeader("寿命") {
+                // 左上は今日の日付（「寿命」の見出しはやめた）
+                PageHeader("${today.monthValue}月${today.dayOfMonth}日（${today.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.JAPANESE)}）") {
                     RoundButton(Icons.Filled.Settings, "設定", CardBg, Ink) { openSettings() }
                 }
-                LifeCards(store.birth, store.lifespan, today) { openSettings() }
+                Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                    LifeCards(store.birth, store.lifespan, today) { openSettings() }
+                    TopWidgets(store, today)
+                }
                 Column(
                     Modifier.fillMaxWidth().padding(bottom = 12.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -189,73 +187,30 @@ private fun LifeCards(birth: LocalDate?, lifespan: Int, today: LocalDate, onSetu
 
     val death = birth.plusYears(lifespan.toLong())
     val days = ChronoUnit.DAYS.between(today, death).coerceAtLeast(0)
-    val weeks = days / 7
-    val months = ChronoUnit.MONTHS.between(today, death).coerceAtLeast(0)
     val rest = if (days > 0) Period.between(today, death) else Period.ZERO
     val age = Period.between(birth, today).years
-    val total = ChronoUnit.DAYS.between(birth, death).coerceAtLeast(1)
-    val lived = ChronoUnit.DAYS.between(birth, today).coerceIn(0, total)
-    val progress = lived.toFloat() / total
 
-    Column(pad, verticalArrangement = Arrangement.spacedBy(14.dp)) {
-        // 残りの日数（大きく）
-        Column(
-            Modifier.fillMaxWidth().card().padding(vertical = 28.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            Text("残りの日数", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Ink)
-            Row(verticalAlignment = Alignment.Bottom) {
-                Text(
-                    "%,d".format(days),
-                    fontSize = if (days >= 10000) 72.sp else 92.sp,
-                    fontWeight = FontWeight.Black,
-                    color = Blue,
-                    lineHeight = 96.sp,
-                )
-                Text("日", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = Ink, modifier = Modifier.padding(bottom = 16.dp, start = 4.dp))
-            }
-            Text("${rest.years}年${rest.months}ヶ月${rest.days}日", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Ink)
-        }
-        // 残りの週数・月数
-        Row(horizontalArrangement = Arrangement.spacedBy(14.dp)) {
-            SmallStat("残りの週数", "%,d".format(weeks), "週", Modifier.weight(1f))
-            SmallStat("残りの月数", "%,d".format(months), "月", Modifier.weight(1f))
-        }
-        // 人生の進捗
-        Column(Modifier.fillMaxWidth().card().padding(22.dp)) {
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                Text("人生の進捗", fontWeight = FontWeight.Bold, color = Ink, fontSize = 16.sp)
-                Text(String.format(Locale.US, "%.1f%%", progress * 100), fontWeight = FontWeight.Black, color = Blue, fontSize = 18.sp)
-            }
-            Spacer(Modifier.height(14.dp))
-            Box(Modifier.fillMaxWidth().height(14.dp).background(Bg, RoundedCornerShape(7.dp))) {
-                Box(Modifier.fillMaxWidth(progress).fillMaxHeight().background(Blue, RoundedCornerShape(7.dp)))
-            }
-            Spacer(Modifier.height(12.dp))
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                Text("現在 ${age}歳", fontSize = 13.sp, fontWeight = FontWeight.Bold, color = SubInk)
-                Text("寿命 ${lifespan}歳", fontSize = 13.sp, fontWeight = FontWeight.Bold, color = SubInk)
-            }
-        }
-        // 命日
-        Row(Modifier.fillMaxWidth().card().padding(horizontal = 24.dp, vertical = 18.dp), verticalAlignment = Alignment.CenterVertically) {
-            Icon(Icons.Filled.DateRange, null, tint = Blue, modifier = Modifier.size(32.dp))
-            Spacer(Modifier.width(18.dp))
-            Column {
-                Text("命日", fontSize = 12.sp, fontWeight = FontWeight.Bold, color = SubInk)
-                Text("${death.year}年${death.monthValue}月${death.dayOfMonth}日", fontSize = 20.sp, fontWeight = FontWeight.Black, color = Ink)
-            }
-        }
-    }
-}
-
-@Composable
-private fun SmallStat(label: String, value: String, unit: String, modifier: Modifier) {
-    Column(modifier.card().padding(vertical = 18.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(label, fontSize = 13.sp, fontWeight = FontWeight.Bold, color = Ink)
+    // 残りの日数（このアプリの顔。ほかの欄は TopWidgets で自由に入れ替える）
+    Column(
+        pad.fillMaxWidth().card().padding(vertical = 24.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Text("残りの日数", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Ink)
         Row(verticalAlignment = Alignment.Bottom) {
-            Text(value, fontSize = 40.sp, fontWeight = FontWeight.Black, color = Blue)
-            Text(unit, fontSize = 15.sp, fontWeight = FontWeight.Bold, color = Ink, modifier = Modifier.padding(bottom = 7.dp, start = 2.dp))
+            Text(
+                "%,d".format(days),
+                fontSize = if (days >= 10000) 72.sp else 92.sp,
+                fontWeight = FontWeight.Black,
+                color = Blue,
+                lineHeight = 96.sp,
+            )
+            Text("日", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = Ink, modifier = Modifier.padding(bottom = 16.dp, start = 4.dp))
+        }
+        Text("${rest.years}年${rest.months}ヶ月${rest.days}日", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Ink)
+        Spacer(Modifier.height(6.dp))
+        Row(horizontalArrangement = Arrangement.spacedBy(14.dp)) {
+            Text("現在 ${age}歳", fontSize = 13.sp, fontWeight = FontWeight.Bold, color = SubInk)
+            Text("寿命 ${lifespan}歳", fontSize = 13.sp, fontWeight = FontWeight.Bold, color = SubInk)
         }
     }
 }
