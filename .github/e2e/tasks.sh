@@ -49,6 +49,8 @@ log "== 2. 今日の調子の画面にスマホ使用時間"
 prev_page; snap screen_time
 expect_text "使用時間の見出し" "今日のスマホ使用時間"
 expect_text "ロック解除の回数" "ロック解除"
+expect_text "先月との比較の欄" "先月の記録がたまると"
+expect_no_text "前の日との比較はやめた" "前の日より"
 
 log "== 3. 「今何してる？」をオン"
 $UI tap "今何してるを聞く" >/dev/null; sleep 1; snap ask_on

@@ -59,6 +59,8 @@ import kotlinx.coroutines.delay
 import org.json.JSONObject
 import java.time.DayOfWeek
 import java.time.LocalDate
+import java.time.YearMonth
+import kotlin.math.roundToInt
 import java.time.format.TextStyle
 import java.util.Locale
 
@@ -184,7 +186,6 @@ fun durationText(minutes: Int) = if (minutes < 60) "${minutes}分" else "${minut
 @Composable
 private fun ScreenTimeCard(date: LocalDate, today: LocalDate) {
     val minutes = Guard.screenMinutes(date)
-    val prev = Guard.screenMinutes(date.minusDays(1))
     val unlocks = Guard.unlockCount(date)
     Column(Modifier.fillMaxWidth().card().padding(20.dp)) {
         Text(
@@ -201,22 +202,55 @@ private fun ScreenTimeCard(date: LocalDate, today: LocalDate) {
             Text("分", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Blue, modifier = Modifier.padding(bottom = 10.dp))
         }
         Spacer(Modifier.height(4.dp))
-        val diff = minutes - prev
-        val compare = when {
-            prev == 0 -> null
-            diff > 0 -> "前の日より ${durationText(diff)} 多い"
-            diff < 0 -> "前の日より ${durationText(-diff)} 少ない"
-            else -> "前の日と同じ"
-        }
-        Text(
-            "ロック解除 ${unlocks}回" + (compare?.let { "　・　$it" } ?: ""),
-            fontSize = 14.sp, fontWeight = FontWeight.Bold, color = SubInk,
-        )
+        Text("ロック解除 ${unlocks}回", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = SubInk)
+        Spacer(Modifier.height(10.dp))
+        MonthCompare(date, today)
         Spacer(Modifier.height(6.dp))
         Text(
             "画面をつけてロックを解除していた時間です（このアプリの見守りが動いている間だけ数えます）。",
             fontSize = 11.sp, color = SubInk, lineHeight = 16.sp,
         )
+    }
+}
+
+/**
+ * 先月との比較（1日あたりの平均）。記録のある日だけで平均する（入れた日より前や、見守りが止まっていた日で薄まらないように）。
+ * 今日はまだ途中なので、今月のほかの日に記録があれば今日は平均に入れない。
+ */
+@Composable
+private fun MonthCompare(date: LocalDate, today: LocalDate) {
+    val month = YearMonth.from(date)
+    fun avg(m: YearMonth, skipToday: Boolean): Int? {
+        val xs = (1..m.lengthOfMonth()).map { m.atDay(it) }
+            .filter { !(skipToday && it == today) }
+            .map { Guard.screenMinutes(it) }.filter { it > 0 }
+        return if (xs.isEmpty()) null else xs.average().roundToInt()
+    }
+    val now = avg(month, skipToday = true) ?: avg(month, skipToday = false)
+    val last = avg(month.minusMonths(1), skipToday = false)
+    val label = if (month == YearMonth.from(today)) "今月" else "${month.monthValue}月"
+
+    Column(Modifier.fillMaxWidth().background(Bg, RoundedCornerShape(14.dp)).padding(horizontal = 14.dp, vertical = 12.dp)) {
+        when {
+            now == null -> Text("この月の記録はまだありません。", fontSize = 13.sp, color = SubInk)
+            last == null -> {
+                Text("先月の記録がたまると、ここに先月との比較が出ます。", fontSize = 13.sp, color = SubInk, lineHeight = 19.sp)
+                Text("${label}の1日平均 ${durationText(now)}", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Ink)
+            }
+            else -> {
+                val pct = ((now - last) * 100.0 / last).roundToInt()
+                Text(
+                    when {
+                        pct < 0 -> "先月より使用時間が平均 ${-pct}% 減っています"
+                        pct > 0 -> "先月より使用時間が平均 ${pct}% 増えています"
+                        else -> "先月と同じくらいです"
+                    },
+                    fontSize = 16.sp, fontWeight = FontWeight.Black, color = if (pct > 0) Danger else Blue, lineHeight = 22.sp,
+                )
+                Spacer(Modifier.height(2.dp))
+                Text("1日平均　${label} ${durationText(now)} ／ 先月 ${durationText(last)}", fontSize = 13.sp, color = SubInk)
+            }
+        }
     }
 }
 
