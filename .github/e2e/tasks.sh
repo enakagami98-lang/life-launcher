@@ -20,6 +20,7 @@ expect_app() { sleep 1; t=$(top); if echo "$t" | grep -q "$2"; then ok "$1 ($t)"
 expect_text() { if $UI hasp "$2" >/dev/null; then ok "$1 「$2」あり"; else ng "$1 「$2」なし / 画面の文字: $($UI texts | paste -sd' ' | cut -c1-150)"; fi; }
 expect_no_text() { if $UI hasp "$2" >/dev/null; then ng "$1 「$2」が出ている"; else ok "$1 「$2」なし"; fi; }
 unlock() { key KEYCODE_POWER; sleep 3; key KEYCODE_WAKEUP; adb shell wm dismiss-keyguard; sleep 4; }
+to_tasks() { for i in 1 2 3 4 5 6; do $UI has "今日のタスク" >/dev/null && $UI has "追加" >/dev/null && return; next_page; done; }
 add_task() { $UI tap "追加" >/dev/null; sleep 2; $UI tapclass android.widget.EditText >/dev/null; sleep 4; softword $1; sleep 1; $UI tap "保存" >/dev/null; sleep 2; }
 
 adb install -r LifeLauncher.apk >/dev/null && log "インストール成功"
@@ -28,7 +29,7 @@ adb shell appops set $PKG SYSTEM_ALERT_WINDOW allow
 key KEYCODE_HOME; sleep 3
 
 log "== 1. 今日のタスク（習慣の右隣）"
-for i in 1 2 3 4; do next_page; done; snap tasks_empty
+to_tasks; snap tasks_empty
 expect_text "今日のタスクの画面" "今日のタスク"
 expect_text "使い方の説明" "終わらなかったタスクは次の日に持ち越されます"
 add_task abc; snap task_added
@@ -38,7 +39,7 @@ $UI tap "abcを完了にする" >/dev/null; sleep 1; snap task_done
 expect_text "チェックで完了" "全部おわり！"
 add_task xyz
 expect_text "2つ目を追加" "1 / 2 完了"
-key KEYCODE_HOME; for i in 1 2 3 4; do next_page; done
+key KEYCODE_HOME; to_tasks
 expect_text "ホームに戻っても残る" "xyz"
 expect_text "完了の状態も残る" "abcを未完了に戻す"
 $UI tap "abcを未完了に戻す" >/dev/null; sleep 1
