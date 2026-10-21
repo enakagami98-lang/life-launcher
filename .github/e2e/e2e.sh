@@ -104,7 +104,7 @@ key KEYCODE_HOME
 
 log "== 10. 非表示"
 lang en-US; next_page; expect_text "一覧にContactsがある" "Contacts"
-$UI long "Contacts" >/dev/null; sleep 1; $UI tap "非表示にする" >/dev/null; sleep 1; snap hidden
+$UI long "Contacts" >/dev/null; sleep 1; $UI tap "Hide" >/dev/null; sleep 1; snap hidden
 expect_text "アプリ一覧にいる" "Apps"; expect_no_text "一覧から消える" "Contacts"
 $UI tapclass android.widget.EditText >/dev/null; sleep 1; softword cont; sleep 1; snap hidden_search
 expect_text "検索中もアプリ一覧のまま" "Apps"
