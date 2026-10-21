@@ -115,7 +115,7 @@ S.update({
     "lock_morning": ("朝の集中時間", "Morning focus time"),
     "lock_night": ("夜のおやすみ時間", "Night rest time"),
     "notif_channel": ("見守り", "Monitoring"),
-    "notif_title": ("LifeLauncher が見守り中", "LifeLauncher is running"),
+    "notif_title": ("Loosen が見守り中", "Loosen is running"),
     "pill_remain": ("%1$s：今日の残り%2$d分", "%1$s: %2$d min left today"),
 })
 
@@ -387,4 +387,11 @@ S.update({
     "minute_label": ("分", "Minute"),
     "hour_value": ("%1$d時", "%1$d"),
     "minute_value": ("%1$s分", ":%1$s"),
+})
+
+S.update({
+    # ---- 使用時間を制限するアプリ ----
+    "s_limited_apps": ("使用時間を制限するアプリ", "Apps with a time limit"),
+    "s_count_warning": ("「使用状況へのアクセス」を許可していないため、このホーム画面から開いた分しか数えられません（通知や履歴から開いた分は0のまま）。上の「許可する」から許可してください。",
+                        "Usage access isn't allowed, so only time opened from this home screen is counted (opening from notifications or recents stays at 0). Allow it with \"Allow\" above."),
 })

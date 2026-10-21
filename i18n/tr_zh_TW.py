@@ -34,7 +34,7 @@ T = {
     "guard_really": "確定要開啟%1$s嗎？", "guard_how_long": "你要用%1$s多久？",
     "guard_remain": "今天還剩 %1$d 分鐘（每天 %2$d 分鐘）", "lock_until": "%1$s 之前不能使用手機",
     "lock_call": "撥打電話", "lock_morning": "早晨專注時間", "lock_night": "夜間休息時間",
-    "notif_channel": "監控", "notif_title": "LifeLauncher 正在執行", "pill_remain": "%1$s：今天還剩 %2$d 分鐘",
+    "notif_channel": "監控", "notif_title": "Loosen 正在執行", "pill_remain": "%1$s：今天還剩 %2$d 分鐘",
     "w_motto": "人生座右銘", "w_screen": "今日螢幕使用時間", "w_spend": "本月支出", "w_tasks": "今日任務",
     "w_countdown": "倒數計時", "w_weather": "天氣", "w_habits": "今日習慣打卡", "w_steps": "步數", "w_yesterday": "昨日回顧",
     "w_edit": "編輯顯示項目", "w_edit_title": "顯示項目", "w_edit_hint": "依由上到下的順序顯示在「剩餘天數」下方。",
@@ -99,3 +99,5 @@ T = {
     "range_start_time": "%1$s開始時間", "range_end_time": "%1$s結束時間", "hour_label": "時", "minute_label": "分",
     "hour_value": "%1$d時", "minute_value": "%1$s分",
 }
+
+T.update({"s_limited_apps": '有使用時間限制的應用程式', "s_count_warning": '未允許「使用情況存取權」，因此只能計算從這個主畫面開啟的時間（從通知或最近使用開啟的時間仍為 0）。請用上方的「允許」開啟。'})

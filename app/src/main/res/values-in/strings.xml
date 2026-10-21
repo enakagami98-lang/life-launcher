@@ -107,7 +107,7 @@
     <string name="lock_morning">Waktu fokus pagi</string>
     <string name="lock_night">Waktu istirahat malam</string>
     <string name="notif_channel">Pemantauan</string>
-    <string name="notif_title">LifeLauncher sedang berjalan</string>
+    <string name="notif_title">Loosen sedang berjalan</string>
     <string name="pill_remain">%1$s: sisa %2$d mnt hari ini</string>
     <string name="w_motto">Moto hidup</string>
     <string name="w_screen">Waktu layar hari ini</string>
@@ -286,4 +286,6 @@
     <string name="range_end_time">Jam selesai %1$s</string>
     <string name="hour_label">Jam</string>
     <string name="minute_label">Menit</string>
+    <string name="s_limited_apps">Aplikasi dengan batas waktu</string>
+    <string name="s_count_warning">Akses penggunaan belum diizinkan, jadi hanya waktu yang dibuka dari layar utama ini yang dihitung (yang dibuka dari notifikasi atau terbaru tetap 0). Izinkan lewat \"Izinkan\" di atas.</string>
 </resources>

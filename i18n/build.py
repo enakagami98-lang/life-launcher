@@ -60,7 +60,7 @@ def write(folder, entries):
 def main():
     base = load("base").S
     ok = True
-    write("values", {"app_name": "LifeLauncher", **{k: v[1] for k, v in base.items()}})
+    write("values", {"app_name": "Loosen", **{k: v[1] for k, v in base.items()}})
     write("values-ja", {k: v[0] for k, v in base.items()})
     for k, (ja, en) in base.items():
         if fmt_args(ja) != fmt_args(en):

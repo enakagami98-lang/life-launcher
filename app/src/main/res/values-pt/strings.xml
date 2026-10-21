@@ -107,7 +107,7 @@
     <string name="lock_morning">Foco da manhã</string>
     <string name="lock_night">Descanso da noite</string>
     <string name="notif_channel">Monitoramento</string>
-    <string name="notif_title">LifeLauncher está ativo</string>
+    <string name="notif_title">Loosen está ativo</string>
     <string name="pill_remain">%1$s: restam %2$d min hoje</string>
     <string name="w_motto">Lema de vida</string>
     <string name="w_screen">Tempo de tela de hoje</string>
@@ -284,4 +284,6 @@
     <string name="range_end_time">Hora de fim de %1$s</string>
     <string name="hour_label">Hora</string>
     <string name="minute_label">Minuto</string>
+    <string name="s_limited_apps">Apps com limite de tempo</string>
+    <string name="s_count_warning">O acesso aos dados de uso não está permitido, então só é contado o tempo aberto por esta tela inicial (o que for aberto por notificações ou recentes fica em 0). Permita em \"Permitir\" acima.</string>
 </resources>

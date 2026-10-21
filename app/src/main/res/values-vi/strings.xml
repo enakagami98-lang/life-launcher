@@ -107,7 +107,7 @@
     <string name="lock_morning">Giờ tập trung buổi sáng</string>
     <string name="lock_night">Giờ nghỉ ngơi ban đêm</string>
     <string name="notif_channel">Theo dõi</string>
-    <string name="notif_title">LifeLauncher đang chạy</string>
+    <string name="notif_title">Loosen đang chạy</string>
     <string name="pill_remain">%1$s: hôm nay còn %2$d phút</string>
     <string name="w_motto">Châm ngôn sống</string>
     <string name="w_screen">Thời gian dùng màn hình hôm nay</string>
@@ -286,4 +286,6 @@
     <string name="range_end_time">Giờ kết thúc %1$s</string>
     <string name="hour_label">Giờ</string>
     <string name="minute_label">Phút</string>
+    <string name="s_limited_apps">Ứng dụng có giới hạn thời gian</string>
+    <string name="s_count_warning">Chưa cho phép quyền truy cập dữ liệu sử dụng nên chỉ đếm được thời gian mở từ màn hình chính này (mở từ thông báo hoặc gần đây vẫn là 0). Hãy cho phép bằng nút \"Cho phép\" ở trên.</string>
 </resources>

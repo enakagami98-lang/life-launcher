@@ -34,7 +34,7 @@ T = {
     "guard_really": "Quer mesmo abrir %1$s?", "guard_how_long": "Por quanto tempo vai usar %1$s?",
     "guard_remain": "Restam %1$d min hoje (%2$d min por dia)", "lock_until": "Celular bloqueado até %1$s",
     "lock_call": "Fazer uma ligação", "lock_morning": "Foco da manhã", "lock_night": "Descanso da noite",
-    "notif_channel": "Monitoramento", "notif_title": "LifeLauncher está ativo", "pill_remain": "%1$s: restam %2$d min hoje",
+    "notif_channel": "Monitoramento", "notif_title": "Loosen está ativo", "pill_remain": "%1$s: restam %2$d min hoje",
     "w_motto": "Lema de vida", "w_screen": "Tempo de tela de hoje", "w_spend": "Gastos do mês", "w_tasks": "Tarefas de hoje",
     "w_countdown": "Contagem regressiva", "w_weather": "Clima", "w_habits": "Hábitos de hoje", "w_steps": "Passos", "w_yesterday": "Ontem",
     "w_edit": "Editar o que aparece", "w_edit_title": "O que aparece", "w_edit_hint": "Aparece abaixo de \"Dias restantes\", de cima para baixo.",
@@ -98,3 +98,5 @@ T = {
     "s_home_on_off": "Voltar à tela inicial ao desligar a tela", "range_on": "Ativar %1$s", "range_start": "Início de %1$s", "range_end": "Fim de %1$s",
     "range_start_time": "Hora de início de %1$s", "range_end_time": "Hora de fim de %1$s", "hour_label": "Hora", "minute_label": "Minuto",
 }
+
+T.update({"s_limited_apps": 'Apps com limite de tempo', "s_count_warning": 'O acesso aos dados de uso não está permitido, então só é contado o tempo aberto por esta tela inicial (o que for aberto por notificações ou recentes fica em 0). Permita em "Permitir" acima.'})

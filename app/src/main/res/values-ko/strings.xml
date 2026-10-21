@@ -107,7 +107,7 @@
     <string name="lock_morning">아침 집중 시간</string>
     <string name="lock_night">밤 휴식 시간</string>
     <string name="notif_channel">모니터링</string>
-    <string name="notif_title">LifeLauncher 실행 중</string>
+    <string name="notif_title">Loosen 실행 중</string>
     <string name="pill_remain">%1$s: 오늘 %2$d분 남음</string>
     <string name="w_motto">인생 좌우명</string>
     <string name="w_screen">오늘의 화면 사용 시간</string>
@@ -289,4 +289,6 @@
     <string name="minute_label">분</string>
     <string name="hour_value">%1$d시</string>
     <string name="minute_value">%1$s분</string>
+    <string name="s_limited_apps">사용 시간을 제한하는 앱</string>
+    <string name="s_count_warning">\'사용 정보 접근\'이 허용되지 않아 이 홈 화면에서 연 시간만 셀 수 있어요 (알림이나 최근 앱에서 연 시간은 0으로 남아요). 위의 \'허용\'에서 허용하세요.</string>
 </resources>

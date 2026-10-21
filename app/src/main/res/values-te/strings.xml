@@ -107,7 +107,7 @@
     <string name="lock_morning">ఉదయం ఏకాగ్రత సమయం</string>
     <string name="lock_night">రాత్రి విశ్రాంతి సమయం</string>
     <string name="notif_channel">పర్యవేక్షణ</string>
-    <string name="notif_title">LifeLauncher నడుస్తోంది</string>
+    <string name="notif_title">Loosen నడుస్తోంది</string>
     <string name="pill_remain">%1$s: ఈరోజు %2$d నిమి మిగిలింది</string>
     <string name="w_motto">జీవిత సూత్రం</string>
     <string name="w_screen">ఈరోజు స్క్రీన్ సమయం</string>
@@ -286,4 +286,6 @@
     <string name="range_end_time">%1$s ముగింపు సమయం</string>
     <string name="hour_label">గంట</string>
     <string name="minute_label">నిమిషం</string>
+    <string name="s_limited_apps">సమయ పరిమితి ఉన్న యాప్‌లు</string>
+    <string name="s_count_warning">వినియోగ యాక్సెస్ అనుమతించలేదు, కాబట్టి ఈ హోమ్ స్క్రీన్ నుండి తెరిచిన సమయం మాత్రమే లెక్కిస్తుంది (నోటిఫికేషన్లు లేదా ఇటీవలి యాప్‌ల నుండి తెరిచినది 0గానే ఉంటుంది). పైన \"అనుమతించు\" తో అనుమతించండి.</string>
 </resources>

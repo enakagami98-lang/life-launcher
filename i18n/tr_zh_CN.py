@@ -34,7 +34,7 @@ T = {
     "guard_really": "确定要打开%1$s吗？", "guard_how_long": "你要用%1$s多长时间？",
     "guard_remain": "今天还剩 %1$d 分钟（每天 %2$d 分钟）", "lock_until": "%1$s 之前不能使用手机",
     "lock_call": "拨打电话", "lock_morning": "早晨专注时间", "lock_night": "夜间休息时间",
-    "notif_channel": "监控", "notif_title": "LifeLauncher 正在运行", "pill_remain": "%1$s：今天还剩 %2$d 分钟",
+    "notif_channel": "监控", "notif_title": "Loosen 正在运行", "pill_remain": "%1$s：今天还剩 %2$d 分钟",
     "w_motto": "人生座右铭", "w_screen": "今日屏幕时间", "w_spend": "本月支出", "w_tasks": "今日任务",
     "w_countdown": "倒计时", "w_weather": "天气", "w_habits": "今日习惯打卡", "w_steps": "步数", "w_yesterday": "昨日回顾",
     "w_edit": "编辑显示项目", "w_edit_title": "显示项目", "w_edit_hint": "按从上到下的顺序显示在“剩余天数”下方。",
@@ -99,3 +99,5 @@ T = {
     "range_start_time": "%1$s开始时间", "range_end_time": "%1$s结束时间", "hour_label": "时", "minute_label": "分",
     "hour_value": "%1$d时", "minute_value": "%1$s分",
 }
+
+T.update({"s_limited_apps": '有使用时间限制的应用', "s_count_warning": '未允许“使用情况访问权限”，因此只能统计从这个主屏幕打开的时间（从通知或最近任务打开的时间仍为 0）。请用上方的“允许”开启。'})

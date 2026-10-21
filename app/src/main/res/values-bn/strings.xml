@@ -107,7 +107,7 @@
     <string name="lock_morning">সকালের মনোযোগের সময়</string>
     <string name="lock_night">রাতের বিশ্রামের সময়</string>
     <string name="notif_channel">পর্যবেক্ষণ</string>
-    <string name="notif_title">LifeLauncher চলছে</string>
+    <string name="notif_title">Loosen চলছে</string>
     <string name="pill_remain">%1$s: আজ %2$d মিনিট বাকি</string>
     <string name="w_motto">জীবনের মূলমন্ত্র</string>
     <string name="w_screen">আজকের স্ক্রিন টাইম</string>
@@ -286,4 +286,6 @@
     <string name="range_end_time">%1$s শেষের সময়</string>
     <string name="hour_label">ঘণ্টা</string>
     <string name="minute_label">মিনিট</string>
+    <string name="s_limited_apps">সময়সীমা দেওয়া অ্যাপ</string>
+    <string name="s_count_warning">ব্যবহারের তথ্যে অ্যাক্সেসের অনুমতি নেই, তাই শুধু এই হোম স্ক্রিন থেকে খোলা সময় গোনা হয় (নোটিফিকেশন বা সাম্প্রতিক থেকে খোলা সময় 0 থাকে)। উপরের \"অনুমতি দিন\" দিয়ে অনুমতি দিন।</string>
 </resources>

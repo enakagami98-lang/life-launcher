@@ -75,6 +75,7 @@ object Guard {
         if (ready) return
         ready = true
         prefs = context.applicationContext.getSharedPreferences("guard", Context.MODE_PRIVATE)
+        appContext = context.applicationContext
         JSONObject(prefs.getString("limits", "{}")!!).let { o -> o.keys().forEach { limits[it] = o.getInt(it) } }
         waitSec = prefs.getInt("waitSec", 10)
         floatingBar = prefs.getBoolean("floatingBar", true)
@@ -140,7 +141,52 @@ object Guard {
         }
     }
 
-    fun usedMs(pkg: String): Long { rollDay(); return usage[pkg] ?: 0 }
+    /**
+     * 今日の使用時間。「使用状況へのアクセス」が許可されていれば、スマホ本体の使用記録
+     * （Digital Wellbeing と同じ元データ）から数える → 通知・履歴・ウィジェットから開いた分も入る。
+     * 許可が無いときは、このホーム画面から開いて使っていた間だけ（自前の記録）。
+     */
+    fun usedMs(pkg: String): Long {
+        rollDay()
+        val own = usage[pkg] ?: 0
+        val sys = systemUsage()?.get(pkg) ?: return own
+        return maxOf(own, sys)
+    }
+
+    private var appContext: Context? = null
+    private var sysCache = emptyMap<String, Long>()
+    private var sysAt = 0L
+    private var sysDay = ""
+
+    /** 今日0時からの、アプリごとの前面にあった時間（15秒ごとに作り直す）。許可が無ければ null */
+    fun systemUsage(): Map<String, Long>? {
+        val ctx = appContext ?: return null
+        if (!hasUsageAccess(ctx)) return null
+        val now = System.currentTimeMillis()
+        val today = LocalDate.now().toString()
+        if (sysDay == today && now - sysAt < 15_000) return sysCache
+        val start = LocalDate.now().atStartOfDay(java.time.ZoneId.systemDefault()).toInstant().toEpochMilli()
+        val result = mutableMapOf<String, Long>()
+        runCatching {
+            val usm = ctx.getSystemService(android.app.usage.UsageStatsManager::class.java)
+            val events = usm.queryEvents(start, now)
+            val e = android.app.usage.UsageEvents.Event()
+            val resumed = mutableMapOf<String, Long>()
+            while (events.hasNextEvent()) {
+                events.getNextEvent(e)
+                when (e.eventType) {
+                    android.app.usage.UsageEvents.Event.ACTIVITY_RESUMED ->
+                        if (e.packageName !in resumed) resumed[e.packageName] = e.timeStamp
+                    android.app.usage.UsageEvents.Event.ACTIVITY_PAUSED, 23 /* ACTIVITY_STOPPED */ ->
+                        resumed.remove(e.packageName)?.let { t -> result[e.packageName] = (result[e.packageName] ?: 0) + (e.timeStamp - t) }
+                }
+            }
+            // 今も前面にあるアプリ
+            resumed.forEach { (pkg, t) -> result[pkg] = (result[pkg] ?: 0) + (now - t) }
+        }
+        sysCache = result; sysAt = now; sysDay = today
+        return result
+    }
 
     fun remainingMs(pkg: String): Long = (limits[pkg] ?: 0) * 60_000L - usedMs(pkg)
 

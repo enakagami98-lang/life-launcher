@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- i18n/build.py で自動生成。直接書き換えない -->
 <resources>
-    <string name="app_name">LifeLauncher</string>
+    <string name="app_name">Loosen</string>
     <string name="dur_m">%1$dm</string>
     <string name="dur_hm">%1$dh %2$dm</string>
     <string name="close">Close</string>
@@ -108,7 +108,7 @@
     <string name="lock_morning">Morning focus time</string>
     <string name="lock_night">Night rest time</string>
     <string name="notif_channel">Monitoring</string>
-    <string name="notif_title">LifeLauncher is running</string>
+    <string name="notif_title">Loosen is running</string>
     <string name="pill_remain">%1$s: %2$d min left today</string>
     <string name="w_motto">Life motto</string>
     <string name="w_screen">Today\'s screen time</string>
@@ -292,4 +292,6 @@
     <string name="minute_label">Minute</string>
     <string name="hour_value">%1$d</string>
     <string name="minute_value">:%1$s</string>
+    <string name="s_limited_apps">Apps with a time limit</string>
+    <string name="s_count_warning">Usage access isn\'t allowed, so only time opened from this home screen is counted (opening from notifications or recents stays at 0). Allow it with \"Allow\" above.</string>
 </resources>

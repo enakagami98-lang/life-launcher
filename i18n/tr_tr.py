@@ -34,7 +34,7 @@ T = {
     "guard_really": "%1$s gerçekten açılsın mı?", "guard_how_long": "%1$s ne kadar süre kullanacaksın?",
     "guard_remain": "Bugün %1$d dk kaldı (günde %2$d dk)", "lock_until": "Telefon %1$s saatine kadar kilitli",
     "lock_call": "Arama yap", "lock_morning": "Sabah odak zamanı", "lock_night": "Gece dinlenme zamanı",
-    "notif_channel": "İzleme", "notif_title": "LifeLauncher çalışıyor", "pill_remain": "%1$s: bugün %2$d dk kaldı",
+    "notif_channel": "İzleme", "notif_title": "Loosen çalışıyor", "pill_remain": "%1$s: bugün %2$d dk kaldı",
     "w_motto": "Hayat sloganı", "w_screen": "Bugünkü ekran süresi", "w_spend": "Bu ayki harcama", "w_tasks": "Bugünün görevleri",
     "w_countdown": "Geri sayım", "w_weather": "Hava durumu", "w_habits": "Bugünün alışkanlıkları", "w_steps": "Adım", "w_yesterday": "Dün",
     "w_edit": "Gösterilenleri düzenle", "w_edit_title": "Gösterilenler", "w_edit_hint": "\"Kalan gün\"ün altında yukarıdan aşağıya gösterilir.",
@@ -98,3 +98,5 @@ T = {
     "s_home_on_off": "Ekran kapanınca ana ekrana dön", "range_on": "%1$s aç", "range_start": "%1$s başlangıç", "range_end": "%1$s bitiş",
     "range_start_time": "%1$s başlangıç saati", "range_end_time": "%1$s bitiş saati", "hour_label": "Saat", "minute_label": "Dakika",
 }
+
+T.update({"s_limited_apps": 'Süre sınırı olan uygulamalar', "s_count_warning": 'Kullanım erişimine izin verilmediği için yalnızca bu ana ekrandan açılan süre sayılır (bildirimlerden veya son kullanılanlardan açılan süre 0 kalır). Yukarıdaki "İzin ver" ile izin ver.'})

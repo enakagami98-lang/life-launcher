@@ -34,7 +34,7 @@ T = {
     "guard_really": "Möchtest du %1$s wirklich öffnen?", "guard_how_long": "Wie lange möchtest du %1$s nutzen?",
     "guard_remain": "Heute noch %1$d Min. (%2$d Min. pro Tag)", "lock_until": "Handy gesperrt bis %1$s",
     "lock_call": "Anrufen", "lock_morning": "Morgendliche Fokuszeit", "lock_night": "Nächtliche Ruhezeit",
-    "notif_channel": "Überwachung", "notif_title": "LifeLauncher läuft", "pill_remain": "%1$s: heute noch %2$d Min.",
+    "notif_channel": "Überwachung", "notif_title": "Loosen läuft", "pill_remain": "%1$s: heute noch %2$d Min.",
     "w_motto": "Lebensmotto", "w_screen": "Bildschirmzeit heute", "w_spend": "Ausgaben diesen Monat", "w_tasks": "Heutige Aufgaben",
     "w_countdown": "Countdown", "w_weather": "Wetter", "w_habits": "Heutige Gewohnheiten", "w_steps": "Schritte", "w_yesterday": "Gestern",
     "w_edit": "Anzeige bearbeiten", "w_edit_title": "Angezeigte Elemente", "w_edit_hint": "Werden unter „Verbleibende Tage“ von oben nach unten angezeigt.",
@@ -98,3 +98,5 @@ T = {
     "s_home_on_off": "Beim Ausschalten des Bildschirms zum Startbildschirm zurückkehren", "range_on": "%1$s einschalten", "range_start": "%1$s Beginn", "range_end": "%1$s Ende",
     "range_start_time": "%1$s Startzeit", "range_end_time": "%1$s Endzeit", "hour_label": "Stunde", "minute_label": "Minute",
 }
+
+T.update({"s_limited_apps": 'Apps mit Zeitlimit', "s_count_warning": 'Der Zugriff auf Nutzungsdaten ist nicht erlaubt, daher wird nur die Zeit gezählt, wenn Apps von diesem Startbildschirm geöffnet werden (aus Benachrichtigungen oder „Zuletzt verwendet“ bleibt es bei 0). Erlaube ihn oben mit „Erlauben“.'})

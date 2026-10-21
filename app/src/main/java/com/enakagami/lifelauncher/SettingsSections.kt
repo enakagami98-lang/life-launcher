@@ -148,6 +148,10 @@ fun ReminderSection(apps: List<AppInfo>) {
             ) { Text(stringResource(R.string.open_app_info)) }
         }
         Spacer(Modifier.height(8.dp))
+        Text(stringResource(R.string.s_limited_apps), color = SubInk, fontSize = 13.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(horizontal = 20.dp, vertical = 4.dp))
+        if (!usageOk && Guard.limits.isNotEmpty()) {
+            Text(stringResource(R.string.s_count_warning), color = Danger, fontSize = 12.sp, lineHeight = 17.sp, modifier = Modifier.padding(horizontal = 20.dp, vertical = 2.dp))
+        }
         Guard.limits.toList()
             .map { (pkg, min) -> Triple(pkg, min, apps.firstOrNull { it.pkg == pkg }?.label ?: pkg) }
             .sortedBy { it.third }

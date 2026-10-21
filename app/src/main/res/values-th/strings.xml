@@ -107,7 +107,7 @@
     <string name="lock_morning">เวลาโฟกัสตอนเช้า</string>
     <string name="lock_night">เวลาพักผ่อนตอนกลางคืน</string>
     <string name="notif_channel">การเฝ้าดู</string>
-    <string name="notif_title">LifeLauncher กำลังทำงาน</string>
+    <string name="notif_title">Loosen กำลังทำงาน</string>
     <string name="pill_remain">%1$s: วันนี้เหลือ %2$d นาที</string>
     <string name="w_motto">คติประจำใจ</string>
     <string name="w_screen">เวลาหน้าจอวันนี้</string>
@@ -286,4 +286,6 @@
     <string name="range_end_time">เวลาสิ้นสุด %1$s</string>
     <string name="hour_label">ชั่วโมง</string>
     <string name="minute_label">นาที</string>
+    <string name="s_limited_apps">แอปที่จำกัดเวลาใช้งาน</string>
+    <string name="s_count_warning">ยังไม่ได้อนุญาต \"สิทธิ์เข้าถึงข้อมูลการใช้งาน\" จึงนับได้เฉพาะเวลาที่เปิดจากหน้าจอหลักนี้ (ที่เปิดจากการแจ้งเตือนหรือรายการล่าสุดจะเป็น 0) อนุญาตได้ที่ \"อนุญาต\" ด้านบน</string>
 </resources>

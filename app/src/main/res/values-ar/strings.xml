@@ -107,7 +107,7 @@
     <string name="lock_morning">وقت التركيز الصباحي</string>
     <string name="lock_night">وقت الراحة الليلي</string>
     <string name="notif_channel">المراقبة</string>
-    <string name="notif_title">LifeLauncher يعمل</string>
+    <string name="notif_title">Loosen يعمل</string>
     <string name="pill_remain">%1$s: تبقى %2$d دقيقة اليوم</string>
     <string name="w_motto">شعار الحياة</string>
     <string name="w_screen">وقت الشاشة اليوم</string>
@@ -286,4 +286,6 @@
     <string name="range_end_time">وقت نهاية %1$s</string>
     <string name="hour_label">الساعة</string>
     <string name="minute_label">الدقيقة</string>
+    <string name="s_limited_apps">التطبيقات ذات الحد الزمني</string>
+    <string name="s_count_warning">لم يُسمح بالوصول إلى بيانات الاستخدام، لذا يُحتسب فقط الوقت الذي فُتحت فيه التطبيقات من هذه الشاشة الرئيسية (ما يُفتح من الإشعارات أو التطبيقات الأخيرة يبقى 0). اسمح به من زر \"سماح\" أعلاه.</string>
 </resources>

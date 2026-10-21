@@ -107,7 +107,7 @@
     <string name="lock_morning">Утреннее время концентрации</string>
     <string name="lock_night">Ночное время отдыха</string>
     <string name="notif_channel">Наблюдение</string>
-    <string name="notif_title">LifeLauncher работает</string>
+    <string name="notif_title">Loosen работает</string>
     <string name="pill_remain">%1$s: сегодня осталось %2$d мин</string>
     <string name="w_motto">Девиз жизни</string>
     <string name="w_screen">Экранное время сегодня</string>
@@ -285,4 +285,6 @@
     <string name="range_end_time">%1$s: время окончания</string>
     <string name="hour_label">Час</string>
     <string name="minute_label">Минута</string>
+    <string name="s_limited_apps">Приложения с лимитом времени</string>
+    <string name="s_count_warning">Доступ к истории использования не разрешён, поэтому считается только время, когда приложение открыто с этого главного экрана (открытое из уведомлений или недавних остаётся 0). Разреши его кнопкой «Разрешить» выше.</string>
 </resources>

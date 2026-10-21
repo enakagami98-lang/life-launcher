@@ -34,7 +34,7 @@ T = {
     "guard_really": "Yakin mau membuka %1$s?", "guard_how_long": "Berapa lama kamu akan memakai %1$s?",
     "guard_remain": "Sisa %1$d mnt hari ini (%2$d mnt per hari)", "lock_until": "Ponsel terkunci sampai %1$s",
     "lock_call": "Telepon", "lock_morning": "Waktu fokus pagi", "lock_night": "Waktu istirahat malam",
-    "notif_channel": "Pemantauan", "notif_title": "LifeLauncher sedang berjalan", "pill_remain": "%1$s: sisa %2$d mnt hari ini",
+    "notif_channel": "Pemantauan", "notif_title": "Loosen sedang berjalan", "pill_remain": "%1$s: sisa %2$d mnt hari ini",
     "w_motto": "Moto hidup", "w_screen": "Waktu layar hari ini", "w_spend": "Pengeluaran bulan ini", "w_tasks": "Tugas hari ini",
     "w_countdown": "Hitung mundur", "w_weather": "Cuaca", "w_habits": "Kebiasaan hari ini", "w_steps": "Langkah", "w_yesterday": "Kemarin",
     "w_edit": "Ubah yang ditampilkan", "w_edit_title": "Yang ditampilkan", "w_edit_hint": "Ditampilkan di bawah \"Hari tersisa\", dari atas ke bawah.",
@@ -98,3 +98,5 @@ T = {
     "s_home_on_off": "Kembali ke layar utama saat layar mati", "range_on": "Aktifkan %1$s", "range_start": "Mulai %1$s", "range_end": "Selesai %1$s",
     "range_start_time": "Jam mulai %1$s", "range_end_time": "Jam selesai %1$s", "hour_label": "Jam", "minute_label": "Menit",
 }
+
+T.update({"s_limited_apps": 'Aplikasi dengan batas waktu', "s_count_warning": 'Akses penggunaan belum diizinkan, jadi hanya waktu yang dibuka dari layar utama ini yang dihitung (yang dibuka dari notifikasi atau terbaru tetap 0). Izinkan lewat "Izinkan" di atas.'})

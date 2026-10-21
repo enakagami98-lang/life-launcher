@@ -107,7 +107,7 @@
     <string name="lock_morning">早晨专注时间</string>
     <string name="lock_night">夜间休息时间</string>
     <string name="notif_channel">监控</string>
-    <string name="notif_title">LifeLauncher 正在运行</string>
+    <string name="notif_title">Loosen 正在运行</string>
     <string name="pill_remain">%1$s：今天还剩 %2$d 分钟</string>
     <string name="w_motto">人生座右铭</string>
     <string name="w_screen">今日屏幕时间</string>
@@ -289,4 +289,6 @@
     <string name="minute_label">分</string>
     <string name="hour_value">%1$d时</string>
     <string name="minute_value">%1$s分</string>
+    <string name="s_limited_apps">有使用时间限制的应用</string>
+    <string name="s_count_warning">未允许“使用情况访问权限”，因此只能统计从这个主屏幕打开的时间（从通知或最近任务打开的时间仍为 0）。请用上方的“允许”开启。</string>
 </resources>

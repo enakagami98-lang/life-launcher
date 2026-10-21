@@ -107,7 +107,7 @@
     <string name="lock_morning">காலை கவன நேரம்</string>
     <string name="lock_night">இரவு ஓய்வு நேரம்</string>
     <string name="notif_channel">கண்காணிப்பு</string>
-    <string name="notif_title">LifeLauncher இயங்குகிறது</string>
+    <string name="notif_title">Loosen இயங்குகிறது</string>
     <string name="pill_remain">%1$s: இன்று %2$d நிமி மீதம்</string>
     <string name="w_motto">வாழ்க்கை குறிக்கோள்</string>
     <string name="w_screen">இன்றைய திரை நேரம்</string>
@@ -286,4 +286,6 @@
     <string name="range_end_time">%1$s முடிவு நேரம்</string>
     <string name="hour_label">மணி</string>
     <string name="minute_label">நிமிடம்</string>
+    <string name="s_limited_apps">நேர வரம்புள்ள ஆப்ஸ்</string>
+    <string name="s_count_warning">பயன்பாட்டு அணுகல் அனுமதிக்கப்படவில்லை, அதனால் இந்த முகப்புத் திரையிலிருந்து திறந்த நேரம் மட்டுமே கணக்கிடப்படும் (அறிவிப்புகள் அல்லது சமீபத்தியவற்றிலிருந்து திறந்தது 0-ஆகவே இருக்கும்). மேலே உள்ள \"அனுமதி\" மூலம் அனுமதிக்கவும்.</string>
 </resources>

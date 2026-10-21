@@ -107,7 +107,7 @@
     <string name="lock_morning">صبح کا توجہ کا وقت</string>
     <string name="lock_night">رات کا آرام کا وقت</string>
     <string name="notif_channel">نگرانی</string>
-    <string name="notif_title">LifeLauncher چل رہا ہے</string>
+    <string name="notif_title">Loosen چل رہا ہے</string>
     <string name="pill_remain">%1$s: آج %2$d منٹ باقی</string>
     <string name="w_motto">زندگی کا نصب العین</string>
     <string name="w_screen">آج کا اسکرین ٹائم</string>
@@ -286,4 +286,6 @@
     <string name="range_end_time">%1$s کے اختتام کا وقت</string>
     <string name="hour_label">گھنٹہ</string>
     <string name="minute_label">منٹ</string>
+    <string name="s_limited_apps">وقت کی حد والی ایپس</string>
+    <string name="s_count_warning">استعمال تک رسائی کی اجازت نہیں، اس لیے صرف اسی ہوم اسکرین سے کھولا گیا وقت گنا جاتا ہے (اطلاعات یا حالیہ ایپس سے کھولا گیا وقت 0 رہتا ہے)۔ اوپر \"اجازت دیں\" سے اجازت دیں۔</string>
 </resources>

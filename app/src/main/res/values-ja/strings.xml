@@ -107,7 +107,7 @@
     <string name="lock_morning">朝の集中時間</string>
     <string name="lock_night">夜のおやすみ時間</string>
     <string name="notif_channel">見守り</string>
-    <string name="notif_title">LifeLauncher が見守り中</string>
+    <string name="notif_title">Loosen が見守り中</string>
     <string name="pill_remain">%1$s：今日の残り%2$d分</string>
     <string name="w_motto">人生のモットー</string>
     <string name="w_screen">今日のスマホ使用時間</string>
@@ -291,4 +291,6 @@
     <string name="minute_label">分</string>
     <string name="hour_value">%1$d時</string>
     <string name="minute_value">%1$s分</string>
+    <string name="s_limited_apps">使用時間を制限するアプリ</string>
+    <string name="s_count_warning">「使用状況へのアクセス」を許可していないため、このホーム画面から開いた分しか数えられません（通知や履歴から開いた分は0のまま）。上の「許可する」から許可してください。</string>
 </resources>

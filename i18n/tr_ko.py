@@ -34,7 +34,7 @@ T = {
     "guard_really": "정말 %1$s을(를) 열까요?", "guard_how_long": "%1$s을(를) 얼마나 쓸 건가요?",
     "guard_remain": "오늘 %1$d분 남음 (하루 %2$d분)", "lock_until": "%1$s까지 휴대폰을 쓸 수 없어요",
     "lock_call": "전화 걸기", "lock_morning": "아침 집중 시간", "lock_night": "밤 휴식 시간",
-    "notif_channel": "모니터링", "notif_title": "LifeLauncher 실행 중", "pill_remain": "%1$s: 오늘 %2$d분 남음",
+    "notif_channel": "모니터링", "notif_title": "Loosen 실행 중", "pill_remain": "%1$s: 오늘 %2$d분 남음",
     "w_motto": "인생 좌우명", "w_screen": "오늘의 화면 사용 시간", "w_spend": "이번 달 지출", "w_tasks": "오늘의 할 일",
     "w_countdown": "카운트다운", "w_weather": "날씨", "w_habits": "오늘의 습관 체크", "w_steps": "걸음 수", "w_yesterday": "어제 돌아보기",
     "w_edit": "표시 항목 편집", "w_edit_title": "표시 항목", "w_edit_hint": "'남은 날' 아래에 위에서부터 순서대로 표시돼요.",
@@ -99,3 +99,5 @@ T = {
     "range_start_time": "%1$s 시작 시각", "range_end_time": "%1$s 끝 시각", "hour_label": "시", "minute_label": "분",
     "hour_value": "%1$d시", "minute_value": "%1$s분",
 }
+
+T.update({"s_limited_apps": '사용 시간을 제한하는 앱', "s_count_warning": "'사용 정보 접근'이 허용되지 않아 이 홈 화면에서 연 시간만 셀 수 있어요 (알림이나 최근 앱에서 연 시간은 0으로 남아요). 위의 '허용'에서 허용하세요."})

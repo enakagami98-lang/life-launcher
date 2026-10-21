@@ -107,7 +107,7 @@
     <string name="lock_morning">सुबह का फ़ोकस समय</string>
     <string name="lock_night">रात का आराम समय</string>
     <string name="notif_channel">निगरानी</string>
-    <string name="notif_title">LifeLauncher चल रहा है</string>
+    <string name="notif_title">Loosen चल रहा है</string>
     <string name="pill_remain">%1$s: आज %2$d मिनट बाकी</string>
     <string name="w_motto">जीवन का मूलमंत्र</string>
     <string name="w_screen">आज का स्क्रीन टाइम</string>
@@ -286,4 +286,6 @@
     <string name="range_end_time">%1$s खत्म होने का समय</string>
     <string name="hour_label">घंटा</string>
     <string name="minute_label">मिनट</string>
+    <string name="s_limited_apps">समय सीमा वाले ऐप</string>
+    <string name="s_count_warning">उपयोग ऐक्सेस की अनुमति नहीं है, इसलिए केवल इसी होम स्क्रीन से खोले गए समय की गिनती होती है (सूचना या हाल के ऐप से खोला गया समय 0 रहता है)। ऊपर \"अनुमति दें\" से अनुमति दें।</string>
 </resources>

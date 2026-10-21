@@ -34,7 +34,7 @@ T = {
     "guard_really": "Bạn thật sự muốn mở %1$s?", "guard_how_long": "Bạn sẽ dùng %1$s trong bao lâu?",
     "guard_remain": "Hôm nay còn %1$d phút (%2$d phút mỗi ngày)", "lock_until": "Điện thoại bị khóa đến %1$s",
     "lock_call": "Gọi điện", "lock_morning": "Giờ tập trung buổi sáng", "lock_night": "Giờ nghỉ ngơi ban đêm",
-    "notif_channel": "Theo dõi", "notif_title": "LifeLauncher đang chạy", "pill_remain": "%1$s: hôm nay còn %2$d phút",
+    "notif_channel": "Theo dõi", "notif_title": "Loosen đang chạy", "pill_remain": "%1$s: hôm nay còn %2$d phút",
     "w_motto": "Châm ngôn sống", "w_screen": "Thời gian dùng màn hình hôm nay", "w_spend": "Chi tiêu tháng này", "w_tasks": "Việc hôm nay",
     "w_countdown": "Đếm ngược", "w_weather": "Thời tiết", "w_habits": "Thói quen hôm nay", "w_steps": "Số bước", "w_yesterday": "Hôm qua",
     "w_edit": "Sửa mục hiển thị", "w_edit_title": "Mục hiển thị", "w_edit_hint": "Hiển thị bên dưới \"Số ngày còn lại\", từ trên xuống.",
@@ -98,3 +98,5 @@ T = {
     "s_home_on_off": "Về màn hình chính khi tắt màn hình", "range_on": "Bật %1$s", "range_start": "Bắt đầu %1$s", "range_end": "Kết thúc %1$s",
     "range_start_time": "Giờ bắt đầu %1$s", "range_end_time": "Giờ kết thúc %1$s", "hour_label": "Giờ", "minute_label": "Phút",
 }
+
+T.update({"s_limited_apps": 'Ứng dụng có giới hạn thời gian', "s_count_warning": 'Chưa cho phép quyền truy cập dữ liệu sử dụng nên chỉ đếm được thời gian mở từ màn hình chính này (mở từ thông báo hoặc gần đây vẫn là 0). Hãy cho phép bằng nút "Cho phép" ở trên.'})
