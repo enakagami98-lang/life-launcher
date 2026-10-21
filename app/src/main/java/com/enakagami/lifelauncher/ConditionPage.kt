@@ -555,5 +555,9 @@ fun buildAiPrompt(ctx: android.content.Context, store: Store): String {
     val habits = store.habits.joinToString(", ") { it.text }.ifBlank { none }
     val from = dates.firstOrNull()?.toString() ?: ""
     val to = dates.lastOrNull()?.toString() ?: ""
-    return ctx.getString(R.string.ai_prompt, dates.size, from, to, goals, habits, csv + unlockSection).trim()
+    val prompt = ctx.getString(R.string.ai_prompt, dates.size, from, to, goals, habits, csv + unlockSection).trim()
+    // 質問文の訳は日本語と英語だけ。ほかの言語のスマホでは、英語の質問文に「その言語で答えて」を足す
+    val lang = Locale.getDefault()
+    return if (lang.language in listOf("ja", "en")) prompt
+    else prompt + "\n- Please answer in " + lang.getDisplayLanguage(Locale.ENGLISH)
 }
