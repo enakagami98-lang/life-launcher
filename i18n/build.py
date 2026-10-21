@@ -18,12 +18,14 @@ LANGS = {
     "zh_CN": "values-zh-rCN", "zh_TW": "values-zh-rTW", "ko": "values-ko",
     "es": "values-es", "fr": "values-fr", "de": "values-de", "pt": "values-pt",
     "it": "values-it", "ru": "values-ru", "in": "values-in", "th": "values-th",
-    "vi": "values-vi", "hi": "values-hi",
+    "vi": "values-vi", "hi": "values-hi", "ar": "values-ar", "ur": "values-ur", "tr": "values-tr",
+    "bn": "values-bn", "mr": "values-mr", "te": "values-te", "ta": "values-ta",
 }
 
 
 LOCALE_TAG = {"zh_CN": "zh-CN", "zh_TW": "zh-TW", "ko": "ko", "es": "es", "fr": "fr", "de": "de", "pt": "pt",
-              "it": "it", "ru": "ru", "in": "id", "th": "th", "vi": "vi", "hi": "hi"}
+              "it": "it", "ru": "ru", "in": "id", "th": "th", "vi": "vi", "hi": "hi", "ar": "ar", "ur": "ur",
+              "tr": "tr", "bn": "bn", "mr": "mr", "te": "te", "ta": "ta"}
 
 
 def load(name):
