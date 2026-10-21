@@ -20,14 +20,15 @@ adb shell appops set $PKG SYSTEM_ALERT_WINDOW allow
 key KEYCODE_HOME; sleep 3
 
 # 言語タグ  画面に出るはずの文字（トップの「まずは誕生日と寿命を設定しましょう」に当たるもの）
-while read -r tag word; do
+# adb が標準入力を読んでしまうので、一覧は 3 番から読む
+while read -r tag word <&3; do
   [ -z "$tag" ] && continue
   log "== $tag"
   lang $tag; snap "${tag}_top"
   expect_text "$tag のトップ" "$word"
   prev_page; snap "${tag}_condition"
   key KEYCODE_HOME
-done <<'EOF'
+done 3<<'EOF'
 it-IT Prima imposta
 th-TH เริ่มจากตั้งวันเกิด
 ar-EG أولًا، اضبط

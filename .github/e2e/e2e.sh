@@ -40,6 +40,7 @@ $UI tap "年" >/dev/null; sleep 1; snap keyboard_shown; softword 1999
 $UI tap "月" >/dev/null; sleep 1; softword 4
 $UI tap "日" >/dev/null; sleep 1; softword 29
 $UI tap "寿命（歳）" >/dev/null; sleep 1; soft BS BS BS; softword 30
+if ! $UI has "30" >/dev/null; then $UI tap "寿命（歳）" >/dev/null; sleep 1; soft BS BS BS; softword 30; fi
 sleep 1; snap settings_typed
 expect_text "年の入力" "1999"; expect_text "寿命の入力" "30"; expect_no_text "エラー表示なし" "生年月日を正しく入力してください（例：1999年4月29日）"
 $UI tap "保存" >/dev/null; sleep 2; snap after_save
