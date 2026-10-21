@@ -24,6 +24,8 @@ expect_app() { sleep 1; t=$(top); if echo "$t" | grep -q "$2"; then ok "$1 ($t)"
 expect_text() { if $UI has "$2" >/dev/null; then ok "$1 「$2」あり"; else ng "$1 「$2」なし / 画面の文字: $($UI texts | tr '\n' ' ' | cut -c1-150)"; fi; }
 expect_no_text() { if $UI has "$2" >/dev/null; then ng "$1 「$2」が出ている"; else ok "$1 「$2」なし"; fi; }
 
+# アプリの言語を切り替える。日本語のままだと文字入力のキーボードが日本語入力になり、英字を打てないので、打つ間だけ英語にする
+lang() { adb shell cmd locale set-app-locales $PKG --locales $1 >/dev/null 2>&1; sleep 3; adb shell input keyevent KEYCODE_HOME; sleep 3; }
 adb install -r LifeLauncher.apk >/dev/null && log "インストール成功"
 adb shell cmd locale set-app-locales com.enakagami.lifelauncher --locales ja-JP >/dev/null 2>&1  # 仮想スマホは英語なので、このアプリだけ日本語に
 adb shell cmd package set-home-activity $PKG/.MainActivity >/dev/null
@@ -55,6 +57,7 @@ $UI tap "閉じる" >/dev/null; sleep 2; expect_text "閉じると元の設定�
 
 log "== 3. アプリ検索"
 next_page; snap swipe1; expect_text "1回スワイプでアプリ一覧" "アプリ"
+lang en-US; next_page
 $UI tapclass android.widget.EditText >/dev/null; sleep 1; snap search_keyboard; softword sett; sleep 1; snap search_typed
 expect_text "検索結果にSettings" "Settings"
 expect_no_text "関係ないアプリは消える" "Chrome"
@@ -62,7 +65,7 @@ soft ENTER; sleep 3; snap after_enter
 expect_app "キーボードの決定キーで先頭の検索結果(Settings)が開く" com.android.settings
 
 log "== 4. 他アプリ→ホームボタン"
-key KEYCODE_HOME; snap home_from_settings
+lang ja-JP; snap home_from_settings
 expect_app "LifeLauncherに戻る" $PKG; expect_text "寿命画面に戻る" "残りの日数"
 
 log "== 5. 他アプリ→戻るボタン"
@@ -100,17 +103,18 @@ $UI tap "Chrome" >/dev/null; sleep 3; expect_app "お気に入りからChromeが
 key KEYCODE_HOME
 
 log "== 10. 非表示"
-next_page; expect_text "一覧にContactsがある" "Contacts"
+lang en-US; next_page; expect_text "一覧にContactsがある" "Contacts"
 $UI long "Contacts" >/dev/null; sleep 1; $UI tap "非表示にする" >/dev/null; sleep 1; snap hidden
-expect_text "アプリ一覧にいる" "アプリ"; expect_no_text "一覧から消える" "Contacts"
+expect_text "アプリ一覧にいる" "Apps"; expect_no_text "一覧から消える" "Contacts"
 $UI tapclass android.widget.EditText >/dev/null; sleep 1; softword cont; sleep 1; snap hidden_search
-expect_text "検索中もアプリ一覧のまま" "アプリ"
+expect_text "検索中もアプリ一覧のまま" "Apps"
 expect_no_text "検索でも出ない" "Contacts"
 key KEYCODE_HOME
 
 log "== 11. 目標の追加"
-next_page; next_page; $UI tap "追加" >/dev/null; sleep 1; $UI tapclass android.widget.EditText >/dev/null; sleep 1; softword toeic; sleep 1; $UI tap "保存" >/dev/null; sleep 2; snap goal_added
-expect_text "目標が追加される" "toeic"; expect_text "目標画面のまま" "目標"
+lang en-US; next_page; next_page; $UI tap "Add" >/dev/null; sleep 1; $UI tapclass android.widget.EditText >/dev/null; sleep 1; softword toeic; sleep 1; $UI tap "Save" >/dev/null; sleep 2; snap goal_added
+expect_text "目標が追加される" "toeic"; expect_text "目標画面のまま" "Goals"
+lang ja-JP
 key KEYCODE_HOME
 
 log "== 13. 色の変更"

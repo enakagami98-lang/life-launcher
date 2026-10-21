@@ -21,8 +21,11 @@ expect_text() { if $UI hasp "$2" >/dev/null; then ok "$1 「$2」あり"; else n
 expect_no_text() { if $UI hasp "$2" >/dev/null; then ng "$1 「$2」が出ている"; else ok "$1 「$2」なし"; fi; }
 unlock() { key KEYCODE_POWER; sleep 3; key KEYCODE_WAKEUP; adb shell wm dismiss-keyguard; sleep 4; }
 to_tasks() { for i in 1 2 3 4 5 6; do $UI has "今日のタスク" >/dev/null && $UI has "追加" >/dev/null && return; next_page; done; }
-add_task() { $UI tap "追加" >/dev/null; sleep 2; $UI tapclass android.widget.EditText >/dev/null; sleep 4; softword $1; sleep 1; $UI tap "保存" >/dev/null; sleep 2; }
+to_tasks_en() { for i in 1 2 3 4 5 6; do $UI has "Today's tasks" >/dev/null && $UI has "Add" >/dev/null && return; next_page; done; }
+add_task() { lang en-US; to_tasks_en; $UI tap "Add" >/dev/null; sleep 2; $UI tapclass android.widget.EditText >/dev/null; sleep 4; softword $1; sleep 1; $UI tap "Save" >/dev/null; sleep 2; lang ja-JP; to_tasks; }
 
+# アプリの言語を切り替える。日本語のままだと文字入力のキーボードが日本語入力になり、英字を打てないので、打つ間だけ英語にする
+lang() { adb shell cmd locale set-app-locales $PKG --locales $1 >/dev/null 2>&1; sleep 3; adb shell input keyevent KEYCODE_HOME; sleep 3; }
 adb install -r LifeLauncher.apk >/dev/null && log "インストール成功"
 adb shell cmd locale set-app-locales com.enakagami.lifelauncher --locales ja-JP >/dev/null 2>&1  # 仮想スマホは英語なので、このアプリだけ日本語に
 adb shell cmd package set-home-activity $PKG/.MainActivity >/dev/null
