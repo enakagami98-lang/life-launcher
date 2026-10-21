@@ -73,6 +73,8 @@ prev_page; $UI tap "今何してるを聞く" >/dev/null; sleep 1
 key KEYCODE_HOME; unlock; snap ask_options
 expect_text "買い物" "買い物"
 expect_text "音楽を聴く" "音楽を聴く"
+expect_text "ジム" "ジム"
+expect_text "読書" "読書"
 expect_text "支払い" "支払い"
 $UI tap "買い物" >/dev/null; sleep 1; $UI tap "支払い" >/dev/null; sleep 2
 expect_no_text "答えると閉じる" "今何してる？"
