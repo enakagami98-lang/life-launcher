@@ -120,6 +120,8 @@ fun AskScreen(now: LocalTime) {
         Spacer(Modifier.height(8.dp))
         Text(stringResource(R.string.ask_hint), color = SubInk, fontSize = 12.sp, lineHeight = 18.sp)
         TextButton(onClick = { editing = true }) { Text(stringResource(R.string.opt_edit), fontWeight = FontWeight.Bold) }
+        // 画面の一番下（ジェスチャーの場所）に重ならないよう余白を取る
+        Spacer(Modifier.height(64.dp))
     }
     if (editing) OptionsEditDialog { editing = false }
 }

@@ -63,6 +63,7 @@ for w in カウントダウン 天気 今日の習慣チェック 歩数 昨日�
 $UI tap "保存" >/dev/null; sleep 3; snap new_widgets
 expect_text "カウントダウン" "タップして、目標の日を登録"
 expect_text "習慣チェック" "「習慣」の画面で追加すると"
+adb shell input swipe 540 1800 540 700 400; sleep 2; snap new_widgets_lower
 expect_text "歩数（許可のお願いかセンサー無し）" "歩"
 expect_text "昨日のふり返り" "今日の調子を入力"
 expect_text "天気（許可のお願い）" "だいたいの位置"
@@ -86,7 +87,7 @@ expect_text "カードの通知も足される" "¥4,780"
 $UI tap "今月の支払額" >/dev/null; sleep 2; snap spend_list
 expect_text "一覧に出る" "¥3,500"
 $UI tap "¥3,500を消す" >/dev/null; sleep 2
-expect_text "消すと合計が減る" "今月の支払額  ¥1,280"
+expect_text "消すと合計が減る" "今月の支払額 ¥1,280"
 $UI tap "閉じる" >/dev/null; sleep 1
 key KEYCODE_HOME
 
@@ -107,7 +108,7 @@ expect_no_text "答えると閉じる" "今何してる？"
 
 log "== 6. スマホの言語が英語なら英語で出る"
 lang en-US; snap english
-expect_text "英語の見出し" "Edit what's shown"
+expect_text "英語の案内" "First, set your birthday"
 expect_text "英語の部品名" "Phone today"
 expect_no_text "日本語は出ない" "今日のスマホ"
 lang ja-JP
