@@ -97,11 +97,11 @@ key KEYCODE_HOME; unlock; snap ask_options
 for t in 買い物 音楽を聴く ジム 読書 支払い; do expect_text "$t" "$t"; done
 $UI tap "選択肢を編集" >/dev/null; sleep 2; snap options_edit
 $UI tap "ジムを消す" >/dev/null; sleep 1
-$UI tap "閉じる" >/dev/null; sleep 1; snap removed_gym
+key KEYCODE_BACK; snap removed_gym
 expect_no_text "消した選択肢は出ない" "ジム"
 $UI tap "選択肢を編集" >/dev/null; sleep 2
 $UI tap "最初の選択肢に戻す" >/dev/null; sleep 1
-$UI tap "閉じる" >/dev/null; sleep 1
+key KEYCODE_BACK
 expect_text "元に戻すと復活" "ジム"
 $UI tap "買い物" >/dev/null; sleep 1; $UI tap "支払い" >/dev/null; sleep 2
 expect_no_text "答えると閉じる" "今何してる？"
