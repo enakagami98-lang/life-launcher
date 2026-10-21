@@ -1,6 +1,7 @@
 package com.enakagami.lifelauncher
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -53,7 +54,7 @@ fun AppsPage(store: Store, apps: List<AppInfo>, query: String, onQuery: (String)
     sheetApp?.let { app -> AppActionSheet(app, store, onDismiss = { sheetApp = null }) }
 
     Column(Modifier.fillMaxSize().imePadding()) {
-        PageHeader("アプリ")
+        PageHeader(stringResource(R.string.page_apps))
         // 検索欄（アプリ名を入力してから開く「ひと手間」の入口）
         Row(
             Modifier.padding(horizontal = 24.dp).fillMaxWidth(),
@@ -61,7 +62,7 @@ fun AppsPage(store: Store, apps: List<AppInfo>, query: String, onQuery: (String)
         ) {
             Column(Modifier.weight(1f)) {
                 Box {
-                    if (query.isEmpty()) Text("アプリ名で検索", fontSize = 20.sp, color = SubInk.copy(alpha = 0.6f))
+                    if (query.isEmpty()) Text(stringResource(R.string.search_apps), fontSize = 20.sp, color = SubInk.copy(alpha = 0.6f))
                     BasicTextField(
                         value = query,
                         onValueChange = onQuery,
@@ -77,7 +78,7 @@ fun AppsPage(store: Store, apps: List<AppInfo>, query: String, onQuery: (String)
                 Box(Modifier.fillMaxWidth().height(2.dp).background(Ink))
             }
             Spacer(Modifier.width(12.dp))
-            Icon(Icons.Filled.Search, "検索", tint = Ink)
+            Icon(Icons.Filled.Search, stringResource(R.string.search), tint = Ink)
         }
         Spacer(Modifier.height(8.dp))
         LazyColumn(Modifier.fillMaxSize()) {
@@ -104,7 +105,7 @@ private fun AppRow(app: AppInfo, onOpen: () -> Unit, onLongPress: () -> Unit) {
         // 使いすぎ防止に入っているアプリには小さな印
         if (limited) {
             Spacer(Modifier.width(10.dp))
-            Icon(Icons.Filled.Notifications, "使いすぎ防止", tint = SubInk, modifier = Modifier.size(16.dp))
+            Icon(Icons.Filled.Notifications, stringResource(R.string.limit_mark), tint = SubInk, modifier = Modifier.size(16.dp))
         }
     }
 }

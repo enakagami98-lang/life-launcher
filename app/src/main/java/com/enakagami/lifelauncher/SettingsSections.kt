@@ -1,6 +1,7 @@
 package com.enakagami.lifelauncher
 
 import android.content.Intent
+import androidx.compose.ui.res.stringResource
 import android.net.Uri
 import android.provider.Settings
 import androidx.compose.foundation.background
@@ -55,25 +56,25 @@ fun ColorSection(store: Store) {
     var editing by remember { mutableStateOf<String?>(null) }
     val bg = Color(store.bgColor)
     val accent = Color(store.accentColor)
-    Section("色")
+    Section(stringResource(R.string.s_color))
     Column(cardPad.fillMaxWidth().card().padding(vertical = 8.dp)) {
-        ColorRow("背景の色", bg) { editing = "bg" }
-        ColorRow("アクセントの色（数字・ボタン）", accent) { editing = "accent" }
+        ColorRow(stringResource(R.string.s_bg), bg) { editing = "bg" }
+        ColorRow(stringResource(R.string.s_accent), accent) { editing = "accent" }
         val l1 = maxOf(bg.luminance(), accent.luminance()) + 0.05f
         val l2 = minOf(bg.luminance(), accent.luminance()) + 0.05f
         if (l1 / l2 < 1.8f) {
             Text(
-                "背景とアクセントの色が近いため、数字が見えにくいかもしれません。",
+                stringResource(R.string.s_contrast),
                 color = Danger, fontSize = 13.sp, modifier = Modifier.padding(horizontal = 20.dp, vertical = 4.dp),
             )
         }
         TextButton(onClick = { store.saveColors(DefaultBg.toArgb(), DefaultAccent.toArgb()) }, modifier = Modifier.padding(start = 8.dp)) {
-            Text("元の色（白と青）に戻す")
+            Text(stringResource(R.string.s_color_reset))
         }
     }
     editing?.let { which ->
         ColorPickerDialog(
-            title = if (which == "bg") "背景の色" else "アクセントの色",
+            title = stringResource(if (which == "bg") R.string.s_bg else R.string.s_accent_short),
             initial = if (which == "bg") bg else accent,
             onPick = { c ->
                 if (which == "bg") store.saveColors(c.toArgb(), store.accentColor)
@@ -109,32 +110,30 @@ fun ReminderSection(apps: List<AppInfo>) {
     val overlayOk = remember(resume) { Guard.hasOverlay(context) }
     var picking by remember { mutableStateOf(false) }
 
-    Section("アプリリマインダー")
+    Section(stringResource(R.string.s_reminder))
     Column(cardPad.fillMaxWidth().card().padding(vertical = 12.dp)) {
         Text(
-            "アプリ一覧で長押し→「使いすぎ防止に追加」でも登録できます。使いすぎてしまうアプリを選ぶと、開く前に少し待ってから、使う時間（5・10・15分）を決めるようになります。時間が来たら、もう一度待ってから延長するか決めます。1日の残りが5分・1分になると画面の下でお知らせします。",
+            stringResource(R.string.s_reminder_desc),
             color = SubInk, fontSize = 14.sp, lineHeight = 21.sp, modifier = Modifier.padding(horizontal = 20.dp),
         )
         Spacer(Modifier.height(12.dp))
         // 必須：重ねて表示（お知らせ・進捗バー・時間切れでホームに戻すため）
         if (!overlayOk) {
-            Text("使うには、次の許可が必要です", color = Danger, fontWeight = FontWeight.Bold, fontSize = 14.sp, modifier = Modifier.padding(horizontal = 20.dp))
+            Text(stringResource(R.string.s_need_perm), color = Danger, fontWeight = FontWeight.Bold, fontSize = 14.sp, modifier = Modifier.padding(horizontal = 20.dp))
         }
-        PermissionRow("他のアプリの上に重ねて表示（必須）", overlayOk) {
+        PermissionRow(stringResource(R.string.s_overlay), overlayOk) {
             context.startActivity(
                 Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:${context.packageName}"))
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             )
         }
         // 任意：使用状況へのアクセス（履歴・通知から直接開いた場合も見張れる）
-        PermissionRow("使用状況へのアクセス（任意）", usageOk) {
+        PermissionRow(stringResource(R.string.s_usage), usageOk) {
             context.startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
         }
         if (!usageOk) {
             Text(
-                "今は「簡易モード」です。このホーム画面から開いたときだけ見張ります（履歴や通知から直接開いた場合は見張れません）。\n\n" +
-                    "「使用状況へのアクセス」がスマホの保護で許可できない場合：\n" +
-                    "① 下のボタンで「アプリ情報」を開く\n② 右上の「︙」→「制限付き設定を許可」\n③ もう一度「許可する」を押す",
+                stringResource(R.string.s_simple_mode),
                 color = SubInk, fontSize = 13.sp, lineHeight = 19.sp,
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 4.dp),
             )
@@ -146,20 +145,20 @@ fun ReminderSection(apps: List<AppInfo>) {
                     )
                 },
                 modifier = Modifier.padding(start = 8.dp),
-            ) { Text("アプリ情報を開く") }
+            ) { Text(stringResource(R.string.open_app_info)) }
         }
         Spacer(Modifier.height(8.dp))
         Guard.limits.toList()
             .map { (pkg, min) -> Triple(pkg, min, apps.firstOrNull { it.pkg == pkg }?.label ?: pkg) }
             .sortedBy { it.third }
             .forEach { (pkg, min, label) -> LimitRow(pkg, label, min) }
-        TextButton(onClick = { picking = true }, modifier = Modifier.padding(start = 8.dp)) { Text("＋ アプリを追加", fontWeight = FontWeight.Bold) }
+        TextButton(onClick = { picking = true }, modifier = Modifier.padding(start = 8.dp)) { Text(stringResource(R.string.s_add_app), fontWeight = FontWeight.Bold) }
 
-        Text("開くまでの待ち時間", color = Ink, fontSize = 15.sp, modifier = Modifier.padding(start = 20.dp, top = 8.dp, bottom = 8.dp))
+        Text(stringResource(R.string.s_wait), color = Ink, fontSize = 15.sp, modifier = Modifier.padding(start = 20.dp, top = 8.dp, bottom = 8.dp))
         Row(Modifier.padding(horizontal = 20.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            listOf(5, 10, 20, 30).forEach { s -> Chip("${s}秒", Guard.waitSec == s) { Guard.updateWaitSec(s) } }
+            listOf(5, 10, 20, 30).forEach { s -> Chip(stringResource(R.string.seconds, s), Guard.waitSec == s) { Guard.updateWaitSec(s) } }
         }
-        SwitchRow("フローティングプログレスバー（使っている間、画面の一番下に残り時間の線を出す）", Guard.floatingBar) { Guard.updateFloatingBar(it) }
+        SwitchRow(stringResource(R.string.s_bar), Guard.floatingBar) { Guard.updateFloatingBar(it) }
     }
 
     if (picking) {
@@ -175,8 +174,8 @@ fun ReminderSection(apps: List<AppInfo>) {
 private fun PermissionRow(label: String, ok: Boolean, onClick: () -> Unit) {
     Row(Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 4.dp), verticalAlignment = Alignment.CenterVertically) {
         Text(label, color = Ink, fontSize = 15.sp, modifier = Modifier.weight(1f))
-        if (ok) Text("許可済み", color = SubInk, fontSize = 14.sp)
-        else TextButton(onClick = onClick) { Text("許可する", fontWeight = FontWeight.Bold) }
+        if (ok) Text(stringResource(R.string.allowed), color = SubInk, fontSize = 14.sp)
+        else TextButton(onClick = onClick) { Text(stringResource(R.string.allow), fontWeight = FontWeight.Bold) }
     }
 }
 
@@ -187,19 +186,19 @@ private fun LimitRow(pkg: String, label: String, minutes: Int) {
     Row(Modifier.fillMaxWidth().padding(start = 20.dp, end = 8.dp, top = 4.dp, bottom = 4.dp), verticalAlignment = Alignment.CenterVertically) {
         Column(Modifier.weight(1f)) {
             Text(label, color = Ink, fontSize = 16.sp, fontWeight = FontWeight.Bold)
-            Text("今日 ${used}分 使用", color = SubInk, fontSize = 12.sp)
+            Text(stringResource(R.string.s_used_today, used.toInt()), color = SubInk, fontSize = 12.sp)
         }
         Box {
             Text(
-                "1日 ${minutes}分 ▾",
+                stringResource(R.string.s_per_day, minutes) + " ▾",
                 color = Blue, fontSize = 15.sp, fontWeight = FontWeight.Bold,
                 modifier = Modifier.clickable { menu = true }.padding(horizontal = 10.dp, vertical = 8.dp),
             )
             DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
                 LimitOptions.forEach { m ->
-                    DropdownMenuItem(text = { Text("${m}分") }, onClick = { Guard.setLimit(pkg, m); menu = false })
+                    DropdownMenuItem(text = { Text(stringResource(R.string.dur_m, m)) }, onClick = { Guard.setLimit(pkg, m); menu = false })
                 }
-                DropdownMenuItem(text = { Text("リマインダーから外す", color = Danger) }, onClick = { Guard.removeLimit(pkg); menu = false })
+                DropdownMenuItem(text = { Text(stringResource(R.string.limit_remove), color = Danger) }, onClick = { Guard.removeLimit(pkg); menu = false })
             }
         }
     }
@@ -212,10 +211,10 @@ private fun AppPickerDialog(apps: List<AppInfo>, onPick: (AppInfo) -> Unit, onDi
     AlertDialog(
         onDismissRequest = onDismiss,
         containerColor = Bg,
-        title = { Text("アプリを選ぶ", fontWeight = FontWeight.Bold) },
+        title = { Text(stringResource(R.string.s_pick_app), fontWeight = FontWeight.Bold) },
         text = {
             Column {
-                OutlinedTextField(value = q, onValueChange = { q = it }, singleLine = true, placeholder = { Text("アプリ名で検索") }, modifier = Modifier.fillMaxWidth())
+                OutlinedTextField(value = q, onValueChange = { q = it }, singleLine = true, placeholder = { Text(stringResource(R.string.search_apps)) }, modifier = Modifier.fillMaxWidth())
                 Spacer(Modifier.height(8.dp))
                 LazyColumn(Modifier.heightIn(max = 380.dp)) {
                     items(shown, key = { it.key }) { app ->
@@ -228,7 +227,7 @@ private fun AppPickerDialog(apps: List<AppInfo>, onPick: (AppInfo) -> Unit, onDi
             }
         },
         confirmButton = {},
-        dismissButton = { TextButton(onClick = onDismiss) { Text("キャンセル") } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.cancel)) } },
     )
 }
 
@@ -238,22 +237,23 @@ fun LockSection() {
     val context = LocalContext.current
     val resume = LocalResumeSignal.current
     val ok = remember(resume) { Guard.hasOverlay(context) }
-    Section("使えない時間帯")
+    Section(stringResource(R.string.s_lock))
     Column(cardPad.fillMaxWidth().card().padding(vertical = 12.dp)) {
         Text(
-            "設定した時間は、ホーム画面の代わりに「使えません」の画面が出ます。アプリを開いてもすぐ閉じます（電話は使えます）。今の時刻が入る時間にすると、すぐに始まります。",
+            stringResource(R.string.s_lock_desc),
             color = SubInk, fontSize = 14.sp, lineHeight = 21.sp, modifier = Modifier.padding(horizontal = 20.dp),
         )
         if (!ok) {
-            Text("※ アプリを閉じるには、上の「他のアプリの上に重ねて表示」の許可が必要です", color = Danger, fontSize = 13.sp, modifier = Modifier.padding(horizontal = 20.dp, vertical = 6.dp))
+            Text(stringResource(R.string.s_lock_need), color = Danger, fontSize = 13.sp, modifier = Modifier.padding(horizontal = 20.dp, vertical = 6.dp))
         }
-        RangeEditor("朝", Guard.morning) { Guard.updateMorning(it) }
-        RangeEditor("夜", Guard.night) { Guard.updateNight(it) }
-        SwitchRow("画面を消したら寿命画面に戻す（次に画面をつけたとき必ず寿命画面から）", Guard.homeOnScreenOff) { Guard.updateHomeOnScreenOff(it) }
+        RangeEditor(stringResource(R.string.morning), Guard.morning) { Guard.updateMorning(it) }
+        RangeEditor(stringResource(R.string.night), Guard.night) { Guard.updateNight(it) }
+        SwitchRow(stringResource(R.string.s_home_on_off), Guard.homeOnScreenOff) { Guard.updateHomeOnScreenOff(it) }
     }
 }
 
-private val DayNames = listOf("月", "火", "水", "木", "金", "土", "日")
+/** 月〜日の短い名前（スマホの言語で） */
+private val DayNames get() = java.time.DayOfWeek.values().map { it.getDisplayName(java.time.format.TextStyle.NARROW, java.util.Locale.getDefault()) }
 
 @Composable
 private fun RangeEditor(name: String, range: LockRange, onChange: (LockRange) -> Unit) {
@@ -261,12 +261,12 @@ private fun RangeEditor(name: String, range: LockRange, onChange: (LockRange) ->
     Column(Modifier.padding(horizontal = 20.dp, vertical = 10.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(name, color = Ink, fontSize = 18.sp, fontWeight = FontWeight.Bold, modifier = Modifier.weight(1f))
-            AccentSwitch(range.enabled, "${name}をオンにする") { onChange(range.copy(enabled = it)) }
+            AccentSwitch(range.enabled, stringResource(R.string.range_on, name)) { onChange(range.copy(enabled = it)) }
         }
         Row(verticalAlignment = Alignment.CenterVertically) {
-            TimeText("${name}の開始", range.start) { editing = "start" }
+            TimeText(stringResource(R.string.range_start, name), range.start) { editing = "start" }
             Text("〜", color = Ink, fontSize = 18.sp, modifier = Modifier.padding(horizontal = 8.dp))
-            TimeText("${name}の終了", range.end) { editing = "end" }
+            TimeText(stringResource(R.string.range_end, name), range.end) { editing = "end" }
         }
         Spacer(Modifier.height(8.dp))
         Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
@@ -285,7 +285,7 @@ private fun RangeEditor(name: String, range: LockRange, onChange: (LockRange) ->
     }
     editing?.let { which ->
         TimeDialog(
-            title = if (which == "start") "${name}の開始時刻" else "${name}の終了時刻",
+            title = stringResource(if (which == "start") R.string.range_start_time else R.string.range_end_time, name),
             initial = if (which == "start") range.start else range.end,
             onPick = { m -> onChange(if (which == "start") range.copy(start = m) else range.copy(end = m)); editing = null },
             onDismiss = { editing = null },
@@ -315,23 +315,23 @@ private fun TimeDialog(title: String, initial: Int, onPick: (Int) -> Unit, onDis
         title = { Text("$title  ${minutesText(hour * 60 + minute)}", fontWeight = FontWeight.Bold) },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                Text("時", color = SubInk, fontSize = 13.sp)
+                Text(stringResource(R.string.hour_label), color = SubInk, fontSize = 13.sp)
                 (0 until 24).chunked(6).forEach { row ->
                     Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                        row.forEach { h -> GridChip("${h}時", hour == h, Modifier.weight(1f)) { hour = h } }
+                        row.forEach { h -> GridChip(stringResource(R.string.hour_value, h), hour == h, Modifier.weight(1f)) { hour = h } }
                     }
                 }
                 Spacer(Modifier.height(6.dp))
-                Text("分", color = SubInk, fontSize = 13.sp)
+                Text(stringResource(R.string.minute_label), color = SubInk, fontSize = 13.sp)
                 (0 until 60 step 5).chunked(6).forEach { row ->
                     Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                        row.forEach { m -> GridChip("%02d分".format(m), minute == m, Modifier.weight(1f)) { minute = m } }
+                        row.forEach { m -> GridChip(stringResource(R.string.minute_value, "%02d".format(m)), minute == m, Modifier.weight(1f)) { minute = m } }
                     }
                 }
             }
         },
-        confirmButton = { TextButton(onClick = { onPick(hour * 60 + minute) }) { Text("決定", fontWeight = FontWeight.Bold) } },
-        dismissButton = { TextButton(onClick = onDismiss) { Text("キャンセル") } },
+        confirmButton = { TextButton(onClick = { onPick(hour * 60 + minute) }) { Text(stringResource(R.string.decide), fontWeight = FontWeight.Bold) } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.cancel)) } },
     )
 }
 

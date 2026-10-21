@@ -16,11 +16,19 @@ data class Item(val id: Long, val text: String)
 
 /** トップ画面に置ける部品（id → 名前） */
 val ALL_WIDGETS = linkedMapOf(
-    "motto" to "人生のモットー",
-    "screen" to "今日のスマホ使用時間",
-    "tasks" to "今日のタスク",
-    "spend" to "今月の支払額",
+    "motto" to R.string.w_motto,
+    "screen" to R.string.w_screen,
+    "spend" to R.string.w_spend,
+    "tasks" to R.string.w_tasks,
+    "countdown" to R.string.w_countdown,
+    "weather" to R.string.w_weather,
+    "habits" to R.string.w_habits,
+    "steps" to R.string.w_steps,
+    "yesterday" to R.string.w_yesterday,
 )
+
+/** カウントダウン（例：入社まであと◯日） */
+data class Countdown(val id: Long, val title: String, val date: LocalDate)
 
 /** 今日のタスク。doneDate は完了した日（未完了は null） */
 data class Task(val id: Long, val text: String, val doneDate: String? = null)
@@ -163,9 +171,9 @@ class Store(context: Context) {
     }
 
     // ---- トップ画面の部品（残り日数の下に並べるもの） ----
-    /** 表示する部品の id を上から順に。motto / screen / tasks / spend */
+    /** 表示する部品の id を上から順に（ALL_WIDGETS のキー）。最初は モットー・今日のスマホ・支払額 */
     val widgets = mutableStateListOf<String>().apply {
-        addAll((prefs.getString("widgets", null) ?: "motto,screen,tasks,spend").split(',').filter { it in ALL_WIDGETS })
+        addAll((prefs.getString("widgets", null) ?: "motto,screen,spend").split(',').filter { it in ALL_WIDGETS })
     }
 
     fun saveWidgets(list: List<String>) {
@@ -179,6 +187,58 @@ class Store(context: Context) {
     fun saveMotto(text: String) {
         motto = text
         prefs.edit().putString("motto", text).apply()
+    }
+
+    // ---- カウントダウン ----
+    val countdowns = mutableStateListOf<Countdown>().apply {
+        val a = JSONArray(prefs.getString("countdowns", "[]"))
+        for (i in 0 until a.length()) {
+            val o = a.getJSONObject(i)
+            runCatching { add(Countdown(o.getLong("id"), o.getString("title"), LocalDate.parse(o.getString("date")))) }
+        }
+    }
+
+    fun addCountdown(title: String, date: LocalDate) {
+        countdowns.add(Countdown(System.currentTimeMillis(), title, date)); saveCountdowns()
+    }
+
+    fun removeCountdown(id: Long) { countdowns.removeAll { it.id == id }; saveCountdowns() }
+
+    private fun saveCountdowns() {
+        val a = JSONArray()
+        countdowns.forEach { a.put(JSONObject().put("id", it.id).put("title", it.title).put("date", it.date.toString())) }
+        prefs.edit().putString("countdowns", a.toString()).apply()
+    }
+
+    // ---- 習慣のチェック（習慣の id → できた日） ----
+    val habitDone = mutableStateMapOf<Long, Set<String>>().apply {
+        val o = JSONObject(prefs.getString("habitDone", "{}") ?: "{}")
+        o.keys().forEach { k ->
+            val a = o.getJSONArray(k)
+            runCatching { put(k.toLong(), (0 until a.length()).map { a.getString(it) }.toSet()) }
+        }
+    }
+
+    fun isHabitDone(id: Long, date: LocalDate) = date.toString() in (habitDone[id] ?: emptySet())
+
+    fun toggleHabit(id: Long, date: LocalDate) {
+        val d = date.toString()
+        val set = habitDone[id] ?: emptySet()
+        // 古い記録は400日分だけ残す
+        val keep = date.minusDays(400).toString()
+        habitDone[id] = (if (d in set) set - d else set + d).filter { it >= keep }.toSet()
+        val o = JSONObject()
+        habitDone.forEach { (k, v) -> if (habits.any { it.id == k }) o.put(k.toString(), JSONArray(v.sorted())) }
+        prefs.edit().putString("habitDone", o.toString()).apply()
+    }
+
+    /** 何日連続でできているか（今日まだなら昨日から数える） */
+    fun habitStreak(id: Long, today: LocalDate): Int {
+        val set = habitDone[id] ?: return 0
+        var d = if (today.toString() in set) today else today.minusDays(1)
+        var n = 0
+        while (d.toString() in set) { n++; d = d.minusDays(1) }
+        return n
     }
 
     // ---- 今日のタスク ----

@@ -1,6 +1,7 @@
 package com.enakagami.lifelauncher
 
 import androidx.compose.foundation.background
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -114,12 +115,12 @@ fun LimitChooser(pkg: String, onBack: () -> Unit, onDone: () -> Unit) {
         Modifier.fillMaxWidth().clickable(onClick = onBack).padding(horizontal = 24.dp, vertical = 10.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Icon(Icons.Filled.ArrowBack, "戻る", tint = SubInk, modifier = Modifier.size(20.dp))
+        Icon(Icons.Filled.ArrowBack, stringResource(R.string.back), tint = SubInk, modifier = Modifier.size(20.dp))
         Spacer(Modifier.width(10.dp))
-        Text("1日に使ってよい時間", color = Ink, fontSize = 17.sp, fontWeight = FontWeight.Bold)
+        Text(stringResource(R.string.limit_title), color = Ink, fontSize = 17.sp, fontWeight = FontWeight.Bold)
     }
     Text(
-        "開く前に少し待ってから、今回使う時間（5・10・15分）を決めるようになります。",
+        stringResource(R.string.limit_desc),
         color = SubInk, fontSize = 13.sp, lineHeight = 19.sp,
         modifier = Modifier.padding(horizontal = 24.dp, vertical = 4.dp),
     )
@@ -137,7 +138,7 @@ fun LimitChooser(pkg: String, onBack: () -> Unit, onDone: () -> Unit) {
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     Text("$m", color = if (selected) OnAccent else Ink, fontSize = 22.sp, fontWeight = FontWeight.Black)
-                    Text("分", color = if (selected) OnAccent else SubInk, fontSize = 12.sp)
+                    Text(stringResource(R.string.unit_min), color = if (selected) OnAccent else SubInk, fontSize = 12.sp)
                 }
             }
         }
@@ -149,10 +150,10 @@ fun LimitChooser(pkg: String, onBack: () -> Unit, onDone: () -> Unit) {
 fun ReminderItems(pkg: String, onChoose: () -> Unit, close: (() -> Unit) -> Unit) {
     val limit = Guard.limits[pkg]
     if (limit == null) {
-        SheetItem(Icons.Filled.Notifications, "使いすぎ防止に追加", "開く前に少し待ち、使う時間を決めます", onClick = onChoose)
+        SheetItem(Icons.Filled.Notifications, stringResource(R.string.limit_add), stringResource(R.string.limit_add_sub), onClick = onChoose)
     } else {
-        SheetItem(Icons.Filled.Notifications, "1日の上限を変更", "今は1日 ${limit}分", onClick = onChoose)
-        SheetItem(Icons.Filled.Clear, "使いすぎ防止から外す", onClick = { close { Guard.removeLimit(pkg) } })
+        SheetItem(Icons.Filled.Notifications, stringResource(R.string.limit_change), stringResource(R.string.limit_now, limit), onClick = onChoose)
+        SheetItem(Icons.Filled.Clear, stringResource(R.string.limit_remove), onClick = { close { Guard.removeLimit(pkg) } })
     }
 }
 
@@ -161,16 +162,16 @@ fun ReminderItems(pkg: String, onChoose: () -> Unit, close: (() -> Unit) -> Unit
 fun AppActionSheet(app: AppInfo, store: Store, onDismiss: () -> Unit) {
     var choosing by remember { mutableStateOf(false) }
     val limit = Guard.limits[app.pkg]
-    ActionSheet(app.label, if (limit != null) "使いすぎ防止：1日 ${limit}分" else null, onDismiss) { close ->
+    ActionSheet(app.label, if (limit != null) stringResource(R.string.limit_badge, limit) else null, onDismiss) { close ->
         if (choosing) {
             LimitChooser(app.pkg, onBack = { choosing = false }, onDone = { close {} })
         } else {
             val fav = store.isFavorite(app.key)
-            SheetItem(Icons.Filled.Star, if (fav) "お気に入りから外す" else "お気に入りに追加", "寿命画面の下に表示されます") {
+            SheetItem(Icons.Filled.Star, stringResource(if (fav) R.string.fav_remove else R.string.fav_add), stringResource(R.string.fav_sub)) {
                 close { if (fav) store.removeFavorite(app.key) else store.addFavorite(app.key, app.label) }
             }
             ReminderItems(app.pkg, onChoose = { choosing = true }, close = close)
-            SheetItem(Icons.Filled.Close, "非表示にする", "一覧と検索から隠します（設定で戻せます）", danger = true) {
+            SheetItem(Icons.Filled.Close, stringResource(R.string.hide), stringResource(R.string.hide_sub), danger = true) {
                 close { store.hide(app.pkg) }
             }
         }

@@ -1,6 +1,7 @@
 package com.enakagami.lifelauncher
 
 import androidx.compose.foundation.background
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.awaitEachGesture
@@ -49,9 +50,9 @@ import androidx.compose.ui.unit.sp
 
 /** ワンタップで選べる見本の色 */
 val PresetColors = listOf(
-    "白" to 0xFFFFFFFF, "黒" to 0xFF000000, "紺" to 0xFF0F1B2D, "深緑" to 0xFF27444F,
-    "ベージュ" to 0xFFF5EFE6, "グレー" to 0xFFE9EBF0, "青" to 0xFF1043E5, "赤" to 0xFFE53935,
-    "緑" to 0xFF1E9E5A, "オレンジ" to 0xFFF28C28, "紫" to 0xFF7B4DFF, "ピンク" to 0xFFE91E8C,
+    R.string.color_white to 0xFFFFFFFF, R.string.color_black to 0xFF000000, R.string.color_navy to 0xFF0F1B2D, R.string.color_teal to 0xFF27444F,
+    R.string.color_beige to 0xFFF5EFE6, R.string.color_gray to 0xFFE9EBF0, R.string.color_blue to 0xFF1043E5, R.string.color_red to 0xFFE53935,
+    R.string.color_green to 0xFF1E9E5A, R.string.color_orange to 0xFFF28C28, R.string.color_purple to 0xFF7B4DFF, R.string.color_pink to 0xFFE91E8C,
 ).map { (n, c) -> n to Color(c) }
 
 fun Color.hex() = "#%06X".format(0xFFFFFF and toArgb())
@@ -90,7 +91,8 @@ fun ColorPickerDialog(title: String, initial: Color, onPick: (Color) -> Unit, on
                 // 見本
                 PresetColors.chunked(6).forEach { row ->
                     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                        row.forEach { (name, c) ->
+                        row.forEach { (nameRes, c) ->
+                            val name = stringResource(nameRes)
                             Box(
                                 Modifier.size(32.dp).clip(CircleShape).background(c)
                                     .border(if (c.hex() == color.hex()) 3.dp else 1.dp, if (c.hex() == color.hex()) Blue else SubInk, CircleShape)
@@ -102,13 +104,15 @@ fun ColorPickerDialog(title: String, initial: Color, onPick: (Color) -> Unit, on
                 }
                 // 鮮やかさ（横）と明るさ（縦）の四角
                 var box by remember { mutableStateOf(IntSize(1, 1)) }
+                val squareDesc = stringResource(R.string.color_square)
+                val barDesc = stringResource(R.string.color_bar)
                 val density = LocalDensity.current
                 Box(
                     Modifier.fillMaxWidth().height(160.dp).clip(RoundedCornerShape(12.dp))
                         .background(Brush.horizontalGradient(listOf(Color.White, hueColor)))
                         .background(Brush.verticalGradient(listOf(Color.Transparent, Color.Black)))
                         .onSizeChanged { box = it }
-                        .semantics { contentDescription = "色の四角" }
+                        .semantics { contentDescription = squareDesc }
                         .pointerInput(Unit) {
                             awaitEachGesture {
                                 fun update(p: Offset) {
@@ -134,7 +138,7 @@ fun ColorPickerDialog(title: String, initial: Color, onPick: (Color) -> Unit, on
                     Modifier.fillMaxWidth().height(22.dp).clip(RoundedCornerShape(11.dp))
                         .background(Brush.horizontalGradient(listOf(Color.Red, Color.Yellow, Color.Green, Color.Cyan, Color.Blue, Color.Magenta, Color.Red)))
                         .onSizeChanged { bar = it }
-                        .semantics { contentDescription = "虹色のバー" }
+                        .semantics { contentDescription = barDesc }
                         .pointerInput(Unit) {
                             awaitEachGesture {
                                 fun update(p: Offset) {
@@ -173,8 +177,8 @@ fun ColorPickerDialog(title: String, initial: Color, onPick: (Color) -> Unit, on
                 }
             }
         },
-        confirmButton = { TextButton(onClick = { onPick(color) }) { Text("決定", fontWeight = FontWeight.Bold) } },
-        dismissButton = { TextButton(onClick = onDismiss) { Text("キャンセル") } },
+        confirmButton = { TextButton(onClick = { onPick(color) }) { Text(stringResource(R.string.decide), fontWeight = FontWeight.Bold) } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.cancel)) } },
     )
 }
 

@@ -1,6 +1,7 @@
 package com.enakagami.lifelauncher
 
 import androidx.compose.foundation.background
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -115,14 +116,14 @@ fun TextInputDialog(
             TextButton(
                 onClick = { if (text.isNotBlank()) onSave(text.trim()) },
                 enabled = text.isNotBlank(),
-            ) { Text("保存", fontWeight = FontWeight.Bold) }
+            ) { Text(stringResource(R.string.save), fontWeight = FontWeight.Bold) }
         },
         dismissButton = {
             Row {
                 if (onDelete != null) {
-                    TextButton(onClick = onDelete) { Text("削除", color = Danger) }
+                    TextButton(onClick = onDelete) { Text(stringResource(R.string.delete), color = Danger) }
                 }
-                TextButton(onClick = onDismiss) { Text("キャンセル") }
+                TextButton(onClick = onDismiss) { Text(stringResource(R.string.cancel)) }
             }
         },
         containerColor = Bg,

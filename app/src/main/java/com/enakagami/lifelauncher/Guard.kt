@@ -97,6 +97,7 @@ object Guard {
                 unlockLogs.add(UnlockLog(o.getLong("t"), o.optString("doing"), o.optString("purpose")))
             }
         }
+        loadOptions()
     }
 
     // ---- 設定 ----
@@ -122,9 +123,9 @@ object Guard {
 
     // ---- 使えない時間帯 ----
     /** 今が使えない時間なら (名前, 解除時刻) を返す */
-    fun activeLock(now: LocalDateTime = LocalDateTime.now()): Pair<String, String>? = when {
-        morning.activeAt(now) -> "朝の集中時間" to minutesText(morning.end)
-        night.activeAt(now) -> "夜のおやすみ時間" to minutesText(night.end)
+    fun activeLock(now: LocalDateTime = LocalDateTime.now()): Pair<Int, String>? = when {
+        morning.activeAt(now) -> R.string.lock_morning to minutesText(morning.end)
+        night.activeAt(now) -> R.string.lock_night to minutesText(night.end)
         else -> null
     }
 
@@ -267,6 +268,44 @@ object Guard {
         val from = date.atStartOfDay(zone).toInstant().toEpochMilli()
         val to = date.plusDays(1).atStartOfDay(zone).toInstant().toEpochMilli()
         return unlockLogs.filter { it.time in from until to }.sortedBy { it.time }
+    }
+
+    // ---- 「今何してる？」の選択肢（登録・削除できる） ----
+    // 最初から入っている選択肢は "@キー" で保存し、表示するときにスマホの言語の文字にする
+    val DEFAULT_DOING = listOf("@study", "@work", "@class", "@commute", "@meal", "@break", "@relax", "@shopping", "@music", "@gym", "@reading", "@bedtime", "@wakeup")
+    val DEFAULT_PURPOSE = listOf("@contact", "@sns", "@video", "@search", "@pay", "@schedule", "@time", "@notice", "@game", "@idle")
+    val doingOptions = mutableStateListOf<String>()
+    val purposeOptions = mutableStateListOf<String>()
+
+    private fun loadOptions() {
+        fun load(key: String, def: List<String>) = prefs.getString(key, null)
+            ?.let { s -> JSONArray(s).let { a -> (0 until a.length()).map { a.getString(it) } } } ?: def
+        doingOptions.clear(); doingOptions.addAll(load("doingOpts", DEFAULT_DOING))
+        purposeOptions.clear(); purposeOptions.addAll(load("purposeOpts", DEFAULT_PURPOSE))
+    }
+
+    private fun saveOptions() {
+        prefs.edit()
+            .putString("doingOpts", JSONArray(doingOptions.toList()).toString())
+            .putString("purposeOpts", JSONArray(purposeOptions.toList()).toString())
+            .apply()
+    }
+
+    fun optionList(doing: Boolean) = if (doing) doingOptions else purposeOptions
+
+    fun addOption(doing: Boolean, text: String) {
+        val t = text.trim()
+        val list = optionList(doing)
+        if (t.isEmpty() || t in list) return
+        list.add(t); saveOptions()
+    }
+
+    fun removeOption(doing: Boolean, entry: String) { optionList(doing).remove(entry); saveOptions() }
+
+    fun resetOptions() {
+        doingOptions.clear(); doingOptions.addAll(DEFAULT_DOING)
+        purposeOptions.clear(); purposeOptions.addAll(DEFAULT_PURPOSE)
+        saveOptions()
     }
 
     // ---- 許可の確認 ----

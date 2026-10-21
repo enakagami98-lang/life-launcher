@@ -1,6 +1,7 @@
 package com.enakagami.lifelauncher
 
 import androidx.compose.foundation.clickable
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -36,7 +37,9 @@ import sh.calvin.reorderable.rememberReorderableLazyListState
 
 /** 目標（kind="goals"）と習慣（kind="habits"）で共通の画面 */
 @Composable
-fun ItemsPage(store: Store, kind: String, title: String) {
+fun ItemsPage(store: Store, kind: String) {
+    val goals = kind == "goals"
+    val title = stringResource(if (goals) R.string.page_goals else R.string.page_habits)
     val list = store.listFor(kind)
     var adding by remember { mutableStateOf(false) }
     var editing by remember { mutableStateOf<Item?>(null) }
@@ -48,11 +51,11 @@ fun ItemsPage(store: Store, kind: String, title: String) {
 
     Column(Modifier.fillMaxSize()) {
         PageHeader(title) {
-            RoundButton(Icons.Filled.Add, "追加", Blue, OnAccent) { adding = true }
+            RoundButton(Icons.Filled.Add, stringResource(R.string.add), Blue, OnAccent) { adding = true }
         }
         if (list.isEmpty()) {
             Text(
-                "右上の＋から追加できます。\nタップで編集・削除、長押ししたまま上下に動かすと並べ替えできます。",
+                stringResource(R.string.items_empty),
                 color = SubInk,
                 fontSize = 15.sp,
                 lineHeight = 22.sp,
@@ -92,7 +95,7 @@ fun ItemsPage(store: Store, kind: String, title: String) {
 
     if (adding) {
         TextInputDialog(
-            title = "${title}を追加",
+            title = stringResource(if (goals) R.string.goal_add else R.string.habit_add),
             initial = "",
             onSave = { store.addItem(kind, it); adding = false },
             onDismiss = { adding = false },
@@ -100,7 +103,7 @@ fun ItemsPage(store: Store, kind: String, title: String) {
     }
     editing?.let { item ->
         TextInputDialog(
-            title = "${title}を編集",
+            title = stringResource(if (goals) R.string.goal_edit else R.string.habit_edit),
             initial = item.text,
             onSave = { store.updateItem(kind, item.id, it); editing = null },
             onDismiss = { editing = null },

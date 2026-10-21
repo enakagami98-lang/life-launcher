@@ -24,6 +24,7 @@ to_tasks() { for i in 1 2 3 4 5 6; do $UI has "今日のタスク" >/dev/null &&
 add_task() { $UI tap "追加" >/dev/null; sleep 2; $UI tapclass android.widget.EditText >/dev/null; sleep 4; softword $1; sleep 1; $UI tap "保存" >/dev/null; sleep 2; }
 
 adb install -r LifeLauncher.apk >/dev/null && log "インストール成功"
+adb shell cmd locale set-app-locales com.enakagami.lifelauncher --locales ja-JP >/dev/null 2>&1  # 仮想スマホは英語なので、このアプリだけ日本語に
 adb shell cmd package set-home-activity $PKG/.MainActivity >/dev/null
 adb shell appops set $PKG SYSTEM_ALERT_WINDOW allow
 key KEYCODE_HOME; sleep 3

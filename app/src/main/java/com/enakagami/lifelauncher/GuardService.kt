@@ -101,10 +101,10 @@ class GuardService : Service() {
 
     private fun startAsForeground() {
         val nm = getSystemService(NotificationManager::class.java)
-        nm.createNotificationChannel(NotificationChannel("guard", "見守り", NotificationManager.IMPORTANCE_MIN))
+        nm.createNotificationChannel(NotificationChannel("guard", getString(R.string.notif_channel), NotificationManager.IMPORTANCE_MIN))
         val n = Notification.Builder(this, "guard")
             .setSmallIcon(R.drawable.ic_notify)
-            .setContentTitle("LifeLauncher が見守り中")
+            .setContentTitle(getString(R.string.notif_title))
             .setOngoing(true)
             .build()
         if (Build.VERSION.SDK_INT >= 34) startForeground(1, n, ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE)
@@ -115,6 +115,8 @@ class GuardService : Service() {
         val now = System.currentTimeMillis()
         val dt = (now - lastTick).coerceIn(0, 5000)
         lastTick = now
+        // 歩数センサーは画面が消えていても聞き続ける（許可が出たらここで聞き始める）
+        Steps.ensureListening(this)
         if (!getSystemService(PowerManager::class.java).isInteractive) { wasActive = false; return }
         // ロック解除の画面（パスワード入力中）は何もしない
         if (getSystemService(android.app.KeyguardManager::class.java).isKeyguardLocked) { wasActive = false; return }
@@ -228,7 +230,7 @@ class GuardService : Service() {
         }
         if (warned.add("$pkg-$minute")) {
             if (minute == 1) warned.add("$pkg-5")
-            showPill("${label(pkg)}：今日の残り${minute}分")
+            showPill(getString(R.string.pill_remain, label(pkg), minute))
         }
     }
 

@@ -1,6 +1,7 @@
 package com.enakagami.lifelauncher
 
 import android.content.Intent
+import androidx.compose.ui.res.stringResource
 import android.provider.Settings
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -52,29 +53,31 @@ fun SettingsDialog(store: Store, apps: List<AppInfo>, onDismiss: () -> Unit) {
     val birthOk = parsed != null && parsed.year >= 1900 && !parsed.isAfter(LocalDate.now())
     val lifeOk = lifeNum != null && lifeNum in 1..150 && (parsed == null || parsed.plusYears(lifeNum.toLong()).isAfter(LocalDate.now()))
     val valid = birthOk && lifeOk
+    val errBirth = stringResource(R.string.err_birth)
+    val errLife = stringResource(R.string.err_life)
     val error = when {
         year.isEmpty() || month.isEmpty() || day.isEmpty() -> null
-        !birthOk -> "生年月日を正しく入力してください（例：1999年4月29日）"
-        life.isNotEmpty() && !lifeOk -> "寿命は今の年齢より大きい数にしてください"
+        !birthOk -> errBirth
+        life.isNotEmpty() && !lifeOk -> errLife
         else -> null
     }
 
     Dialog(onDismissRequest = onDismiss, properties = DialogProperties(usePlatformDefaultWidth = false)) {
         Surface(Modifier.fillMaxSize(), color = Bg) {
             Column(Modifier.fillMaxSize().systemBarsPadding().verticalScroll(rememberScrollState())) {
-                PageHeader("設定") {
-                    RoundButton(Icons.Filled.Close, "閉じる", CardBg, Ink, onDismiss)
+                PageHeader(stringResource(R.string.settings)) {
+                    RoundButton(Icons.Filled.Close, stringResource(R.string.close), CardBg, Ink, onDismiss)
                 }
 
-                Section("生年月日と寿命")
+                Section(stringResource(R.string.s_birth))
                 Column(Modifier.padding(horizontal = 20.dp).fillMaxWidth().card().padding(20.dp)) {
                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        NumberField("年", year, { year = it }, Modifier.weight(1.4f))
-                        NumberField("月", month, { month = it }, Modifier.weight(1f))
-                        NumberField("日", day, { day = it }, Modifier.weight(1f))
+                        NumberField(stringResource(R.string.year), year, { year = it }, Modifier.weight(1.4f))
+                        NumberField(stringResource(R.string.month), month, { month = it }, Modifier.weight(1f))
+                        NumberField(stringResource(R.string.day), day, { day = it }, Modifier.weight(1f))
                     }
                     Spacer(Modifier.height(12.dp))
-                    NumberField("寿命（歳）", life, { life = it }, Modifier.fillMaxWidth())
+                    NumberField(stringResource(R.string.s_lifespan), life, { life = it }, Modifier.fillMaxWidth())
                     if (error != null) {
                         Spacer(Modifier.height(8.dp))
                         Text(error, color = Danger, fontSize = 13.sp)
@@ -85,17 +88,17 @@ fun SettingsDialog(store: Store, apps: List<AppInfo>, onDismiss: () -> Unit) {
                         enabled = valid,
                         modifier = Modifier.fillMaxWidth().height(50.dp),
                         colors = ButtonDefaults.buttonColors(containerColor = Blue, contentColor = OnAccent),
-                    ) { Text("保存", fontWeight = FontWeight.Bold, fontSize = 16.sp) }
+                    ) { Text(stringResource(R.string.save), fontWeight = FontWeight.Bold, fontSize = 16.sp) }
                 }
 
                 ColorSection(store)
                 ReminderSection(apps)
                 LockSection()
 
-                Section("ホームアプリ")
+                Section(stringResource(R.string.s_home))
                 Column(Modifier.padding(horizontal = 20.dp).fillMaxWidth().card().padding(20.dp)) {
                     Text(
-                        "このアプリを「ホームアプリ」に設定すると、ロック解除後やホームボタンを押したときに必ずこの画面が出ます。",
+                        stringResource(R.string.s_home_desc),
                         fontSize = 14.sp, color = SubInk,
                     )
                     Spacer(Modifier.height(12.dp))
@@ -108,14 +111,14 @@ fun SettingsDialog(store: Store, apps: List<AppInfo>, onDismiss: () -> Unit) {
                         },
                         modifier = Modifier.fillMaxWidth().height(50.dp),
                         colors = ButtonDefaults.buttonColors(containerColor = Blue, contentColor = OnAccent),
-                    ) { Text("ホームアプリの設定を開く", fontWeight = FontWeight.Bold) }
+                    ) { Text(stringResource(R.string.s_home_open), fontWeight = FontWeight.Bold) }
                 }
 
-                Section("非表示にしたアプリ")
+                Section(stringResource(R.string.s_hidden))
                 Column(Modifier.padding(horizontal = 20.dp).fillMaxWidth().card().padding(vertical = 8.dp)) {
                     if (store.hidden.isEmpty()) {
                         Text(
-                            "まだありません。アプリ一覧で長押しすると非表示にできます。",
+                            stringResource(R.string.s_hidden_none),
                             fontSize = 14.sp, color = SubInk,
                             modifier = Modifier.padding(horizontal = 20.dp, vertical = 12.dp),
                         )
@@ -127,7 +130,7 @@ fun SettingsDialog(store: Store, apps: List<AppInfo>, onDismiss: () -> Unit) {
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
                             Text(label, fontSize = 16.sp, color = Ink, modifier = Modifier.weight(1f))
-                            TextButton(onClick = { store.unhide(pkg) }) { Text("表示に戻す") }
+                            TextButton(onClick = { store.unhide(pkg) }) { Text(stringResource(R.string.s_unhide)) }
                         }
                     }
                 }

@@ -1,6 +1,7 @@
 package com.enakagami.lifelauncher
 
 import android.content.Intent
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -117,34 +118,34 @@ fun ConditionPage(store: Store, today: LocalDate) {
     ) {
         item {
             Column(Modifier.padding(start = 4.dp, top = 12.dp)) {
-                Text("今日の調子", fontSize = 28.sp, fontWeight = FontWeight.Black, color = Ink)
+                Text(stringResource(R.string.page_condition), fontSize = 28.sp, fontWeight = FontWeight.Black, color = Ink)
                 DateSwitcher(date, today, onChange = { date = it })
             }
         }
         item { ScreenTimeCard(date, today) }
         item {
-            ScoreCard("今日の調子", "1日を振り返って総合的に", log.overall) { save(log.copy(overall = it)) }
+            ScoreCard(stringResource(R.string.c_overall), stringResource(R.string.c_overall_hint), log.overall) { save(log.copy(overall = it)) }
         }
         item {
             Column(Modifier.fillMaxWidth().card().padding(20.dp)) {
-                ScoreRow("睡眠の質", "ぐっすり眠れたか", log.sleep) { save(log.copy(sleep = it)) }
+                ScoreRow(stringResource(R.string.c_sleep), stringResource(R.string.c_sleep_hint), log.sleep) { save(log.copy(sleep = it)) }
                 Spacer(Modifier.height(16.dp))
                 SleepHoursRow(log.sleepHours) { save(log.copy(sleepHours = it)) }
             }
         }
         item {
-            ScoreCard("集中度", "やるべきことに集中できたか", log.focus) { save(log.copy(focus = it)) }
+            ScoreCard(stringResource(R.string.c_focus), stringResource(R.string.c_focus_hint), log.focus) { save(log.copy(focus = it)) }
         }
         item {
-            ScoreCard("気分", "前向きな気持ちだったか", log.mood) { save(log.copy(mood = it)) }
+            ScoreCard(stringResource(R.string.c_mood), stringResource(R.string.c_mood_hint), log.mood) { save(log.copy(mood = it)) }
         }
         item {
             Column(Modifier.fillMaxWidth().card().padding(20.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                Text("食べたもの・メモ", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Ink)
-                MemoField("朝ごはん", log.breakfast) { save(log.copy(breakfast = it)) }
-                MemoField("昼ごはん", log.lunch) { save(log.copy(lunch = it)) }
-                MemoField("夜ごはん", log.dinner) { save(log.copy(dinner = it)) }
-                MemoField("メモ（運動・出来事・飲んだものなど）", log.memo) { save(log.copy(memo = it)) }
+                Text(stringResource(R.string.c_food), fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Ink)
+                MemoField(stringResource(R.string.c_breakfast), log.breakfast) { save(log.copy(breakfast = it)) }
+                MemoField(stringResource(R.string.c_lunch), log.lunch) { save(log.copy(lunch = it)) }
+                MemoField(stringResource(R.string.c_dinner), log.dinner) { save(log.copy(dinner = it)) }
+                MemoField(stringResource(R.string.c_memo), log.memo) { save(log.copy(memo = it)) }
             }
         }
         item { UnlockLogCard(date) }
@@ -157,29 +158,27 @@ fun ConditionPage(store: Store, today: LocalDate) {
 private fun DateSwitcher(date: LocalDate, today: LocalDate, onChange: (LocalDate) -> Unit) {
     Row(verticalAlignment = Alignment.CenterVertically) {
         IconButton(onClick = { onChange(date.minusDays(1)) }) {
-            Icon(Icons.Filled.KeyboardArrowLeft, "前の日", tint = Ink)
+            Icon(Icons.Filled.KeyboardArrowLeft, stringResource(R.string.prev_day), tint = Ink)
         }
         val label = when (date) {
-            today -> "今日"
-            today.minusDays(1) -> "昨日"
+            today -> stringResource(R.string.today)
+            today.minusDays(1) -> stringResource(R.string.yesterday)
             else -> null
         }
         Text(
-            "${date.monthValue}月${date.dayOfMonth}日（${weekday(date.dayOfWeek)}）" + (label?.let { "・$it" } ?: ""),
+            dateWithWeekday(date) + (label?.let { " · $it" } ?: ""),
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold,
             color = if (date == today) Blue else Ink,
         )
         IconButton(onClick = { onChange(date.plusDays(1)) }, enabled = date < today) {
-            Icon(Icons.Filled.KeyboardArrowRight, "次の日", tint = if (date < today) Ink else SubInk.copy(alpha = 0.25f))
+            Icon(Icons.Filled.KeyboardArrowRight, stringResource(R.string.next_day), tint = if (date < today) Ink else SubInk.copy(alpha = 0.25f))
         }
     }
 }
 
-private fun weekday(d: DayOfWeek) = d.getDisplayName(TextStyle.SHORT, Locale.JAPANESE)
+private fun weekday(d: DayOfWeek) = d.getDisplayName(TextStyle.SHORT, Locale.getDefault())
 
-/** 192 → 「3時間12分」 */
-fun durationText(minutes: Int) = if (minutes < 60) "${minutes}分" else "${minutes / 60}時間${minutes % 60}分"
 
 // ---- スマホの使用時間 ----
 
@@ -189,25 +188,25 @@ private fun ScreenTimeCard(date: LocalDate, today: LocalDate) {
     val unlocks = Guard.unlockCount(date)
     Column(Modifier.fillMaxWidth().card().padding(20.dp)) {
         Text(
-            if (date == today) "今日のスマホ使用時間" else "この日のスマホ使用時間",
+            stringResource(if (date == today) R.string.st_today else R.string.st_that_day),
             fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Ink,
         )
         Spacer(Modifier.height(4.dp))
         Row(verticalAlignment = Alignment.Bottom) {
             if (minutes >= 60) {
                 Text("${minutes / 60}", fontSize = 64.sp, fontWeight = FontWeight.Black, color = Blue, lineHeight = 64.sp)
-                Text("時間", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Blue, modifier = Modifier.padding(bottom = 10.dp, end = 8.dp))
+                Text(stringResource(R.string.unit_hours), fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Blue, modifier = Modifier.padding(bottom = 10.dp, end = 8.dp))
             }
             Text("${minutes % 60}", fontSize = 64.sp, fontWeight = FontWeight.Black, color = Blue, lineHeight = 64.sp)
-            Text("分", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Blue, modifier = Modifier.padding(bottom = 10.dp))
+            Text(stringResource(R.string.unit_min), fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Blue, modifier = Modifier.padding(bottom = 10.dp))
         }
         Spacer(Modifier.height(4.dp))
-        Text("ロック解除 ${unlocks}回", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = SubInk)
+        Text(stringResource(R.string.st_unlocks, unlocks), fontSize = 14.sp, fontWeight = FontWeight.Bold, color = SubInk)
         Spacer(Modifier.height(10.dp))
         MonthCompare(date, today)
         Spacer(Modifier.height(6.dp))
         Text(
-            "画面をつけてロックを解除していた時間です（このアプリの見守りが動いている間だけ数えます）。",
+            stringResource(R.string.st_note),
             fontSize = 11.sp, color = SubInk, lineHeight = 16.sp,
         )
     }
@@ -228,27 +227,27 @@ private fun MonthCompare(date: LocalDate, today: LocalDate) {
     }
     val now = avg(month, skipToday = true) ?: avg(month, skipToday = false)
     val last = avg(month.minusMonths(1), skipToday = false)
-    val label = if (month == YearMonth.from(today)) "今月" else "${month.monthValue}月"
+    val label = if (month == YearMonth.from(today)) stringResource(R.string.this_month) else month.month.getDisplayName(TextStyle.FULL_STANDALONE, Locale.getDefault())
 
     Column(Modifier.fillMaxWidth().background(Bg, RoundedCornerShape(14.dp)).padding(horizontal = 14.dp, vertical = 12.dp)) {
         when {
-            now == null -> Text("この月の記録はまだありません。", fontSize = 13.sp, color = SubInk)
+            now == null -> Text(stringResource(R.string.mc_none), fontSize = 13.sp, color = SubInk)
             last == null -> {
-                Text("先月の記録がたまると、ここに先月との比較が出ます。", fontSize = 13.sp, color = SubInk, lineHeight = 19.sp)
-                Text("${label}の1日平均 ${durationText(now)}", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Ink)
+                Text(stringResource(R.string.mc_wait), fontSize = 13.sp, color = SubInk, lineHeight = 19.sp)
+                Text(stringResource(R.string.mc_avg, label, durationText(now)), fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Ink)
             }
             else -> {
                 val pct = ((now - last) * 100.0 / last).roundToInt()
                 Text(
                     when {
-                        pct < 0 -> "先月より使用時間が平均 ${-pct}% 減っています"
-                        pct > 0 -> "先月より使用時間が平均 ${pct}% 増えています"
-                        else -> "先月と同じくらいです"
+                        pct < 0 -> stringResource(R.string.mc_down, -pct)
+                        pct > 0 -> stringResource(R.string.mc_up, pct)
+                        else -> stringResource(R.string.mc_same)
                     },
                     fontSize = 16.sp, fontWeight = FontWeight.Black, color = if (pct > 0) Danger else Blue, lineHeight = 22.sp,
                 )
                 Spacer(Modifier.height(2.dp))
-                Text("1日平均　${label} ${durationText(now)} ／ 先月 ${durationText(last)}", fontSize = 13.sp, color = SubInk)
+                Text(stringResource(R.string.mc_detail, label, durationText(now), durationText(last)), fontSize = 13.sp, color = SubInk)
             }
         }
     }
@@ -264,41 +263,42 @@ private fun UnlockLogCard(date: LocalDate) {
     val logs = Guard.logsOn(date)
 
     Column(Modifier.fillMaxWidth().card().padding(20.dp)) {
-        Text("スマホを開いた記録", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Ink)
+        Text(stringResource(R.string.ul_title), fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Ink)
         Spacer(Modifier.height(6.dp))
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
-                "ロック解除のたびに「今何してる？」を聞く",
+                stringResource(R.string.ul_switch),
                 fontSize = 14.sp, color = Ink, lineHeight = 20.sp, modifier = Modifier.weight(1f),
             )
             Spacer(Modifier.width(8.dp))
+            val askDesc = stringResource(R.string.ul_switch_desc)
             Switch(
                 checked = Guard.askEnabled,
                 onCheckedChange = { Guard.updateAskEnabled(it) },
-                modifier = Modifier.semantics { contentDescription = "今何してるを聞く" },
+                modifier = Modifier.semantics { contentDescription = askDesc },
                 colors = SwitchDefaults.colors(checkedTrackColor = Blue, checkedThumbColor = OnAccent),
             )
         }
         Text(
-            "オンの間は、答えるまでスマホを使えません（電話は使えます）。前の答えから5分以内は聞きません。原因が分かったらオフにしてOK。",
+            stringResource(R.string.ul_note),
             fontSize = 12.sp, color = SubInk, lineHeight = 18.sp,
         )
         if (Guard.askEnabled && !overlayOk) {
             Spacer(Modifier.height(6.dp))
             Text(
-                "※ 他のアプリを開いたときに質問へ戻すには、設定の「他のアプリの上に重ねて表示」の許可が必要です",
+                stringResource(R.string.ul_need_overlay),
                 fontSize = 12.sp, color = Danger, lineHeight = 18.sp,
             )
         }
         Spacer(Modifier.height(12.dp))
         if (logs.isEmpty()) {
-            Text("この日の記録はまだありません。", fontSize = 13.sp, color = SubInk)
+            Text(stringResource(R.string.ul_none), fontSize = 13.sp, color = SubInk)
             return@Column
         }
         // 多かった理由（無駄に気づくため）
         val top = logs.groupingBy { it.purpose }.eachCount().entries.sortedByDescending { it.value }.take(3)
         Text(
-            "多かった理由：" + top.joinToString("　") { "${it.key} ${it.value}回" },
+            stringResource(R.string.ul_top, top.joinToString("　") { it.key + " " + context.getString(R.string.times, it.value) }),
             fontSize = 13.sp, fontWeight = FontWeight.Bold, color = Blue, lineHeight = 19.sp,
         )
         Spacer(Modifier.height(8.dp))
@@ -330,7 +330,7 @@ private fun ScoreRow(title: String, hint: String, value: Int?, onChange: (Int?) 
         Text(title, fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Ink)
         Spacer(Modifier.width(8.dp))
         Text(hint, fontSize = 12.sp, color = SubInk, modifier = Modifier.weight(1f))
-        Text(value?.toString() ?: "未入力", fontSize = if (value == null) 13.sp else 22.sp, fontWeight = FontWeight.Black, color = if (value == null) SubInk else Blue)
+        Text(value?.toString() ?: stringResource(R.string.not_entered), fontSize = if (value == null) 13.sp else 22.sp, fontWeight = FontWeight.Black, color = if (value == null) SubInk else Blue)
     }
     Spacer(Modifier.height(10.dp))
     Row(horizontalArrangement = Arrangement.spacedBy(3.dp)) {
@@ -355,8 +355,8 @@ private fun ScoreRow(title: String, hint: String, value: Int?, onChange: (Int?) 
         }
     }
     Row(Modifier.fillMaxWidth().padding(top = 4.dp), horizontalArrangement = Arrangement.SpaceBetween) {
-        Text("最悪", fontSize = 11.sp, color = SubInk)
-        Text("最高", fontSize = 11.sp, color = SubInk)
+        Text(stringResource(R.string.worst), fontSize = 11.sp, color = SubInk)
+        Text(stringResource(R.string.best), fontSize = 11.sp, color = SubInk)
     }
 }
 
@@ -364,10 +364,10 @@ private fun ScoreRow(title: String, hint: String, value: Int?, onChange: (Int?) 
 @Composable
 private fun SleepHoursRow(value: Float?, onChange: (Float?) -> Unit) {
     Row(verticalAlignment = Alignment.CenterVertically) {
-        Text("睡眠時間", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Ink, modifier = Modifier.weight(1f))
+        Text(stringResource(R.string.c_sleep_hours), fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Ink, modifier = Modifier.weight(1f))
         StepButton("−") { onChange(((value ?: 7f) - 0.5f).coerceAtLeast(0f)) }
         Text(
-            value?.let { String.format(Locale.US, "%.1f時間", it) } ?: "未入力",
+            value?.let { stringResource(R.string.hours_value, String.format(Locale.getDefault(), "%.1f", it)) } ?: stringResource(R.string.not_entered),
             fontSize = 18.sp,
             fontWeight = FontWeight.Black,
             color = if (value == null) SubInk else Blue,
@@ -407,7 +407,7 @@ private fun fmt(x: Float?, unit: String = "") = x?.let { String.format(Locale.US
 @Composable
 private fun TrendCard(days: Map<LocalDate, DayLog>) {
     Column(Modifier.fillMaxWidth().card().padding(20.dp)) {
-        Text("調子がいいときの傾向", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Ink)
+        Text(stringResource(R.string.tr_title), fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Ink)
         Spacer(Modifier.height(10.dp))
 
         // 直近14日の「今日の調子」の棒グラフ
@@ -427,15 +427,15 @@ private fun TrendCard(days: Map<LocalDate, DayLog>) {
             }
         }
         Row(Modifier.fillMaxWidth().padding(top = 4.dp), horizontalArrangement = Arrangement.SpaceBetween) {
-            Text("2週間前", fontSize = 11.sp, color = SubInk)
-            Text("今日", fontSize = 11.sp, color = SubInk)
+            Text(stringResource(R.string.tr_2w), fontSize = 11.sp, color = SubInk)
+            Text(stringResource(R.string.today), fontSize = 11.sp, color = SubInk)
         }
         Spacer(Modifier.height(14.dp))
 
         val rated = days.values.filter { it.overall != null }
         if (rated.size < 5) {
             Text(
-                "「今日の調子」を5日分つけると、調子がいい日とそうでない日の違いがここに出ます（いま ${rated.size}日）。",
+                stringResource(R.string.tr_wait, rated.size),
                 fontSize = 13.sp, color = SubInk, lineHeight = 19.sp,
             )
             return@Column
@@ -444,17 +444,17 @@ private fun TrendCard(days: Map<LocalDate, DayLog>) {
         val other = rated.filter { it.overall!! < 7 }
         Row(Modifier.fillMaxWidth()) {
             Text("", Modifier.weight(1.2f))
-            Text("調子 7以上\n(${good.size}日)", Modifier.weight(1f), fontSize = 12.sp, fontWeight = FontWeight.Bold, color = Blue, lineHeight = 16.sp)
-            Text("それ以外\n(${other.size}日)", Modifier.weight(1f), fontSize = 12.sp, fontWeight = FontWeight.Bold, color = SubInk, lineHeight = 16.sp)
+            Text(stringResource(R.string.tr_good, good.size), Modifier.weight(1f), fontSize = 12.sp, fontWeight = FontWeight.Bold, color = Blue, lineHeight = 16.sp)
+            Text(stringResource(R.string.tr_other, other.size), Modifier.weight(1f), fontSize = 12.sp, fontWeight = FontWeight.Bold, color = SubInk, lineHeight = 16.sp)
         }
         Spacer(Modifier.height(6.dp))
-        TrendRow("睡眠時間", fmt(avg(good.mapNotNull { it.sleepHours }), "h"), fmt(avg(other.mapNotNull { it.sleepHours }), "h"))
-        TrendRow("睡眠の質", fmt(avg(good.mapNotNull { it.sleep?.toFloat() })), fmt(avg(other.mapNotNull { it.sleep?.toFloat() })))
-        TrendRow("集中度", fmt(avg(good.mapNotNull { it.focus?.toFloat() })), fmt(avg(other.mapNotNull { it.focus?.toFloat() })))
-        TrendRow("気分", fmt(avg(good.mapNotNull { it.mood?.toFloat() })), fmt(avg(other.mapNotNull { it.mood?.toFloat() })))
-        TrendRow("朝ごはんあり", rate(good) { it.breakfast.isNotBlank() }, rate(other) { it.breakfast.isNotBlank() })
+        TrendRow(stringResource(R.string.c_sleep_hours), fmt(avg(good.mapNotNull { it.sleepHours }), "h"), fmt(avg(other.mapNotNull { it.sleepHours }), "h"))
+        TrendRow(stringResource(R.string.c_sleep), fmt(avg(good.mapNotNull { it.sleep?.toFloat() })), fmt(avg(other.mapNotNull { it.sleep?.toFloat() })))
+        TrendRow(stringResource(R.string.c_focus), fmt(avg(good.mapNotNull { it.focus?.toFloat() })), fmt(avg(other.mapNotNull { it.focus?.toFloat() })))
+        TrendRow(stringResource(R.string.c_mood), fmt(avg(good.mapNotNull { it.mood?.toFloat() })), fmt(avg(other.mapNotNull { it.mood?.toFloat() })))
+        TrendRow(stringResource(R.string.tr_breakfast), rate(good) { it.breakfast.isNotBlank() }, rate(other) { it.breakfast.isNotBlank() })
         Spacer(Modifier.height(8.dp))
-        Text("※平均です。食事の中身まで含めた分析は、下の「AIに分析してもらう」がおすすめ。", fontSize = 11.sp, color = SubInk, lineHeight = 16.sp)
+        Text(stringResource(R.string.tr_note), fontSize = 11.sp, color = SubInk, lineHeight = 16.sp)
     }
 }
 
@@ -481,16 +481,16 @@ private fun AiPromptCard(store: Store) {
     val count = store.days.size
 
     Column(Modifier.fillMaxWidth().card().padding(20.dp)) {
-        Text("AIに分析してもらう", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Ink)
+        Text(stringResource(R.string.ai_title), fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Ink)
         Spacer(Modifier.height(6.dp))
         Text(
-            "これまでの記録（${count}日分）を、AIへの質問文にまとめます。ChatGPT や Claude に貼り付けると「どんな時に調子がいいか」を分析してくれます。",
+            stringResource(R.string.ai_desc, count),
             fontSize = 13.sp, color = SubInk, lineHeight = 19.sp,
         )
         Spacer(Modifier.height(14.dp))
         Button(
             onClick = {
-                clipboard.setText(AnnotatedString(buildAiPrompt(store)))
+                clipboard.setText(AnnotatedString(buildAiPrompt(context, store)))
                 copied = true
             },
             enabled = count > 0,
@@ -501,16 +501,17 @@ private fun AiPromptCard(store: Store) {
             if (copied) {
                 Icon(Icons.Filled.Check, null, modifier = Modifier.size(20.dp))
                 Spacer(Modifier.width(6.dp))
-                Text("コピーしました", fontWeight = FontWeight.Bold, fontSize = 16.sp)
+                Text(stringResource(R.string.ai_copied), fontWeight = FontWeight.Bold, fontSize = 16.sp)
             } else {
-                Text("質問文をコピー", fontWeight = FontWeight.Bold, fontSize = 16.sp)
+                Text(stringResource(R.string.ai_copy), fontWeight = FontWeight.Bold, fontSize = 16.sp)
             }
         }
         Spacer(Modifier.height(8.dp))
+        val chooser = stringResource(R.string.ai_choose)
         OutlinedButton(
             onClick = {
-                val send = Intent(Intent.ACTION_SEND).setType("text/plain").putExtra(Intent.EXTRA_TEXT, buildAiPrompt(store))
-                runCatching { context.startActivity(Intent.createChooser(send, "AIアプリを選ぶ")) }
+                val send = Intent(Intent.ACTION_SEND).setType("text/plain").putExtra(Intent.EXTRA_TEXT, buildAiPrompt(context, store))
+                runCatching { context.startActivity(Intent.createChooser(send, chooser)) }
             },
             enabled = count > 0,
             modifier = Modifier.fillMaxWidth().height(48.dp),
@@ -518,17 +519,17 @@ private fun AiPromptCard(store: Store) {
         ) {
             Icon(Icons.Filled.Share, null, tint = Blue, modifier = Modifier.size(18.dp))
             Spacer(Modifier.width(6.dp))
-            Text("AIアプリに直接送る", color = Blue, fontWeight = FontWeight.Bold)
+            Text(stringResource(R.string.ai_send), color = Blue, fontWeight = FontWeight.Bold)
         }
     }
 }
 
 /** 記録を、そのままAIに貼れる質問文にする（直近120日分まで） */
-fun buildAiPrompt(store: Store): String {
+fun buildAiPrompt(ctx: android.content.Context, store: Store): String {
     // 調子を記録した日と、スマホの使用時間がある日をあわせる
     val dates = (store.days.keys + Guard.screenMs.keys.mapNotNull { runCatching { LocalDate.parse(it) }.getOrNull() })
         .toSortedSet().toList().takeLast(120)
-    fun cell(s: String) = s.replace(",", "、").replace("\n", " ").trim()
+    fun cell(s: String) = s.replace(",", " ").replace("\n", " ").trim()
     fun n(x: Int?) = x?.toString() ?: ""
     val csv = dates.joinToString("\n") { d ->
         val l = store.day(d)
@@ -548,49 +549,11 @@ fun buildAiPrompt(store: Store): String {
     val unlockCsv = Guard.unlockLogs.filter { it.time >= since }.sortedBy { it.time }.joinToString("\n") {
         java.time.Instant.ofEpochMilli(it.time).atZone(zone).format(logFmt) + "," + cell(it.doing) + "," + cell(it.purpose)
     }
-    val unlockSection = if (unlockCsv.isBlank()) "" else """
-
-# スマホを開いたときの記録（直近14日。ロック解除のたびに答えたもの）
-日付,時刻,そのとき何をしていたか,スマホを開いた理由
-$unlockCsv"""
-    val goals = store.goals.joinToString("、") { it.text }.ifBlank { "（未登録）" }
-    val habits = store.habits.joinToString("、") { it.text }.ifBlank { "（未登録）" }
-    val from = dates.firstOrNull()
-    val to = dates.lastOrNull()
-
-    return """
-あなたは生活習慣とコンディション管理にくわしいコーチです。
-以下は、私が毎日スマホで記録している「今日の調子」のデータです（${dates.size}日分、$from 〜 $to）。
-このデータをもとに、私が「どういう時に調子がいいのか」を分析してください。
-
-# 記録の項目
-- 調子：その日の総合的な調子（0〜10の自己評価。10が最高）
-- 睡眠時間：前の晩に眠った時間（時間）
-- 睡眠の質・集中度・気分：0〜10の自己評価
-- スマホ(分)：その日にスマホの画面をつけて使っていた時間。解除回数：ロックを解除した回数
-- 朝・昼・夜：食べたもの
-- メモ：運動・出来事・飲んだものなど
-- 空欄は「記録していない」という意味です（0点ではありません）
-
-# 参考：私の目標と習慣
-- 目標：$goals
-- 習慣：$habits
-
-# データ（CSV）
-日付,曜日,調子,睡眠時間,睡眠の質,集中度,気分,スマホ(分),解除回数,朝,昼,夜,メモ
-$csv$unlockSection
-
-# お願いしたいこと
-1. 調子がいい日と悪い日で、何が違うか（睡眠・食事・スマホの使用時間・曜日・メモの出来事など）。できるだけ具体的な数字で示してください
-2. 「こういう時に調子がいい」というパターンを3つまで
-3. 調子を下げていそうな習慣や組み合わせ（スマホを開いた記録があれば、無駄になっていそうな時間帯・理由も）
-4. 明日から試せる、小さく始められる行動を3つ
-5. データが少ない・偏っているなど注意すべき点と、今後追加で記録するとよい項目
-
-# 答え方
-- 最初に結論を3行でまとめ、そのあと詳しく説明してください
-- 日本語で、専門用語を使わずにわかりやすく
-- データから言えることと推測は分けて書いてください
-- 医学的な診断はしないでください
-""".trim()
+    val unlockSection = if (unlockCsv.isBlank()) "" else "\n\n" + ctx.getString(R.string.ai_unlock_section, unlockCsv)
+    val none = ctx.getString(R.string.ai_none)
+    val goals = store.goals.joinToString(", ") { it.text }.ifBlank { none }
+    val habits = store.habits.joinToString(", ") { it.text }.ifBlank { none }
+    val from = dates.firstOrNull()?.toString() ?: ""
+    val to = dates.lastOrNull()?.toString() ?: ""
+    return ctx.getString(R.string.ai_prompt, dates.size, from, to, goals, habits, csv + unlockSection).trim()
 }

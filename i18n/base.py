@@ -1,0 +1,390 @@
+# 画面に出る文字の一覧。キー: (日本語, 英語)
+# 英語は values/（訳の無い言語の表示）にもなる。直したら python i18n/build.py
+S = {
+    # ---- 共通 ----
+    "dur_m": ("%1$d分", "%1$dm"),
+    "dur_hm": ("%1$d時間%2$d分", "%1$dh %2$dm"),
+    "close": ("閉じる", "Close"),
+    "add": ("追加", "Add"),
+    "save": ("保存", "Save"),
+    "cancel": ("キャンセル", "Cancel"),
+    "delete": ("削除", "Delete"),
+    "decide": ("決定", "OK"),
+    "allow": ("許可する", "Allow"),
+    "allowed": ("許可済み", "Allowed"),
+    "open_app_info": ("アプリ情報を開く", "Open app info"),
+    "restricted_help": ("許可できないとき：アプリ情報 → 右上の「︙」→「制限付き設定を許可」→ もう一度「許可する」",
+                        "If you can't allow it: App info → ⋮ (top right) → \"Allow restricted settings\" → allow again"),
+
+    # ---- 今何してる？ ----
+    "ask_title": ("今何してる？", "What are you doing?"),
+    "ask_today": ("今日 %1$s・%2$d回目のロック解除", "Today %1$s · unlock #%2$d"),
+    "ask_sub": ("答えるとスマホを使えます", "Answer to use your phone"),
+    "ask_q1": ("① 今していること", "① What you're doing now"),
+    "ask_q2": ("② スマホを開いた理由", "② Why you opened your phone"),
+    "ask_other": ("ボタンに無いときはここに書く", "Not listed? Type it here"),
+    "ask_submit": ("記録してスマホを使う", "Save and use phone"),
+    "ask_hint": ("①を選んでから②のボタンを押すと、すぐに記録されます。この質問は「今日の調子」の画面でオフにできます。",
+                 "Pick ① and then tap a ② button to save right away. You can turn this off on the \"Today\" screen."),
+    "opt_edit": ("選択肢を編集", "Edit choices"),
+    "opt_edit_hint": ("ボタンをタップすると消えます。下の欄に書いて「追加」で増やせます。",
+                      "Tap a button to remove it. Type below and tap \"Add\" to add one."),
+    "opt_remove": ("%1$sを消す", "Remove %1$s"),
+    "opt_new": ("新しい選択肢", "New choice"),
+    "opt_reset": ("最初の選択肢に戻す", "Reset to defaults"),
+    "opt_study": ("勉強", "Studying"),
+    "opt_work": ("仕事・作業", "Working"),
+    "opt_class": ("授業・会議", "Class / meeting"),
+    "opt_commute": ("移動中", "Commuting"),
+    "opt_meal": ("食事中", "Eating"),
+    "opt_break": ("休憩中", "On a break"),
+    "opt_relax": ("家でくつろぎ", "Relaxing at home"),
+    "opt_shopping": ("買い物", "Shopping"),
+    "opt_music": ("音楽を聴く", "Listening to music"),
+    "opt_gym": ("ジム", "Gym"),
+    "opt_reading": ("読書", "Reading"),
+    "opt_bedtime": ("寝る前", "Before bed"),
+    "opt_wakeup": ("起きた直後", "Just woke up"),
+    "opt_contact": ("連絡（LINEなど）", "Messages"),
+    "opt_sns": ("SNS", "Social media"),
+    "opt_video": ("動画", "Videos"),
+    "opt_search": ("調べもの", "Looking something up"),
+    "opt_pay": ("支払い", "Paying"),
+    "opt_schedule": ("予定・メモ", "Plans / notes"),
+    "opt_time": ("時間を見るだけ", "Checking the time"),
+    "opt_notice": ("通知が来た", "Got a notification"),
+    "opt_game": ("ゲーム", "Games"),
+    "opt_idle": ("なんとなく", "No reason"),
+}
+
+S.update({
+    # ---- 色 ----
+    "color_white": ("白", "White"), "color_black": ("黒", "Black"), "color_navy": ("紺", "Navy"),
+    "color_teal": ("深緑", "Dark teal"), "color_beige": ("ベージュ", "Beige"), "color_gray": ("グレー", "Gray"),
+    "color_blue": ("青", "Blue"), "color_red": ("赤", "Red"), "color_green": ("緑", "Green"),
+    "color_orange": ("オレンジ", "Orange"), "color_purple": ("紫", "Purple"), "color_pink": ("ピンク", "Pink"),
+    "color_square": ("色の四角", "Color square"), "color_bar": ("虹色のバー", "Hue bar"),
+
+    # ---- 長押しメニュー・使いすぎ防止 ----
+    "back": ("戻る", "Back"),
+    "unit_min": ("分", "min"),
+    "limit_title": ("1日に使ってよい時間", "Daily time limit"),
+    "limit_desc": ("開く前に少し待ってから、今回使う時間（5・10・15分）を決めるようになります。",
+                   "Before opening, you'll wait a moment and then choose how long to use it (5, 10 or 15 min)."),
+    "limit_add": ("使いすぎ防止に追加", "Add a time limit"),
+    "limit_add_sub": ("開く前に少し待ち、使う時間を決めます", "Wait a moment and choose how long before opening"),
+    "limit_change": ("1日の上限を変更", "Change daily limit"),
+    "limit_now": ("今は1日 %1$d分", "Now %1$d min a day"),
+    "limit_remove": ("使いすぎ防止から外す", "Remove time limit"),
+    "limit_badge": ("使いすぎ防止：1日 %1$d分", "Time limit: %1$d min a day"),
+    "limit_mark": ("使いすぎ防止", "Time limit"),
+    "fav_add": ("お気に入りに追加", "Add to favorites"),
+    "fav_remove": ("お気に入りから外す", "Remove from favorites"),
+    "fav_sub": ("寿命画面の下に表示されます", "Shown below the home screen"),
+    "hide": ("非表示にする", "Hide"),
+    "hide_sub": ("一覧と検索から隠します（設定で戻せます）", "Hide from the list and search (undo in Settings)"),
+
+    # ---- 画面の見出し ----
+    "page_apps": ("アプリ", "Apps"),
+    "search_apps": ("アプリ名で検索", "Search apps"),
+    "search": ("検索", "Search"),
+    "page_goals": ("目標", "Goals"),
+    "page_habits": ("習慣", "Habits"),
+    "page_tasks": ("今日のタスク", "Today's tasks"),
+    "items_empty": ("右上の＋から追加できます。\nタップで編集・削除、長押ししたまま上下に動かすと並べ替えできます。",
+                    "Add with + at the top right.\nTap to edit or delete. Press and hold, then drag to reorder."),
+    "goal_add": ("目標を追加", "Add a goal"), "goal_edit": ("目標を編集", "Edit goal"),
+    "habit_add": ("習慣を追加", "Add a habit"), "habit_edit": ("習慣を編集", "Edit habit"),
+    "tasks_empty": ("右上の＋から今日やることを追加できます。\n終わったら左の丸をタップ。終わったタスクは次の日に消え、終わらなかったタスクは次の日に持ち越されます。\n長押ししたまま上下に動かすと並べ替えできます。",
+                    "Add today's to-dos with + at the top right.\nTap the circle when done. Finished tasks disappear the next day; unfinished ones carry over.\nPress and hold, then drag to reorder."),
+    "all_done": ("全部おわり！", "All done!"),
+    "tasks_progress": ("%1$d / %2$d 完了", "%1$d / %2$d done"),
+    "task_do": ("%1$sを完了にする", "Mark %1$s as done"),
+    "task_undo": ("%1$sを未完了に戻す", "Mark %1$s as not done"),
+    "task_add": ("今日のタスクを追加", "Add a task"),
+    "task_edit": ("タスクを編集", "Edit task"),
+
+    # ---- 待ち画面・使えない時間 ----
+    "guard_used_up": ("今日の使用時間（%1$d分）を使い切りました。\nまた明日。", "You've used today's %1$d minutes.\nSee you tomorrow."),
+    "guard_extend": ("時間になりました。延長しますか？", "Time's up. Extend?"),
+    "guard_really": ("%1$sを本当に開きますか？", "Do you really want to open %1$s?"),
+    "guard_how_long": ("%1$sにどのくらいの時間を使いますか？", "How long will you use %1$s?"),
+    "guard_remain": ("今日の残り %1$d分（1日 %2$d分）", "%1$d min left today (%2$d min a day)"),
+    "lock_until": ("%1$s まではスマホを使えません", "Phone is locked until %1$s"),
+    "lock_call": ("電話をかける", "Make a call"),
+    "lock_morning": ("朝の集中時間", "Morning focus time"),
+    "lock_night": ("夜のおやすみ時間", "Night rest time"),
+    "notif_channel": ("見守り", "Monitoring"),
+    "notif_title": ("LifeLauncher が見守り中", "LifeLauncher is running"),
+    "pill_remain": ("%1$s：今日の残り%2$d分", "%1$s: %2$d min left today"),
+})
+
+S.update({
+    # ---- ホーム画面の部品 ----
+    "w_motto": ("人生のモットー", "Life motto"),
+    "w_screen": ("今日のスマホ使用時間", "Today's screen time"),
+    "w_spend": ("今月の支払額", "Spent this month"),
+    "w_tasks": ("今日のタスク", "Today's tasks"),
+    "w_countdown": ("カウントダウン", "Countdown"),
+    "w_weather": ("天気", "Weather"),
+    "w_habits": ("今日の習慣チェック", "Today's habits"),
+    "w_steps": ("歩数", "Steps"),
+    "w_yesterday": ("昨日のふり返り", "Yesterday"),
+    "w_edit": ("表示する項目を編集", "Edit what's shown"),
+    "w_edit_title": ("表示する項目", "What's shown"),
+    "w_edit_hint": ("「残りの日数」の下に、上から順に並びます。", "Shown below \"Days left\", top to bottom."),
+    "w_show": ("%1$sを表示", "Show %1$s"),
+    "w_up": ("%1$sを上へ", "Move %1$s up"),
+    "w_down": ("%1$sを下へ", "Move %1$s down"),
+    "motto_empty": ("タップして、人生のモットーを入力", "Tap to write your life motto"),
+    "screen_today": ("今日のスマホ", "Phone today"),
+    "unlocks_short": ("解除 %1$d回", "%1$d unlocks"),
+    "tasks_left": ("残り%1$d件", "%1$d left"),
+    "tasks_none": ("まだありません（習慣の右の画面で追加）", "None yet (add them on the screen right of Habits)"),
+    "more_items": ("ほか%1$d件", "%1$d more"),
+    "count_items": ("%1$d件", "%1$d"),
+    "remove_x": ("%1$sを消す", "Remove %1$s"),
+    "spend_need_access": ("支払いの通知から自動で記録するには、タップして「通知へのアクセス」を許可してください",
+                          "To record payments from notifications automatically, tap and allow notification access"),
+    "spend_title": ("今月の支払額  %1$s", "This month  %1$s"),
+    "spend_how": ("PayPay・カード・Gmailなどの「○○円お支払い」の通知から自動で記録します。",
+                  "Records amounts automatically from payment notifications (cards, payment apps, email)."),
+    "spend_allow": ("通知へのアクセスを許可する", "Allow notification access"),
+    "spend_none": ("今月の記録はまだありません。", "Nothing recorded this month."),
+    "spend_manual": ("手入力", "Manual"),
+    "spend_auto": ("（自動）", " (auto)"),
+    "spend_add_manual": ("＋ 手で追加", "+ Add manually"),
+    "spend_add_title": ("支払いを追加", "Add a payment"),
+    "spend_amount": ("金額（円）", "Amount (¥)"),
+    "spend_memo": ("メモ（任意）", "Note (optional)"),
+    "cd_empty": ("タップして、目標の日を登録（例：入社日）", "Tap to add a date to count down to"),
+    "cd_left": ("あと%1$d日", "%1$d days left"),
+    "cd_today": ("今日！", "Today!"),
+    "cd_ago": ("%1$d日たった", "%1$d days ago"),
+    "cd_title": ("名前（例：入社まで）", "Name (e.g. New job)"),
+    "year": ("年", "Year"), "month": ("月", "Month"), "day": ("日", "Day"),
+    "weather_need_permission": ("位置情報の許可が必要です", "Location permission is needed"),
+    "weather_no_location": ("今いる場所がわかりませんでした", "Couldn't get your location"),
+    "weather_failed": ("天気を取れませんでした（ネットを確認）", "Couldn't get the weather (check your connection)"),
+    "weather_tap_allow": ("タップして「だいたいの位置」を許可すると天気が出ます", "Tap and allow approximate location to see the weather"),
+    "loading": ("読み込み中…", "Loading…"),
+    "wx_clear": ("晴れ", "Clear"), "wx_partly": ("晴れ時々くもり", "Partly cloudy"), "wx_cloudy": ("くもり", "Cloudy"),
+    "wx_fog": ("霧", "Fog"), "wx_drizzle": ("霧雨", "Drizzle"), "wx_rain": ("雨", "Rain"), "wx_snow": ("雪", "Snow"),
+    "wx_thunder": ("雷雨", "Thunderstorm"),
+    "wx_maxmin": ("最高%1$d° / 最低%2$d°", "H %1$d° / L %2$d°"),
+    "habits_none": ("「習慣」の画面で追加すると、ここで毎日チェックできます", "Add habits on the Habits screen to check them here every day"),
+    "streak": ("%1$d日連続", "%1$d-day streak"),
+    "steps_no_sensor": ("このスマホには歩数センサーがありません", "This phone has no step sensor"),
+    "steps_tap_allow": ("タップして「身体活動」を許可すると数え始めます", "Tap and allow physical activity to start counting"),
+    "steps_value": ("%1$,d歩", "%1$,d steps"),
+    "yd_condition": ("調子", "Condition"),
+    "yd_sleep": ("睡眠", "Sleep"),
+    "yd_phone": ("スマホ", "Phone"),
+    "yd_input_today": ("今日の調子を入力 ›", "Log today ›"),
+})
+
+S.update({
+    # ---- トップ（寿命）画面 ----
+    "settings": ("設定", "Settings"),
+    "favorites": ("お気に入り", "Favorites"),
+    "fav_empty": ("右にスワイプした「アプリ」の画面で、アプリを長押しすると追加できます。",
+                  "On the Apps screen (swipe left), press and hold an app to add it."),
+    "rename_title": ("表示名を変更", "Rename"),
+    "rename": ("名前を変更", "Rename"),
+    "rename_sub": ("寿命画面での表示名を変えます", "Change the name shown on the home screen"),
+    "setup_first": ("まずは誕生日と寿命を設定しましょう", "First, set your birthday and life expectancy"),
+    "setup": ("設定する", "Set up"),
+    "days_left": ("残りの日数", "Days left"),
+    "unit_days": ("日", "days"),
+    "ymd": ("%1$d年%2$dヶ月%3$d日", "%1$dy %2$dm %3$dd"),
+    "age_now": ("現在 %1$d歳", "Age %1$d"),
+    "lifespan_is": ("寿命 %1$d歳", "Life expectancy %1$d"),
+})
+
+S.update({
+    # ---- 今日の調子 ----
+    "page_condition": ("今日の調子", "Today"),
+    "c_overall": ("今日の調子", "Overall"),
+    "c_overall_hint": ("1日を振り返って総合的に", "Looking back on the whole day"),
+    "c_sleep": ("睡眠の質", "Sleep quality"),
+    "c_sleep_hint": ("ぐっすり眠れたか", "Did you sleep well?"),
+    "c_focus": ("集中度", "Focus"),
+    "c_focus_hint": ("やるべきことに集中できたか", "Did you focus on what mattered?"),
+    "c_mood": ("気分", "Mood"),
+    "c_mood_hint": ("前向きな気持ちだったか", "Did you feel positive?"),
+    "c_food": ("食べたもの・メモ", "Meals and notes"),
+    "c_breakfast": ("朝ごはん", "Breakfast"),
+    "c_lunch": ("昼ごはん", "Lunch"),
+    "c_dinner": ("夜ごはん", "Dinner"),
+    "c_memo": ("メモ（運動・出来事・飲んだものなど）", "Notes (exercise, events, drinks, etc.)"),
+    "c_sleep_hours": ("睡眠時間", "Hours of sleep"),
+    "hours_value": ("%1$s時間", "%1$s h"),
+    "prev_day": ("前の日", "Previous day"),
+    "next_day": ("次の日", "Next day"),
+    "today": ("今日", "Today"),
+    "yesterday": ("昨日", "Yesterday"),
+    "not_entered": ("未入力", "Not set"),
+    "worst": ("最悪", "Worst"),
+    "best": ("最高", "Best"),
+    "times": ("%1$d回", "×%1$d"),
+    "st_today": ("今日のスマホ使用時間", "Today's screen time"),
+    "st_that_day": ("この日のスマホ使用時間", "Screen time this day"),
+    "unit_hours": ("時間", "h"),
+    "st_unlocks": ("ロック解除 %1$d回", "%1$d unlocks"),
+    "st_note": ("画面をつけてロックを解除していた時間です（このアプリの見守りが動いている間だけ数えます）。",
+                "Time with the screen on and unlocked (counted only while this app's monitor is running)."),
+    "this_month": ("今月", "This month"),
+    "mc_none": ("この月の記録はまだありません。", "No records for this month yet."),
+    "mc_wait": ("先月の記録がたまると、ここに先月との比較が出ます。", "Once there's data for last month, a comparison will show here."),
+    "mc_avg": ("%1$sの1日平均 %2$s", "%1$s daily average: %2$s"),
+    "mc_down": ("先月より使用時間が平均 %1$d%% 減っています", "Screen time is down %1$d%% from last month"),
+    "mc_up": ("先月より使用時間が平均 %1$d%% 増えています", "Screen time is up %1$d%% from last month"),
+    "mc_same": ("先月と同じくらいです", "About the same as last month"),
+    "mc_detail": ("1日平均　%1$s %2$s ／ 先月 %3$s", "Daily average: %1$s %2$s / last month %3$s"),
+    "ul_title": ("スマホを開いた記録", "Why you opened your phone"),
+    "ul_switch": ("ロック解除のたびに「今何してる？」を聞く", "Ask \"What are you doing?\" every time you unlock"),
+    "ul_switch_desc": ("今何してるを聞く", "Ask what you are doing"),
+    "ul_note": ("オンの間は、答えるまでスマホを使えません（電話は使えます）。前の答えから5分以内は聞きません。原因が分かったらオフにしてOK。",
+                "While on, you can't use your phone until you answer (calls still work). It won't ask again within 5 minutes. Turn it off once you've found the cause."),
+    "ul_need_overlay": ("※ 他のアプリを開いたときに質問へ戻すには、設定の「他のアプリの上に重ねて表示」の許可が必要です",
+                        "* To bring you back to the question from other apps, allow \"Display over other apps\" in Settings"),
+    "ul_none": ("この日の記録はまだありません。", "No records for this day yet."),
+    "ul_top": ("多かった理由：%1$s", "Top reasons: %1$s"),
+    "tr_title": ("調子がいいときの傾向", "What your good days have in common"),
+    "tr_2w": ("2週間前", "2 weeks ago"),
+    "tr_wait": ("「今日の調子」を5日分つけると、調子がいい日とそうでない日の違いがここに出ます（いま %1$d日）。",
+                "Log 5 days to see what's different on your good days (%1$d so far)."),
+    "tr_good": ("調子 7以上\n(%1$d日)", "7 or higher\n(%1$d days)"),
+    "tr_other": ("それ以外\n(%1$d日)", "Others\n(%1$d days)"),
+    "tr_breakfast": ("朝ごはんあり", "Had breakfast"),
+    "tr_note": ("※平均です。食事の中身まで含めた分析は、下の「AIに分析してもらう」がおすすめ。",
+                "* These are averages. For a deeper look including meals, try \"Ask AI\" below."),
+    "ai_title": ("AIに分析してもらう", "Ask AI"),
+    "ai_desc": ("これまでの記録（%1$d日分）を、AIへの質問文にまとめます。ChatGPT や Claude に貼り付けると「どんな時に調子がいいか」を分析してくれます。",
+                "Turns your records (%1$d days) into a prompt. Paste it into ChatGPT or Claude to learn when you feel your best."),
+    "ai_copy": ("質問文をコピー", "Copy prompt"),
+    "ai_copied": ("コピーしました", "Copied"),
+    "ai_choose": ("AIアプリを選ぶ", "Choose an AI app"),
+    "ai_send": ("AIアプリに直接送る", "Send to an AI app"),
+    "ai_none": ("（未登録）", "(none)"),
+    "ai_unlock_section": ("# スマホを開いたときの記録（直近14日。ロック解除のたびに答えたもの）\n日付,時刻,そのとき何をしていたか,スマホを開いた理由\n%1$s",
+                          "# Why I opened my phone (last 14 days, answered at each unlock)\ndate,time,what I was doing,why I opened my phone\n%1$s"),
+    "ai_prompt": ("""あなたは生活習慣とコンディション管理にくわしいコーチです。
+以下は、私が毎日スマホで記録している「今日の調子」のデータです（%1$d日分、%2$s 〜 %3$s）。
+このデータをもとに、私が「どういう時に調子がいいのか」を分析してください。
+
+# 記録の項目
+- 調子：その日の総合的な調子（0〜10の自己評価。10が最高）
+- 睡眠時間：前の晩に眠った時間（時間）
+- 睡眠の質・集中度・気分：0〜10の自己評価
+- スマホ(分)：その日にスマホの画面をつけて使っていた時間。解除回数：ロックを解除した回数
+- 朝・昼・夜：食べたもの
+- メモ：運動・出来事・飲んだものなど
+- 空欄は「記録していない」という意味です（0点ではありません）
+
+# 参考：私の目標と習慣
+- 目標：%4$s
+- 習慣：%5$s
+
+# データ（CSV）
+日付,曜日,調子,睡眠時間,睡眠の質,集中度,気分,スマホ(分),解除回数,朝,昼,夜,メモ
+%6$s
+
+# お願いしたいこと
+1. 調子がいい日と悪い日で、何が違うか（睡眠・食事・スマホの使用時間・曜日・メモの出来事など）。できるだけ具体的な数字で示してください
+2. 「こういう時に調子がいい」というパターンを3つまで
+3. 調子を下げていそうな習慣や組み合わせ（スマホを開いた記録があれば、無駄になっていそうな時間帯・理由も）
+4. 明日から試せる、小さく始められる行動を3つ
+5. データが少ない・偏っているなど注意すべき点と、今後追加で記録するとよい項目
+
+# 答え方
+- 最初に結論を3行でまとめ、そのあと詳しく説明してください
+- 日本語で、専門用語を使わずにわかりやすく
+- データから言えることと推測は分けて書いてください
+- 医学的な診断はしないでください""",
+"""You are a coach who knows a lot about daily habits and well-being.
+Below is the "Today" data I log on my phone every day (%1$d days, %2$s to %3$s).
+Based on this data, please analyze when I tend to feel my best.
+
+# Fields
+- overall: how the day went overall (self-rated 0–10, 10 is best)
+- sleep_h: hours slept the night before
+- sleep_quality, focus, mood: self-rated 0–10
+- phone_min: minutes the phone screen was on and in use that day. unlocks: number of unlocks
+- breakfast, lunch, dinner: what I ate
+- notes: exercise, events, drinks, etc.
+- Empty means "not recorded" (not zero)
+
+# For reference: my goals and habits
+- Goals: %4$s
+- Habits: %5$s
+
+# Data (CSV)
+date,weekday,overall,sleep_h,sleep_quality,focus,mood,phone_min,unlocks,breakfast,lunch,dinner,notes
+%6$s
+
+# What I'd like
+1. What differs between good and bad days (sleep, meals, screen time, weekday, events in notes, etc.), with concrete numbers where possible
+2. Up to 3 patterns of "I feel good when..."
+3. Habits or combinations that seem to drag me down (if there are phone-unlock records, also times and reasons that look wasteful)
+4. 3 small actions I can try starting tomorrow
+5. Caveats (little or skewed data, etc.) and items worth recording in the future
+
+# How to answer
+- Start with a 3-line summary, then explain in detail
+- Use plain language without jargon, in the same language as this message
+- Separate what the data shows from guesses
+- Don't give medical diagnoses"""),
+})
+
+S.update({
+    # ---- 設定 ----
+    "err_birth": ("生年月日を正しく入力してください（例：1999年4月29日）", "Enter a valid birthday (e.g. 1999 / 4 / 29)"),
+    "err_life": ("寿命は今の年齢より大きい数にしてください", "Life expectancy must be greater than your age"),
+    "s_birth": ("生年月日と寿命", "Birthday and life expectancy"),
+    "s_lifespan": ("寿命（歳）", "Life expectancy (years)"),
+    "s_home": ("ホームアプリ", "Home app"),
+    "s_home_desc": ("このアプリを「ホームアプリ」に設定すると、ロック解除後やホームボタンを押したときに必ずこの画面が出ます。",
+                    "Set this app as your home app so this screen always appears after unlocking or pressing Home."),
+    "s_home_open": ("ホームアプリの設定を開く", "Open home app settings"),
+    "s_hidden": ("非表示にしたアプリ", "Hidden apps"),
+    "s_hidden_none": ("まだありません。アプリ一覧で長押しすると非表示にできます。", "None yet. Press and hold an app in the list to hide it."),
+    "s_unhide": ("表示に戻す", "Unhide"),
+    "s_color": ("色", "Colors"),
+    "s_bg": ("背景の色", "Background color"),
+    "s_accent": ("アクセントの色（数字・ボタン）", "Accent color (numbers, buttons)"),
+    "s_accent_short": ("アクセントの色", "Accent color"),
+    "s_contrast": ("背景とアクセントの色が近いため、数字が見えにくいかもしれません。", "The background and accent colors are similar, so numbers may be hard to read."),
+    "s_color_reset": ("元の色（白と青）に戻す", "Reset to default (white and blue)"),
+    "s_reminder": ("アプリリマインダー", "App reminders"),
+    "s_reminder_desc": ("アプリ一覧で長押し→「使いすぎ防止に追加」でも登録できます。使いすぎてしまうアプリを選ぶと、開く前に少し待ってから、使う時間（5・10・15分）を決めるようになります。時間が来たら、もう一度待ってから延長するか決めます。1日の残りが5分・1分になると画面の下でお知らせします。",
+                        "You can also press and hold an app in the list → \"Add a time limit\". For apps you overuse, you'll wait a moment before opening and choose how long to use them (5, 10 or 15 min). When time is up, you wait again and decide whether to extend. You'll get a notice at the bottom when 5 and 1 minutes are left for the day."),
+    "s_need_perm": ("使うには、次の許可が必要です", "These permissions are needed"),
+    "s_overlay": ("他のアプリの上に重ねて表示（必須）", "Display over other apps (required)"),
+    "s_usage": ("使用状況へのアクセス（任意）", "Usage access (optional)"),
+    "s_simple_mode": ("今は「簡易モード」です。このホーム画面から開いたときだけ見張ります（履歴や通知から直接開いた場合は見張れません）。\n\n「使用状況へのアクセス」がスマホの保護で許可できない場合：\n① 下のボタンで「アプリ情報」を開く\n② 右上の「︙」→「制限付き設定を許可」\n③ もう一度「許可する」を押す",
+                      "You're in \"simple mode\": apps are only monitored when opened from this home screen (not from recents or notifications).\n\nIf your phone won't let you allow usage access:\n① Open \"App info\" with the button below\n② Tap ⋮ (top right) → \"Allow restricted settings\"\n③ Tap \"Allow\" again"),
+    "s_add_app": ("＋ アプリを追加", "+ Add app"),
+    "s_wait": ("開くまでの待ち時間", "Wait before opening"),
+    "seconds": ("%1$d秒", "%1$ds"),
+    "s_bar": ("フローティングプログレスバー（使っている間、画面の一番下に残り時間の線を出す）", "Progress bar (shows the time left as a line at the bottom while you use the app)"),
+    "s_used_today": ("今日 %1$d分 使用", "%1$d min used today"),
+    "s_per_day": ("1日 %1$d分", "%1$d min/day"),
+    "s_pick_app": ("アプリを選ぶ", "Choose an app"),
+    "s_lock": ("使えない時間帯", "Phone-free hours"),
+    "s_lock_desc": ("設定した時間は、ホーム画面の代わりに「使えません」の画面が出ます。アプリを開いてもすぐ閉じます（電話は使えます）。今の時刻が入る時間にすると、すぐに始まります。",
+                    "During these hours a \"locked\" screen replaces the home screen and apps close right away (calls still work). If the current time is inside the range, it starts immediately."),
+    "s_lock_need": ("※ アプリを閉じるには、上の「他のアプリの上に重ねて表示」の許可が必要です", "* To close apps, allow \"Display over other apps\" above"),
+    "morning": ("朝", "Morning"),
+    "night": ("夜", "Night"),
+    "s_home_on_off": ("画面を消したら寿命画面に戻す（次に画面をつけたとき必ず寿命画面から）", "Return to the home screen when the screen turns off"),
+    "range_on": ("%1$sをオンにする", "Turn on %1$s"),
+    "range_start": ("%1$sの開始", "%1$s start"),
+    "range_end": ("%1$sの終了", "%1$s end"),
+    "range_start_time": ("%1$sの開始時刻", "%1$s start time"),
+    "range_end_time": ("%1$sの終了時刻", "%1$s end time"),
+    "hour_label": ("時", "Hour"),
+    "minute_label": ("分", "Minute"),
+    "hour_value": ("%1$d時", "%1$d"),
+    "minute_value": ("%1$s分", ":%1$s"),
+})

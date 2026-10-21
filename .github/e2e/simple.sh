@@ -15,6 +15,7 @@ expect_app() { sleep 1; t=$(top); if echo "$t" | grep -q "$2"; then ok "$1 ($t)"
 expect_text() { if $UI hasp "$2" >/dev/null; then ok "$1 「$2」あり"; else ng "$1 「$2」なし / 画面の文字: $($UI texts | paste -sd' ' | cut -c1-150)"; fi; }
 
 adb install -r LifeLauncher.apk >/dev/null && log "インストール成功"
+adb shell cmd locale set-app-locales com.enakagami.lifelauncher --locales ja-JP >/dev/null 2>&1  # 仮想スマホは英語なので、このアプリだけ日本語に
 adb shell cmd package set-home-activity $PKG/.MainActivity >/dev/null
 adb shell appops set $PKG SYSTEM_ALERT_WINDOW allow
 log "使用状況へのアクセス: $(adb shell appops get $PKG GET_USAGE_STATS | tr -d '\r')（許可しない）"

@@ -1,6 +1,7 @@
 package com.enakagami.lifelauncher
 
 import android.app.Activity
+import androidx.compose.ui.res.stringResource
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -201,7 +202,7 @@ fun LauncherApp(
         MaterialTheme(colorScheme = scheme) {
             Surface(Modifier.fillMaxSize(), color = palette.bg) {
                 if (lock != null) {
-                    LockScreen(lock.first, lock.second, now.toLocalTime())
+                    LockScreen(stringResource(lock.first), lock.second, now.toLocalTime())
                 } else if (Guard.askPending) {
                     // ロック解除時の「今何してる？」。答えるまでホーム画面の代わりに出す
                     AskScreen(now.toLocalTime())
@@ -214,10 +215,11 @@ fun LauncherApp(
                     // ホームに戻るたびに作り直し、開きっぱなしの入力画面やメニューを必ず閉じる
                     key(homeSignal) {
                         when (page % PAGES) {
-                            0 -> LifePage(store, today, apps, openSettings = { showSettings = true })
+                            0 -> LifePage(store, today, apps, openSettings = { showSettings = true },
+                                openCondition = { scope.launch { pager.animateScrollToPage(pager.currentPage - 1) } })
                             1 -> AppsPage(store, apps, query, onQuery = { query = it })
-                            2 -> ItemsPage(store, kind = "goals", title = "目標")
-                            3 -> ItemsPage(store, kind = "habits", title = "習慣")
+                            2 -> ItemsPage(store, kind = "goals")
+                            3 -> ItemsPage(store, kind = "habits")
                             4 -> TasksPage(store, today)
                             else -> ConditionPage(store, today)
                         }

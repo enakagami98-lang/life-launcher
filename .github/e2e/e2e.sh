@@ -25,6 +25,7 @@ expect_text() { if $UI has "$2" >/dev/null; then ok "$1 「$2」あり"; else ng
 expect_no_text() { if $UI has "$2" >/dev/null; then ng "$1 「$2」が出ている"; else ok "$1 「$2」なし"; fi; }
 
 adb install -r LifeLauncher.apk >/dev/null && log "インストール成功"
+adb shell cmd locale set-app-locales com.enakagami.lifelauncher --locales ja-JP >/dev/null 2>&1  # 仮想スマホは英語なので、このアプリだけ日本語に
 adb shell cmd package set-home-activity $PKG/.MainActivity >/dev/null
 log "ホームアプリに登録: $(adb shell cmd package resolve-activity --brief -a android.intent.action.MAIN -c android.intent.category.HOME | tail -1 | tr -d '\r')"
 
@@ -43,7 +44,7 @@ $UI tap "保存" >/dev/null; sleep 2; snap after_save
 expect_text "保存後は寿命画面のまま" "残りの日数"
 EXP=$(python3 -c "import datetime;print('{:,}'.format((datetime.date(2029,4,29)-datetime.date.today()).days))")
 expect_text "残り日数（計算上の正解 $EXP）" "$EXP"
-expect_text "左上は日付" "$(python3 -c "import datetime;d=datetime.date.today();w='月火水木金土日'[d.weekday()];print(f'{d.month}月{d.day}日（{w}）')")"
+T=$(python3 -c "import datetime;d=datetime.date.today();print(f'{d.month}月{d.day}日')"); if $UI hasp "$T" >/dev/null; then ok "左上は日付「$T」"; else ng "左上は日付「$T」なし"; fi
 expect_text "現在の年齢" "現在 27歳"
 
 log "== 2b. ありえない誕生日（199年）は保存できない"

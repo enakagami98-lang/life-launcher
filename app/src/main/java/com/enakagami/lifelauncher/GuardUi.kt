@@ -1,6 +1,7 @@
 package com.enakagami.lifelauncher
 
 import android.content.Intent
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -72,12 +73,12 @@ fun GuardDialog(req: GuardRequest, label: String, onLaunch: (Int) -> Unit, onClo
             Spacer(Modifier.height(8.dp))
             when {
                 remainMin <= 0 -> {
-                    Text("今日の使用時間（${limit}分）を使い切りました。\nまた明日。", color = Ink, fontSize = 20.sp, fontWeight = FontWeight.Bold, lineHeight = 30.sp)
+                    Text(stringResource(R.string.guard_used_up, limit), color = Ink, fontSize = 20.sp, fontWeight = FontWeight.Bold, lineHeight = 30.sp)
                     Spacer(Modifier.height(24.dp))
                 }
                 !waited -> {
                     Text(
-                        if (expired) "時間になりました。延長しますか？" else "${label}を本当に開きますか？",
+                        if (expired) stringResource(R.string.guard_extend) else stringResource(R.string.guard_really, label),
                         color = Ink, fontSize = 20.sp, fontWeight = FontWeight.Bold, lineHeight = 30.sp,
                     )
                     Box(Modifier.fillMaxWidth().height(150.dp), contentAlignment = Alignment.Center) {
@@ -85,9 +86,9 @@ fun GuardDialog(req: GuardRequest, label: String, onLaunch: (Int) -> Unit, onClo
                     }
                 }
                 else -> {
-                    Text("${label}にどのくらいの時間を使いますか？", color = Ink, fontSize = 20.sp, fontWeight = FontWeight.Bold, lineHeight = 30.sp)
+                    Text(stringResource(R.string.guard_how_long, label), color = Ink, fontSize = 20.sp, fontWeight = FontWeight.Bold, lineHeight = 30.sp)
                     Spacer(Modifier.height(6.dp))
-                    Text("今日の残り ${remainMin}分（1日 ${limit}分）", color = SubInk, fontSize = 13.sp)
+                    Text(stringResource(R.string.guard_remain, remainMin, limit), color = SubInk, fontSize = 13.sp)
                     Spacer(Modifier.height(16.dp))
                     Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                         listOf(5, 10, 15).forEach { m ->
@@ -99,7 +100,7 @@ fun GuardDialog(req: GuardRequest, label: String, onLaunch: (Int) -> Unit, onClo
                                 horizontalAlignment = Alignment.CenterHorizontally,
                             ) {
                                 Text("$m", color = Ink, fontSize = 28.sp, fontWeight = FontWeight.Black)
-                                Text("分", color = SubInk, fontSize = 13.sp)
+                                Text(stringResource(R.string.unit_min), color = SubInk, fontSize = 13.sp)
                             }
                         }
                     }
@@ -110,7 +111,7 @@ fun GuardDialog(req: GuardRequest, label: String, onLaunch: (Int) -> Unit, onClo
                 onClick = onClose,
                 modifier = Modifier.fillMaxWidth().height(48.dp),
                 border = BorderStroke(1.5.dp, Ink),
-            ) { Text("閉じる", color = Ink, fontSize = 17.sp) }
+            ) { Text(stringResource(R.string.close), color = Ink, fontSize = 17.sp) }
         }
     }
 }
@@ -128,10 +129,10 @@ fun LockScreen(name: String, until: String, now: LocalTime) {
         Spacer(Modifier.height(12.dp))
         Text(name, color = Blue, fontSize = 22.sp, fontWeight = FontWeight.Bold)
         Spacer(Modifier.height(8.dp))
-        Text("$until まではスマホを使えません", color = SubInk, fontSize = 16.sp, textAlign = TextAlign.Center)
+        Text(stringResource(R.string.lock_until, until), color = SubInk, fontSize = 16.sp, textAlign = TextAlign.Center)
         Spacer(Modifier.height(48.dp))
         Text(
-            "電話をかける",
+            stringResource(R.string.lock_call),
             color = Ink,
             fontSize = 16.sp,
             modifier = Modifier

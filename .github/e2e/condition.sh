@@ -20,6 +20,7 @@ order() { for t in "$@"; do echo "$($UI y "$t") $t"; done | sort -n | awk '{prin
 expect_order() { o=$(order Clock Chrome Settings); if [ "$o" = "$2" ]; then ok "$1 ($o)"; else ng "$1 (期待 $2 / 実際 $o)"; fi; }
 
 adb install -r LifeLauncher.apk >/dev/null && log "インストール成功"
+adb shell cmd locale set-app-locales com.enakagami.lifelauncher --locales ja-JP >/dev/null 2>&1  # 仮想スマホは英語なので、このアプリだけ日本語に
 adb shell cmd package set-home-activity $PKG/.MainActivity >/dev/null
 key KEYCODE_HOME; sleep 3
 

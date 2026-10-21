@@ -1,6 +1,7 @@
 package com.enakagami.lifelauncher
 
 import androidx.compose.foundation.background
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -62,8 +63,8 @@ fun TasksPage(store: Store, today: LocalDate) {
     val done = list.count { it.doneDate != null }
 
     Column(Modifier.fillMaxSize()) {
-        PageHeader("今日のタスク") {
-            RoundButton(Icons.Filled.Add, "追加", Blue, OnAccent) { adding = true }
+        PageHeader(stringResource(R.string.page_tasks)) {
+            RoundButton(Icons.Filled.Add, stringResource(R.string.add), Blue, OnAccent) { adding = true }
         }
         LazyColumn(
             state = listState,
@@ -74,14 +75,14 @@ fun TasksPage(store: Store, today: LocalDate) {
             item(key = "summary") {
                 if (list.isEmpty()) {
                     Text(
-                        "右上の＋から今日やることを追加できます。\n終わったら左の丸をタップ。終わったタスクは次の日に消え、終わらなかったタスクは次の日に持ち越されます。\n長押ししたまま上下に動かすと並べ替えできます。",
+                        stringResource(R.string.tasks_empty),
                         color = SubInk, fontSize = 15.sp, lineHeight = 22.sp,
                         modifier = Modifier.padding(horizontal = 4.dp, vertical = 8.dp),
                     )
                 } else {
                     Column(Modifier.padding(horizontal = 4.dp)) {
                         Text(
-                            if (done == list.size) "全部おわり！" else "$done / ${list.size} 完了",
+                            if (done == list.size) stringResource(R.string.all_done) else stringResource(R.string.tasks_progress, done, list.size),
                             fontSize = 15.sp, fontWeight = FontWeight.Bold, color = Blue,
                         )
                         Spacer(Modifier.height(6.dp))
@@ -108,12 +109,13 @@ fun TasksPage(store: Store, today: LocalDate) {
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         // チェックボックス（丸）
+                        val checkDesc = stringResource(if (isDone) R.string.task_undo else R.string.task_do, task.text)
                         Box(
                             Modifier
                                 .size(48.dp)
                                 .clip(CircleShape)
                                 .clickable { store.toggleTask(task.id, today) }
-                                .semantics { contentDescription = if (isDone) "${task.text}を未完了に戻す" else "${task.text}を完了にする" },
+                                .semantics { contentDescription = checkDesc },
                             contentAlignment = Alignment.Center,
                         ) {
                             Box(
@@ -143,7 +145,7 @@ fun TasksPage(store: Store, today: LocalDate) {
 
     if (adding) {
         TextInputDialog(
-            title = "今日のタスクを追加",
+            title = stringResource(R.string.task_add),
             initial = "",
             onSave = { store.addTask(it); adding = false },
             onDismiss = { adding = false },
@@ -151,7 +153,7 @@ fun TasksPage(store: Store, today: LocalDate) {
     }
     editing?.let { task ->
         TextInputDialog(
-            title = "タスクを編集",
+            title = stringResource(R.string.task_edit),
             initial = task.text,
             onSave = { store.updateTask(task.id, it); editing = null },
             onDismiss = { editing = null },

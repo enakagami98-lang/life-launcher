@@ -13,7 +13,7 @@ data class AppInfo(val key: String, val pkg: String, val cls: String, val label:
 fun loadApps(context: Context): List<AppInfo> {
     val pm = context.packageManager
     val intent = Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER)
-    val collator = Collator.getInstance(Locale.JAPANESE)
+    val collator = Collator.getInstance(Locale.getDefault())
     return pm.queryIntentActivities(intent, 0)
         .filter { it.activityInfo.packageName != context.packageName }
         .map {

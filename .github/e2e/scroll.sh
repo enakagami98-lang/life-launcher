@@ -8,6 +8,7 @@ key() { adb shell input keyevent "$@"; sleep 1.5; }
 next_page() { adb shell input swipe 950 1200 150 1200 300; sleep 1.2; }
 prev_page() { adb shell input swipe 150 1200 950 1200 300; sleep 1.2; }
 adb install -r LifeLauncher.apk >/dev/null && log "インストール: $(adb shell dumpsys package $PKG | grep -m1 versionName | tr -d ' ')"
+adb shell cmd locale set-app-locales com.enakagami.lifelauncher --locales ja-JP >/dev/null 2>&1  # 仮想スマホは英語なので、このアプリだけ日本語に
 adb shell cmd package set-home-activity $PKG/.MainActivity >/dev/null
 key KEYCODE_HOME
 # お気に入りにChromeを登録

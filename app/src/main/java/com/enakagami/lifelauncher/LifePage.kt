@@ -1,6 +1,7 @@
 package com.enakagami.lifelauncher
 
 import androidx.compose.foundation.clickable
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxSize
@@ -44,7 +45,7 @@ import sh.calvin.reorderable.ReorderableItem
 import sh.calvin.reorderable.rememberReorderableLazyListState
 
 @Composable
-fun LifePage(store: Store, today: LocalDate, apps: List<AppInfo>, openSettings: () -> Unit) {
+fun LifePage(store: Store, today: LocalDate, apps: List<AppInfo>, openSettings: () -> Unit, openCondition: () -> Unit) {
     // スクロール位置は画面ごとに持つ（1つを使い回すと、見えていない寿命画面にスクロールが行ってしまう）
     val listState = rememberLazyListState()
     var renaming by remember { mutableStateOf<Fav?>(null) }
@@ -82,18 +83,18 @@ fun LifePage(store: Store, today: LocalDate, apps: List<AppInfo>, openSettings: 
                 verticalArrangement = Arrangement.SpaceBetween,
             ) {
                 // 左上は今日の日付（「寿命」の見出しはやめた）
-                PageHeader("${today.monthValue}月${today.dayOfMonth}日（${today.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.JAPANESE)}）") {
-                    RoundButton(Icons.Filled.Settings, "設定", CardBg, Ink) { openSettings() }
+                PageHeader(dateWithWeekday(today)) {
+                    RoundButton(Icons.Filled.Settings, stringResource(R.string.settings), CardBg, Ink) { openSettings() }
                 }
                 Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                     LifeCards(store.birth, store.lifespan, today) { openSettings() }
-                    TopWidgets(store, today)
+                    TopWidgets(store, today, openCondition)
                 }
                 Column(
                     Modifier.fillMaxWidth().padding(bottom = 12.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
-                    Text("お気に入り", fontSize = 12.sp, color = SubInk)
+                    Text(stringResource(R.string.favorites), fontSize = 12.sp, color = SubInk)
                     Icon(Icons.Filled.KeyboardArrowDown, null, tint = SubInk)
                 }
             }
@@ -101,7 +102,7 @@ fun LifePage(store: Store, today: LocalDate, apps: List<AppInfo>, openSettings: 
         // 下にスクロール：お気に入りアプリ
         item {
             Text(
-                "お気に入り",
+                stringResource(R.string.favorites),
                 fontSize = 28.sp,
                 fontWeight = FontWeight.Black,
                 color = Ink,
@@ -111,7 +112,7 @@ fun LifePage(store: Store, today: LocalDate, apps: List<AppInfo>, openSettings: 
         if (favs.isEmpty()) {
             item {
                 Text(
-                    "右にスワイプした「アプリ」の画面で、アプリを長押しすると追加できます。",
+                    stringResource(R.string.fav_empty),
                     color = SubInk,
                     fontSize = 15.sp,
                     modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp),
@@ -162,7 +163,7 @@ fun LifePage(store: Store, today: LocalDate, apps: List<AppInfo>, openSettings: 
     }
     renaming?.let { fav ->
         TextInputDialog(
-            title = "表示名を変更",
+            title = stringResource(R.string.rename_title),
             initial = fav.label,
             onSave = { store.renameFavorite(fav.key, it); renaming = null },
             onDismiss = { renaming = null },
@@ -178,9 +179,9 @@ private fun LifeCards(birth: LocalDate?, lifespan: Int, today: LocalDate, onSetu
             pad.fillMaxWidth().card().padding(28.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Text("まずは誕生日と寿命を設定しましょう", fontWeight = FontWeight.Bold, color = Ink, textAlign = TextAlign.Center)
+            Text(stringResource(R.string.setup_first), fontWeight = FontWeight.Bold, color = Ink, textAlign = TextAlign.Center)
             Spacer(Modifier.height(12.dp))
-            TextButton(onClick = onSetup) { Text("設定する", fontWeight = FontWeight.Bold, fontSize = 16.sp) }
+            TextButton(onClick = onSetup) { Text(stringResource(R.string.setup), fontWeight = FontWeight.Bold, fontSize = 16.sp) }
         }
         return
     }
@@ -195,7 +196,7 @@ private fun LifeCards(birth: LocalDate?, lifespan: Int, today: LocalDate, onSetu
         pad.fillMaxWidth().card().padding(vertical = 24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Text("残りの日数", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Ink)
+        Text(stringResource(R.string.days_left), fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Ink)
         Row(verticalAlignment = Alignment.Bottom) {
             Text(
                 "%,d".format(days),
@@ -204,13 +205,13 @@ private fun LifeCards(birth: LocalDate?, lifespan: Int, today: LocalDate, onSetu
                 color = Blue,
                 lineHeight = 96.sp,
             )
-            Text("日", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = Ink, modifier = Modifier.padding(bottom = 16.dp, start = 4.dp))
+            Text(stringResource(R.string.unit_days), fontSize = 24.sp, fontWeight = FontWeight.Bold, color = Ink, modifier = Modifier.padding(bottom = 16.dp, start = 4.dp))
         }
-        Text("${rest.years}年${rest.months}ヶ月${rest.days}日", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Ink)
+        Text(stringResource(R.string.ymd, rest.years, rest.months, rest.days), fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Ink)
         Spacer(Modifier.height(6.dp))
         Row(horizontalArrangement = Arrangement.spacedBy(14.dp)) {
-            Text("現在 ${age}歳", fontSize = 13.sp, fontWeight = FontWeight.Bold, color = SubInk)
-            Text("寿命 ${lifespan}歳", fontSize = 13.sp, fontWeight = FontWeight.Bold, color = SubInk)
+            Text(stringResource(R.string.age_now, age), fontSize = 13.sp, fontWeight = FontWeight.Bold, color = SubInk)
+            Text(stringResource(R.string.lifespan_is, lifespan), fontSize = 13.sp, fontWeight = FontWeight.Bold, color = SubInk)
         }
     }
 }
@@ -224,13 +225,13 @@ private fun FavoriteActionSheet(
 ) {
     val pkg = fav.key.substringBefore('/')
     var choosing by remember { mutableStateOf(false) }
-    ActionSheet(fav.label, Guard.limits[pkg]?.let { "使いすぎ防止：1日 ${it}分" }, onDismiss) { close ->
+    ActionSheet(fav.label, Guard.limits[pkg]?.let { stringResource(R.string.limit_badge, it) }, onDismiss) { close ->
         if (choosing) {
             LimitChooser(pkg, onBack = { choosing = false }, onDone = { close {} })
         } else {
-            SheetItem(Icons.Filled.Edit, "名前を変更", "寿命画面での表示名を変えます") { close(onRename) }
+            SheetItem(Icons.Filled.Edit, stringResource(R.string.rename), stringResource(R.string.rename_sub)) { close(onRename) }
             ReminderItems(pkg, onChoose = { choosing = true }, close = close)
-            SheetItem(Icons.Filled.Close, "お気に入りから外す", danger = true) { close(onRemove) }
+            SheetItem(Icons.Filled.Close, stringResource(R.string.fav_remove), danger = true) { close(onRemove) }
         }
     }
 }

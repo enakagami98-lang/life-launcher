@@ -8,6 +8,11 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
 
+    <!-- ホーム画面の部品：天気（だいたいの位置とネット）・歩数 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
+
     <!-- インストール済みアプリの一覧を取得するため -->
     <queries>
         <intent>
@@ -21,6 +26,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
+        android:localeConfig="@xml/locales_config"
         android:theme="@android:style/Theme.Material.Light.NoActionBar">
 
         <activity
@@ -55,7 +61,7 @@
         <service
             android:name=".PaymentListener"
             android:exported="true"
-            android:label="今月の支払額"
+            android:label="@string/w_spend"
             android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
             <intent-filter>
                 <action android:name="android.service.notification.NotificationListenerService" />

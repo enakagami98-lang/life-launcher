@@ -45,6 +45,10 @@ android {
     buildFeatures {
         compose = true
     }
+    lint {
+        // 訳の無い文字は英語で出るので、訳の抜けではビルドを止めない
+        disable += setOf("MissingTranslation", "ExtraTranslation")
+    }
 }
 
 dependencies {
