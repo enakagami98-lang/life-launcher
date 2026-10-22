@@ -150,7 +150,8 @@ class GuardService : Service() {
         if (!Guard.sessionActive(pkg)) {
             hideBar(); openLauncher(pkg, "session"); return
         }
-        // 使用時間はスマホ本体の記録（Guard.usedMs）から数えるので、ここでは足さない
+        // 自前でも数える（Guard.usedMs は自前とスマホ本体の記録の大きいほうを使う）
+        Guard.addUsage(pkg, dt)
         val remain = Guard.remainingMs(pkg)
         if (remain < 30_000) { hideBar(); openLauncher(pkg, "session"); return }
         warnIfNeeded(pkg, remain)

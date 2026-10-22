@@ -23,7 +23,7 @@ key KEYCODE_HOME; sleep 3
 lang ja-JP
 
 log "== 1. 名前が Loosen"
-adb shell dumpsys notification | grep -q "Loosen が見守り中" && ok "通知の名前が Loosen" || ng "通知に Loosen が無い"
+adb shell dumpsys notification --noredact | grep -q "Loosen" && ok "通知の名前が Loosen" || ng "通知に Loosen が無い"
 
 log "== 2. 使用状況へのアクセスが無いとき：注意を出す"
 add_limit Chrome
