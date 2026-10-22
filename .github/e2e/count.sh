@@ -38,9 +38,11 @@ key KEYCODE_HOME
 adb shell monkey -p com.google.android.deskclock -c android.intent.category.LAUNCHER 1 >/dev/null
 sleep 135
 key KEYCODE_HOME
-add_limit Clock
+add_limit 時計
 open_settings_reminder; snap with_access
 expect_no_text "注意が消える" "通知や履歴から開いた分は0のまま"
 if $UI hasp "今日 2分 使用" >/dev/null || $UI hasp "今日 3分 使用" >/dev/null; then ok "直接開いた時計の使用時間が数えられている"; else ng "時計の使用時間が数えられていない / $($UI texts | paste -sd' ' | cut -c1-250)"; fi
 
+log "== アプリ内の記録（使用時間の読み取り）"
+adb logcat -d -s Loosen | tail -5 | tee -a $R
 log "== 結果: PASS $(grep -c '^PASS' $R) / FAIL $(grep -c '^FAIL' $R)"

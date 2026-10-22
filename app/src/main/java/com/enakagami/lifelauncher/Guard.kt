@@ -167,6 +167,7 @@ object Guard {
         if (sysDay == today && now - sysAt < 15_000) return sysCache
         val start = LocalDate.now().atStartOfDay(java.time.ZoneId.systemDefault()).toInstant().toEpochMilli()
         val result = mutableMapOf<String, Long>()
+        var count = 0
         runCatching {
             val usm = ctx.getSystemService(android.app.usage.UsageStatsManager::class.java)
             val events = usm.queryEvents(start, now)
@@ -174,6 +175,7 @@ object Guard {
             val resumed = mutableMapOf<String, Long>()
             while (events.hasNextEvent()) {
                 events.getNextEvent(e)
+                count++
                 when (e.eventType) {
                     android.app.usage.UsageEvents.Event.ACTIVITY_RESUMED ->
                         if (e.packageName !in resumed) resumed[e.packageName] = e.timeStamp
@@ -183,7 +185,10 @@ object Guard {
             }
             // 今も前面にあるアプリ
             resumed.forEach { (pkg, t) -> result[pkg] = (result[pkg] ?: 0) + (now - t) }
-        }
+        }.onFailure { android.util.Log.w("Loosen", "usage query failed", it) }
+        // 動作確認用の記録（adb logcat -s Loosen で見られる）
+        android.util.Log.d("Loosen", "usage events=$count since=$start limited=" +
+            limits.keys.joinToString { "$it:${(result[it] ?: 0) / 1000}s" })
         sysCache = result; sysAt = now; sysDay = today
         return result
     }
