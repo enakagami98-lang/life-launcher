@@ -90,3 +90,12 @@
 - 訳は Claude が作ったもの。公開前に、できればその言語を話す人に見てもらう（特にマラーティー語・テルグ語・タミル語・ベンガル語・ウルドゥー語）
 - e2e：`-f only=lang` で9言語に切り替えて撮影（約10分）→ 9/9。全体テスト Android 15 は 67/68（残り1つは撮影タイミング）、Android 14 は仮想スマホが固まり60分で打ち切り（いつもの）
 - e2e の学び：`while read ... done <<EOF` の中で adb を呼ぶと、adb が一覧を読み込んでしまいループが1回で終わる → `read <&3` と `done 3<<EOF` にする
+
+## 2026-10-22 名前を Loosen に・使用時間の数え方の修正・朝の「今日の目標」（v1.0.42）
+- 表示名は Loosen（app_name と notif_title）。パッケージ名・リポジトリ名・APK のファイル名（LifeLauncher.apk）は変えていない（上書き更新とダウンロードリンクを壊さないため）
+- 不具合の原因：制限アプリの使用時間は「待ち画面を通して開いた間」しか数えていなかった → 通知・履歴から開いた Instagram/X は0のまま
+- 直し方：Guard.usedMs = max(自前の記録, スマホ本体の使用記録)。本体の記録は Guard.systemUsage()（今日0時からの ACTIVITY_RESUMED〜PAUSED/STOPPED を足す、15秒キャッシュ）。「使用状況へのアクセス」が無いと本体の記録は読めない → 設定に赤字の注意
+- 確認用ログ：`adb logcat -s Loosen`（usage events=… limited=pkg:秒）
+- 今日の目標：Guard.needGoal()＝ 目標オン・夜のおやすみ時間オン・今は使えない時間ではない・今日の夜の時間が終わった（日付をまたぐなら昨日の曜日）・今日の目標が空。true の間 MainActivity は GoalScreen、GuardService は他アプリから戻す。onUnlock では「今何してる？」より優先
+- トップの部品に "goal"（今日の目標）。設定の「使えない時間帯」にオン/オフ（最初はオン）
+- e2e：`-f only=count`（5/5）、`-f only=goal`（14/14）。e2e の学び：日本語表示だと時計アプリの名前は「時計」、通知の中身は `dumpsys notification --noredact` でないと見えない
