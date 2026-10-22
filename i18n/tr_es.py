@@ -100,3 +100,5 @@ T = {
 }
 
 T.update({"s_limited_apps": 'Apps con límite de tiempo', "s_count_warning": 'El acceso al uso no está permitido, así que solo se cuenta el tiempo abierto desde esta pantalla de inicio (lo abierto desde notificaciones o recientes queda en 0). Permítelo con "Permitir" arriba.'})
+
+T.update({'goal_title': 'Meta de hoy', 'goal_sub': 'Terminó el descanso nocturno. Define tu meta de hoy antes de usar el teléfono.', 'goal_yesterday': 'Meta de ayer: %1$s', 'goal_hint': 'p. ej., terminar el informe', 'goal_start': 'Fijarla y empezar el día', 'goal_note': 'Hasta que la fijes, las demás apps te traerán de vuelta aquí (las llamadas funcionan). Puedes mostrar la meta en la pantalla de inicio con "Meta de hoy".', 'goal_empty': 'Toca para fijar la meta de hoy', 's_goal_on': 'Tras el descanso nocturno, fija primero la meta de hoy (el teléfono sigue bloqueado hasta entonces)'})

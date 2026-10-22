@@ -77,11 +77,13 @@ fun TopWidgets(store: Store, today: LocalDate, openCondition: () -> Unit) {
     var showSpend by remember { mutableStateOf(false) }
     var editingLayout by remember { mutableStateOf(false) }
     var editingCountdown by remember { mutableStateOf(false) }
+    var editingGoal by remember { mutableStateOf(false) }
 
     Column(Modifier.padding(horizontal = 20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
         store.widgets.forEach { id ->
             when (id) {
                 "motto" -> MottoCard(store.motto) { editingMotto = true }
+                "goal" -> GoalCard(Guard.dailyGoal(today)) { editingGoal = true }
                 "screen" -> ScreenCard(today)
                 "spend" -> SpendCard { showSpend = true }
                 "tasks" -> TasksCard(store, today)
@@ -107,6 +109,16 @@ fun TopWidgets(store: Store, today: LocalDate, openCondition: () -> Unit) {
             onSave = { store.saveMotto(it); editingMotto = false },
             onDismiss = { editingMotto = false },
             onDelete = if (store.motto.isNotEmpty()) ({ store.saveMotto(""); editingMotto = false }) else null,
+        )
+    }
+    if (editingGoal) {
+        val current = Guard.dailyGoal(today)
+        TextInputDialog(
+            title = stringResource(R.string.goal_title),
+            initial = current,
+            onSave = { Guard.setDailyGoal(today, it); editingGoal = false },
+            onDismiss = { editingGoal = false },
+            onDelete = if (current.isNotEmpty()) ({ Guard.setDailyGoal(today, ""); editingGoal = false }) else null,
         )
     }
     if (showSpend) SpendDialog { showSpend = false }
@@ -144,6 +156,17 @@ private fun MottoCard(motto: String, onEdit: () -> Unit) {
                 color = Ink, textAlign = TextAlign.Center, lineHeight = 28.sp,
             )
         }
+    }
+}
+
+// ---- 今日の目標 ----
+@Composable
+private fun GoalCard(goal: String, onEdit: () -> Unit) {
+    CardColumn(onEdit) {
+        SmallLabel(stringResource(R.string.goal_title))
+        Spacer(Modifier.height(4.dp))
+        if (goal.isBlank()) Text(stringResource(R.string.goal_empty), fontSize = 15.sp, color = SubInk)
+        else Text(goal, fontSize = 20.sp, fontWeight = FontWeight.Black, color = Ink, lineHeight = 28.sp)
     }
 }
 

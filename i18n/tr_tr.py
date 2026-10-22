@@ -100,3 +100,5 @@ T = {
 }
 
 T.update({"s_limited_apps": 'Süre sınırı olan uygulamalar', "s_count_warning": 'Kullanım erişimine izin verilmediği için yalnızca bu ana ekrandan açılan süre sayılır (bildirimlerden veya son kullanılanlardan açılan süre 0 kalır). Yukarıdaki "İzin ver" ile izin ver.'})
+
+T.update({'goal_title': 'Bugünün hedefi', 'goal_sub': 'Gece dinlenme zamanı bitti. Telefonu kullanmadan önce bugünün hedefini belirle.', 'goal_yesterday': 'Dünün hedefi: %1$s', 'goal_hint': 'ör. raporu bitirmek', 'goal_start': 'Belirle ve güne başla', 'goal_note': 'Belirleyene kadar diğer uygulamalar seni buraya geri getirir (arama yapılabilir). Hedefi ana ekranda "Bugünün hedefi" ile gösterebilirsin.', 'goal_empty': 'Bugünün hedefini belirlemek için dokun', 's_goal_on': 'Gece dinlenmesinden sonra önce bugünün hedefini belirle (o zamana kadar telefon kilitli)'})

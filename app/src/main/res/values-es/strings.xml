@@ -286,4 +286,12 @@
     <string name="minute_label">Minuto</string>
     <string name="s_limited_apps">Apps con límite de tiempo</string>
     <string name="s_count_warning">El acceso al uso no está permitido, así que solo se cuenta el tiempo abierto desde esta pantalla de inicio (lo abierto desde notificaciones o recientes queda en 0). Permítelo con \"Permitir\" arriba.</string>
+    <string name="goal_title">Meta de hoy</string>
+    <string name="goal_sub">Terminó el descanso nocturno. Define tu meta de hoy antes de usar el teléfono.</string>
+    <string name="goal_yesterday">Meta de ayer: %1$s</string>
+    <string name="goal_hint">p. ej., terminar el informe</string>
+    <string name="goal_start">Fijarla y empezar el día</string>
+    <string name="goal_note">Hasta que la fijes, las demás apps te traerán de vuelta aquí (las llamadas funcionan). Puedes mostrar la meta en la pantalla de inicio con \"Meta de hoy\".</string>
+    <string name="goal_empty">Toca para fijar la meta de hoy</string>
+    <string name="s_goal_on">Tras el descanso nocturno, fija primero la meta de hoy (el teléfono sigue bloqueado hasta entonces)</string>
 </resources>

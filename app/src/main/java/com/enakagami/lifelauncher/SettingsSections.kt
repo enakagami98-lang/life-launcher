@@ -252,6 +252,7 @@ fun LockSection() {
         }
         RangeEditor(stringResource(R.string.morning), Guard.morning) { Guard.updateMorning(it) }
         RangeEditor(stringResource(R.string.night), Guard.night) { Guard.updateNight(it) }
+        SwitchRow(stringResource(R.string.s_goal_on), Guard.goalOn) { Guard.updateGoalOn(it) }
         SwitchRow(stringResource(R.string.s_home_on_off), Guard.homeOnScreenOff) { Guard.updateHomeOnScreenOff(it) }
     }
 }

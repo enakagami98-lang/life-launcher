@@ -291,4 +291,12 @@
     <string name="minute_value">%1$s分</string>
     <string name="s_limited_apps">有使用時間限制的應用程式</string>
     <string name="s_count_warning">未允許「使用情況存取權」，因此只能計算從這個主畫面開啟的時間（從通知或最近使用開啟的時間仍為 0）。請用上方的「允許」開啟。</string>
+    <string name="goal_title">今日目標</string>
+    <string name="goal_sub">夜間休息時間結束了。先決定今天的目標，再使用手機吧。</string>
+    <string name="goal_yesterday">昨天的目標：%1$s</string>
+    <string name="goal_hint">例：寫完報告</string>
+    <string name="goal_start">決定目標，開始新的一天</string>
+    <string name="goal_note">決定之前，開啟其他應用程式也會回到這裡（可以打電話）。決定的目標可以顯示在主畫面的「今日目標」。</string>
+    <string name="goal_empty">點按設定今日目標</string>
+    <string name="s_goal_on">夜間休息時間結束後，先決定今日目標（決定之前不能使用手機）</string>
 </resources>

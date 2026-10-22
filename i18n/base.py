@@ -395,3 +395,15 @@ S.update({
     "s_count_warning": ("「使用状況へのアクセス」を許可していないため、このホーム画面から開いた分しか数えられません（通知や履歴から開いた分は0のまま）。上の「許可する」から許可してください。",
                         "Usage access isn't allowed, so only time opened from this home screen is counted (opening from notifications or recents stays at 0). Allow it with \"Allow\" above."),
 })
+
+S.update({
+    # ---- 今日の目標 ----
+    'goal_title': ('今日の目標', "Today's goal"),
+    'goal_sub': ('夜のおやすみ時間が終わりました。今日の目標を決めてから、スマホを使いましょう。', "Night rest time is over. Set today's goal before using your phone."),
+    'goal_yesterday': ('昨日の目標：%1$s', "Yesterday's goal: %1$s"),
+    'goal_hint': ('例：ESを1社出す', 'e.g. Finish the report'),
+    'goal_start': ('決めて1日を始める', 'Set it and start the day'),
+    'goal_note': ('決めるまでは、ほかのアプリを開いてもこの画面に戻ります（電話は使えます）。決めた目標はトップ画面の「今日の目標」に出せます。', 'Until you set it, other apps bring you back here (calls still work). You can show the goal on the home screen with "Today\'s goal".'),
+    'goal_empty': ('タップして、今日の目標を入力', "Tap to set today's goal"),
+    's_goal_on': ('夜のおやすみ時間が終わったら、最初に今日の目標を決める（決めるまでスマホを使えない）', "After night rest time, set today's goal first (phone stays locked until you do)"),
+})

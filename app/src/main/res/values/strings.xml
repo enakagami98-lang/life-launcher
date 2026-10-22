@@ -294,4 +294,12 @@
     <string name="minute_value">:%1$s</string>
     <string name="s_limited_apps">Apps with a time limit</string>
     <string name="s_count_warning">Usage access isn\'t allowed, so only time opened from this home screen is counted (opening from notifications or recents stays at 0). Allow it with \"Allow\" above.</string>
+    <string name="goal_title">Today\'s goal</string>
+    <string name="goal_sub">Night rest time is over. Set today\'s goal before using your phone.</string>
+    <string name="goal_yesterday">Yesterday\'s goal: %1$s</string>
+    <string name="goal_hint">e.g. Finish the report</string>
+    <string name="goal_start">Set it and start the day</string>
+    <string name="goal_note">Until you set it, other apps bring you back here (calls still work). You can show the goal on the home screen with \"Today\'s goal\".</string>
+    <string name="goal_empty">Tap to set today\'s goal</string>
+    <string name="s_goal_on">After night rest time, set today\'s goal first (phone stays locked until you do)</string>
 </resources>

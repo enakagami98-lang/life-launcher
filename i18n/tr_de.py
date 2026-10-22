@@ -100,3 +100,5 @@ T = {
 }
 
 T.update({"s_limited_apps": 'Apps mit Zeitlimit', "s_count_warning": 'Der Zugriff auf Nutzungsdaten ist nicht erlaubt, daher wird nur die Zeit gezählt, wenn Apps von diesem Startbildschirm geöffnet werden (aus Benachrichtigungen oder „Zuletzt verwendet“ bleibt es bei 0). Erlaube ihn oben mit „Erlauben“.'})
+
+T.update({'goal_title': 'Tagesziel', 'goal_sub': 'Die nächtliche Ruhezeit ist vorbei. Lege dein heutiges Ziel fest, bevor du das Handy nutzt.', 'goal_yesterday': 'Gestriges Ziel: %1$s', 'goal_hint': 'z. B. Bericht fertigstellen', 'goal_start': 'Festlegen und Tag beginnen', 'goal_note': 'Bis du es festlegst, bringen dich andere Apps hierher zurück (Anrufe gehen). Du kannst das Ziel auf dem Startbildschirm mit „Tagesziel“ anzeigen.', 'goal_empty': 'Tippe, um das Tagesziel festzulegen', 's_goal_on': 'Nach der nächtlichen Ruhezeit zuerst das Tagesziel festlegen (Handy bleibt bis dahin gesperrt)'})

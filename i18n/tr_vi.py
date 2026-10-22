@@ -100,3 +100,5 @@ T = {
 }
 
 T.update({"s_limited_apps": 'Ứng dụng có giới hạn thời gian', "s_count_warning": 'Chưa cho phép quyền truy cập dữ liệu sử dụng nên chỉ đếm được thời gian mở từ màn hình chính này (mở từ thông báo hoặc gần đây vẫn là 0). Hãy cho phép bằng nút "Cho phép" ở trên.'})
+
+T.update({'goal_title': 'Mục tiêu hôm nay', 'goal_sub': 'Giờ nghỉ đêm đã kết thúc. Hãy đặt mục tiêu hôm nay trước khi dùng điện thoại.', 'goal_yesterday': 'Mục tiêu hôm qua: %1$s', 'goal_hint': 'vd: hoàn thành báo cáo', 'goal_start': 'Đặt mục tiêu và bắt đầu ngày mới', 'goal_note': 'Trước khi đặt, mở ứng dụng khác sẽ quay lại màn hình này (vẫn gọi điện được). Có thể hiện mục tiêu trên màn hình chính bằng "Mục tiêu hôm nay".', 'goal_empty': 'Chạm để đặt mục tiêu hôm nay', 's_goal_on': 'Sau giờ nghỉ đêm, đặt mục tiêu hôm nay trước (điện thoại bị khóa đến khi đặt)'})

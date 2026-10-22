@@ -99,6 +99,8 @@ object Guard {
             }
         }
         loadOptions()
+        goalOn = prefs.getBoolean("goalOn", true)
+        JSONObject(prefs.getString("dailyGoals", "{}")!!).let { o -> o.keys().forEach { dailyGoals[it] = o.getString(it) } }
     }
 
     // ---- 設定 ----
@@ -288,6 +290,8 @@ object Guard {
         val today = LocalDate.now().toString()
         unlocks[today] = (unlocks[today] ?: 0) + 1
         saveScreen()
+        // 夜のおやすみ時間のあと最初の解除：まず今日の目標（このときは「今何してる？」は聞かない）
+        if (needGoal()) return true
         if (!askEnabled || askPending) return askPending
         if (System.currentTimeMillis() - lastAnswerAt < ASK_GAP_MS) return false
         // 使えない時間帯は、そもそもスマホを使えないので聞かない
@@ -319,6 +323,44 @@ object Guard {
         val from = date.atStartOfDay(zone).toInstant().toEpochMilli()
         val to = date.plusDays(1).atStartOfDay(zone).toInstant().toEpochMilli()
         return unlockLogs.filter { it.time in from until to }.sortedBy { it.time }
+    }
+
+    // ---- 今日の目標（夜のおやすみ時間が終わったら最初に決める） ----
+    var goalOn by mutableStateOf(true)
+        private set
+    /** 日付 → その日の目標 */
+    val dailyGoals = mutableStateMapOf<String, String>()
+
+    fun updateGoalOn(v: Boolean) { goalOn = v; prefs.edit().putBoolean("goalOn", v).apply() }
+
+    fun dailyGoal(date: LocalDate = LocalDate.now()) = dailyGoals[date.toString()] ?: ""
+
+    fun setDailyGoal(date: LocalDate, text: String) {
+        val t = text.trim()
+        if (t.isEmpty()) dailyGoals.remove(date.toString()) else dailyGoals[date.toString()] = t
+        // 古い目標は400日分だけ残す
+        val keep = date.minusDays(400).toString()
+        dailyGoals.keys.filter { it < keep }.forEach { dailyGoals.remove(it) }
+        val o = JSONObject(); dailyGoals.forEach { (k, v) -> o.put(k, v) }
+        prefs.edit().putString("dailyGoals", o.toString()).apply()
+    }
+
+    /**
+     * 今日の「夜のおやすみ時間」が終わったあとで、まだ今日の目標を決めていないか。
+     * true の間は、目標を決めるまでホーム画面（目標の入力）に戻し続ける。
+     * 夜のおやすみ時間を使っていない人には出さない。
+     */
+    fun needGoal(now: LocalDateTime = LocalDateTime.now()): Boolean {
+        val n = night
+        if (!goalOn || !n.enabled || n.start == n.end) return false
+        if (activeLock(now) != null) return false
+        if (dailyGoal(now.toLocalDate()).isNotBlank()) return false
+        val t = now.hour * 60 + now.minute
+        val dow = now.dayOfWeek.value
+        val yesterday = (dow + 5) % 7 + 1
+        // 22時〜6時のように日付をまたぐなら「昨日の夜」、またがないなら「今日」の分が終わったか
+        val endedToday = if (n.start > n.end) yesterday in n.days else dow in n.days
+        return endedToday && t >= n.end
     }
 
     // ---- 「今何してる？」の選択肢（登録・削除できる） ----

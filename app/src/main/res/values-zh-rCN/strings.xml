@@ -291,4 +291,12 @@
     <string name="minute_value">%1$s分</string>
     <string name="s_limited_apps">有使用时间限制的应用</string>
     <string name="s_count_warning">未允许“使用情况访问权限”，因此只能统计从这个主屏幕打开的时间（从通知或最近任务打开的时间仍为 0）。请用上方的“允许”开启。</string>
+    <string name="goal_title">今日目标</string>
+    <string name="goal_sub">夜间休息时间结束了。先定好今天的目标，再使用手机吧。</string>
+    <string name="goal_yesterday">昨天的目标：%1$s</string>
+    <string name="goal_hint">例：写完报告</string>
+    <string name="goal_start">定好目标，开始新的一天</string>
+    <string name="goal_note">定好之前，打开其他应用也会回到这里（可以打电话）。定好的目标可以在主屏幕的“今日目标”中显示。</string>
+    <string name="goal_empty">点按设置今日目标</string>
+    <string name="s_goal_on">夜间休息时间结束后，先定好今日目标（定好之前不能使用手机）</string>
 </resources>

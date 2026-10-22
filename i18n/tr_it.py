@@ -100,3 +100,5 @@ T = {
 }
 
 T.update({"s_limited_apps": 'App con limite di tempo', "s_count_warning": 'L\'accesso ai dati di utilizzo non è consentito, quindi viene contato solo il tempo aperto da questa schermata iniziale (quanto aperto da notifiche o recenti resta a 0). Consentilo con "Consenti" qui sopra.'})
+
+T.update({'goal_title': 'Obiettivo di oggi', 'goal_sub': "Il riposo notturno è finito. Fissa l'obiettivo di oggi prima di usare il telefono.", 'goal_yesterday': 'Obiettivo di ieri: %1$s', 'goal_hint': 'es. finire la relazione', 'goal_start': 'Fissalo e inizia la giornata', 'goal_note': 'Finché non lo fissi, le altre app ti riportano qui (le chiamate funzionano). Puoi mostrarlo nella schermata iniziale con "Obiettivo di oggi".', 'goal_empty': "Tocca per fissare l'obiettivo di oggi", 's_goal_on': "Dopo il riposo notturno, fissa prima l'obiettivo di oggi (telefono bloccato fino ad allora)"})

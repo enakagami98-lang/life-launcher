@@ -17,6 +17,7 @@ data class Item(val id: Long, val text: String)
 /** トップ画面に置ける部品（id → 名前） */
 val ALL_WIDGETS = linkedMapOf(
     "motto" to R.string.w_motto,
+    "goal" to R.string.goal_title,
     "screen" to R.string.w_screen,
     "spend" to R.string.w_spend,
     "tasks" to R.string.w_tasks,

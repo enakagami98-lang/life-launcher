@@ -100,3 +100,5 @@ T = {
 }
 
 T.update({"s_limited_apps": 'Aplikasi dengan batas waktu', "s_count_warning": 'Akses penggunaan belum diizinkan, jadi hanya waktu yang dibuka dari layar utama ini yang dihitung (yang dibuka dari notifikasi atau terbaru tetap 0). Izinkan lewat "Izinkan" di atas.'})
+
+T.update({'goal_title': 'Tujuan hari ini', 'goal_sub': 'Waktu istirahat malam sudah selesai. Tentukan tujuan hari ini sebelum memakai ponsel.', 'goal_yesterday': 'Tujuan kemarin: %1$s', 'goal_hint': 'mis. selesaikan laporan', 'goal_start': 'Tetapkan dan mulai hari', 'goal_note': 'Sebelum ditetapkan, aplikasi lain akan membawamu kembali ke sini (telepon tetap bisa). Tujuan bisa ditampilkan di layar utama lewat "Tujuan hari ini".', 'goal_empty': 'Ketuk untuk menetapkan tujuan hari ini', 's_goal_on': 'Setelah waktu istirahat malam, tetapkan dulu tujuan hari ini (ponsel terkunci sampai itu)'})

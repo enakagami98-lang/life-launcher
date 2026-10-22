@@ -288,4 +288,12 @@
     <string name="minute_label">منٹ</string>
     <string name="s_limited_apps">وقت کی حد والی ایپس</string>
     <string name="s_count_warning">استعمال تک رسائی کی اجازت نہیں، اس لیے صرف اسی ہوم اسکرین سے کھولا گیا وقت گنا جاتا ہے (اطلاعات یا حالیہ ایپس سے کھولا گیا وقت 0 رہتا ہے)۔ اوپر \"اجازت دیں\" سے اجازت دیں۔</string>
+    <string name="goal_title">آج کا ہدف</string>
+    <string name="goal_sub">رات کا آرام کا وقت ختم ہو گیا۔ فون استعمال کرنے سے پہلے آج کا ہدف طے کریں۔</string>
+    <string name="goal_yesterday">کل کا ہدف: %1$s</string>
+    <string name="goal_hint">مثلاً رپورٹ مکمل کرنا</string>
+    <string name="goal_start">طے کریں اور دن شروع کریں</string>
+    <string name="goal_note">طے کرنے تک دوسری ایپس کھولنے پر آپ یہیں واپس آئیں گے (کال ہو سکتی ہے)۔ ہدف کو ہوم اسکرین پر \"آج کا ہدف\" سے دکھا سکتے ہیں۔</string>
+    <string name="goal_empty">آج کا ہدف طے کرنے کے لیے دبائیں</string>
+    <string name="s_goal_on">رات کے آرام کے بعد پہلے آج کا ہدف طے کریں (طے کرنے تک فون بند)</string>
 </resources>

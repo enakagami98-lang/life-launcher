@@ -286,4 +286,12 @@
     <string name="minute_label">Minuto</string>
     <string name="s_limited_apps">App con limite di tempo</string>
     <string name="s_count_warning">L\'accesso ai dati di utilizzo non è consentito, quindi viene contato solo il tempo aperto da questa schermata iniziale (quanto aperto da notifiche o recenti resta a 0). Consentilo con \"Consenti\" qui sopra.</string>
+    <string name="goal_title">Obiettivo di oggi</string>
+    <string name="goal_sub">Il riposo notturno è finito. Fissa l\'obiettivo di oggi prima di usare il telefono.</string>
+    <string name="goal_yesterday">Obiettivo di ieri: %1$s</string>
+    <string name="goal_hint">es. finire la relazione</string>
+    <string name="goal_start">Fissalo e inizia la giornata</string>
+    <string name="goal_note">Finché non lo fissi, le altre app ti riportano qui (le chiamate funzionano). Puoi mostrarlo nella schermata iniziale con \"Obiettivo di oggi\".</string>
+    <string name="goal_empty">Tocca per fissare l\'obiettivo di oggi</string>
+    <string name="s_goal_on">Dopo il riposo notturno, fissa prima l\'obiettivo di oggi (telefono bloccato fino ad allora)</string>
 </resources>

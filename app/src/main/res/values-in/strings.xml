@@ -288,4 +288,12 @@
     <string name="minute_label">Menit</string>
     <string name="s_limited_apps">Aplikasi dengan batas waktu</string>
     <string name="s_count_warning">Akses penggunaan belum diizinkan, jadi hanya waktu yang dibuka dari layar utama ini yang dihitung (yang dibuka dari notifikasi atau terbaru tetap 0). Izinkan lewat \"Izinkan\" di atas.</string>
+    <string name="goal_title">Tujuan hari ini</string>
+    <string name="goal_sub">Waktu istirahat malam sudah selesai. Tentukan tujuan hari ini sebelum memakai ponsel.</string>
+    <string name="goal_yesterday">Tujuan kemarin: %1$s</string>
+    <string name="goal_hint">mis. selesaikan laporan</string>
+    <string name="goal_start">Tetapkan dan mulai hari</string>
+    <string name="goal_note">Sebelum ditetapkan, aplikasi lain akan membawamu kembali ke sini (telepon tetap bisa). Tujuan bisa ditampilkan di layar utama lewat \"Tujuan hari ini\".</string>
+    <string name="goal_empty">Ketuk untuk menetapkan tujuan hari ini</string>
+    <string name="s_goal_on">Setelah waktu istirahat malam, tetapkan dulu tujuan hari ini (ponsel terkunci sampai itu)</string>
 </resources>

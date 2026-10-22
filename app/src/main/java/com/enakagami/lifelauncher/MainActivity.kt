@@ -203,6 +203,9 @@ fun LauncherApp(
             Surface(Modifier.fillMaxSize(), color = palette.bg) {
                 if (lock != null) {
                     LockScreen(stringResource(lock.first), lock.second, now.toLocalTime())
+                } else if (Guard.needGoal(now)) {
+                    // 夜のおやすみ時間のあと最初：今日の目標を決めるまでホーム画面の代わりに出す
+                    GoalScreen()
                 } else if (Guard.askPending) {
                     // ロック解除時の「今何してる？」。答えるまでホーム画面の代わりに出す
                     AskScreen(now.toLocalTime())

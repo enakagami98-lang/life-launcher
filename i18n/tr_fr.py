@@ -100,3 +100,5 @@ T = {
 }
 
 T.update({"s_limited_apps": 'Applis avec limite de temps', "s_count_warning": "L'accès aux données d'utilisation n'est pas autorisé : seul le temps ouvert depuis cet écran d'accueil est compté (ce qui est ouvert depuis les notifications ou les récentes reste à 0). Autorisez-le avec « Autoriser » ci-dessus."})
+
+T.update({'goal_title': 'Objectif du jour', 'goal_sub': "Le repos du soir est terminé. Fixez votre objectif du jour avant d'utiliser le téléphone.", 'goal_yesterday': "Objectif d'hier : %1$s", 'goal_hint': 'ex. finir le rapport', 'goal_start': 'Valider et commencer la journée', 'goal_note': "Tant qu'il n'est pas fixé, les autres applis vous ramènent ici (les appels fonctionnent). Vous pouvez l'afficher sur l'accueil avec « Objectif du jour ».", 'goal_empty': "Touchez pour fixer l'objectif du jour", 's_goal_on': "Après le repos du soir, fixer d'abord l'objectif du jour (téléphone bloqué jusque-là)"})
