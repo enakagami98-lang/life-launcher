@@ -16,7 +16,7 @@ ok() { log "PASS | $1"; }
 ng() { log "FAIL | $1"; }
 expect_text() { if $UI hasp "$2" >/dev/null; then ok "$1 「$2」あり"; else ng "$1 「$2」なし / 画面の文字: $($UI texts | paste -sd' ' | cut -c1-200)"; fi; }
 expect_no_text() { if $UI hasp "$2" >/dev/null; then ng "$1 「$2」が出ている"; else ok "$1 「$2」なし"; fi; }
-next() { $UI tap "$1" >/dev/null; sleep 2; }
+next() { $UI tapraw "$1" >/dev/null; sleep 2; }
 
 adb install -r LifeLauncher.apk >/dev/null && log "インストール成功"
 adb shell cmd package set-home-activity $PKG/.MainActivity >/dev/null

@@ -72,6 +72,12 @@ elif cmd == "tapnear":
     pos = center(find(text))
     best = min(ns, key=lambda n: abs(center(n)[1] - pos[1]))
     x, y = center(best); adb("shell", "input", "tap", str(x), str(y)); print("FOUND")
+elif cmd == "tapraw":
+    # 画面の下端（ナビゲーションの近く）にあるボタンもそのまま押す
+    n = find(text)
+    if n is None:
+        print(f"NOTFOUND: {text}"); sys.exit(1)
+    x, y = center(n); adb("shell", "input", "tap", str(x), str(y)); print(f"FOUND: {text}")
 elif cmd in ("has", "hasp"):
     n = find(text, exact=(cmd == "has"))
     print(("FOUND: " if n is not None else "NOTFOUND: ") + text)

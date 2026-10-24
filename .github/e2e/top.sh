@@ -46,6 +46,7 @@ expect_text "部品の候補：カウントダウン" "カウントダウン"
 expect_text "部品の候補：天気" "天気"
 expect_text "部品の候補：習慣チェック" "今日の習慣チェック"
 expect_text "部品の候補：歩数" "歩数"
+$UI tapp "昨日のふり返り" >/dev/null; sleep 1
 expect_text "部品の候補：昨日のふり返り" "昨日のふり返り"
 $UI tap "今日のタスクを表示" >/dev/null; sleep 1
 for i in 1 2 3; do $UI tap "今日のタスクを上へ" >/dev/null; sleep 1; done
