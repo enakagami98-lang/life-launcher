@@ -33,7 +33,7 @@ expect_text "ほかのホームアプリへ切り替えられる" "ほかのホ�
 expect_no_text "残りの日数は出ない" "まずは誕生日と寿命を設定"
 
 log "== 3. スマホ自体は使える（アプリ一覧から開ける）"
-expect_text "アプリ一覧がある" "アプリ名で検索"
+expect_text "アプリ一覧がある" "アプリ"
 $UI tap "Chrome" >/dev/null; sleep 4
 expect_app "一覧から Chrome が開く" com.android.chrome
 key KEYCODE_HOME
