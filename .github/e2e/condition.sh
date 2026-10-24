@@ -27,8 +27,10 @@ sleep 3; adb shell input keyevent KEYCODE_HOME; sleep 3; bash .github/e2e/skip_t
 key KEYCODE_HOME; sleep 3
 
 log "== 1. お気に入りを3つ登録"
+# アプリ名は表示の言語で変わる（日本語だと「時計」「設定」で、「設定」は歯車ボタンと同じ名前になる）ので、1〜3は英語で行う
+adb shell cmd locale set-app-locales $PKG --locales en-US >/dev/null 2>&1; sleep 3; key KEYCODE_HOME; sleep 2
 next_page; sleep 2
-for a in Clock Chrome Settings; do $UI long "$a" >/dev/null; sleep 2; $UI tap "お気に入りに追加" >/dev/null; sleep 2; done
+for a in Clock Chrome Settings; do $UI long "$a" >/dev/null; sleep 2; $UI tap "Add to favorites" >/dev/null; sleep 2; done
 key KEYCODE_HOME; favs; snap favs_before
 expect_order "登録した順に並ぶ" "Clock<Chrome<Settings"
 
@@ -46,12 +48,14 @@ expect_order "ホームに戻っても並びが残る" "Clock<Chrome<Settings"
 
 log "== 3. 動かさずに長押し→いつものメニュー"
 $UI long "Chrome" >/dev/null; sleep 2; snap sheet_favorite
-expect_text "メニューが出る" "名前を変更"
+expect_text "メニューが出る" "Rename"
 expect_no_text "上へ移動は無くなった" "上へ移動"
 key KEYCODE_BACK
 $UI tap "Clock" >/dev/null; sleep 3
 t=$(top); if echo "$t" | grep -qv "$PKG"; then ok "タップでアプリが開く ($t)"; else ng "タップしても開かない ($t)"; fi
 key KEYCODE_HOME
+
+adb shell cmd locale set-app-locales $PKG --locales ja-JP >/dev/null 2>&1; sleep 3; key KEYCODE_HOME; sleep 2
 
 log "== 4. 寿命から右へスワイプで身体の調子"
 prev_page; snap condition
@@ -84,7 +88,7 @@ log "== 5. 傾向とAI用の質問文"
 $UI tap "質問文をコピー" >/dev/null; snap copied
 expect_text "コピーできた" "コピーしました"
 expect_text "傾向の案内" "いま 1日"
-for i in 1 2 3; do adb shell input swipe 540 600 540 1900 300; sleep 1; done
+for i in 1 2 3 4 5 6 7 8; do adb shell input swipe 540 600 540 1900 300; sleep 1; done
 $UI tap "前の日" >/dev/null; sleep 1; snap yesterday
 expect_text "前の日に切り替わる" "昨日"
 expect_text "前の日の睡眠時間は未入力" "未入力"
