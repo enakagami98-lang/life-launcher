@@ -1,3 +1,6 @@
+import java.security.KeyStore
+import java.security.MessageDigest
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -7,10 +10,10 @@ plugins {
 // 署名鍵の指紋（SHA-256）。改造して別の鍵で署名し直したアプリを見分けるのに使う
 fun certSha256(): String {
     val ks = System.getenv("KEYSTORE_PATH") ?: return ""
-    val store = java.security.KeyStore.getInstance("PKCS12")
+    val store = KeyStore.getInstance("PKCS12")
     file(ks).inputStream().use { store.load(it, System.getenv("KEYSTORE_PASSWORD").toCharArray()) }
     val cert = store.getCertificate(System.getenv("KEY_ALIAS")) ?: return ""
-    return java.security.MessageDigest.getInstance("SHA-256").digest(cert.encoded)
+    return MessageDigest.getInstance("SHA-256").digest(cert.encoded)
         .joinToString("") { "%02x".format(it) }
 }
 
