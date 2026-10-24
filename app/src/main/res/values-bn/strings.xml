@@ -326,4 +326,15 @@
     <string name="tut7_longpress">তালিকায় অ্যাপ চেপে ধরে প্রিয়, সময়সীমা বা লুকানো সেট করুন।</string>
     <string name="tut7_tip">সেটিংসের (⚙) \"গাইড আবার দেখুন\" থেকে যেকোনো সময় এই গাইড দেখতে পারবেন।</string>
     <string name="s_tutorial">গাইড আবার দেখুন</string>
+    <string name="pay_title">Loosen ব্যবহার চালিয়ে যান</string>
+    <string name="pay_body">বাকি দিন, সময়সীমা, ফোনমুক্ত সময়, \"এখন কী করছেন?\" ইত্যাদি সুবিধা সাবস্ক্রিপশনে পাওয়া যায়। প্রথম ৩ দিন ফ্রি।</string>
+    <string name="pay_trial">৩ দিনের ফ্রি ট্রায়াল শুরু করুন</string>
+    <string name="pay_subscribe">সাবস্ক্রাইব করুন</string>
+    <string name="pay_then">তারপর %1$s/বছর (স্বয়ংক্রিয় নবায়ন)</string>
+    <string name="pay_restore">আগেই সাবস্ক্রাইব করেছেন? আবার যাচাই করুন</string>
+    <string name="pay_unavailable">Google Play-তে সংযোগ করা যাচ্ছে না। ইন্টারনেট ও Google অ্যাকাউন্ট দেখুন।</string>
+    <string name="pay_limited">সাবস্ক্রিপশন না থাকা পর্যন্ত Loosen-এর সুবিধা বন্ধ থাকে। নিচের তালিকা থেকে অ্যাপ স্বাভাবিকভাবে খুলতে পারবেন।</string>
+    <string name="pay_switch_home">অন্য হোম অ্যাপে বদলান</string>
+    <string name="pay_cancel_note">ফ্রি ট্রায়ালের মধ্যে বাতিল করলে কোনো চার্জ নেই। Google Play → পেমেন্ট ও সাবস্ক্রিপশন থেকে যেকোনো সময় বাতিল করুন।</string>
+    <string name="pay_manage">সাবস্ক্রিপশন পরিচালনা (বাতিল, পেমেন্টের উপায়)</string>
 </resources>

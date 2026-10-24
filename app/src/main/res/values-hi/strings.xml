@@ -326,4 +326,15 @@
     <string name="tut7_longpress">सूची में किसी ऐप को दबाकर रखें और पसंदीदा, समय सीमा या छिपाना सेट करें।</string>
     <string name="tut7_tip">यह गाइड सेटिंग (⚙) में \"गाइड फिर से देखें\" से कभी भी देख सकते हैं।</string>
     <string name="s_tutorial">गाइड फिर से देखें</string>
+    <string name="pay_title">Loosen इस्तेमाल करते रहें</string>
+    <string name="pay_body">बचे दिन, समय सीमा, फ़ोन-मुक्त समय, \"अभी क्या कर रहे हैं?\" जैसी सुविधाएं सदस्यता से मिलती हैं। पहले 3 दिन मुफ़्त हैं।</string>
+    <string name="pay_trial">3 दिन का मुफ़्त ट्रायल शुरू करें</string>
+    <string name="pay_subscribe">सदस्यता लें</string>
+    <string name="pay_then">उसके बाद %1$s/वर्ष (अपने-आप नवीनीकरण)</string>
+    <string name="pay_restore">पहले से सदस्य हैं? फिर से जांचें</string>
+    <string name="pay_unavailable">Google Play से कनेक्ट नहीं हो पा रहा। इंटरनेट और Google खाता जांचें।</string>
+    <string name="pay_limited">सदस्यता न होने तक Loosen की सुविधाएं रुकी हैं। नीचे की सूची से ऐप हमेशा की तरह खोल सकते हैं।</string>
+    <string name="pay_switch_home">दूसरे होम ऐप पर जाएं</string>
+    <string name="pay_cancel_note">मुफ़्त ट्रायल के दौरान रद्द करने पर कोई शुल्क नहीं लगेगा। Google Play → भुगतान और सदस्यताएं में कभी भी रद्द करें।</string>
+    <string name="pay_manage">सदस्यता प्रबंधित करें (रद्द करें, भुगतान का तरीका)</string>
 </resources>

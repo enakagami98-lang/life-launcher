@@ -326,4 +326,15 @@
     <string name="tut7_longpress">فہرست میں کسی ایپ کو دبا کر رکھیں اور پسندیدہ، وقت کی حد یا چھپانا ترتیب دیں۔</string>
     <string name="tut7_tip">یہ رہنمائی ترتیبات (⚙) میں \"رہنمائی دوبارہ دیکھیں\" سے کبھی بھی دیکھ سکتے ہیں۔</string>
     <string name="s_tutorial">رہنمائی دوبارہ دیکھیں</string>
+    <string name="pay_title">Loosen استعمال کرتے رہیں</string>
+    <string name="pay_body">باقی دن، وقت کی حد، فون سے پاک اوقات، \"ابھی کیا کر رہے ہیں؟\" اور مزید سہولیات سبسکرپشن سے ملتی ہیں۔ پہلے 3 دن مفت ہیں۔</string>
+    <string name="pay_trial">3 دن کی مفت آزمائش شروع کریں</string>
+    <string name="pay_subscribe">سبسکرائب کریں</string>
+    <string name="pay_then">اس کے بعد %1$s/سال (خودکار تجدید)</string>
+    <string name="pay_restore">پہلے سے سبسکرائب کیا؟ دوبارہ چیک کریں</string>
+    <string name="pay_unavailable">Google Play سے رابطہ نہیں ہو سکا۔ انٹرنیٹ اور Google اکاؤنٹ چیک کریں۔</string>
+    <string name="pay_limited">سبسکرپشن کے بغیر Loosen کی سہولیات رکی ہوئی ہیں۔ نیچے کی فہرست سے ایپس معمول کے مطابق کھول سکتے ہیں۔</string>
+    <string name="pay_switch_home">کسی اور ہوم ایپ پر جائیں</string>
+    <string name="pay_cancel_note">مفت آزمائش کے دوران منسوخ کریں تو کوئی رقم نہیں کٹے گی۔ Google Play ← ادائیگیاں اور سبسکرپشنز میں کبھی بھی منسوخ کریں۔</string>
+    <string name="pay_manage">سبسکرپشن کا انتظام (منسوخی، ادائیگی کا طریقہ)</string>
 </resources>

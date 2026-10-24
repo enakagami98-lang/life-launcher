@@ -329,4 +329,15 @@
     <string name="tut7_longpress">앱 목록에서 앱을 길게 누르면 즐겨찾기·사용 제한·숨기기를 설정할 수 있어요.</string>
     <string name="tut7_tip">설정(⚙)의 \'사용법 다시 보기\'에서 언제든 이 설명을 볼 수 있어요.</string>
     <string name="s_tutorial">사용법 다시 보기</string>
+    <string name="pay_title">Loosen 계속 사용하기</string>
+    <string name="pay_body">남은 날, 사용 제한, 사용 금지 시간, \'지금 뭐 하고 있어요?\' 등은 구독으로 이용할 수 있어요. 처음 3일은 무료예요.</string>
+    <string name="pay_trial">3일 무료 체험 시작</string>
+    <string name="pay_subscribe">구독 시작</string>
+    <string name="pay_then">이후 %1$s/년 (자동 갱신)</string>
+    <string name="pay_restore">이미 구독했나요? 다시 확인</string>
+    <string name="pay_unavailable">Google Play에 연결할 수 없어요. 인터넷 연결과 Google 계정을 확인하세요.</string>
+    <string name="pay_limited">구독이 없는 동안 Loosen의 기능은 멈춰 있어요. 아래 앱 목록에서 평소처럼 앱을 쓸 수 있어요.</string>
+    <string name="pay_switch_home">다른 홈 앱으로 바꾸기</string>
+    <string name="pay_cancel_note">무료 체험 기간에 해지하면 요금이 청구되지 않아요. 해지는 Google Play의 \'결제 및 구독\'에서 언제든 할 수 있어요.</string>
+    <string name="pay_manage">구독 관리 (해지, 결제 수단)</string>
 </resources>

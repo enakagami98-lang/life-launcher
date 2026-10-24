@@ -326,4 +326,15 @@
     <string name="tut7_longpress">यादीत ॲप दाबून धरून आवडी, वेळ मर्यादा किंवा लपवणे सेट करा.</string>
     <string name="tut7_tip">सेटिंग्ज (⚙) मधील \"मार्गदर्शन पुन्हा पहा\" मधून हे कधीही पाहता येईल.</string>
     <string name="s_tutorial">मार्गदर्शन पुन्हा पहा</string>
+    <string name="pay_title">Loosen वापरणे सुरू ठेवा</string>
+    <string name="pay_body">उरलेले दिवस, वेळ मर्यादा, फोनमुक्त वेळ, \"आत्ता काय करत आहात?\" अशा सुविधा सदस्यतेने मिळतात. पहिले 3 दिवस मोफत.</string>
+    <string name="pay_trial">3 दिवसांची मोफत चाचणी सुरू करा</string>
+    <string name="pay_subscribe">सदस्यता घ्या</string>
+    <string name="pay_then">त्यानंतर %1$s/वर्ष (आपोआप नूतनीकरण)</string>
+    <string name="pay_restore">आधीच सदस्य आहात? पुन्हा तपासा</string>
+    <string name="pay_unavailable">Google Play शी जोडता येत नाही. इंटरनेट आणि Google खाते तपासा.</string>
+    <string name="pay_limited">सदस्यता नसताना Loosen च्या सुविधा थांबलेल्या आहेत. खालील यादीतून ॲप्स नेहमीप्रमाणे उघडता येतात.</string>
+    <string name="pay_switch_home">दुसऱ्या होम ॲपवर जा</string>
+    <string name="pay_cancel_note">मोफत चाचणीदरम्यान रद्द केल्यास शुल्क लागणार नाही. Google Play → पेमेंट आणि सदस्यता मधून कधीही रद्द करा.</string>
+    <string name="pay_manage">सदस्यता व्यवस्थापित करा (रद्द करणे, पेमेंट पद्धत)</string>
 </resources>

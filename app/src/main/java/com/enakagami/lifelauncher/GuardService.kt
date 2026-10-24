@@ -77,6 +77,7 @@ class GuardService : Service() {
     override fun onCreate() {
         super.onCreate()
         Guard.init(this)
+        Billing.init(this)
         wm = getSystemService(WindowManager::class.java)
         startAsForeground()
         registerReceiver(screenReceiver, IntentFilter().apply {
@@ -122,6 +123,8 @@ class GuardService : Service() {
         if (getSystemService(android.app.KeyguardManager::class.java).isKeyguardLocked) { wasActive = false; return }
         ensureAnchor()
         Guard.addScreenTime(dt)
+        // Play 版で定期購入が無いときは、使いすぎ防止・使えない時間・質問などは止める
+        if (Billing.locked) { hideBar(); wasActive = true; return }
         if (!wasActive) {
             wasActive = true
             // ロックを解除した瞬間：「今何してる？」を出す

@@ -326,4 +326,15 @@
     <string name="tut7_longpress">اضغط مطولًا على تطبيق في القائمة لإضافته إلى المفضلة أو تحديد وقته أو إخفائه.</string>
     <string name="tut7_tip">يمكنك رؤية هذا الدليل مجددًا من \"عرض الدليل مرة أخرى\" في الإعدادات (⚙).</string>
     <string name="s_tutorial">عرض الدليل مرة أخرى</string>
+    <string name="pay_title">تابع استخدام Loosen</string>
+    <string name="pay_body">الأيام المتبقية والحدود الزمنية وساعات بلا هاتف و\"ماذا تفعل الآن؟\" وغيرها متاحة بالاشتراك. أول 3 أيام مجانية.</string>
+    <string name="pay_trial">ابدأ تجربة مجانية لمدة 3 أيام</string>
+    <string name="pay_subscribe">اشترك</string>
+    <string name="pay_then">ثم %1$s/سنة (تجديد تلقائي)</string>
+    <string name="pay_restore">مشترك بالفعل؟ تحقّق مجددًا</string>
+    <string name="pay_unavailable">تعذّر الاتصال بـ Google Play. تحقّق من الإنترنت وحساب Google.</string>
+    <string name="pay_limited">بدون اشتراك تتوقف ميزات Loosen. لا يزال بإمكانك فتح تطبيقاتك من القائمة بالأسفل.</string>
+    <string name="pay_switch_home">التبديل إلى تطبيق شاشة رئيسية آخر</string>
+    <string name="pay_cancel_note">إذا ألغيت خلال الفترة التجريبية المجانية فلن تُحاسَب. يمكنك الإلغاء في أي وقت من Google Play ← الدفعات والاشتراكات.</string>
+    <string name="pay_manage">إدارة الاشتراك (الإلغاء، طريقة الدفع)</string>
 </resources>

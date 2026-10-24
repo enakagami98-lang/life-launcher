@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       only:
-        description: "all=全部 / scroll=スクロールだけ / simple=簡易モードと長押しパネル / condition=お気に入りの並べ替えと今日の調子 / tasks=今日のタスク・使用時間・今何してる？ / top=トップ画面と支払額 / lang=いろいろな言語の表示 / count=制限アプリの使用時間 / goal=朝の今日の目標 / tutorial=使い方（all以外はAndroid 15のみ）"
+        description: "all=全部 / scroll=スクロールだけ / simple=簡易モードと長押しパネル / condition=お気に入りの並べ替えと今日の調子 / tasks=今日のタスク・使用時間・今何してる？ / top=トップ画面と支払額 / lang=いろいろな言語の表示 / count=制限アプリの使用時間 / goal=朝の今日の目標 / tutorial=使い方 / paywall=Play版の購入画面（all以外はAndroid 15のみ）"
         default: "all"
       tag:
         description: "試すAPKのリリース名（空なら最新）"
@@ -21,7 +21,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: 最新のAPKを取得
-        run: gh release download ${{ inputs.tag }} --pattern LifeLauncher.apk
+        run: gh release download ${{ inputs.tag }} --pattern LifeLauncher.apk --pattern Loosen-play.apk
         env:
           GH_TOKEN: ${{ github.token }}
       - run: pip install pillow

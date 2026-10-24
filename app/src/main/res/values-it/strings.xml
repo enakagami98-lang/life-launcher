@@ -324,4 +324,15 @@
     <string name="tut7_longpress">Tieni premuta un\'app nell\'elenco per aggiungerla ai preferiti, limitarla o nasconderla.</string>
     <string name="tut7_tip">Puoi rivedere questa guida quando vuoi da \"Rivedi la guida\" in Impostazioni (⚙).</string>
     <string name="s_tutorial">Rivedi la guida</string>
+    <string name="pay_title">Continua a usare Loosen</string>
+    <string name="pay_body">Giorni rimasti, limiti di tempo, ore senza telefono, \"Cosa stai facendo?\" e altro sono disponibili con un abbonamento. I primi 3 giorni sono gratis.</string>
+    <string name="pay_trial">Inizia la prova gratuita di 3 giorni</string>
+    <string name="pay_subscribe">Abbonati</string>
+    <string name="pay_then">Poi %1$s/anno (rinnovo automatico)</string>
+    <string name="pay_restore">Già abbonato? Verifica di nuovo</string>
+    <string name="pay_unavailable">Impossibile connettersi a Google Play. Controlla la connessione e l\'account Google.</string>
+    <string name="pay_limited">Senza abbonamento le funzioni di Loosen sono in pausa. Puoi comunque aprire le tue app dall\'elenco qui sotto.</string>
+    <string name="pay_switch_home">Passa a un\'altra app iniziale</string>
+    <string name="pay_cancel_note">Se annulli durante la prova gratuita non paghi nulla. Annulla quando vuoi da Google Play → Pagamenti e abbonamenti.</string>
+    <string name="pay_manage">Gestisci abbonamento (annulla, metodo di pagamento)</string>
 </resources>

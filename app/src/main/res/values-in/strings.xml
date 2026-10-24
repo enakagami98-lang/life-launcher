@@ -326,4 +326,15 @@
     <string name="tut7_longpress">Tekan lama aplikasi di daftar untuk menambah ke favorit, memberi batas waktu, atau menyembunyikannya.</string>
     <string name="tut7_tip">Panduan ini bisa dibuka lagi kapan saja dari \"Lihat panduan lagi\" di Setelan (⚙).</string>
     <string name="s_tutorial">Lihat panduan lagi</string>
+    <string name="pay_title">Terus pakai Loosen</string>
+    <string name="pay_body">Hari tersisa, batas waktu, jam bebas ponsel, \"Sedang apa sekarang?\" dan lainnya tersedia dengan langganan. 3 hari pertama gratis.</string>
+    <string name="pay_trial">Mulai uji coba gratis 3 hari</string>
+    <string name="pay_subscribe">Berlangganan</string>
+    <string name="pay_then">Lalu %1$s/tahun (diperpanjang otomatis)</string>
+    <string name="pay_restore">Sudah berlangganan? Periksa lagi</string>
+    <string name="pay_unavailable">Tidak bisa terhubung ke Google Play. Periksa koneksi internet dan akun Google.</string>
+    <string name="pay_limited">Tanpa langganan, fitur Loosen dijeda. Kamu tetap bisa membuka aplikasi dari daftar di bawah.</string>
+    <string name="pay_switch_home">Ganti ke aplikasi layar utama lain</string>
+    <string name="pay_cancel_note">Batalkan selama uji coba gratis dan kamu tidak akan ditagih. Batalkan kapan saja di Google Play → Pembayaran &amp; langganan.</string>
+    <string name="pay_manage">Kelola langganan (batal, metode pembayaran)</string>
 </resources>

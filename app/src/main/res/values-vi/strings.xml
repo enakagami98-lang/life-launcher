@@ -326,4 +326,15 @@
     <string name="tut7_longpress">Nhấn giữ ứng dụng trong danh sách để thêm vào yêu thích, đặt giới hạn hoặc ẩn.</string>
     <string name="tut7_tip">Xem lại hướng dẫn này bất cứ lúc nào ở \"Xem lại hướng dẫn\" trong Cài đặt (⚙).</string>
     <string name="s_tutorial">Xem lại hướng dẫn</string>
+    <string name="pay_title">Tiếp tục dùng Loosen</string>
+    <string name="pay_body">Số ngày còn lại, giới hạn thời gian, giờ không dùng điện thoại, \"Bạn đang làm gì?\" và nhiều tính năng khác có khi đăng ký. 3 ngày đầu miễn phí.</string>
+    <string name="pay_trial">Bắt đầu dùng thử miễn phí 3 ngày</string>
+    <string name="pay_subscribe">Đăng ký</string>
+    <string name="pay_then">Sau đó %1$s/năm (tự động gia hạn)</string>
+    <string name="pay_restore">Đã đăng ký? Kiểm tra lại</string>
+    <string name="pay_unavailable">Không kết nối được Google Play. Hãy kiểm tra mạng và tài khoản Google.</string>
+    <string name="pay_limited">Khi chưa đăng ký, các tính năng của Loosen tạm dừng. Bạn vẫn mở ứng dụng được từ danh sách bên dưới.</string>
+    <string name="pay_switch_home">Chuyển sang ứng dụng màn hình chính khác</string>
+    <string name="pay_cancel_note">Hủy trong thời gian dùng thử miễn phí thì không bị tính phí. Hủy bất cứ lúc nào trong Google Play → Thanh toán và gói đăng ký.</string>
+    <string name="pay_manage">Quản lý gói đăng ký (hủy, phương thức thanh toán)</string>
 </resources>

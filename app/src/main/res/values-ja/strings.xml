@@ -331,4 +331,15 @@
     <string name="tut7_longpress">アプリ一覧でアプリを長押しすると、お気に入り・使いすぎ防止・非表示を設定できます。</string>
     <string name="tut7_tip">設定（⚙）の「使い方をもう一度見る」から、いつでもこの説明を見られます。</string>
     <string name="s_tutorial">使い方をもう一度見る</string>
+    <string name="pay_title">Loosen を続けるには</string>
+    <string name="pay_body">残りの日数・使いすぎ防止・使えない時間帯・今何してる？などの機能は、定期購入で使えます。最初の3日間は無料です。</string>
+    <string name="pay_trial">3日間無料で始める</string>
+    <string name="pay_subscribe">定期購入を始める</string>
+    <string name="pay_then">その後 %1$s／年（自動更新）</string>
+    <string name="pay_restore">購入済みの方：購入を確認する</string>
+    <string name="pay_unavailable">Google Play に接続できません。ネット接続と Google アカウントを確認してください。</string>
+    <string name="pay_limited">定期購入が無い間、Loosen の機能は止まっています。下のアプリ一覧から、いつも通りアプリは使えます。</string>
+    <string name="pay_switch_home">ほかのホームアプリに切り替える</string>
+    <string name="pay_cancel_note">無料期間中に解約すれば料金はかかりません。解約は Google Play の「お支払いと定期購入」からいつでもできます。</string>
+    <string name="pay_manage">定期購入の管理（解約・支払い方法）</string>
 </resources>

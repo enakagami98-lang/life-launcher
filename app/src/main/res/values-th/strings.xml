@@ -326,4 +326,15 @@
     <string name="tut7_longpress">กดค้างที่แอปในรายการเพื่อเพิ่มในรายการโปรด จำกัดเวลา หรือซ่อน</string>
     <string name="tut7_tip">ดูคำแนะนำนี้อีกครั้งได้ทุกเมื่อที่ \"ดูวิธีใช้อีกครั้ง\" ในการตั้งค่า (⚙)</string>
     <string name="s_tutorial">ดูวิธีใช้อีกครั้ง</string>
+    <string name="pay_title">ใช้ Loosen ต่อ</string>
+    <string name="pay_body">วันที่เหลือ การจำกัดเวลา ช่วงงดใช้โทรศัพท์ \"ตอนนี้ทำอะไรอยู่?\" และอื่นๆ ใช้ได้เมื่อสมัครสมาชิก 3 วันแรกฟรี</string>
+    <string name="pay_trial">เริ่มทดลองใช้ฟรี 3 วัน</string>
+    <string name="pay_subscribe">สมัครสมาชิก</string>
+    <string name="pay_then">จากนั้น %1$s/ปี (ต่ออายุอัตโนมัติ)</string>
+    <string name="pay_restore">สมัครแล้ว? ตรวจสอบอีกครั้ง</string>
+    <string name="pay_unavailable">เชื่อมต่อ Google Play ไม่ได้ ตรวจสอบอินเทอร์เน็ตและบัญชี Google</string>
+    <string name="pay_limited">ระหว่างที่ยังไม่ได้สมัคร ฟีเจอร์ของ Loosen จะหยุดไว้ ยังเปิดแอปได้ตามปกติจากรายการด้านล่าง</string>
+    <string name="pay_switch_home">เปลี่ยนไปใช้แอปหน้าจอหลักอื่น</string>
+    <string name="pay_cancel_note">ยกเลิกระหว่างทดลองใช้ฟรีจะไม่มีการเรียกเก็บเงิน ยกเลิกได้ทุกเมื่อที่ Google Play → การชำระเงินและการสมัครใช้บริการ</string>
+    <string name="pay_manage">จัดการการสมัคร (ยกเลิก วิธีชำระเงิน)</string>
 </resources>

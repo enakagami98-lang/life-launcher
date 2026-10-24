@@ -325,4 +325,15 @@
     <string name="tut7_longpress">Favorilere eklemek, süre sınırı koymak veya gizlemek için listede uygulamaya basılı tut.</string>
     <string name="tut7_tip">Bu rehberi Ayarlar\'daki (⚙) \"Rehberi tekrar gör\"den istediğin zaman açabilirsin.</string>
     <string name="s_tutorial">Rehberi tekrar gör</string>
+    <string name="pay_title">Loosen\'ı kullanmaya devam et</string>
+    <string name="pay_body">Kalan gün, süre sınırları, telefonsuz saatler, \"Şu an ne yapıyorsun?\" ve daha fazlası abonelikle kullanılabilir. İlk 3 gün ücretsiz.</string>
+    <string name="pay_trial">3 günlük ücretsiz denemeyi başlat</string>
+    <string name="pay_subscribe">Abone ol</string>
+    <string name="pay_then">Sonra %1$s/yıl (otomatik yenilenir)</string>
+    <string name="pay_restore">Zaten abone misin? Tekrar kontrol et</string>
+    <string name="pay_unavailable">Google Play\'e bağlanılamıyor. İnternet bağlantını ve Google hesabını kontrol et.</string>
+    <string name="pay_limited">Abonelik yokken Loosen\'ın özellikleri durdurulur. Uygulamalarını aşağıdaki listeden açabilirsin.</string>
+    <string name="pay_switch_home">Başka bir ana ekran uygulamasına geç</string>
+    <string name="pay_cancel_note">Ücretsiz deneme sırasında iptal edersen ücret alınmaz. İstediğin zaman Google Play → Ödemeler ve abonelikler\'den iptal edebilirsin.</string>
+    <string name="pay_manage">Aboneliği yönet (iptal, ödeme yöntemi)</string>
 </resources>

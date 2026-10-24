@@ -326,4 +326,15 @@
     <string name="tut7_longpress">జాబితాలో యాప్‌ను నొక్కి పట్టి ఇష్టమైనవి, సమయ పరిమితి లేదా దాచడం సెట్ చేయండి.</string>
     <string name="tut7_tip">సెట్టింగ్‌ల (⚙) లోని \"గైడ్ మళ్లీ చూడు\" నుండి ఎప్పుడైనా ఇది చూడవచ్చు.</string>
     <string name="s_tutorial">గైడ్ మళ్లీ చూడు</string>
+    <string name="pay_title">Loosen వాడటం కొనసాగించండి</string>
+    <string name="pay_body">మిగిలిన రోజులు, సమయ పరిమితులు, ఫోన్ లేని సమయం, \"ఇప్పుడు ఏం చేస్తున్నారు?\" వంటివి సబ్‌స్క్రిప్షన్‌తో లభిస్తాయి. మొదటి 3 రోజులు ఉచితం.</string>
+    <string name="pay_trial">3 రోజుల ఉచిత ట్రయల్ మొదలుపెట్టు</string>
+    <string name="pay_subscribe">సబ్‌స్క్రైబ్ చేయి</string>
+    <string name="pay_then">తర్వాత %1$s/సంవత్సరం (ఆటో రెన్యువల్)</string>
+    <string name="pay_restore">ఇప్పటికే సబ్‌స్క్రైబ్ చేశారా? మళ్లీ చూడండి</string>
+    <string name="pay_unavailable">Google Play కి కనెక్ట్ కాలేదు. ఇంటర్నెట్, Google ఖాతా చూడండి.</string>
+    <string name="pay_limited">సబ్‌స్క్రిప్షన్ లేనప్పుడు Loosen ఫీచర్లు ఆగి ఉంటాయి. కింది జాబితా నుండి యాప్‌లను మామూలుగా తెరవవచ్చు.</string>
+    <string name="pay_switch_home">వేరే హోమ్ యాప్‌కు మారు</string>
+    <string name="pay_cancel_note">ఉచిత ట్రయల్‌లో రద్దు చేస్తే ఛార్జ్ ఉండదు. Google Play → చెల్లింపులు &amp; సబ్‌స్క్రిప్షన్‌లలో ఎప్పుడైనా రద్దు చేయండి.</string>
+    <string name="pay_manage">సబ్‌స్క్రిప్షన్ నిర్వహణ (రద్దు, చెల్లింపు విధానం)</string>
 </resources>

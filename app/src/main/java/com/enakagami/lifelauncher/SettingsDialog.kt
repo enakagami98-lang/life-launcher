@@ -95,6 +95,16 @@ fun SettingsDialog(store: Store, apps: List<AppInfo>, onDismiss: () -> Unit, onT
                 ReminderSection(apps)
                 LockSection()
 
+                if (BuildConfig.PAYWALL) {
+                    Column(Modifier.padding(horizontal = 20.dp, vertical = 4.dp).fillMaxWidth()) {
+                        TextButton(onClick = {
+                            runCatching {
+                                context.startActivity(Intent(Intent.ACTION_VIEW, android.net.Uri.parse(Billing.manageUrl(context.packageName)))
+                                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+                            }
+                        }) { Text(stringResource(R.string.pay_manage)) }
+                    }
+                }
                 // 使い方をもう一度
                 Column(Modifier.padding(horizontal = 20.dp, vertical = 8.dp).fillMaxWidth()) {
                     Button(

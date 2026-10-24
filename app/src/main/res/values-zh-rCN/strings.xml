@@ -329,4 +329,15 @@
     <string name="tut7_longpress">在应用列表中长按应用，可以设置收藏、使用限制或隐藏。</string>
     <string name="tut7_tip">随时可在设置（⚙）的“再看一遍使用说明”中重新查看。</string>
     <string name="s_tutorial">再看一遍使用说明</string>
+    <string name="pay_title">继续使用 Loosen</string>
+    <string name="pay_body">剩余天数、使用限制、禁用时段、“你现在在做什么？”等功能需订阅后使用。前 3 天免费。</string>
+    <string name="pay_trial">开始 3 天免费试用</string>
+    <string name="pay_subscribe">开始订阅</string>
+    <string name="pay_then">之后 %1$s/年（自动续订）</string>
+    <string name="pay_restore">已订阅？重新确认</string>
+    <string name="pay_unavailable">无法连接 Google Play。请检查网络连接和 Google 账号。</string>
+    <string name="pay_limited">未订阅期间，Loosen 的功能已暂停。你仍可以从下方的应用列表打开应用。</string>
+    <string name="pay_switch_home">切换到其他主屏幕应用</string>
+    <string name="pay_cancel_note">在免费试用期内取消不会扣费。可随时在 Google Play 的“付款和订阅”中取消。</string>
+    <string name="pay_manage">管理订阅（取消、付款方式）</string>
 </resources>

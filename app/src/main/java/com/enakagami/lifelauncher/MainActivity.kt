@@ -64,6 +64,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         Guard.init(this)
         Spend.init(this)
+        Billing.init(this)
         val store = Store(this)
         handleGuardIntent(intent)
         setContent {
@@ -102,6 +103,7 @@ class MainActivity : ComponentActivity() {
         // 簡易モードでは、ホームに戻ってきたら今回の利用は終わり（次に開くときはまた待つ）
         if (!Guard.hasUsageAccess(this)) Guard.endCurrentSession()
         resumeSignal.intValue++
+        Billing.refresh()
         // 見守りサービスを動かす（すでに動いていれば何もしない）
         runCatching { startForegroundService(Intent(this, GuardService::class.java)) }
     }
@@ -171,7 +173,7 @@ fun LauncherApp(
 
     val openApp: (String) -> Unit = { key ->
         val pkg = key.substringBefore('/')
-        if (Guard.isLimited(pkg) && !Guard.sessionActive(pkg)) setGuardRequest(GuardRequest(pkg, key, "open"))
+        if (!Billing.locked && Guard.isLimited(pkg) && !Guard.sessionActive(pkg)) setGuardRequest(GuardRequest(pkg, key, "open"))
         else launchApp(context, key)
     }
 
@@ -203,10 +205,13 @@ fun LauncherApp(
     ) {
         MaterialTheme(colorScheme = scheme) {
             Surface(Modifier.fillMaxSize(), color = palette.bg) {
-                if (lock != null) {
+                if (lock != null && !Billing.locked) {
                     LockScreen(stringResource(lock.first), lock.second, now.toLocalTime())
                 } else if (showTutorial) {
                     TutorialScreen(store, apps, onFinish = { store.finishTutorial(); showTutorial = false })
+                } else if (Billing.locked) {
+                    // Play 版で定期購入が無いとき：機能は止めて、購入画面＋アプリ一覧
+                    PaywallScreen(store, apps, query, onQuery = { query = it })
                 } else if (Guard.needGoal(now)) {
                     // 夜のおやすみ時間のあと最初：今日の目標を決めるまでホーム画面の代わりに出す
                     GoalScreen()

@@ -60,9 +60,11 @@ def write(folder, entries):
 def main():
     base = dict(load("base").S)
     # チュートリアルの文字は tutorial.py に言語ごとの並びで入っている
-    tut = load("tutorial")
-    for i, k in enumerate(tut.KEYS):
-        base[k] = (tut.L["ja"][i], tut.L["en"][i])
+    # チュートリアル・購入画面の文字は、言語ごとの並びで別ファイルに入っている
+    extras = [load("tutorial"), load("paywall")]
+    for ex in extras:
+        for i, k in enumerate(ex.KEYS):
+            base[k] = (ex.L["ja"][i], ex.L["en"][i])
     ok = True
     write("values", {"app_name": "Loosen", **{k: v[1] for k, v in base.items()}})
     write("values-ja", {k: v[0] for k, v in base.items()})
@@ -73,9 +75,10 @@ def main():
         if not (ROOT / f"tr_{code}.py").exists():
             continue
         t = dict(load(f"tr_{code}").T)
-        if code in tut.L:
-            assert len(tut.L[code]) == len(tut.KEYS), f"tutorial.py の {code} の数が合わない"
-            t.update(dict(zip(tut.KEYS, tut.L[code])))
+        for ex in extras:
+            if code in ex.L:
+                assert len(ex.L[code]) == len(ex.KEYS), f"{ex.__name__}.py の {code} の数が合わない"
+                t.update(dict(zip(ex.KEYS, ex.L[code])))
         out = {}
         for k, (_, en) in base.items():
             v = t.get(k)

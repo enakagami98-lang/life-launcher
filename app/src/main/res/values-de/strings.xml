@@ -325,4 +325,15 @@
     <string name="tut7_longpress">Halte eine App in der Liste gedrückt, um sie zu Favoriten hinzuzufügen, zu begrenzen oder auszublenden.</string>
     <string name="tut7_tip">Diese Anleitung findest du jederzeit unter „Anleitung erneut ansehen“ in den Einstellungen (⚙).</string>
     <string name="s_tutorial">Anleitung erneut ansehen</string>
+    <string name="pay_title">Loosen weiter nutzen</string>
+    <string name="pay_body">Verbleibende Tage, Zeitlimits, handyfreie Zeiten, „Was machst du gerade?“ und mehr gibt es mit einem Abo. Die ersten 3 Tage sind kostenlos.</string>
+    <string name="pay_trial">3 Tage kostenlos testen</string>
+    <string name="pay_subscribe">Abonnieren</string>
+    <string name="pay_then">Danach %1$s/Jahr (automatische Verlängerung)</string>
+    <string name="pay_restore">Schon abonniert? Erneut prüfen</string>
+    <string name="pay_unavailable">Keine Verbindung zu Google Play. Prüfe Internetverbindung und Google-Konto.</string>
+    <string name="pay_limited">Ohne Abo sind die Funktionen von Loosen pausiert. Deine Apps kannst du weiterhin über die Liste unten öffnen.</string>
+    <string name="pay_switch_home">Zu einer anderen Start-App wechseln</string>
+    <string name="pay_cancel_note">Kündigst du während des Testzeitraums, wird nichts berechnet. Kündigen jederzeit in Google Play → Zahlungen und Abos.</string>
+    <string name="pay_manage">Abo verwalten (kündigen, Zahlungsmethode)</string>
 </resources>

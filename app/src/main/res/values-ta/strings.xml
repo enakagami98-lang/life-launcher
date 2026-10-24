@@ -326,4 +326,15 @@
     <string name="tut7_longpress">பட்டியலில் ஆப்ஸை அழுத்திப் பிடித்துப் பிடித்தவை, நேர வரம்பு அல்லது மறைத்தலை அமைக்கவும்.</string>
     <string name="tut7_tip">அமைப்புகளில் (⚙) உள்ள \"வழிகாட்டியை மீண்டும் பார்\" மூலம் எப்போது வேண்டுமானாலும் இதைப் பார்க்கலாம்.</string>
     <string name="s_tutorial">வழிகாட்டியை மீண்டும் பார்</string>
+    <string name="pay_title">Loosen-ஐத் தொடர்ந்து பயன்படுத்துங்கள்</string>
+    <string name="pay_body">மீதமுள்ள நாட்கள், நேர வரம்புகள், போன் இல்லாத நேரம், \"இப்போது என்ன செய்கிறீர்கள்?\" போன்றவை சந்தாவுடன் கிடைக்கும். முதல் 3 நாட்கள் இலவசம்.</string>
+    <string name="pay_trial">3 நாள் இலவச சோதனையைத் தொடங்கு</string>
+    <string name="pay_subscribe">சந்தா சேர்</string>
+    <string name="pay_then">பிறகு %1$s/ஆண்டு (தானியங்கு புதுப்பிப்பு)</string>
+    <string name="pay_restore">ஏற்கனவே சந்தா உள்ளதா? மீண்டும் சரிபார்</string>
+    <string name="pay_unavailable">Google Play-உடன் இணைக்க முடியவில்லை. இணையம் மற்றும் Google கணக்கைச் சரிபார்க்கவும்.</string>
+    <string name="pay_limited">சந்தா இல்லாதபோது Loosen அம்சங்கள் நிறுத்தப்பட்டிருக்கும். கீழே உள்ள பட்டியலிலிருந்து ஆப்ஸை வழக்கம்போல் திறக்கலாம்.</string>
+    <string name="pay_switch_home">வேறு முகப்பு ஆப்ஸுக்கு மாறு</string>
+    <string name="pay_cancel_note">இலவசச் சோதனையின்போது ரத்துசெய்தால் கட்டணம் இல்லை. Google Play → பணம் செலுத்துதல் &amp; சந்தாக்களில் எப்போது வேண்டுமானாலும் ரத்துசெய்யலாம்.</string>
+    <string name="pay_manage">சந்தாவை நிர்வகி (ரத்து, பணம் செலுத்தும் முறை)</string>
 </resources>

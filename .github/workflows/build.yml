@@ -21,7 +21,7 @@ jobs:
 
       - uses: gradle/actions/setup-gradle@v4
         with:
-          gradle-version: "8.9"
+          gradle-version: "8.11.1"
 
       - name: 署名用の鍵を復元
         run: echo "$KEYSTORE_B64" | base64 -d > "$RUNNER_TEMP/release.p12"
@@ -29,7 +29,7 @@ jobs:
           KEYSTORE_B64: ${{ secrets.KEYSTORE_B64 }}
 
       - name: APKを組み立てる
-        run: gradle assembleRelease --no-daemon --stacktrace
+        run: gradle assembleGithubRelease assemblePlayRelease bundlePlayRelease --no-daemon --stacktrace
         env:
           KEYSTORE_PATH: ${{ runner.temp }}/release.p12
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
@@ -38,8 +38,11 @@ jobs:
 
       - name: リリースに公開
         run: |
-          cp app/build/outputs/apk/release/app-release.apk LifeLauncher.apk
-          gh release create "v1.0.${{ github.run_number }}" LifeLauncher.apk \
+          cp app/build/outputs/apk/github/release/app-github-release.apk LifeLauncher.apk
+          # Google Play 用：AAB は Play Console にアップロードするもの、APK は仮想スマホでの確認用
+          cp app/build/outputs/bundle/playRelease/app-play-release.aab Loosen-play.aab
+          cp app/build/outputs/apk/play/release/app-play-release.apk Loosen-play.apk
+          gh release create "v1.0.${{ github.run_number }}" LifeLauncher.apk Loosen-play.aab Loosen-play.apk \
             --title "LifeLauncher 1.0.${{ github.run_number }}" \
             --notes "$NOTES" --latest
         env:

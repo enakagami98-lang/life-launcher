@@ -332,4 +332,15 @@
     <string name="tut7_longpress">Press and hold an app in the list to add it to favorites, set a time limit, or hide it.</string>
     <string name="tut7_tip">You can see this guide again anytime from \"Show the guide again\" in Settings (⚙).</string>
     <string name="s_tutorial">Show the guide again</string>
+    <string name="pay_title">Keep using Loosen</string>
+    <string name="pay_body">Days left, time limits, phone-free hours, \"What are you doing?\" and more are available with a subscription. The first 3 days are free.</string>
+    <string name="pay_trial">Start 3-day free trial</string>
+    <string name="pay_subscribe">Subscribe</string>
+    <string name="pay_then">Then %1$s/year (auto-renews)</string>
+    <string name="pay_restore">Already subscribed? Check again</string>
+    <string name="pay_unavailable">Can\'t connect to Google Play. Check your internet connection and Google account.</string>
+    <string name="pay_limited">Loosen\'s features are paused without a subscription. You can still open your apps from the list below.</string>
+    <string name="pay_switch_home">Switch to another home app</string>
+    <string name="pay_cancel_note">Cancel during the free trial and you won\'t be charged. Cancel anytime in Google Play → Payments &amp; subscriptions.</string>
+    <string name="pay_manage">Manage subscription (cancel, payment method)</string>
 </resources>

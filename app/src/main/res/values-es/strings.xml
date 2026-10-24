@@ -324,4 +324,15 @@
     <string name="tut7_longpress">Mantén pulsada una app en la lista para añadirla a favoritos, ponerle límite u ocultarla.</string>
     <string name="tut7_tip">Puedes volver a ver esta guía en \"Ver la guía de nuevo\" en Ajustes (⚙).</string>
     <string name="s_tutorial">Ver la guía de nuevo</string>
+    <string name="pay_title">Sigue usando Loosen</string>
+    <string name="pay_body">Los días restantes, los límites de tiempo, las horas sin teléfono, \"¿Qué estás haciendo?\" y más están disponibles con una suscripción. Los primeros 3 días son gratis.</string>
+    <string name="pay_trial">Empezar prueba gratis de 3 días</string>
+    <string name="pay_subscribe">Suscribirse</string>
+    <string name="pay_then">Después %1$s/año (se renueva automáticamente)</string>
+    <string name="pay_restore">¿Ya te suscribiste? Comprobar de nuevo</string>
+    <string name="pay_unavailable">No se puede conectar con Google Play. Revisa la conexión a internet y tu cuenta de Google.</string>
+    <string name="pay_limited">Sin suscripción, las funciones de Loosen están en pausa. Puedes seguir abriendo tus apps desde la lista de abajo.</string>
+    <string name="pay_switch_home">Cambiar a otra app de inicio</string>
+    <string name="pay_cancel_note">Si cancelas durante la prueba gratis, no se te cobrará. Cancela cuando quieras en Google Play → Pagos y suscripciones.</string>
+    <string name="pay_manage">Gestionar suscripción (cancelar, método de pago)</string>
 </resources>

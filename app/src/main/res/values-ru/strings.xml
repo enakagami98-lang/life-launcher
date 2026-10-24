@@ -325,4 +325,15 @@
     <string name="tut7_longpress">Удерживай приложение в списке, чтобы добавить в избранное, ограничить или скрыть.</string>
     <string name="tut7_tip">Эту инструкцию можно снова открыть в «Показать инструкцию снова» в настройках (⚙).</string>
     <string name="s_tutorial">Показать инструкцию снова</string>
+    <string name="pay_title">Продолжить пользоваться Loosen</string>
+    <string name="pay_body">«Осталось дней», лимиты времени, время без телефона, «Чем ты сейчас занят?» и другое доступны по подписке. Первые 3 дня бесплатно.</string>
+    <string name="pay_trial">Начать 3 дня бесплатно</string>
+    <string name="pay_subscribe">Оформить подписку</string>
+    <string name="pay_then">Затем %1$s/год (автопродление)</string>
+    <string name="pay_restore">Уже подписаны? Проверить снова</string>
+    <string name="pay_unavailable">Не удаётся подключиться к Google Play. Проверьте интернет и аккаунт Google.</string>
+    <string name="pay_limited">Без подписки функции Loosen приостановлены. Приложения можно открывать из списка ниже.</string>
+    <string name="pay_switch_home">Переключиться на другой главный экран</string>
+    <string name="pay_cancel_note">Если отменить подписку во время пробного периода, оплаты не будет. Отменить можно в любой момент: Google Play → Платежи и подписки.</string>
+    <string name="pay_manage">Управление подпиской (отмена, способ оплаты)</string>
 </resources>
