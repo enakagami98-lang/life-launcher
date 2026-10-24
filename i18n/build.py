@@ -61,7 +61,7 @@ def main():
     base = dict(load("base").S)
     # チュートリアルの文字は tutorial.py に言語ごとの並びで入っている
     # チュートリアル・購入画面の文字は、言語ごとの並びで別ファイルに入っている
-    extras = [load("tutorial"), load("paywall")]
+    extras = [load("tutorial"), load("paywall"), load("body")]
     for ex in extras:
         for i, k in enumerate(ex.KEYS):
             base[k] = (ex.L["ja"][i], ex.L["en"][i])

@@ -67,10 +67,10 @@ expect_text "カウントダウン" "タップして、目標の日を登録"
 expect_text "習慣チェック" "「習慣」の画面で追加すると"
 adb shell input swipe 540 1800 540 700 400; sleep 2; snap new_widgets_lower
 expect_text "歩数（許可のお願いかセンサー無し）" "歩"
-expect_text "昨日のふり返り" "今日の調子を入力"
+expect_text "昨日のふり返り" "今日の身体の調子を入力"
 expect_text "天気（許可のお願い）" "だいたいの位置"
-$UI tap "今日の調子を入力 ›" >/dev/null; sleep 2; snap to_condition
-expect_text "ふり返りから今日の調子へ" "睡眠の質"
+$UI tap "今日の身体の調子を入力 ›" >/dev/null; sleep 2; snap to_condition
+expect_text "ふり返りから身体の調子へ" "睡眠の質"
 key KEYCODE_HOME
 
 log "== 4. 支払いの通知から金額を読む"

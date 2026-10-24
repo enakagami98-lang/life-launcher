@@ -38,13 +38,15 @@ import androidx.compose.ui.unit.sp
 data class Palette(val bg: Color, val accent: Color) {
     val dark = bg.luminance() < 0.4f
     val card = if (dark) lerp(bg, Color.White, 0.10f) else lerp(bg, Color.Black, 0.05f)
-    val ink = if (dark) Color(0xFFF2F3F7) else Color(0xFF1A1A1F)
+    // 明るい背景の文字は紺色（黒より柔らかく見える）
+    val ink = if (dark) Color(0xFFF2F3F7) else Color(0xFF16213E)
     val subInk = ink.copy(alpha = 0.62f)
     val onAccent = if (accent.luminance() > 0.55f) Color(0xFF1A1A1F) else Color.White
 }
 
-val DefaultBg = Color(0xFFFFFFFF)
-val DefaultAccent = Color(0xFF1043E5)
+// 最初の色：薄い黄色の背景に紺色（ストアの見本もこの色）
+val DefaultBg = Color(0xFFFFF7DA)
+val DefaultAccent = Color(0xFF1C2E5C)
 val LocalPalette = staticCompositionLocalOf { Palette(DefaultBg, DefaultAccent) }
 
 val Blue: Color @Composable @ReadOnlyComposable get() = LocalPalette.current.accent

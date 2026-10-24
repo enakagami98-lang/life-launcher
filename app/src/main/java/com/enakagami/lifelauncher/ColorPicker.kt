@@ -53,6 +53,7 @@ val PresetColors = listOf(
     R.string.color_white to 0xFFFFFFFF, R.string.color_black to 0xFF000000, R.string.color_navy to 0xFF0F1B2D, R.string.color_teal to 0xFF27444F,
     R.string.color_beige to 0xFFF5EFE6, R.string.color_gray to 0xFFE9EBF0, R.string.color_blue to 0xFF1043E5, R.string.color_red to 0xFFE53935,
     R.string.color_green to 0xFF1E9E5A, R.string.color_orange to 0xFFF28C28, R.string.color_purple to 0xFF7B4DFF, R.string.color_pink to 0xFFE91E8C,
+    R.string.color_cream to 0xFFFFF7DA, R.string.color_indigo to 0xFF1C2E5C,
 ).map { (n, c) -> n to Color(c) }
 
 fun Color.hex() = "#%06X".format(0xFFFFFF and toArgb())
@@ -89,7 +90,7 @@ fun ColorPickerDialog(title: String, initial: Color, onPick: (Color) -> Unit, on
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(14.dp)) {
                 // 見本
-                PresetColors.chunked(6).forEach { row ->
+                PresetColors.chunked(7).forEach { row ->
                     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                         row.forEach { (nameRes, c) ->
                             val name = stringResource(nameRes)

@@ -20,7 +20,7 @@
     <string name="ask_q2">② Pourquoi vous avez ouvert le téléphone</string>
     <string name="ask_other">Absent de la liste ? Écrivez-le ici</string>
     <string name="ask_submit">Enregistrer et utiliser</string>
-    <string name="ask_hint">Choisissez ① puis touchez un bouton ② pour enregistrer aussitôt. Vous pouvez désactiver cette question sur l\'écran « Aujourd\'hui ».</string>
+    <string name="ask_hint">Choisissez ① puis touchez un bouton ② pour enregistrer aussitôt. Vous pouvez désactiver cette question sur l\'écran « Forme ».</string>
     <string name="opt_edit">Modifier les choix</string>
     <string name="opt_edit_hint">Touchez un bouton pour le retirer. Écrivez en dessous puis touchez « Ajouter ».</string>
     <string name="opt_remove">Retirer %1$s</string>
@@ -186,9 +186,6 @@
     <string name="ymd">%1$d a %2$d m %3$d j</string>
     <string name="age_now">%1$d ans</string>
     <string name="lifespan_is">Espérance de vie %1$d ans</string>
-    <string name="page_condition">Aujourd\'hui</string>
-    <string name="c_overall">Global</string>
-    <string name="c_overall_hint">En repensant à toute la journée</string>
     <string name="c_sleep">Qualité du sommeil</string>
     <string name="c_sleep_hint">Avez-vous bien dormi ?</string>
     <string name="c_focus">Concentration</string>
@@ -212,7 +209,6 @@
     <string name="st_today">Temps d\'écran du jour</string>
     <string name="st_that_day">Temps d\'écran ce jour-là</string>
     <string name="st_unlocks">%1$d déverrouillages</string>
-    <string name="st_note">Temps écran allumé et déverrouillé (compté seulement quand la surveillance de cette appli fonctionne).</string>
     <string name="this_month">Ce mois-ci</string>
     <string name="mc_none">Pas encore de données ce mois-ci.</string>
     <string name="mc_wait">Quand il y aura des données du mois dernier, la comparaison s\'affichera ici.</string>
@@ -230,11 +226,8 @@
     <string name="ul_top">Raisons principales : %1$s</string>
     <string name="tr_title">Ce que vos bons jours ont en commun</string>
     <string name="tr_2w">Il y a 2 semaines</string>
-    <string name="tr_wait">Notez 5 jours pour voir ce qui change les bons jours (%1$d pour l\'instant).</string>
-    <string name="tr_good">7 ou plus\n(%1$d jours)</string>
     <string name="tr_other">Autres\n(%1$d jours)</string>
     <string name="tr_breakfast">Petit-déjeuner pris</string>
-    <string name="tr_note">* Ce sont des moyennes. Pour une analyse incluant les repas, essayez « Demander à l\'IA » ci-dessous.</string>
     <string name="ai_title">Demander à l\'IA</string>
     <string name="ai_desc">Transforme vos données (%1$d jours) en requête. Collez-la dans ChatGPT ou Claude pour savoir quand vous êtes au mieux.</string>
     <string name="ai_copy">Copier la requête</string>
@@ -318,7 +311,7 @@
     <string name="tut6_body">Affiché sous « Jours restants ». Modifiable à tout moment via « Modifier l\'affichage ».</string>
     <string name="tut7_title">Tout est prêt</string>
     <string name="tut7_body">Balayez à gauche ou à droite pour changer de page.</string>
-    <string name="tut7_page_left">← Balayer vers la droite : Aujourd\'hui (forme, sommeil, temps d\'écran)</string>
+    <string name="tut7_page_left">← Balayer vers la droite : Forme (forme, sommeil, temps d\'écran)</string>
     <string name="tut7_page_top">Accueil : jours restants, vos infos, favoris plus bas</string>
     <string name="tut7_page_right">→ Balayer vers la gauche : applis, objectifs, habitudes, tâches du jour</string>
     <string name="tut7_longpress">Maintenez une appli dans la liste pour l\'ajouter aux favoris, la limiter ou la masquer.</string>
@@ -335,4 +328,38 @@
     <string name="pay_switch_home">Passer à une autre appli d\'accueil</string>
     <string name="pay_cancel_note">Résiliez pendant l\'essai gratuit et vous ne serez pas débité. Résiliez à tout moment dans Google Play → Paiements et abonnements.</string>
     <string name="pay_manage">Gérer l\'abonnement (résilier, moyen de paiement)</string>
+    <string name="this_month_so_far">Ce mois-ci (jusqu\'à hier)</string>
+    <string name="c_bed">Coucher (hier soir)</string>
+    <string name="c_wake">Lever (ce matin)</string>
+    <string name="c_time_clear">Effacer</string>
+    <string name="c_bedphone">Téléphone dans les 30 min avant le coucher : %1$s</string>
+    <string name="c_bedphone_none">Téléphone dans les 30 min avant le coucher : non utilisé</string>
+    <string name="c_bedphone_unknown">Téléphone dans les 30 min avant le coucher : inconnu (nécessite « Accès aux données d\'utilisation » ; le téléphone garde ses relevés environ une semaine)</string>
+    <string name="c_alcohol">Alcool</string>
+    <string name="alc_no">Non</string>
+    <string name="alc_yes">Oui</string>
+    <string name="tr_alcohol">Alcool bu</string>
+    <string name="tr_bedphone">Téléphone avant le coucher</string>
+    <string name="color_cream">Jaune pâle</string>
+    <string name="color_indigo">Indigo</string>
+    <string name="pie_title">Temps par appli aujourd\'hui</string>
+    <string name="pie_other">Autres</string>
+    <string name="pie_need">Pour voir le temps par appli, autorisez « Accès aux données d\'utilisation ».</string>
+    <string name="pie_none">Aucune appli n\'a encore été utilisée 1 minute ou plus aujourd\'hui.</string>
+    <string name="pie_note">Calculé à partir des relevés d\'utilisation du téléphone (les mêmes données que Bien-être numérique). Le temps passé sur cet écran d\'accueil n\'est pas inclus.</string>
+    <string name="goal_done">Réussi</string>
+    <string name="goal_done_btn">J\'ai réussi !</string>
+    <string name="goal_undo">Marquer comme non réussi</string>
+    <string name="goal_edit_btn">Modifier l\'objectif</string>
+    <string name="congrats_title">Félicitations !</string>
+    <string name="congrats_body">Vous avez atteint l\'objectif du jour. Bravo !</string>
+    <string name="page_condition">Forme</string>
+    <string name="c_overall">Corps</string>
+    <string name="c_overall_hint">Votre niveau d\'énergie physique</string>
+    <string name="st_note">Temps avec l\'écran allumé et déverrouillé. Si « Accès aux données d\'utilisation » est autorisé, il est aussi complété par les relevés du téléphone (7 derniers jours).</string>
+    <string name="tr_wait">Notez corps, concentration et humeur pendant 5 jours pour voir ce qui change vos bons jours (%1$d pour l\'instant).</string>
+    <string name="tr_good">Moyenne 7 ou plus\n(%1$d jours)</string>
+    <string name="tr_note">* Les bons jours sont séparés selon la moyenne corps, concentration et humeur. Pour une analyse incluant les repas, essayez « Demander à l\'IA » ci-dessous.</string>
+    <string name="ai_unlock_section"># Pourquoi j\'ai ouvert mon téléphone (14 derniers jours, répondu à chaque déverrouillage)\ndate,heure,ce que je faisais,pourquoi j\'ai ouvert mon téléphone\n%1$s</string>
+    <string name="ai_prompt">Tu es un coach qui connaît très bien les habitudes de vie et le bien-être.\nVoici les données que je note chaque jour sur mon téléphone (%1$d jours, du %2$s au %3$s). Analyse à quels moments je me sens le mieux.\n\n# Champs\n- corps, concentration, humeur, qualité_sommeil : auto-évaluation de 0 à 10 (10 = le mieux). Juge les bons jours d\'après la moyenne de corps, concentration et humeur\n- heures_sommeil : heures dormies la nuit précédente. coucher, lever : l\'heure du coucher la veille et du lever ce matin-là\n- téléphone_avant_coucher : minutes d\'utilisation du téléphone dans les 30 minutes avant le coucher\n- téléphone_min : minutes avec l\'écran allumé et utilisé ce jour-là. déverrouillages : nombre de déverrouillages\n- alcool : 1 = bu de l\'alcool, 0 = non\n- objectif, réussi : l\'objectif du jour et si je l\'ai atteint (1 = atteint)\n- petit-déjeuner, déjeuner, dîner, notes : ce que j\'ai mangé, sport, événements, etc.\n- Vide signifie \"non noté\" (pas zéro)\n\n# Pour info : mes objectifs et habitudes\n- Objectifs : %4$s\n- Habitudes : %5$s\n\n# Données (CSV)\ndate,jour,corps,concentration,humeur,qualité_sommeil,heures_sommeil,coucher,lever,téléphone_avant_coucher,téléphone_min,déverrouillages,alcool,objectif,réussi,petit-déjeuner,déjeuner,dîner,notes\n%6$s\n\n# Ce que j\'aimerais\n1. Ce qui diffère entre les bons et les mauvais jours (sommeil, heure du coucher, téléphone avant de dormir, alcool, repas, temps d\'écran, jour de la semaine, etc.), avec des chiffres concrets si possible\n2. Jusqu\'à 3 schémas du type \"je me sens bien quand...\"\n3. Les habitudes ou combinaisons qui semblent me tirer vers le bas (s\'il y a des relevés de déverrouillage, aussi les moments et raisons qui semblent du temps perdu)\n4. 3 petites actions à essayer dès demain\n5. Les précautions (peu de données, données biaisées, etc.) et ce qu\'il serait utile de noter à l\'avenir\n\n# Comment répondre\n- Commence par un résumé en 3 lignes, puis explique en détail\n- Réponds en %7$s, avec des mots simples et sans jargon\n- Sépare ce que montrent les données de ce qui relève de la supposition\n- Ne pose pas de diagnostic médical</string>
 </resources>

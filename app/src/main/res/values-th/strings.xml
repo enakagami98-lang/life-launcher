@@ -20,7 +20,7 @@
     <string name="ask_q2">② เหตุผลที่เปิดโทรศัพท์</string>
     <string name="ask_other">ไม่มีในรายการ? พิมพ์ที่นี่</string>
     <string name="ask_submit">บันทึกและใช้โทรศัพท์</string>
-    <string name="ask_hint">เลือก ① แล้วแตะปุ่ม ② เพื่อบันทึกทันที ปิดคำถามนี้ได้ที่หน้า \"วันนี้\"</string>
+    <string name="ask_hint">เลือก ① แล้วแตะปุ่ม ② เพื่อบันทึกทันที ปิดคำถามนี้ได้ที่หน้า \"สภาพร่างกาย\"</string>
     <string name="opt_edit">แก้ไขตัวเลือก</string>
     <string name="opt_edit_hint">แตะปุ่มเพื่อลบ พิมพ์ด้านล่างแล้วแตะ \"เพิ่ม\" เพื่อเพิ่มตัวเลือก</string>
     <string name="opt_remove">ลบ %1$s</string>
@@ -172,7 +172,7 @@
     <string name="yd_condition">สภาพร่างกาย</string>
     <string name="yd_sleep">การนอน</string>
     <string name="yd_phone">โทรศัพท์</string>
-    <string name="yd_input_today">บันทึกวันนี้ ›</string>
+    <string name="yd_input_today">บันทึกสภาพร่างกาย ›</string>
     <string name="settings">การตั้งค่า</string>
     <string name="favorites">รายการโปรด</string>
     <string name="fav_empty">ที่หน้าแอป (ปัดไปทางซ้าย) กดค้างที่แอปเพื่อเพิ่ม</string>
@@ -186,9 +186,6 @@
     <string name="ymd">%1$d ปี %2$d เดือน %3$d วัน</string>
     <string name="age_now">อายุ %1$d</string>
     <string name="lifespan_is">อายุขัย %1$d</string>
-    <string name="page_condition">วันนี้</string>
-    <string name="c_overall">ภาพรวม</string>
-    <string name="c_overall_hint">มองย้อนทั้งวัน</string>
     <string name="c_sleep">คุณภาพการนอน</string>
     <string name="c_sleep_hint">หลับสบายไหม</string>
     <string name="c_focus">สมาธิ</string>
@@ -214,7 +211,6 @@
     <string name="st_that_day">เวลาหน้าจอวันนั้น</string>
     <string name="unit_hours">ชม.</string>
     <string name="st_unlocks">ปลดล็อก %1$d ครั้ง</string>
-    <string name="st_note">เวลาที่หน้าจอเปิดและปลดล็อกอยู่ (นับเฉพาะตอนที่ระบบเฝ้าดูของแอปนี้ทำงาน)</string>
     <string name="this_month">เดือนนี้</string>
     <string name="mc_none">เดือนนี้ยังไม่มีข้อมูล</string>
     <string name="mc_wait">เมื่อมีข้อมูลของเดือนที่แล้ว จะแสดงการเปรียบเทียบที่นี่</string>
@@ -232,11 +228,8 @@
     <string name="ul_top">เหตุผลที่พบบ่อย: %1$s</string>
     <string name="tr_title">สิ่งที่วันดีๆ ของคุณมีเหมือนกัน</string>
     <string name="tr_2w">2 สัปดาห์ก่อน</string>
-    <string name="tr_wait">บันทึก 5 วันเพื่อดูว่าวันดีๆ ต่างจากวันอื่นอย่างไร (ตอนนี้ %1$d วัน)</string>
-    <string name="tr_good">7 ขึ้นไป\n(%1$d วัน)</string>
     <string name="tr_other">อื่นๆ\n(%1$d วัน)</string>
     <string name="tr_breakfast">กินมื้อเช้า</string>
-    <string name="tr_note">* นี่คือค่าเฉลี่ย หากต้องการวิเคราะห์รวมถึงอาหาร ลองใช้ \"ถาม AI\" ด้านล่าง</string>
     <string name="ai_title">ถาม AI</string>
     <string name="ai_desc">แปลงบันทึกของคุณ (%1$d วัน) เป็นคำถาม วางใน ChatGPT หรือ Claude เพื่อดูว่าคุณรู้สึกดีที่สุดเมื่อไร</string>
     <string name="ai_copy">คัดลอกคำถาม</string>
@@ -320,7 +313,7 @@
     <string name="tut6_body">แสดงใต้ \"วันที่เหลือ\" เปลี่ยนได้ทุกเมื่อที่ \"แก้ไขสิ่งที่แสดง\"</string>
     <string name="tut7_title">พร้อมแล้ว</string>
     <string name="tut7_body">ปัดซ้ายหรือขวาเพื่อเปลี่ยนหน้า</string>
-    <string name="tut7_page_left">← ปัดไปทางขวา: วันนี้ (สภาพร่างกาย การนอน เวลาหน้าจอ)</string>
+    <string name="tut7_page_left">← ปัดไปทางขวา: สภาพร่างกาย (สภาพร่างกาย การนอน เวลาหน้าจอ)</string>
     <string name="tut7_page_top">หน้าหลัก: วันที่เหลือ ข้อมูลที่เลือก เลื่อนลงเป็นรายการโปรด</string>
     <string name="tut7_page_right">→ ปัดไปทางซ้าย: แอป เป้าหมาย นิสัย งานวันนี้</string>
     <string name="tut7_longpress">กดค้างที่แอปในรายการเพื่อเพิ่มในรายการโปรด จำกัดเวลา หรือซ่อน</string>
@@ -337,4 +330,38 @@
     <string name="pay_switch_home">เปลี่ยนไปใช้แอปหน้าจอหลักอื่น</string>
     <string name="pay_cancel_note">ยกเลิกระหว่างทดลองใช้ฟรีจะไม่มีการเรียกเก็บเงิน ยกเลิกได้ทุกเมื่อที่ Google Play → การชำระเงินและการสมัครใช้บริการ</string>
     <string name="pay_manage">จัดการการสมัคร (ยกเลิก วิธีชำระเงิน)</string>
+    <string name="this_month_so_far">เดือนนี้ (ถึงเมื่อวาน)</string>
+    <string name="c_bed">เวลาเข้านอน (เมื่อคืน)</string>
+    <string name="c_wake">เวลาตื่น (เช้านี้)</string>
+    <string name="c_time_clear">ล้าง</string>
+    <string name="c_bedphone">ใช้มือถือใน 30 นาทีก่อนนอน: %1$s</string>
+    <string name="c_bedphone_none">ใช้มือถือใน 30 นาทีก่อนนอน: ไม่ได้ใช้</string>
+    <string name="c_bedphone_unknown">ใช้มือถือใน 30 นาทีก่อนนอน: ไม่ทราบ (ต้องอนุญาต “การเข้าถึงข้อมูลการใช้งาน” และมือถือเก็บบันทึกไว้ประมาณหนึ่งสัปดาห์)</string>
+    <string name="c_alcohol">แอลกอฮอล์</string>
+    <string name="alc_no">ไม่มี</string>
+    <string name="alc_yes">มี</string>
+    <string name="tr_alcohol">ดื่มแอลกอฮอล์</string>
+    <string name="tr_bedphone">ใช้มือถือก่อนนอน</string>
+    <string name="color_cream">เหลืองอ่อน</string>
+    <string name="color_indigo">กรมท่า</string>
+    <string name="pie_title">เวลาใช้งานแต่ละแอปวันนี้</string>
+    <string name="pie_other">อื่นๆ</string>
+    <string name="pie_need">หากต้องการดูเวลาของแต่ละแอป ต้องอนุญาต “การเข้าถึงข้อมูลการใช้งาน”</string>
+    <string name="pie_none">วันนี้ยังไม่มีแอปที่ใช้นาน 1 นาทีขึ้นไป</string>
+    <string name="pie_note">นับจากบันทึกการใช้งานของมือถือ (ข้อมูลเดียวกับ Digital Wellbeing) ไม่รวมเวลาบนหน้าจอหลักนี้</string>
+    <string name="goal_done">สำเร็จ</string>
+    <string name="goal_done_btn">ทำได้แล้ว!</string>
+    <string name="goal_undo">ยกเลิกการสำเร็จ</string>
+    <string name="goal_edit_btn">แก้ไขเป้าหมาย</string>
+    <string name="congrats_title">ยินดีด้วย!</string>
+    <string name="congrats_body">คุณทำเป้าหมายของวันนี้สำเร็จแล้ว เก่งมาก!</string>
+    <string name="page_condition">สภาพร่างกาย</string>
+    <string name="c_overall">ร่างกาย</string>
+    <string name="c_overall_hint">ร่างกายกระปรี้กระเปร่าแค่ไหน</string>
+    <string name="st_note">เวลาที่หน้าจอเปิดและปลดล็อกอยู่ หากอนุญาต “การเข้าถึงข้อมูลการใช้งาน” จะเติมจากบันทึกของมือถือด้วย (7 วันล่าสุด)</string>
+    <string name="tr_wait">บันทึกร่างกาย สมาธิ และอารมณ์ 5 วัน เพื่อดูว่าวันที่รู้สึกดีต่างจากวันอื่นอย่างไร (ตอนนี้ %1$d วัน)</string>
+    <string name="tr_good">เฉลี่ย 7 ขึ้นไป\n(%1$d วัน)</string>
+    <string name="tr_note">* แบ่งวันที่รู้สึกดีจากค่าเฉลี่ยของร่างกาย สมาธิ และอารมณ์ หากต้องการวิเคราะห์รวมถึงอาหาร ลองใช้ “ให้ AI วิเคราะห์” ด้านล่าง</string>
+    <string name="ai_unlock_section"># เหตุผลที่เปิดมือถือ (14 วันล่าสุด ตอบทุกครั้งที่ปลดล็อก)\nวันที่,เวลา,ตอนนั้นกำลังทำอะไร,เหตุผลที่เปิดมือถือ\n%1$s</string>
+    <string name="ai_prompt">คุณเป็นโค้ชที่เชี่ยวชาญเรื่องนิสัยในชีวิตประจำวันและการดูแลสุขภาพ\nด้านล่างคือข้อมูลที่ฉันบันทึกในมือถือทุกวัน (%1$d วัน ตั้งแต่ %2$s ถึง %3$s) ช่วยวิเคราะห์ว่าฉันมักรู้สึกดีที่สุดเมื่อไร\n\n# ช่องข้อมูล\n- ร่างกาย สมาธิ อารมณ์ คุณภาพการนอน: ให้คะแนนตัวเอง 0–10 (10 ดีที่สุด) ให้ตัดสินวันที่ดีจากค่าเฉลี่ยของร่างกาย สมาธิ และอารมณ์\n- ชั่วโมงนอน: จำนวนชั่วโมงที่นอนคืนก่อนหน้า เข้านอน ตื่น: เวลาที่เข้านอนคืนก่อนหน้าและเวลาที่ตื่นเช้าวันนั้น\n- มือถือก่อนนอน: จำนวนนาทีที่ใช้มือถือใน 30 นาทีก่อนเข้านอน\n- มือถือ_นาที: จำนวนนาทีที่หน้าจอเปิดและใช้งานในวันนั้น ปลดล็อก: จำนวนครั้งที่ปลดล็อก\n- แอลกอฮอล์: 1 = ดื่ม, 0 = ไม่ดื่ม\n- เป้าหมาย สำเร็จ: เป้าหมายของวันนั้นและทำได้หรือไม่ (1 = สำเร็จ)\n- อาหารเช้า อาหารกลางวัน อาหารเย็น บันทึก: สิ่งที่กิน การออกกำลังกาย เหตุการณ์ ฯลฯ\n- ช่องว่างหมายถึง \"ไม่ได้บันทึก\" (ไม่ใช่ศูนย์)\n\n# ข้อมูลอ้างอิง: เป้าหมายและนิสัยของฉัน\n- เป้าหมาย: %4$s\n- นิสัย: %5$s\n\n# ข้อมูล (CSV)\nวันที่,วัน,ร่างกาย,สมาธิ,อารมณ์,คุณภาพการนอน,ชั่วโมงนอน,เข้านอน,ตื่น,มือถือก่อนนอน,มือถือ_นาที,ปลดล็อก,แอลกอฮอล์,เป้าหมาย,สำเร็จ,อาหารเช้า,อาหารกลางวัน,อาหารเย็น,บันทึก\n%6$s\n\n# สิ่งที่อยากให้ช่วย\n1. วันที่ดีกับวันที่แย่ต่างกันอย่างไร (การนอน เวลาเข้านอน มือถือก่อนนอน แอลกอฮอล์ อาหาร เวลาหน้าจอ วันในสัปดาห์ ฯลฯ) ใส่ตัวเลขที่ชัดเจนเท่าที่ทำได้\n2. รูปแบบ \"ฉันรู้สึกดีเมื่อ...\" ไม่เกิน 3 ข้อ\n3. นิสัยหรือการผสมกันที่ดูเหมือนทำให้ฉันแย่ลง (ถ้ามีบันทึกการเปิดมือถือ ให้บอกช่วงเวลาและเหตุผลที่ดูเสียเวลาด้วย)\n4. 3 การกระทำเล็กๆ ที่ลองได้ตั้งแต่พรุ่งนี้\n5. ข้อควรระวัง (ข้อมูลน้อยหรือเอนเอียง ฯลฯ) และสิ่งที่ควรบันทึกเพิ่มในอนาคต\n\n# วิธีตอบ\n- เริ่มด้วยสรุป 3 บรรทัด แล้วจึงอธิบายโดยละเอียด\n- ตอบเป็น%7$s ด้วยภาษาง่ายๆ ไม่ใช้ศัพท์เฉพาะ\n- แยกสิ่งที่ข้อมูลบอกออกจากการคาดเดา\n- อย่าวินิจฉัยทางการแพทย์</string>
 </resources>

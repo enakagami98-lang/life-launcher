@@ -20,7 +20,7 @@
     <string name="ask_q2">② Kenapa membuka ponsel</string>
     <string name="ask_other">Tidak ada? Ketik di sini</string>
     <string name="ask_submit">Simpan dan pakai ponsel</string>
-    <string name="ask_hint">Pilih ① lalu ketuk tombol ② untuk langsung menyimpan. Pertanyaan ini bisa dimatikan di layar \"Hari ini\".</string>
+    <string name="ask_hint">Pilih ① lalu ketuk tombol ② untuk langsung menyimpan. Pertanyaan ini bisa dimatikan di layar \"Kondisi badan\".</string>
     <string name="opt_edit">Ubah pilihan</string>
     <string name="opt_edit_hint">Ketuk tombol untuk menghapusnya. Ketik di bawah lalu ketuk \"Tambah\" untuk menambah.</string>
     <string name="opt_remove">Hapus %1$s</string>
@@ -186,9 +186,6 @@
     <string name="ymd">%1$d thn %2$d bln %3$d hr</string>
     <string name="age_now">Usia %1$d</string>
     <string name="lifespan_is">Harapan hidup %1$d</string>
-    <string name="page_condition">Hari ini</string>
-    <string name="c_overall">Keseluruhan</string>
-    <string name="c_overall_hint">Melihat kembali seharian</string>
     <string name="c_sleep">Kualitas tidur</string>
     <string name="c_sleep_hint">Tidur nyenyak?</string>
     <string name="c_focus">Fokus</string>
@@ -214,7 +211,6 @@
     <string name="st_that_day">Waktu layar hari itu</string>
     <string name="unit_hours">jam</string>
     <string name="st_unlocks">%1$d kali buka kunci</string>
-    <string name="st_note">Waktu layar menyala dan tidak terkunci (dihitung hanya saat pemantauan aplikasi ini berjalan).</string>
     <string name="this_month">Bulan ini</string>
     <string name="mc_none">Belum ada catatan bulan ini.</string>
     <string name="mc_wait">Setelah ada data bulan lalu, perbandingannya muncul di sini.</string>
@@ -232,11 +228,8 @@
     <string name="ul_top">Alasan terbanyak: %1$s</string>
     <string name="tr_title">Kesamaan hari-hari baikmu</string>
     <string name="tr_2w">2 minggu lalu</string>
-    <string name="tr_wait">Catat 5 hari untuk melihat apa yang berbeda di hari baikmu (baru %1$d).</string>
-    <string name="tr_good">7 ke atas\n(%1$d hari)</string>
     <string name="tr_other">Lainnya\n(%1$d hari)</string>
     <string name="tr_breakfast">Sarapan</string>
-    <string name="tr_note">* Ini rata-rata. Untuk analisis yang lebih dalam termasuk makanan, coba \"Tanya AI\" di bawah.</string>
     <string name="ai_title">Tanya AI</string>
     <string name="ai_desc">Mengubah catatanmu (%1$d hari) menjadi pertanyaan. Tempel ke ChatGPT atau Claude untuk tahu kapan kamu paling fit.</string>
     <string name="ai_copy">Salin pertanyaan</string>
@@ -320,7 +313,7 @@
     <string name="tut6_body">Ditampilkan di bawah \"Hari tersisa\". Bisa diubah kapan saja lewat \"Ubah yang ditampilkan\".</string>
     <string name="tut7_title">Siap!</string>
     <string name="tut7_body">Geser ke kiri atau kanan untuk pindah halaman.</string>
-    <string name="tut7_page_left">← Geser ke kanan: Hari ini (kondisi, tidur, waktu layar)</string>
+    <string name="tut7_page_left">← Geser ke kanan: Kondisi badan (kondisi, tidur, waktu layar)</string>
     <string name="tut7_page_top">Utama: hari tersisa, info pilihanmu, gulir ke bawah untuk favorit</string>
     <string name="tut7_page_right">→ Geser ke kiri: aplikasi, tujuan, kebiasaan, tugas hari ini</string>
     <string name="tut7_longpress">Tekan lama aplikasi di daftar untuk menambah ke favorit, memberi batas waktu, atau menyembunyikannya.</string>
@@ -337,4 +330,38 @@
     <string name="pay_switch_home">Ganti ke aplikasi layar utama lain</string>
     <string name="pay_cancel_note">Batalkan selama uji coba gratis dan kamu tidak akan ditagih. Batalkan kapan saja di Google Play → Pembayaran &amp; langganan.</string>
     <string name="pay_manage">Kelola langganan (batal, metode pembayaran)</string>
+    <string name="this_month_so_far">Bulan ini (sampai kemarin)</string>
+    <string name="c_bed">Jam tidur (tadi malam)</string>
+    <string name="c_wake">Jam bangun (pagi ini)</string>
+    <string name="c_time_clear">Hapus</string>
+    <string name="c_bedphone">HP dalam 30 menit sebelum tidur: %1$s</string>
+    <string name="c_bedphone_none">HP dalam 30 menit sebelum tidur: tidak dipakai</string>
+    <string name="c_bedphone_unknown">HP dalam 30 menit sebelum tidur: tidak diketahui (perlu izin “Akses penggunaan”; catatan HP hanya tersimpan sekitar seminggu)</string>
+    <string name="c_alcohol">Alkohol</string>
+    <string name="alc_no">Tidak</string>
+    <string name="alc_yes">Ya</string>
+    <string name="tr_alcohol">Minum alkohol</string>
+    <string name="tr_bedphone">HP sebelum tidur</string>
+    <string name="color_cream">Kuning muda</string>
+    <string name="color_indigo">Biru tua</string>
+    <string name="pie_title">Waktu hari ini per aplikasi</string>
+    <string name="pie_other">Lainnya</string>
+    <string name="pie_need">Untuk melihat waktu per aplikasi, izinkan “Akses penggunaan”.</string>
+    <string name="pie_none">Hari ini belum ada aplikasi yang dipakai 1 menit atau lebih.</string>
+    <string name="pie_note">Dihitung dari catatan penggunaan HP (data yang sama dengan Digital Wellbeing). Waktu di layar utama ini tidak termasuk.</string>
+    <string name="goal_done">Tercapai</string>
+    <string name="goal_done_btn">Berhasil!</string>
+    <string name="goal_undo">Tandai belum tercapai</string>
+    <string name="goal_edit_btn">Ubah target</string>
+    <string name="congrats_title">Selamat!</string>
+    <string name="congrats_body">Kamu mencapai target hari ini. Kerja bagus!</string>
+    <string name="page_condition">Kondisi badan</string>
+    <string name="c_overall">Badan</string>
+    <string name="c_overall_hint">Seberapa bugar badanmu</string>
+    <string name="st_note">Waktu saat layar menyala dan tidak terkunci. Jika “Akses penggunaan” diizinkan, juga dilengkapi dari catatan HP (7 hari terakhir).</string>
+    <string name="tr_wait">Catat badan, fokus, dan suasana hati selama 5 hari untuk melihat apa yang berbeda di hari-hari baikmu (sejauh ini %1$d).</string>
+    <string name="tr_good">Rata-rata 7 ke atas\n(%1$d hari)</string>
+    <string name="tr_note">* Hari baik dibedakan dari rata-rata badan, fokus, dan suasana hati. Untuk analisis yang juga mencakup makanan, coba “Tanya AI” di bawah.</string>
+    <string name="ai_unlock_section"># Alasan saya membuka HP (14 hari terakhir, dijawab setiap kali membuka kunci)\ntanggal,jam,apa yang sedang saya lakukan,alasan membuka HP\n%1$s</string>
+    <string name="ai_prompt">Kamu adalah pelatih yang paham betul soal kebiasaan sehari-hari dan kesehatan.\nDi bawah ini data yang saya catat setiap hari di HP (%1$d hari, %2$s sampai %3$s). Tolong analisis kapan saya biasanya merasa paling baik.\n\n# Kolom\n- badan, fokus, suasana_hati, kualitas_tidur: penilaian diri 0–10 (10 terbaik). Nilai hari baik dari rata-rata badan, fokus, dan suasana hati\n- jam_tidur: berapa jam saya tidur malam sebelumnya. tidur, bangun: jam saya tidur malam sebelumnya dan bangun pagi itu\n- hp_sebelum_tidur: menit saya memakai HP dalam 30 menit sebelum tidur\n- hp_menit: menit layar menyala dan dipakai hari itu. buka_kunci: berapa kali membuka kunci\n- alkohol: 1 = minum alkohol, 0 = tidak\n- target, tercapai: target hari itu dan apakah tercapai (1 = tercapai)\n- sarapan, makan_siang, makan_malam, catatan: apa yang saya makan, olahraga, kejadian, dll.\n- Kosong berarti \"tidak dicatat\" (bukan nol)\n\n# Sebagai referensi: target dan kebiasaan saya\n- Target: %4$s\n- Kebiasaan: %5$s\n\n# Data (CSV)\ntanggal,hari,badan,fokus,suasana_hati,kualitas_tidur,jam_tidur,tidur,bangun,hp_sebelum_tidur,hp_menit,buka_kunci,alkohol,target,tercapai,sarapan,makan_siang,makan_malam,catatan\n%6$s\n\n# Yang saya minta\n1. Apa yang berbeda antara hari baik dan hari buruk (tidur, jam tidur, HP sebelum tidur, alkohol, makanan, waktu layar, hari dalam seminggu, dll.), dengan angka konkret bila memungkinkan\n2. Paling banyak 3 pola \"saya merasa baik ketika...\"\n3. Kebiasaan atau kombinasi yang tampaknya membuat kondisi saya turun (jika ada catatan membuka HP, juga waktu dan alasan yang tampak sia-sia)\n4. 3 tindakan kecil yang bisa saya coba mulai besok\n5. Hal yang perlu diperhatikan (data sedikit atau berat sebelah, dll.) dan hal yang sebaiknya dicatat ke depannya\n\n# Cara menjawab\n- Mulailah dengan ringkasan 3 baris, lalu jelaskan secara rinci\n- Jawab dalam %7$s, dengan bahasa sederhana tanpa istilah teknis\n- Pisahkan apa yang ditunjukkan data dari dugaan\n- Jangan memberikan diagnosis medis</string>
 </resources>

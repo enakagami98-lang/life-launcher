@@ -20,7 +20,7 @@
     <string name="ask_q2">② Por que abriu o celular</string>
     <string name="ask_other">Não está na lista? Digite aqui</string>
     <string name="ask_submit">Salvar e usar o celular</string>
-    <string name="ask_hint">Escolha ① e toque em um botão de ② para salvar na hora. Você pode desativar isto na tela \"Hoje\".</string>
+    <string name="ask_hint">Escolha ① e toque em um botão de ② para salvar na hora. Você pode desativar isto na tela \"Condição\".</string>
     <string name="opt_edit">Editar opções</string>
     <string name="opt_edit_hint">Toque em um botão para removê-lo. Digite abaixo e toque em \"Adicionar\" para criar um.</string>
     <string name="opt_remove">Remover %1$s</string>
@@ -186,9 +186,6 @@
     <string name="ymd">%1$d a %2$d m %3$d d</string>
     <string name="age_now">Idade %1$d</string>
     <string name="lifespan_is">Expectativa de vida %1$d</string>
-    <string name="page_condition">Hoje</string>
-    <string name="c_overall">Geral</string>
-    <string name="c_overall_hint">Pensando no dia inteiro</string>
     <string name="c_sleep">Qualidade do sono</string>
     <string name="c_sleep_hint">Dormiu bem?</string>
     <string name="c_focus">Foco</string>
@@ -212,7 +209,6 @@
     <string name="st_today">Tempo de tela de hoje</string>
     <string name="st_that_day">Tempo de tela deste dia</string>
     <string name="st_unlocks">%1$d desbloqueios</string>
-    <string name="st_note">Tempo com a tela ligada e desbloqueada (contado só enquanto o monitoramento deste app está ativo).</string>
     <string name="this_month">Este mês</string>
     <string name="mc_none">Ainda não há dados deste mês.</string>
     <string name="mc_wait">Quando houver dados do mês passado, a comparação aparecerá aqui.</string>
@@ -230,11 +226,8 @@
     <string name="ul_top">Principais motivos: %1$s</string>
     <string name="tr_title">O que seus dias bons têm em comum</string>
     <string name="tr_2w">Há 2 semanas</string>
-    <string name="tr_wait">Registre 5 dias para ver o que muda nos seus dias bons (%1$d até agora).</string>
-    <string name="tr_good">7 ou mais\n(%1$d dias)</string>
     <string name="tr_other">Outros\n(%1$d dias)</string>
     <string name="tr_breakfast">Tomou café da manhã</string>
-    <string name="tr_note">* São médias. Para uma análise que inclua as refeições, experimente \"Perguntar à IA\" abaixo.</string>
     <string name="ai_title">Perguntar à IA</string>
     <string name="ai_desc">Transforma seus registros (%1$d dias) em uma pergunta. Cole no ChatGPT ou Claude para descobrir quando você se sente melhor.</string>
     <string name="ai_copy">Copiar pergunta</string>
@@ -318,7 +311,7 @@
     <string name="tut6_body">Aparece abaixo de \"Dias restantes\". Dá para mudar quando quiser em \"Editar o que aparece\".</string>
     <string name="tut7_title">Tudo pronto</string>
     <string name="tut7_body">Deslize para a esquerda ou direita para mudar de página.</string>
-    <string name="tut7_page_left">← Deslize para a direita: Hoje (estado, sono, tempo de tela)</string>
+    <string name="tut7_page_left">← Deslize para a direita: Condição (estado, sono, tempo de tela)</string>
     <string name="tut7_page_top">Início: dias restantes, suas informações e, abaixo, favoritos</string>
     <string name="tut7_page_right">→ Deslize para a esquerda: apps, metas, hábitos, tarefas de hoje</string>
     <string name="tut7_longpress">Segure um app na lista para adicioná-lo aos favoritos, limitar ou ocultar.</string>
@@ -335,4 +328,38 @@
     <string name="pay_switch_home">Mudar para outro app de tela inicial</string>
     <string name="pay_cancel_note">Cancele durante o teste grátis e nada será cobrado. Cancele quando quiser em Google Play → Pagamentos e assinaturas.</string>
     <string name="pay_manage">Gerenciar assinatura (cancelar, forma de pagamento)</string>
+    <string name="this_month_so_far">Este mês (até ontem)</string>
+    <string name="c_bed">Hora de dormir (ontem à noite)</string>
+    <string name="c_wake">Hora de acordar (hoje)</string>
+    <string name="c_time_clear">Limpar</string>
+    <string name="c_bedphone">Celular nos 30 min antes de dormir: %1$s</string>
+    <string name="c_bedphone_none">Celular nos 30 min antes de dormir: não usou</string>
+    <string name="c_bedphone_unknown">Celular nos 30 min antes de dormir: desconhecido (requer “Acesso ao uso”; o telefone guarda os registros por cerca de uma semana)</string>
+    <string name="c_alcohol">Álcool</string>
+    <string name="alc_no">Não</string>
+    <string name="alc_yes">Sim</string>
+    <string name="tr_alcohol">Bebeu álcool</string>
+    <string name="tr_bedphone">Celular antes de dormir</string>
+    <string name="color_cream">Amarelo-claro</string>
+    <string name="color_indigo">Anil</string>
+    <string name="pie_title">Tempo de hoje por app</string>
+    <string name="pie_other">Outros</string>
+    <string name="pie_need">Para ver o tempo por app, permita o “Acesso ao uso”.</string>
+    <string name="pie_none">Nenhum app foi usado por 1 minuto ou mais hoje ainda.</string>
+    <string name="pie_note">Calculado a partir dos registros de uso do telefone (os mesmos dados do Bem-estar digital). Não inclui o tempo nesta tela inicial.</string>
+    <string name="goal_done">Concluído</string>
+    <string name="goal_done_btn">Consegui!</string>
+    <string name="goal_undo">Marcar como não concluído</string>
+    <string name="goal_edit_btn">Editar meta</string>
+    <string name="congrats_title">Parabéns!</string>
+    <string name="congrats_body">Você cumpriu a meta de hoje. Muito bem!</string>
+    <string name="page_condition">Condição</string>
+    <string name="c_overall">Corpo</string>
+    <string name="c_overall_hint">Quanta energia seu corpo tinha</string>
+    <string name="st_note">Tempo com a tela ligada e desbloqueada. Com o “Acesso ao uso” permitido, também é completado com os registros do telefone (últimos 7 dias).</string>
+    <string name="tr_wait">Registre corpo, foco e humor por 5 dias para ver o que muda nos seus dias bons (%1$d até agora).</string>
+    <string name="tr_good">Média 7 ou mais\n(%1$d dias)</string>
+    <string name="tr_note">* Os dias bons são separados pela média de corpo, foco e humor. Para uma análise que inclua as refeições, experimente “Pedir à IA” abaixo.</string>
+    <string name="ai_unlock_section"># Por que abri o celular (últimos 14 dias, respondido a cada desbloqueio)\ndata,hora,o que eu estava fazendo,por que abri o celular\n%1$s</string>
+    <string name="ai_prompt">Você é um coach que entende muito de hábitos diários e bem-estar.\nAbaixo estão os dados que registro todos os dias no celular (%1$d dias, de %2$s a %3$s). Analise quando eu costumo me sentir melhor.\n\n# Campos\n- corpo, foco, humor, qualidade_sono: autoavaliação de 0 a 10 (10 é o melhor). Avalie os dias bons pela média de corpo, foco e humor\n- horas_sono: horas que dormi na noite anterior. dormir, acordar: a que horas fui dormir na noite anterior e acordei naquela manhã\n- celular_antes_dormir: minutos de uso do celular nos 30 minutos antes de dormir\n- celular_min: minutos com a tela ligada e em uso naquele dia. desbloqueios: número de desbloqueios\n- álcool: 1 = bebi álcool, 0 = não\n- meta, concluída: a meta do dia e se eu a cumpri (1 = cumprida)\n- café da manhã, almoço, jantar, notas: o que comi, exercícios, acontecimentos etc.\n- Vazio significa \"não registrado\" (não é zero)\n\n# Para referência: minhas metas e hábitos\n- Metas: %4$s\n- Hábitos: %5$s\n\n# Dados (CSV)\ndata,dia,corpo,foco,humor,qualidade_sono,horas_sono,dormir,acordar,celular_antes_dormir,celular_min,desbloqueios,álcool,meta,concluída,café da manhã,almoço,jantar,notas\n%6$s\n\n# O que eu gostaria\n1. O que muda entre dias bons e ruins (sono, hora de dormir, celular antes de dormir, álcool, refeições, tempo de tela, dia da semana etc.), com números concretos quando possível\n2. Até 3 padrões do tipo \"eu me sinto bem quando...\"\n3. Hábitos ou combinações que parecem me derrubar (se houver registros de desbloqueio, também horários e motivos que parecem desperdício)\n4. 3 pequenas ações que posso testar a partir de amanhã\n5. Ressalvas (poucos dados, dados enviesados etc.) e itens que valeria a pena registrar no futuro\n\n# Como responder\n- Comece com um resumo de 3 linhas e depois explique em detalhes\n- Responda em %7$s, com linguagem simples e sem jargões\n- Separe o que os dados mostram das suposições\n- Não faça diagnósticos médicos</string>
 </resources>

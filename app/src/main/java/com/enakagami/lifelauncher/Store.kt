@@ -48,9 +48,9 @@ class Store(context: Context) {
     var lifespan by mutableIntStateOf(prefs.getInt("lifespan", 80))
         private set
 
-    var bgColor by mutableIntStateOf(prefs.getInt("bg", 0xFFFFFFFF.toInt()))
+    var bgColor by mutableIntStateOf(prefs.getInt("bg", 0xFFFFF7DA.toInt()))
         private set
-    var accentColor by mutableIntStateOf(prefs.getInt("accent", 0xFF1043E5.toInt()))
+    var accentColor by mutableIntStateOf(prefs.getInt("accent", 0xFF1C2E5C.toInt()))
         private set
 
     fun saveColors(bg: Int, accent: Int) {

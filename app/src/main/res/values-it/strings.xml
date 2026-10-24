@@ -20,7 +20,7 @@
     <string name="ask_q2">② Perché hai aperto il telefono</string>
     <string name="ask_other">Non c\'è? Scrivilo qui</string>
     <string name="ask_submit">Salva e usa il telefono</string>
-    <string name="ask_hint">Scegli ① e poi tocca un pulsante ② per salvare subito. Puoi disattivarlo nella schermata \"Oggi\".</string>
+    <string name="ask_hint">Scegli ① e poi tocca un pulsante ② per salvare subito. Puoi disattivarlo nella schermata \"Forma fisica\".</string>
     <string name="opt_edit">Modifica scelte</string>
     <string name="opt_edit_hint">Tocca un pulsante per rimuoverlo. Scrivi sotto e tocca \"Aggiungi\" per aggiungerne uno.</string>
     <string name="opt_remove">Rimuovi %1$s</string>
@@ -186,9 +186,6 @@
     <string name="ymd">%1$d a %2$d m %3$d g</string>
     <string name="age_now">Età %1$d</string>
     <string name="lifespan_is">Aspettativa di vita %1$d</string>
-    <string name="page_condition">Oggi</string>
-    <string name="c_overall">Generale</string>
-    <string name="c_overall_hint">Ripensando a tutta la giornata</string>
     <string name="c_sleep">Qualità del sonno</string>
     <string name="c_sleep_hint">Hai dormito bene?</string>
     <string name="c_focus">Concentrazione</string>
@@ -212,7 +209,6 @@
     <string name="st_today">Tempo di utilizzo di oggi</string>
     <string name="st_that_day">Tempo di utilizzo di quel giorno</string>
     <string name="st_unlocks">%1$d sblocchi</string>
-    <string name="st_note">Tempo con lo schermo acceso e sbloccato (contato solo mentre il monitoraggio di questa app è attivo).</string>
     <string name="this_month">Questo mese</string>
     <string name="mc_none">Ancora nessun dato per questo mese.</string>
     <string name="mc_wait">Quando ci saranno dati del mese scorso, qui comparirà il confronto.</string>
@@ -230,11 +226,8 @@
     <string name="ul_top">Motivi principali: %1$s</string>
     <string name="tr_title">Cosa hanno in comune le tue giornate buone</string>
     <string name="tr_2w">2 settimane fa</string>
-    <string name="tr_wait">Registra 5 giorni per vedere cosa cambia nelle giornate buone (finora %1$d).</string>
-    <string name="tr_good">7 o più\n(%1$d giorni)</string>
     <string name="tr_other">Altri\n(%1$d giorni)</string>
     <string name="tr_breakfast">Ha fatto colazione</string>
-    <string name="tr_note">* Sono medie. Per un\'analisi che includa i pasti, prova \"Chiedi all\'IA\" qui sotto.</string>
     <string name="ai_title">Chiedi all\'IA</string>
     <string name="ai_desc">Trasforma i tuoi dati (%1$d giorni) in una domanda. Incollala in ChatGPT o Claude per capire quando stai meglio.</string>
     <string name="ai_copy">Copia domanda</string>
@@ -318,7 +311,7 @@
     <string name="tut6_body">Mostrato sotto \"Giorni rimasti\". Puoi cambiarlo quando vuoi con \"Modifica cosa mostrare\".</string>
     <string name="tut7_title">Tutto pronto</string>
     <string name="tut7_body">Scorri a sinistra o a destra per cambiare pagina.</string>
-    <string name="tut7_page_left">← Scorri a destra: Oggi (forma, sonno, tempo di utilizzo)</string>
+    <string name="tut7_page_left">← Scorri a destra: Forma fisica (forma, sonno, tempo di utilizzo)</string>
     <string name="tut7_page_top">Home: giorni rimasti, le tue info e, più in basso, i preferiti</string>
     <string name="tut7_page_right">→ Scorri a sinistra: app, obiettivi, abitudini, attività di oggi</string>
     <string name="tut7_longpress">Tieni premuta un\'app nell\'elenco per aggiungerla ai preferiti, limitarla o nasconderla.</string>
@@ -335,4 +328,38 @@
     <string name="pay_switch_home">Passa a un\'altra app iniziale</string>
     <string name="pay_cancel_note">Se annulli durante la prova gratuita non paghi nulla. Annulla quando vuoi da Google Play → Pagamenti e abbonamenti.</string>
     <string name="pay_manage">Gestisci abbonamento (annulla, metodo di pagamento)</string>
+    <string name="this_month_so_far">Questo mese (fino a ieri)</string>
+    <string name="c_bed">Andato a letto (ieri sera)</string>
+    <string name="c_wake">Sveglia (stamattina)</string>
+    <string name="c_time_clear">Cancella</string>
+    <string name="c_bedphone">Telefono nei 30 min prima di dormire: %1$s</string>
+    <string name="c_bedphone_none">Telefono nei 30 min prima di dormire: non usato</string>
+    <string name="c_bedphone_unknown">Telefono nei 30 min prima di dormire: non noto (serve “Accesso ai dati di utilizzo”; il telefono conserva i dati per circa una settimana)</string>
+    <string name="c_alcohol">Alcol</string>
+    <string name="alc_no">No</string>
+    <string name="alc_yes">Sì</string>
+    <string name="tr_alcohol">Bevuto alcol</string>
+    <string name="tr_bedphone">Telefono prima di dormire</string>
+    <string name="color_cream">Giallo chiaro</string>
+    <string name="color_indigo">Indaco</string>
+    <string name="pie_title">Tempo di oggi per app</string>
+    <string name="pie_other">Altre</string>
+    <string name="pie_need">Per vedere il tempo per app, consenti “Accesso ai dati di utilizzo”.</string>
+    <string name="pie_none">Oggi nessuna app è stata ancora usata per 1 minuto o più.</string>
+    <string name="pie_note">Calcolato dai dati di utilizzo del telefono (gli stessi di Benessere digitale). Il tempo su questa schermata Home non è incluso.</string>
+    <string name="goal_done">Fatto</string>
+    <string name="goal_done_btn">Ce l\'ho fatta!</string>
+    <string name="goal_undo">Segna come non fatto</string>
+    <string name="goal_edit_btn">Modifica obiettivo</string>
+    <string name="congrats_title">Congratulazioni!</string>
+    <string name="congrats_body">Hai raggiunto l\'obiettivo di oggi. Ottimo lavoro!</string>
+    <string name="page_condition">Forma fisica</string>
+    <string name="c_overall">Corpo</string>
+    <string name="c_overall_hint">Quanta energia aveva il tuo corpo</string>
+    <string name="st_note">Tempo con lo schermo acceso e sbloccato. Se consenti “Accesso ai dati di utilizzo”, viene completato anche con i dati del telefono (ultimi 7 giorni).</string>
+    <string name="tr_wait">Registra corpo, concentrazione e umore per 5 giorni per vedere cosa cambia nei giorni buoni (finora %1$d).</string>
+    <string name="tr_good">Media 7 o più\n(%1$d giorni)</string>
+    <string name="tr_note">* I giorni buoni sono separati in base alla media di corpo, concentrazione e umore. Per un\'analisi che includa i pasti, prova “Chiedi all\'IA” qui sotto.</string>
+    <string name="ai_unlock_section"># Perché ho aperto il telefono (ultimi 14 giorni, risposta a ogni sblocco)\ndata,ora,cosa stavo facendo,perché ho aperto il telefono\n%1$s</string>
+    <string name="ai_prompt">Sei un coach che conosce molto bene le abitudini quotidiane e il benessere.\nQui sotto ci sono i dati che registro ogni giorno sul telefono (%1$d giorni, dal %2$s al %3$s). Analizza quando tendo a sentirmi meglio.\n\n# Campi\n- corpo, concentrazione, umore, qualità_sonno: autovalutazione da 0 a 10 (10 è il massimo). Valuta i giorni buoni in base alla media di corpo, concentrazione e umore\n- ore_sonno: ore dormite la notte prima. a_letto, sveglia: quando sono andato a letto la sera prima e quando mi sono svegliato quella mattina\n- telefono_prima_di_dormire: minuti di uso del telefono nei 30 minuti prima di andare a letto\n- telefono_min: minuti con lo schermo acceso e in uso quel giorno. sblocchi: numero di sblocchi\n- alcol: 1 = bevuto alcol, 0 = no\n- obiettivo, raggiunto: l\'obiettivo del giorno e se l\'ho raggiunto (1 = raggiunto)\n- colazione, pranzo, cena, note: cosa ho mangiato, attività fisica, eventi ecc.\n- Vuoto significa \"non registrato\" (non zero)\n\n# Per riferimento: i miei obiettivi e abitudini\n- Obiettivi: %4$s\n- Abitudini: %5$s\n\n# Dati (CSV)\ndata,giorno,corpo,concentrazione,umore,qualità_sonno,ore_sonno,a_letto,sveglia,telefono_prima_di_dormire,telefono_min,sblocchi,alcol,obiettivo,raggiunto,colazione,pranzo,cena,note\n%6$s\n\n# Cosa vorrei\n1. Cosa cambia tra giorni buoni e cattivi (sonno, ora di andare a letto, telefono prima di dormire, alcol, pasti, tempo davanti allo schermo, giorno della settimana ecc.), con numeri concreti se possibile\n2. Fino a 3 schemi del tipo \"sto bene quando...\"\n3. Abitudini o combinazioni che sembrano abbattermi (se ci sono dati sugli sblocchi, anche orari e motivi che sembrano tempo sprecato)\n4. 3 piccole azioni da provare a partire da domani\n5. Avvertenze (pochi dati o dati sbilanciati ecc.) e cose che varrebbe la pena registrare in futuro\n\n# Come rispondere\n- Inizia con un riassunto di 3 righe, poi spiega nel dettaglio\n- Rispondi in %7$s, con parole semplici e senza termini tecnici\n- Separa ciò che mostrano i dati dalle supposizioni\n- Non fare diagnosi mediche</string>
 </resources>

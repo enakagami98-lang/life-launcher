@@ -20,7 +20,7 @@
     <string name="ask_q2">② فون کیوں کھولا</string>
     <string name="ask_other">فہرست میں نہیں؟ یہاں لکھیں</string>
     <string name="ask_submit">محفوظ کریں اور فون استعمال کریں</string>
-    <string name="ask_hint">① منتخب کریں پھر ② کا بٹن دبائیں، فوراً محفوظ ہو جائے گا۔ یہ سوال \"آج\" والی اسکرین سے بند کیا جا سکتا ہے۔</string>
+    <string name="ask_hint">① منتخب کریں پھر ② کا بٹن دبائیں، فوراً محفوظ ہو جائے گا۔ یہ سوال \"جسم کی حالت\" والی اسکرین سے بند کیا جا سکتا ہے۔</string>
     <string name="opt_edit">انتخاب میں ترمیم</string>
     <string name="opt_edit_hint">ہٹانے کے لیے بٹن دبائیں۔ نیا شامل کرنے کے لیے نیچے لکھ کر \"شامل کریں\" دبائیں۔</string>
     <string name="opt_remove">%1$s ہٹائیں</string>
@@ -172,7 +172,7 @@
     <string name="yd_condition">حالت</string>
     <string name="yd_sleep">نیند</string>
     <string name="yd_phone">فون</string>
-    <string name="yd_input_today">آج درج کریں ›</string>
+    <string name="yd_input_today">جسم کی حالت درج کریں ›</string>
     <string name="settings">ترتیبات</string>
     <string name="favorites">پسندیدہ</string>
     <string name="fav_empty">ایپس والی اسکرین پر (سوائپ کریں) کسی ایپ کو دبا کر رکھیں تاکہ شامل ہو جائے۔</string>
@@ -186,9 +186,6 @@
     <string name="ymd">%1$d سال %2$d ماہ %3$d دن</string>
     <string name="age_now">عمر %1$d</string>
     <string name="lifespan_is">متوقع عمر %1$d</string>
-    <string name="page_condition">آج</string>
-    <string name="c_overall">مجموعی</string>
-    <string name="c_overall_hint">پورے دن کو دیکھتے ہوئے</string>
     <string name="c_sleep">نیند کا معیار</string>
     <string name="c_sleep_hint">اچھی نیند آئی؟</string>
     <string name="c_focus">توجہ</string>
@@ -214,7 +211,6 @@
     <string name="st_that_day">اس دن کا اسکرین ٹائم</string>
     <string name="unit_hours">گھنٹے</string>
     <string name="st_unlocks">%1$d بار ان لاک</string>
-    <string name="st_note">اسکرین آن اور ان لاک رہنے کا وقت (صرف اس وقت گنا جاتا ہے جب اس ایپ کی نگرانی چل رہی ہو)۔</string>
     <string name="this_month">اس ماہ</string>
     <string name="mc_none">اس ماہ کا ابھی کوئی ڈیٹا نہیں۔</string>
     <string name="mc_wait">پچھلے ماہ کا ڈیٹا آنے پر یہاں موازنہ دکھے گا۔</string>
@@ -232,11 +228,8 @@
     <string name="ul_top">سب سے زیادہ وجوہات: %1$s</string>
     <string name="tr_title">آپ کے اچھے دنوں میں کیا مشترک ہے</string>
     <string name="tr_2w">2 ہفتے پہلے</string>
-    <string name="tr_wait">اچھے دنوں کا فرق دیکھنے کے لیے 5 دن درج کریں (اب تک %1$d)۔</string>
-    <string name="tr_good">7 یا زیادہ\n(%1$d دن)</string>
     <string name="tr_other">باقی\n(%1$d دن)</string>
     <string name="tr_breakfast">ناشتہ کیا</string>
-    <string name="tr_note">* یہ اوسط ہیں۔ کھانے سمیت تفصیلی تجزیے کے لیے نیچے \"AI سے پوچھیں\" آزمائیں۔</string>
     <string name="ai_title">AI سے پوچھیں</string>
     <string name="ai_desc">آپ کے ریکارڈ (%1$d دن) کو سوال میں بدلتا ہے۔ ChatGPT یا Claude میں چسپاں کریں تاکہ پتہ چلے آپ کب بہترین محسوس کرتے ہیں۔</string>
     <string name="ai_copy">سوال کاپی کریں</string>
@@ -320,7 +313,7 @@
     <string name="tut6_body">\"باقی دن\" کے نیچے دکھتا ہے۔ \"دکھائی جانے والی چیزیں بدلیں\" سے کبھی بھی بدل سکتے ہیں۔</string>
     <string name="tut7_title">سب تیار ہے</string>
     <string name="tut7_body">صفحہ بدلنے کے لیے دائیں یا بائیں سوائپ کریں۔</string>
-    <string name="tut7_page_left">آج: حالت، نیند، اسکرین ٹائم</string>
+    <string name="tut7_page_left">جسم کی حالت: حالت، نیند، اسکرین ٹائم</string>
     <string name="tut7_page_top">ہوم: باقی دن، منتخب معلومات، نیچے پسندیدہ</string>
     <string name="tut7_page_right">ایپس، اہداف، عادات، آج کے کام</string>
     <string name="tut7_longpress">فہرست میں کسی ایپ کو دبا کر رکھیں اور پسندیدہ، وقت کی حد یا چھپانا ترتیب دیں۔</string>
@@ -337,4 +330,38 @@
     <string name="pay_switch_home">کسی اور ہوم ایپ پر جائیں</string>
     <string name="pay_cancel_note">مفت آزمائش کے دوران منسوخ کریں تو کوئی رقم نہیں کٹے گی۔ Google Play ← ادائیگیاں اور سبسکرپشنز میں کبھی بھی منسوخ کریں۔</string>
     <string name="pay_manage">سبسکرپشن کا انتظام (منسوخی، ادائیگی کا طریقہ)</string>
+    <string name="this_month_so_far">اس مہینے (کل تک)</string>
+    <string name="c_bed">سونے کا وقت (کل رات)</string>
+    <string name="c_wake">جاگنے کا وقت (آج صبح)</string>
+    <string name="c_time_clear">صاف کریں</string>
+    <string name="c_bedphone">سونے سے پہلے 30 منٹ میں فون: %1$s</string>
+    <string name="c_bedphone_none">سونے سے پہلے 30 منٹ میں فون: استعمال نہیں کیا</string>
+    <string name="c_bedphone_unknown">سونے سے پہلے 30 منٹ میں فون: معلوم نہیں (”استعمال تک رسائی“ کی اجازت درکار ہے؛ فون اپنا ریکارڈ تقریباً ایک ہفتہ رکھتا ہے)</string>
+    <string name="c_alcohol">شراب</string>
+    <string name="alc_no">نہیں</string>
+    <string name="alc_yes">ہاں</string>
+    <string name="tr_alcohol">شراب پی</string>
+    <string name="tr_bedphone">سونے سے پہلے فون</string>
+    <string name="color_cream">ہلکا پیلا</string>
+    <string name="color_indigo">گہرا نیلا</string>
+    <string name="pie_title">آج ایپ کے لحاظ سے وقت</string>
+    <string name="pie_other">دیگر</string>
+    <string name="pie_need">ہر ایپ کا وقت دیکھنے کے لیے ”استعمال تک رسائی“ کی اجازت دیں۔</string>
+    <string name="pie_none">آج ابھی تک کوئی ایپ 1 منٹ یا زیادہ استعمال نہیں ہوئی۔</string>
+    <string name="pie_note">فون کے استعمال کے ریکارڈ سے گنا گیا (Digital Wellbeing والا ہی ڈیٹا)۔ اس ہوم اسکرین پر گزارا وقت شامل نہیں۔</string>
+    <string name="goal_done">مکمل</string>
+    <string name="goal_done_btn">میں نے کر دکھایا!</string>
+    <string name="goal_undo">مکمل نہ سمجھیں</string>
+    <string name="goal_edit_btn">ہدف بدلیں</string>
+    <string name="congrats_title">مبارک ہو!</string>
+    <string name="congrats_body">آپ نے آج کا ہدف پورا کر لیا۔ بہت خوب!</string>
+    <string name="page_condition">جسم کی حالت</string>
+    <string name="c_overall">جسم</string>
+    <string name="c_overall_hint">جسم میں کتنی تازگی تھی</string>
+    <string name="st_note">اسکرین آن اور ان لاک رہنے کا وقت۔ اگر ”استعمال تک رسائی“ کی اجازت ہو تو فون کے ریکارڈ (پچھلے 7 دن) سے بھی پورا کیا جاتا ہے۔</string>
+    <string name="tr_wait">5 دن تک جسم، توجہ اور موڈ درج کریں تاکہ اچھے دنوں کا فرق نظر آئے (ابھی %1$d دن)۔</string>
+    <string name="tr_good">اوسط 7 یا زیادہ\n(%1$d دن)</string>
+    <string name="tr_note">* اچھے دن جسم، توجہ اور موڈ کی اوسط سے الگ کیے جاتے ہیں۔ کھانے سمیت گہرے تجزیے کے لیے نیچے ”AI سے پوچھیں“ آزمائیں۔</string>
+    <string name="ai_unlock_section"># میں نے فون کیوں کھولا (پچھلے 14 دن، ہر ان لاک پر دیا گیا جواب)\nتاریخ,وقت,اس وقت کیا کر رہا تھا,فون کیوں کھولا\n%1$s</string>
+    <string name="ai_prompt">آپ ایک کوچ ہیں جو روزمرہ کی عادات اور صحت کے بارے میں اچھی معلومات رکھتے ہیں۔\nنیچے وہ ڈیٹا ہے جو میں ہر روز اپنے فون میں درج کرتا ہوں (%1$d دن، %2$s سے %3$s تک)۔ براہ کرم تجزیہ کریں کہ میں کب سب سے اچھا محسوس کرتا ہوں۔\n\n# کالم\n- جسم، توجہ، موڈ، نیند_کا_معیار: 0 سے 10 تک خود کی درجہ بندی (10 سب سے اچھا)۔ اچھے دن جسم، توجہ اور موڈ کی اوسط سے طے کریں\n- نیند_گھنٹے: پچھلی رات کتنے گھنٹے سویا۔ سونا، جاگنا: پچھلی رات کب سویا اور اس صبح کب جاگا\n- سونے_سے_پہلے_فون: سونے سے پہلے 30 منٹ میں فون استعمال کے منٹ\n- فون_منٹ: اس دن اسکرین آن رہ کر استعمال ہونے کے منٹ۔ ان_لاک: کتنی بار ان لاک کیا\n- شراب: 1 = پی، 0 = نہیں\n- ہدف، پورا: اس دن کا ہدف اور کیا میں نے اسے پورا کیا (1 = پورا)\n- ناشتہ، دوپہر_کا_کھانا، رات_کا_کھانا، نوٹ: کیا کھایا، ورزش، واقعات وغیرہ\n- خالی کا مطلب \"درج نہیں کیا\" ہے (صفر نہیں)\n\n# حوالے کے لیے: میرے اہداف اور عادات\n- اہداف: %4$s\n- عادات: %5$s\n\n# ڈیٹا (CSV)\nتاریخ,دن,جسم,توجہ,موڈ,نیند_کا_معیار,نیند_گھنٹے,سونا,جاگنا,سونے_سے_پہلے_فون,فون_منٹ,ان_لاک,شراب,ہدف,پورا,ناشتہ,دوپہر_کا_کھانا,رات_کا_کھانا,نوٹ\n%6$s\n\n# میں کیا چاہتا ہوں\n1. اچھے اور برے دنوں میں کیا فرق ہے (نیند، سونے کا وقت، سونے سے پہلے فون، شراب، کھانا، اسکرین ٹائم، ہفتے کا دن وغیرہ)، جہاں ممکن ہو ٹھوس اعداد کے ساتھ\n2. \"مجھے تب اچھا لگتا ہے جب...\" جیسے زیادہ سے زیادہ 3 پیٹرن\n3. ایسی عادات یا امتزاج جو میری حالت گراتے لگتے ہیں (اگر فون کھولنے کا ریکارڈ ہے تو بیکار لگنے والے اوقات اور وجوہات بھی)\n4. 3 چھوٹے قدم جو میں کل سے آزما سکوں\n5. احتیاطیں (کم یا یک طرفہ ڈیٹا وغیرہ) اور آئندہ درج کرنے کے قابل چیزیں\n\n# جواب کیسے دیں\n- پہلے 3 سطروں میں خلاصہ دیں، پھر تفصیل سے سمجھائیں\n- %7$s میں، آسان الفاظ میں اور تکنیکی اصطلاحات کے بغیر جواب دیں\n- جو ڈیٹا سے نظر آتا ہے اور جو اندازہ ہے، انہیں الگ لکھیں\n- کوئی طبی تشخیص نہ کریں</string>
 </resources>

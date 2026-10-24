@@ -20,7 +20,7 @@
     <string name="ask_q2">② لماذا فتحت هاتفك</string>
     <string name="ask_other">غير موجود؟ اكتبه هنا</string>
     <string name="ask_submit">حفظ واستخدام الهاتف</string>
-    <string name="ask_hint">اختر ① ثم اضغط زرًا من ② ليُحفظ فورًا. يمكنك إيقاف هذا السؤال من شاشة \"اليوم\".</string>
+    <string name="ask_hint">اختر ① ثم اضغط زرًا من ② ليُحفظ فورًا. يمكنك إيقاف هذا السؤال من شاشة \"حالة الجسم\".</string>
     <string name="opt_edit">تعديل الخيارات</string>
     <string name="opt_edit_hint">اضغط على زر لحذفه. اكتب بالأسفل واضغط \"إضافة\" لإضافة خيار.</string>
     <string name="opt_remove">حذف %1$s</string>
@@ -172,7 +172,7 @@
     <string name="yd_condition">الحالة</string>
     <string name="yd_sleep">النوم</string>
     <string name="yd_phone">الهاتف</string>
-    <string name="yd_input_today">سجّل اليوم ›</string>
+    <string name="yd_input_today">سجّل حالة الجسم ›</string>
     <string name="settings">الإعدادات</string>
     <string name="favorites">المفضلة</string>
     <string name="fav_empty">في شاشة التطبيقات (اسحب جانبًا)، اضغط مطولًا على تطبيق لإضافته.</string>
@@ -186,9 +186,6 @@
     <string name="ymd">%1$d سنة %2$d شهر %3$d يوم</string>
     <string name="age_now">العمر %1$d</string>
     <string name="lifespan_is">العمر المتوقع %1$d</string>
-    <string name="page_condition">اليوم</string>
-    <string name="c_overall">إجمالًا</string>
-    <string name="c_overall_hint">بالنظر إلى اليوم كله</string>
     <string name="c_sleep">جودة النوم</string>
     <string name="c_sleep_hint">هل نمت جيدًا؟</string>
     <string name="c_focus">التركيز</string>
@@ -214,7 +211,6 @@
     <string name="st_that_day">وقت الشاشة في ذلك اليوم</string>
     <string name="unit_hours">س</string>
     <string name="st_unlocks">فتح القفل %1$d مرة</string>
-    <string name="st_note">الوقت الذي كانت فيه الشاشة مضاءة وغير مقفلة (يُحسب فقط أثناء عمل مراقبة هذا التطبيق).</string>
     <string name="this_month">هذا الشهر</string>
     <string name="mc_none">لا توجد بيانات لهذا الشهر بعد.</string>
     <string name="mc_wait">عند توفر بيانات الشهر الماضي ستظهر المقارنة هنا.</string>
@@ -232,11 +228,8 @@
     <string name="ul_top">أكثر الأسباب: %1$s</string>
     <string name="tr_title">ما يجمع أيامك الجيدة</string>
     <string name="tr_2w">قبل أسبوعين</string>
-    <string name="tr_wait">سجّل 5 أيام لترى ما يختلف في أيامك الجيدة (حتى الآن %1$d).</string>
-    <string name="tr_good">7 فأكثر\n(%1$d يوم)</string>
     <string name="tr_other">غير ذلك\n(%1$d يوم)</string>
     <string name="tr_breakfast">تناول الفطور</string>
-    <string name="tr_note">* هذه متوسطات. لتحليل يشمل الوجبات جرّب \"اسأل الذكاء الاصطناعي\" بالأسفل.</string>
     <string name="ai_title">اسأل الذكاء الاصطناعي</string>
     <string name="ai_desc">يحوّل سجلاتك (%1$d يوم) إلى سؤال. الصقه في ChatGPT أو Claude لتعرف متى تكون في أفضل حال.</string>
     <string name="ai_copy">نسخ السؤال</string>
@@ -320,7 +313,7 @@
     <string name="tut6_body">يظهر أسفل \"الأيام المتبقية\". يمكنك تغييره متى شئت من \"تعديل ما يظهر\".</string>
     <string name="tut7_title">كل شيء جاهز</string>
     <string name="tut7_body">اسحب يمينًا أو يسارًا للتنقل بين الصفحات.</string>
-    <string name="tut7_page_left">اليوم: الحالة والنوم ووقت الشاشة</string>
+    <string name="tut7_page_left">حالة الجسم: الحالة والنوم ووقت الشاشة</string>
     <string name="tut7_page_top">الرئيسية: الأيام المتبقية ومعلوماتك والمفضلة بالأسفل</string>
     <string name="tut7_page_right">التطبيقات والأهداف والعادات ومهام اليوم</string>
     <string name="tut7_longpress">اضغط مطولًا على تطبيق في القائمة لإضافته إلى المفضلة أو تحديد وقته أو إخفائه.</string>
@@ -337,4 +330,38 @@
     <string name="pay_switch_home">التبديل إلى تطبيق شاشة رئيسية آخر</string>
     <string name="pay_cancel_note">إذا ألغيت خلال الفترة التجريبية المجانية فلن تُحاسَب. يمكنك الإلغاء في أي وقت من Google Play ← الدفعات والاشتراكات.</string>
     <string name="pay_manage">إدارة الاشتراك (الإلغاء، طريقة الدفع)</string>
+    <string name="this_month_so_far">هذا الشهر (حتى أمس)</string>
+    <string name="c_bed">وقت النوم (ليلة أمس)</string>
+    <string name="c_wake">وقت الاستيقاظ (هذا الصباح)</string>
+    <string name="c_time_clear">مسح</string>
+    <string name="c_bedphone">الهاتف في آخر 30 دقيقة قبل النوم: %1$s</string>
+    <string name="c_bedphone_none">الهاتف في آخر 30 دقيقة قبل النوم: لم يُستخدم</string>
+    <string name="c_bedphone_unknown">الهاتف في آخر 30 دقيقة قبل النوم: غير معروف (يلزم إذن «الوصول إلى بيانات الاستخدام»، ويحتفظ الهاتف بسجلاته نحو أسبوع)</string>
+    <string name="c_alcohol">الكحول</string>
+    <string name="alc_no">لا</string>
+    <string name="alc_yes">نعم</string>
+    <string name="tr_alcohol">شرب الكحول</string>
+    <string name="tr_bedphone">الهاتف قبل النوم</string>
+    <string name="color_cream">أصفر فاتح</string>
+    <string name="color_indigo">نيلي</string>
+    <string name="pie_title">وقت اليوم حسب التطبيق</string>
+    <string name="pie_other">أخرى</string>
+    <string name="pie_need">لرؤية الوقت لكل تطبيق، اسمح بـ«الوصول إلى بيانات الاستخدام».</string>
+    <string name="pie_none">لم يُستخدم أي تطبيق لمدة دقيقة أو أكثر اليوم بعد.</string>
+    <string name="pie_note">محسوب من سجلات استخدام الهاتف (نفس بيانات «الصحة الرقمية»). لا يشمل الوقت على هذه الشاشة الرئيسية.</string>
+    <string name="goal_done">تم</string>
+    <string name="goal_done_btn">لقد فعلتها!</string>
+    <string name="goal_undo">إلغاء الإنجاز</string>
+    <string name="goal_edit_btn">تعديل الهدف</string>
+    <string name="congrats_title">تهانينا!</string>
+    <string name="congrats_body">لقد حققت هدف اليوم. أحسنت!</string>
+    <string name="page_condition">حالة الجسم</string>
+    <string name="c_overall">الجسم</string>
+    <string name="c_overall_hint">مدى نشاط جسمك</string>
+    <string name="st_note">الوقت الذي كانت فيه الشاشة مضاءة وغير مقفلة. إذا سمحت بـ«الوصول إلى بيانات الاستخدام»، يُستكمل أيضًا من سجلات الهاتف (آخر 7 أيام).</string>
+    <string name="tr_wait">سجّل الجسم والتركيز والمزاج لمدة 5 أيام لترى ما الذي يميز أيامك الجيدة (حتى الآن %1$d).</string>
+    <string name="tr_good">متوسط 7 فأكثر\n(%1$d أيام)</string>
+    <string name="tr_note">* تُحدَّد الأيام الجيدة بمتوسط الجسم والتركيز والمزاج. لتحليل أعمق يشمل الوجبات، جرّب «اسأل الذكاء الاصطناعي» بالأسفل.</string>
+    <string name="ai_unlock_section"># لماذا فتحت هاتفي (آخر 14 يومًا، أُجيب عند كل فتح قفل)\nالتاريخ,الوقت,ماذا كنت أفعل,لماذا فتحت الهاتف\n%1$s</string>
+    <string name="ai_prompt">أنت مدرب لديك خبرة كبيرة في العادات اليومية والصحة.\nفيما يلي البيانات التي أسجلها كل يوم على هاتفي (%1$d يومًا، من %2$s إلى %3$s). من فضلك حلّل متى أشعر عادةً بأفضل حال.\n\n# الحقول\n- الجسم، التركيز، المزاج، جودة_النوم: تقييم ذاتي من 0 إلى 10 (10 هو الأفضل). احكم على الأيام الجيدة بمتوسط الجسم والتركيز والمزاج\n- ساعات_النوم: عدد ساعات النوم في الليلة السابقة. النوم، الاستيقاظ: متى نمت في الليلة السابقة ومتى استيقظت ذلك الصباح\n- الهاتف_قبل_النوم: دقائق استخدام الهاتف في الثلاثين دقيقة قبل النوم\n- الهاتف_دقائق: دقائق كانت فيها الشاشة مضاءة ومستخدمة في ذلك اليوم. فتح_القفل: عدد مرات فتح القفل\n- الكحول: 1 = شربت، 0 = لا\n- الهدف، تحقق: هدف ذلك اليوم وهل حققته (1 = تحقق)\n- الإفطار، الغداء، العشاء، ملاحظات: ما أكلته، الرياضة، الأحداث وغيرها\n- الخانة الفارغة تعني \"لم يُسجَّل\" (وليست صفرًا)\n\n# للعلم: أهدافي وعاداتي\n- الأهداف: %4$s\n- العادات: %5$s\n\n# البيانات (CSV)\nالتاريخ,اليوم,الجسم,التركيز,المزاج,جودة_النوم,ساعات_النوم,النوم,الاستيقاظ,الهاتف_قبل_النوم,الهاتف_دقائق,فتح_القفل,الكحول,الهدف,تحقق,الإفطار,الغداء,العشاء,ملاحظات\n%6$s\n\n# ما أريده\n1. ما الذي يختلف بين الأيام الجيدة والسيئة (النوم، وقت النوم، الهاتف قبل النوم، الكحول، الوجبات، وقت الشاشة، يوم الأسبوع وغيرها)، بأرقام محددة قدر الإمكان\n2. حتى 3 أنماط من نوع \"أشعر بحال جيدة عندما...\"\n3. العادات أو التركيبات التي يبدو أنها تُضعف حالتي (وإن وُجدت سجلات فتح الهاتف، فالأوقات والأسباب التي تبدو مضيعة للوقت أيضًا)\n4. 3 خطوات صغيرة يمكنني تجربتها بدءًا من الغد\n5. ملاحظات للحذر (قلة البيانات أو انحيازها وغير ذلك) وأمور يستحق تسجيلها مستقبلًا\n\n# طريقة الإجابة\n- ابدأ بملخص من 3 أسطر، ثم اشرح بالتفصيل\n- أجب باللغة %7$s، بكلمات بسيطة ودون مصطلحات متخصصة\n- افصل بين ما تُظهره البيانات وما هو تخمين\n- لا تقدّم تشخيصًا طبيًا</string>
 </resources>

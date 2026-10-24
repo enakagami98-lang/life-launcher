@@ -51,7 +51,7 @@ $UI tap "abcを未完了に戻す" >/dev/null; sleep 1
 expect_text "チェックを外せる" "0 / 2 完了"
 key KEYCODE_HOME
 
-log "== 2. 今日の調子の画面にスマホ使用時間"
+log "== 2. 身体の調子の画面にスマホ使用時間"
 prev_page; snap screen_time
 expect_text "使用時間の見出し" "今日のスマホ使用時間"
 expect_text "ロック解除の回数" "ロック解除"
@@ -76,12 +76,12 @@ expect_text "ホームボタンでも質問のまま" "今何してる？"
 log "== 5. 2タップで答える"
 $UI tap "勉強" >/dev/null; sleep 1; $UI tap "SNS" >/dev/null; sleep 2; snap answered
 expect_no_text "答えると質問が消える" "今何してる？"
-expect_text "寿命画面に戻る" "まずは誕生日と寿命を設定"
+expect_text "ホーム画面に戻る" "まずは誕生日と寿命を設定"
 adb shell monkey -p com.android.chrome -c android.intent.category.LAUNCHER 1 >/dev/null; sleep 8
 expect_app "答えた後は他のアプリを使える" com.android.chrome
 key KEYCODE_HOME
 
-log "== 6. 記録が今日の調子に出る"
+log "== 6. 記録が身体の調子に出る"
 prev_page; $UI tapp "勉強 → SNS" >/dev/null; sleep 1; snap log_shown
 expect_text "時刻つきの記録" "勉強 → SNS"
 expect_text "多かった理由" "多かった理由：SNS 1回"

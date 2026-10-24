@@ -20,7 +20,7 @@
     <string name="ask_q2">② Por qué abriste el teléfono</string>
     <string name="ask_other">¿No está? Escríbelo aquí</string>
     <string name="ask_submit">Guardar y usar el teléfono</string>
-    <string name="ask_hint">Elige ① y luego toca un botón de ② para guardar al instante. Puedes desactivarlo en la pantalla \"Hoy\".</string>
+    <string name="ask_hint">Elige ① y luego toca un botón de ② para guardar al instante. Puedes desactivarlo en la pantalla \"Condición\".</string>
     <string name="opt_edit">Editar opciones</string>
     <string name="opt_edit_hint">Toca un botón para quitarlo. Escribe abajo y toca \"Añadir\" para agregar uno.</string>
     <string name="opt_remove">Quitar %1$s</string>
@@ -186,9 +186,6 @@
     <string name="ymd">%1$d a %2$d m %3$d d</string>
     <string name="age_now">Edad %1$d</string>
     <string name="lifespan_is">Esperanza de vida %1$d</string>
-    <string name="page_condition">Hoy</string>
-    <string name="c_overall">General</string>
-    <string name="c_overall_hint">Pensando en todo el día</string>
     <string name="c_sleep">Calidad del sueño</string>
     <string name="c_sleep_hint">¿Dormiste bien?</string>
     <string name="c_focus">Concentración</string>
@@ -212,7 +209,6 @@
     <string name="st_today">Tiempo de pantalla de hoy</string>
     <string name="st_that_day">Tiempo de pantalla de ese día</string>
     <string name="st_unlocks">%1$d desbloqueos</string>
-    <string name="st_note">Tiempo con la pantalla encendida y desbloqueada (solo se cuenta mientras funciona la supervisión de esta app).</string>
     <string name="this_month">Este mes</string>
     <string name="mc_none">Aún no hay datos de este mes.</string>
     <string name="mc_wait">Cuando haya datos del mes pasado, aquí verás la comparación.</string>
@@ -230,11 +226,8 @@
     <string name="ul_top">Motivos principales: %1$s</string>
     <string name="tr_title">Qué tienen en común tus días buenos</string>
     <string name="tr_2w">Hace 2 semanas</string>
-    <string name="tr_wait">Registra 5 días para ver qué cambia en tus días buenos (%1$d hasta ahora).</string>
-    <string name="tr_good">7 o más\n(%1$d días)</string>
     <string name="tr_other">Otros\n(%1$d días)</string>
     <string name="tr_breakfast">Desayunó</string>
-    <string name="tr_note">* Son promedios. Para un análisis que incluya las comidas, prueba \"Preguntar a la IA\" abajo.</string>
     <string name="ai_title">Preguntar a la IA</string>
     <string name="ai_desc">Convierte tus registros (%1$d días) en una consulta. Pégala en ChatGPT o Claude para saber cuándo te sientes mejor.</string>
     <string name="ai_copy">Copiar consulta</string>
@@ -318,7 +311,7 @@
     <string name="tut6_body">Se muestra debajo de \"Días restantes\". Puedes cambiarlo cuando quieras en \"Editar lo que se muestra\".</string>
     <string name="tut7_title">Todo listo</string>
     <string name="tut7_body">Desliza a izquierda o derecha para cambiar de página.</string>
-    <string name="tut7_page_left">← Desliza a la derecha: Hoy (estado, sueño, tiempo de pantalla)</string>
+    <string name="tut7_page_left">← Desliza a la derecha: Condición (estado, sueño, tiempo de pantalla)</string>
     <string name="tut7_page_top">Inicio: días restantes, tu información y, más abajo, favoritos</string>
     <string name="tut7_page_right">→ Desliza a la izquierda: apps, metas, hábitos, tareas de hoy</string>
     <string name="tut7_longpress">Mantén pulsada una app en la lista para añadirla a favoritos, ponerle límite u ocultarla.</string>
@@ -335,4 +328,38 @@
     <string name="pay_switch_home">Cambiar a otra app de inicio</string>
     <string name="pay_cancel_note">Si cancelas durante la prueba gratis, no se te cobrará. Cancela cuando quieras en Google Play → Pagos y suscripciones.</string>
     <string name="pay_manage">Gestionar suscripción (cancelar, método de pago)</string>
+    <string name="this_month_so_far">Este mes (hasta ayer)</string>
+    <string name="c_bed">Hora de acostarse (anoche)</string>
+    <string name="c_wake">Hora de levantarse (hoy)</string>
+    <string name="c_time_clear">Borrar</string>
+    <string name="c_bedphone">Móvil en los 30 min antes de dormir: %1$s</string>
+    <string name="c_bedphone_none">Móvil en los 30 min antes de dormir: no se usó</string>
+    <string name="c_bedphone_unknown">Móvil en los 30 min antes de dormir: no se sabe (requiere “Acceso a datos de uso”; el teléfono guarda sus registros una semana aprox.)</string>
+    <string name="c_alcohol">Alcohol</string>
+    <string name="alc_no">No</string>
+    <string name="alc_yes">Sí</string>
+    <string name="tr_alcohol">Bebió alcohol</string>
+    <string name="tr_bedphone">Móvil antes de dormir</string>
+    <string name="color_cream">Amarillo claro</string>
+    <string name="color_indigo">Añil</string>
+    <string name="pie_title">Tiempo de hoy por app</string>
+    <string name="pie_other">Otras</string>
+    <string name="pie_need">Para ver el tiempo por app, permite el “Acceso a datos de uso”.</string>
+    <string name="pie_none">Hoy todavía no has usado ninguna app durante 1 minuto o más.</string>
+    <string name="pie_note">Calculado con los registros de uso del teléfono (los mismos datos que Bienestar digital). No incluye el tiempo en esta pantalla de inicio.</string>
+    <string name="goal_done">Logrado</string>
+    <string name="goal_done_btn">¡Lo logré!</string>
+    <string name="goal_undo">Marcar como no logrado</string>
+    <string name="goal_edit_btn">Editar objetivo</string>
+    <string name="congrats_title">¡Felicidades!</string>
+    <string name="congrats_body">Has cumplido el objetivo de hoy. ¡Buen trabajo!</string>
+    <string name="page_condition">Condición</string>
+    <string name="c_overall">Cuerpo</string>
+    <string name="c_overall_hint">Cuánta energía tenía tu cuerpo</string>
+    <string name="st_note">Tiempo con la pantalla encendida y desbloqueada. Si permites el “Acceso a datos de uso”, también se completa con los registros del teléfono (últimos 7 días).</string>
+    <string name="tr_wait">Registra cuerpo, concentración y ánimo durante 5 días para ver qué cambia en tus días buenos (%1$d hasta ahora).</string>
+    <string name="tr_good">Media 7 o más\n(%1$d días)</string>
+    <string name="tr_note">* Los días buenos se separan por la media de cuerpo, concentración y ánimo. Para un análisis que incluya las comidas, prueba “Pedir a la IA” abajo.</string>
+    <string name="ai_unlock_section"># Por qué abrí el móvil (últimos 14 días, respondido en cada desbloqueo)\nfecha,hora,qué estaba haciendo,por qué abrí el móvil\n%1$s</string>
+    <string name="ai_prompt">Eres un coach que sabe mucho de hábitos diarios y bienestar.\nAbajo están los datos que registro cada día en mi móvil (%1$d días, del %2$s al %3$s). Analiza cuándo suelo sentirme mejor.\n\n# Campos\n- cuerpo, concentración, ánimo, calidad_sueño: autoevaluación de 0 a 10 (10 es lo mejor). Juzga los días buenos por la media de cuerpo, concentración y ánimo\n- horas_sueño: horas que dormí la noche anterior. acostarse, levantarse: a qué hora me acosté la noche anterior y a qué hora me levanté esa mañana\n- móvil_antes_dormir: minutos que usé el móvil en los 30 minutos antes de acostarme\n- móvil_min: minutos con la pantalla encendida y en uso ese día. desbloqueos: número de desbloqueos\n- alcohol: 1 = bebí alcohol, 0 = no\n- objetivo, logrado: el objetivo de ese día y si lo cumplí (1 = cumplido)\n- desayuno, comida, cena, notas: lo que comí, ejercicio, sucesos, etc.\n- Vacío significa \"sin registrar\" (no es cero)\n\n# Como referencia: mis objetivos y hábitos\n- Objetivos: %4$s\n- Hábitos: %5$s\n\n# Datos (CSV)\nfecha,día,cuerpo,concentración,ánimo,calidad_sueño,horas_sueño,acostarse,levantarse,móvil_antes_dormir,móvil_min,desbloqueos,alcohol,objetivo,logrado,desayuno,comida,cena,notas\n%6$s\n\n# Lo que me gustaría\n1. Qué cambia entre los días buenos y los malos (sueño, hora de acostarme, móvil antes de dormir, alcohol, comidas, tiempo de pantalla, día de la semana, etc.), con cifras concretas cuando sea posible\n2. Hasta 3 patrones del tipo \"me siento bien cuando...\"\n3. Hábitos o combinaciones que parecen bajarme el ánimo (si hay registros de desbloqueo, también horas y motivos que parecen tiempo perdido)\n4. 3 acciones pequeñas que pueda probar desde mañana\n5. Advertencias (pocos datos o sesgados, etc.) y datos que valdría la pena registrar en el futuro\n\n# Cómo responder\n- Empieza con un resumen de 3 líneas y luego explica en detalle\n- Responde en %7$s, con lenguaje sencillo y sin tecnicismos\n- Separa lo que muestran los datos de las suposiciones\n- No hagas diagnósticos médicos</string>
 </resources>

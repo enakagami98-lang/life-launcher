@@ -6,7 +6,7 @@ UI="python3 .github/e2e/ui.py"
 N=0
 log() { echo "$*" | tee -a $R; }
 top() { adb shell dumpsys activity activities | grep -m1 topResumedActivity | grep -o '[a-z0-9.]*/[A-Za-z0-9.]*' | head -1; }
-page() { for t in 生年月日と寿命 目標を追加 お気に入り アプリ 目標 習慣 今日のタスク 今日の調子; do $UI has "$t" >/dev/null && { echo "$t"; return; }; done; echo "?"; }
+page() { for t in 生年月日と寿命 目標を追加 お気に入り アプリ 目標 習慣 今日のタスク 身体の調子; do $UI has "$t" >/dev/null && { echo "$t"; return; }; done; echo "?"; }
 snap() { N=$((N+1)); f=$(printf "%02d_%s" $N "$1"); adb exec-out screencap -p > $OUT/$f.png; log "   [撮影 $f] 表示中アプリ=$(top) 画面=$(page)"; }
 # 画面キーボード（Gboard）のキーを指でタップして入力する
 declare -A K=( [1]="140 1724" [2]="404 1724" [3]="672 1724" [4]="140 1880" [5]="404 1880" [6]="672 1880" [7]="140 2036" [8]="404 2036" [9]="672 2036" [0]="404 2192" [BS]="944 2036"
@@ -33,7 +33,7 @@ sleep 3; adb shell input keyevent KEYCODE_HOME; sleep 3; bash .github/e2e/skip_t
 log "ホームアプリに登録: $(adb shell cmd package resolve-activity --brief -a android.intent.action.MAIN -c android.intent.category.HOME | tail -1 | tr -d '\r')"
 
 log "== 1. ホームボタン"
-key KEYCODE_HOME; expect_app "ホームボタンでLifeLauncher" $PKG; expect_text "寿命画面" "お気に入り"; snap home
+key KEYCODE_HOME; expect_app "ホームボタンでLifeLauncher" $PKG; expect_text "ホーム画面" "お気に入り"; snap home
 
 log "== 2. 寿命の設定（1999/4/29生まれ・寿命30歳）"
 $UI tap "設定" >/dev/null; sleep 2; snap settings_open
@@ -45,7 +45,7 @@ if ! $UI has "30" >/dev/null; then $UI tap "寿命（歳）" >/dev/null; sleep 1
 sleep 1; snap settings_typed
 expect_text "年の入力" "1999"; expect_text "寿命の入力" "30"; expect_no_text "エラー表示なし" "生年月日を正しく入力してください（例：1999年4月29日）"
 $UI tap "保存" >/dev/null; sleep 2; snap after_save
-expect_text "保存後は寿命画面のまま" "残りの日数"
+expect_text "保存後はホーム画面のまま" "残りの日数"
 EXP=$(python3 -c "import datetime;print('{:,}'.format((datetime.date(2029,4,29)-datetime.date.today()).days))")
 expect_text "残り日数（計算上の正解 $EXP）" "$EXP"
 T=$(python3 -c "import datetime;d=datetime.date.today();print(f'{d.month}月{d.day}日')"); if $UI hasp "$T" >/dev/null; then ok "左上は日付「$T」"; else ng "左上は日付「$T」なし"; fi
@@ -68,39 +68,39 @@ expect_app "キーボードの決定キーで先頭の検索結果(Settings)が�
 
 log "== 4. 他アプリ→ホームボタン"
 lang ja-JP; snap home_from_settings
-expect_app "LifeLauncherに戻る" $PKG; expect_text "寿命画面に戻る" "残りの日数"
+expect_app "LifeLauncherに戻る" $PKG; expect_text "ホーム画面に戻る" "残りの日数"
 
 log "== 5. 他アプリ→戻るボタン"
 next_page; $UI tap "Chrome" >/dev/null; sleep 4; snap chrome_opened
 expect_app "一覧タップでChromeが開く" com.android.chrome
 for i in 1 2 3 4; do [ "$(top | cut -d/ -f1)" = "$PKG" ] && break; key KEYCODE_BACK; done
 snap back_from_chrome
-expect_app "戻るボタンでLifeLauncherに戻る" $PKG; expect_text "アプリ一覧ではなく寿命画面" "残りの日数"
+expect_app "戻るボタンでLifeLauncherに戻る" $PKG; expect_text "アプリ一覧ではなくホーム画面" "残りの日数"
 
 log "== 6. 目標画面にいる状態でロック→解除"
 next_page; next_page; snap before_lock; expect_text "目標画面にいる" "目標"
 key KEYCODE_POWER; sleep 3; key KEYCODE_WAKEUP; adb shell wm dismiss-keyguard; sleep 3; snap after_unlock
-expect_app "解除後はLifeLauncher" $PKG; expect_text "解除後は寿命画面" "残りの日数"
+expect_app "解除後はLifeLauncher" $PKG; expect_text "解除後はホーム画面" "残りの日数"
 
 log "== 7. 目標の入力画面を開いたままホームボタン"
 next_page; next_page; $UI tap "追加" >/dev/null; sleep 1; snap goal_dialog_open
 key KEYCODE_HOME; snap home_while_dialog
-expect_no_text "入力画面が閉じる" "目標を追加"; expect_text "寿命画面" "残りの日数"
+expect_no_text "入力画面が閉じる" "目標を追加"; expect_text "ホーム画面" "残りの日数"
 
 log "== 8. 6枚で一周"
 next_page; expect_text "1回目→アプリ" "アプリ"
 next_page; expect_text "2回目→目標" "目標"
 next_page; expect_text "3回目→習慣" "習慣"
 next_page; expect_text "4回目→今日のタスク" "今日のタスク"
-next_page; expect_text "5回目→今日の調子" "今日の調子"
+next_page; expect_text "5回目→身体の調子" "身体の調子"
 next_page; expect_text "6回目→寿命に戻る" "残りの日数"; snap loop_back
-prev_page; expect_text "逆方向→今日の調子" "今日の調子"
+prev_page; expect_text "逆方向→身体の調子" "身体の調子"
 key KEYCODE_HOME
 
 log "== 9. お気に入り"
 next_page; $UI long "Chrome" >/dev/null; sleep 1; snap long_press_menu; $UI tap "お気に入りに追加" >/dev/null; sleep 1
 key KEYCODE_HOME; adb shell input swipe 540 2000 540 400 400; sleep 2; snap favorites
-expect_text "寿命画面の下にChrome" "Chrome"
+expect_text "ホーム画面の下にChrome" "Chrome"
 $UI tap "Chrome" >/dev/null; sleep 3; expect_app "お気に入りからChromeが開く" com.android.chrome
 key KEYCODE_HOME
 
@@ -127,7 +127,7 @@ $UI tap "黒" >/dev/null; sleep 1; expect_text "見本の黒を選ぶとカラ�
 $UI tap "決定" >/dev/null; sleep 1
 $UI tap "アクセントの色（数字・ボタン）" >/dev/null; sleep 2
 $UI tap "色の四角" >/dev/null; sleep 1; snap color_square_tapped
-if $UI has "#000000" >/dev/null || $UI has "#1043E5" >/dev/null; then ng "四角をタップすると色が変わる"; else ok "四角をタップすると色が変わる ($($UI texts | grep -o '#[0-9A-F]\{6\}' | head -1))"; fi
+if $UI has "#000000" >/dev/null || $UI has "#1C2E5C" >/dev/null; then ng "四角をタップすると色が変わる"; else ok "四角をタップすると色が変わる ($($UI texts | grep -o '#[0-9A-F]\{6\}' | head -1))"; fi
 $UI tap "オレンジ" >/dev/null; sleep 1; expect_text "見本のオレンジ" "#F28C28"
 $UI tap "決定" >/dev/null; sleep 1
 $UI tap "閉じる" >/dev/null; sleep 2; snap dark_theme
@@ -173,10 +173,10 @@ adb shell am start -n com.android.chrome/com.google.android.apps.chrome.Main >/d
 expect_app "使い切った後に直接開いても戻される" $PKG; snap reopen_after_limit
 $UI tap "閉じる" >/dev/null
 
-log "== 17. アプリを開いたまま画面を消す → つけると寿命画面"
+log "== 17. アプリを開いたまま画面を消す → つけるとホーム画面"
 adb shell am start -a android.settings.SETTINGS >/dev/null; sleep 3
 key KEYCODE_POWER; sleep 3; key KEYCODE_WAKEUP; adb shell wm dismiss-keyguard; sleep 3; snap screen_off_from_app
-expect_app "設定アプリを開いたまま消しても寿命画面から" $PKG
+expect_app "設定アプリを開いたまま消してもホーム画面から" $PKG
 
 log "== 18. 使えない時間帯（今の時刻を含む夜の時間を設定）"
 H=$(adb shell date +%H | sed "s/[^0-9]//g"); E=$(printf "%02d" $(( (10#$H + 2) % 24 )))

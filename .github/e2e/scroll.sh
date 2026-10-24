@@ -1,5 +1,5 @@
 #!/bin/bash
-# 寿命画面から下にスクロールしてお気に入りが見えるかを、いろいろな操作の後で20回確かめる
+# ホーム画面から下にスクロールしてお気に入りが見えるかを、いろいろな操作の後で20回確かめる
 PKG=com.enakagami.lifelauncher
 OUT=e2e-out; mkdir -p $OUT; R=$OUT/result.txt; : > $R
 UI="python3 .github/e2e/ui.py"
@@ -27,7 +27,7 @@ for i in "${!P[@]}"; do
       lock) key KEYCODE_POWER; sleep 2; key KEYCODE_WAKEUP; adb shell wm dismiss-keyguard; sleep 2;;
     esac
   done
-  # 寿命画面に来ていなければホームで戻す
+  # ホーム画面に来ていなければホームで戻す
   $UI has "残りの日数" >/dev/null || $UI has "まずは誕生日と寿命を設定しましょう" >/dev/null || key KEYCODE_HOME
   adb shell input swipe 540 1900 540 500 300; sleep 1.5
   if ! $UI has "設定" >/dev/null && $UI has "Settings" >/dev/null; then OK=$((OK+1)); log "PASS | パターン$((i+1)) [${P[$i]}] 下にスクロールできた"

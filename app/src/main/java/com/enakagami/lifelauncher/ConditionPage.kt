@@ -65,7 +65,10 @@ import kotlin.math.roundToInt
 import java.time.format.TextStyle
 import java.util.Locale
 
-/** 1日分の「今日の調子」。点数は 0〜10、未入力は null */
+/**
+ * 1日分の「身体の調子」。点数は 0〜10、未入力は null。
+ * bedTime（昨夜寝た時刻）・wakeTime（今朝起きた時刻）は 0:00 からの分。bedPhone は寝る前30分にスマホを使った分数
+ */
 data class DayLog(
     val overall: Int? = null,
     val sleep: Int? = null,
@@ -76,8 +79,15 @@ data class DayLog(
     val lunch: String = "",
     val dinner: String = "",
     val memo: String = "",
+    val bedTime: Int? = null,
+    val wakeTime: Int? = null,
+    val bedPhone: Int? = null,
+    val alcohol: Boolean = false,
 ) {
     fun isEmpty() = this == DayLog()
+
+    /** 調子がいいかを見る点数：睡眠以外の3つ（身体の調子・集中度・気分）の平均 */
+    fun score(): Float? = listOfNotNull(overall, focus, mood).takeIf { it.isNotEmpty() }?.average()?.toFloat()
 
     fun toJson(): JSONObject = JSONObject().apply {
         overall?.let { put("overall", it) }
@@ -86,6 +96,10 @@ data class DayLog(
         mood?.let { put("mood", it) }
         sleepHours?.let { put("sleepHours", it.toDouble()) }
         put("breakfast", breakfast).put("lunch", lunch).put("dinner", dinner).put("memo", memo)
+        bedTime?.let { put("bed", it) }
+        wakeTime?.let { put("wake", it) }
+        bedPhone?.let { put("bedPhone", it) }
+        if (alcohol) put("alcohol", true)
     }
 
     companion object {
@@ -99,11 +113,15 @@ data class DayLog(
             lunch = o.optString("lunch"),
             dinner = o.optString("dinner"),
             memo = o.optString("memo"),
+            bedTime = o.optInt("bed", -1).takeIf { it >= 0 },
+            wakeTime = o.optInt("wake", -1).takeIf { it >= 0 },
+            bedPhone = o.optInt("bedPhone", -1).takeIf { it >= 0 },
+            alcohol = o.optBoolean("alcohol", false),
         )
     }
 }
 
-/** 寿命の画面から右へ（指を左→右に）スワイプした先の画面 */
+/** ホーム画面から右へ（指を左→右に）スワイプした先の「身体の調子」の画面 */
 @Composable
 fun ConditionPage(store: Store, today: LocalDate) {
     var date by remember { mutableStateOf(today) }
@@ -131,6 +149,7 @@ fun ConditionPage(store: Store, today: LocalDate) {
                 ScoreRow(stringResource(R.string.c_sleep), stringResource(R.string.c_sleep_hint), log.sleep) { save(log.copy(sleep = it)) }
                 Spacer(Modifier.height(16.dp))
                 SleepHoursRow(log.sleepHours) { save(log.copy(sleepHours = it)) }
+                BedWakeRows(date, log, save)
             }
         }
         item {
@@ -146,6 +165,7 @@ fun ConditionPage(store: Store, today: LocalDate) {
                 MemoField(stringResource(R.string.c_lunch), log.lunch) { save(log.copy(lunch = it)) }
                 MemoField(stringResource(R.string.c_dinner), log.dinner) { save(log.copy(dinner = it)) }
                 MemoField(stringResource(R.string.c_memo), log.memo) { save(log.copy(memo = it)) }
+                AlcoholRow(log.alcohol) { save(log.copy(alcohol = it)) }
             }
         }
         item { UnlockLogCard(date) }
@@ -225,9 +245,15 @@ private fun MonthCompare(date: LocalDate, today: LocalDate) {
             .map { Guard.screenMinutes(it) }.filter { it > 0 }
         return if (xs.isEmpty()) null else xs.average().roundToInt()
     }
-    val now = avg(month, skipToday = true) ?: avg(month, skipToday = false)
+    val withoutToday = avg(month, skipToday = true)
+    val now = withoutToday ?: avg(month, skipToday = false)
     val last = avg(month.minusMonths(1), skipToday = false)
-    val label = if (month == YearMonth.from(today)) stringResource(R.string.this_month) else month.month.getDisplayName(TextStyle.FULL_STANDALONE, Locale.getDefault())
+    // 今月は、まだ途中の今日を除いた「昨日まで」の平均（今日の分は日付が変わると入る）
+    val label = when {
+        month != YearMonth.from(today) -> month.month.getDisplayName(TextStyle.FULL_STANDALONE, Locale.getDefault())
+        withoutToday != null && today.dayOfMonth > 1 -> stringResource(R.string.this_month_so_far)
+        else -> stringResource(R.string.this_month)
+    }
 
     Column(Modifier.fillMaxWidth().background(Bg, RoundedCornerShape(14.dp)).padding(horizontal = 14.dp, vertical = 12.dp)) {
         when {
@@ -399,6 +425,101 @@ private fun MemoField(label: String, value: String, onChange: (String) -> Unit) 
     )
 }
 
+/** 昨夜寝た時刻を、実際の日時（ミリ秒）にする。12時より前なら日付が変わってから寝たとみなす */
+private fun bedMillis(date: LocalDate, bed: Int): Long {
+    val day = if (bed >= 12 * 60) date.minusDays(1) else date
+    return day.atStartOfDay(java.time.ZoneId.systemDefault()).plusMinutes(bed.toLong()).toInstant().toEpochMilli()
+}
+
+private fun wakeMillis(date: LocalDate, wake: Int): Long =
+    date.atStartOfDay(java.time.ZoneId.systemDefault()).plusMinutes(wake.toLong()).toInstant().toEpochMilli()
+
+/** 寝る前30分にスマホを使った分数。本体の記録が無い・まだその時刻になっていない・古すぎるときは null */
+private fun bedPhoneMinutes(date: LocalDate, bed: Int): Int? {
+    val t = bedMillis(date, bed)
+    val now = System.currentTimeMillis()
+    if (t > now || now - t > 7 * 86_400_000L) return null
+    return Guard.phoneMinutesBetween(t - 30 * 60_000L, t)
+}
+
+/** 昨夜寝た時刻・今朝起きた時刻。両方入れると睡眠時間を計算し、寝る前30分のスマホも調べて残す */
+@Composable
+private fun BedWakeRows(date: LocalDate, log: DayLog, save: (DayLog) -> Unit) {
+    val context = LocalContext.current
+    val clear = stringResource(R.string.c_time_clear)
+    fun pick(initial: Int?, default: Int, onPick: (Int?) -> Unit) {
+        val init = initial ?: default
+        val d = android.app.TimePickerDialog(
+            context, { _, h, m -> onPick(h * 60 + m) }, init / 60, init % 60,
+            android.text.format.DateFormat.is24HourFormat(context),
+        )
+        d.setButton(android.content.DialogInterface.BUTTON_NEUTRAL, clear) { _, _ -> onPick(null) }
+        d.show()
+    }
+    fun update(bed: Int?, wake: Int?) {
+        var l = log.copy(bedTime = bed, wakeTime = wake, bedPhone = bed?.let { bedPhoneMinutes(date, it) })
+        if (bed != null && wake != null) {
+            val h = (wakeMillis(date, wake) - bedMillis(date, bed)) / 3_600_000f
+            if (h > 0f && h <= 16f) l = l.copy(sleepHours = (h * 10).roundToInt() / 10f)
+        }
+        save(l)
+    }
+    TimeRow(stringResource(R.string.c_bed), log.bedTime) { pick(log.bedTime, 23 * 60) { update(it, log.wakeTime) } }
+    TimeRow(stringResource(R.string.c_wake), log.wakeTime) { pick(log.wakeTime, 7 * 60) { update(log.bedTime, it) } }
+    // 許可をあとから出したときなど、まだ調べられていなければ調べ直す
+    LaunchedEffect(date, log.bedTime, log.bedPhone) {
+        val b = log.bedTime
+        if (b != null && log.bedPhone == null) bedPhoneMinutes(date, b)?.let { save(log.copy(bedPhone = it)) }
+    }
+    if (log.bedTime != null) {
+        val bp = log.bedPhone
+        Spacer(Modifier.height(8.dp))
+        Text(
+            when {
+                bp == null -> stringResource(R.string.c_bedphone_unknown)
+                bp > 0 -> stringResource(R.string.c_bedphone, durationText(bp))
+                else -> stringResource(R.string.c_bedphone_none)
+            },
+            fontSize = 13.sp, fontWeight = FontWeight.Bold, lineHeight = 19.sp,
+            color = if (bp != null && bp > 0) Danger else SubInk,
+        )
+    }
+}
+
+@Composable
+private fun TimeRow(label: String, value: Int?, onClick: () -> Unit) {
+    Row(
+        Modifier.fillMaxWidth().padding(top = 8.dp).clip(RoundedCornerShape(12.dp)).clickable(onClick = onClick).padding(vertical = 4.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(label, fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Ink, modifier = Modifier.weight(1f))
+        Box(Modifier.clip(RoundedCornerShape(12.dp)).background(Bg).padding(horizontal = 18.dp, vertical = 10.dp)) {
+            Text(
+                value?.let { minutesText(it) } ?: stringResource(R.string.not_entered),
+                fontSize = 18.sp, fontWeight = FontWeight.Black, color = if (value == null) SubInk else Blue,
+            )
+        }
+    }
+}
+
+/** お酒の有無。最初は「なし」で、ワンタップで「あり」にする */
+@Composable
+private fun AlcoholRow(value: Boolean, onChange: (Boolean) -> Unit) {
+    // 行のどこを押しても切り替わる
+    Row(
+        Modifier.fillMaxWidth().clip(RoundedCornerShape(12.dp)).clickable { onChange(!value) }.padding(vertical = 4.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(stringResource(R.string.c_alcohol), fontSize = 15.sp, fontWeight = FontWeight.Bold, color = Ink, modifier = Modifier.weight(1f))
+        Box(Modifier.clip(CircleShape).background(if (value) Blue else Bg).padding(horizontal = 22.dp, vertical = 10.dp)) {
+            Text(
+                stringResource(if (value) R.string.alc_yes else R.string.alc_no),
+                fontSize = 15.sp, fontWeight = FontWeight.Black, color = if (value) OnAccent else SubInk,
+            )
+        }
+    }
+}
+
 // ---- 傾向（どういう時に調子がいいか） ----
 
 private fun avg(xs: List<Float>) = if (xs.isEmpty()) null else xs.average().toFloat()
@@ -410,16 +531,16 @@ private fun TrendCard(days: Map<LocalDate, DayLog>) {
         Text(stringResource(R.string.tr_title), fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Ink)
         Spacer(Modifier.height(10.dp))
 
-        // 直近14日の「今日の調子」の棒グラフ
+        // 直近14日の調子（睡眠以外の3つの点数の平均）の棒グラフ
         val today = LocalDate.now()
         Row(Modifier.fillMaxWidth().height(64.dp), horizontalArrangement = Arrangement.spacedBy(4.dp), verticalAlignment = Alignment.Bottom) {
             for (i in 13 downTo 0) {
-                val v = days[today.minusDays(i.toLong())]?.overall
+                val v = days[today.minusDays(i.toLong())]?.score()
                 Box(Modifier.weight(1f).fillMaxHeight(), contentAlignment = Alignment.BottomCenter) {
                     Box(
                         Modifier
                             .fillMaxWidth()
-                            .fillMaxHeight(if (v == null) 0.04f else (v.coerceAtLeast(0) / 10f).coerceAtLeast(0.06f))
+                            .fillMaxHeight(if (v == null) 0.04f else (v.coerceAtLeast(0f) / 10f).coerceAtLeast(0.06f))
                             .clip(RoundedCornerShape(4.dp))
                             .background(if (v == null) SubInk.copy(alpha = 0.15f) else Blue),
                     )
@@ -432,7 +553,7 @@ private fun TrendCard(days: Map<LocalDate, DayLog>) {
         }
         Spacer(Modifier.height(14.dp))
 
-        val rated = days.values.filter { it.overall != null }
+        val rated = days.values.filter { it.score() != null }
         if (rated.size < 5) {
             Text(
                 stringResource(R.string.tr_wait, rated.size),
@@ -440,8 +561,8 @@ private fun TrendCard(days: Map<LocalDate, DayLog>) {
             )
             return@Column
         }
-        val good = rated.filter { it.overall!! >= 7 }
-        val other = rated.filter { it.overall!! < 7 }
+        val good = rated.filter { it.score()!! >= 7f }
+        val other = rated.filter { it.score()!! < 7f }
         Row(Modifier.fillMaxWidth()) {
             Text("", Modifier.weight(1.2f))
             Text(stringResource(R.string.tr_good, good.size), Modifier.weight(1f), fontSize = 12.sp, fontWeight = FontWeight.Bold, color = Blue, lineHeight = 16.sp)
@@ -453,6 +574,12 @@ private fun TrendCard(days: Map<LocalDate, DayLog>) {
         TrendRow(stringResource(R.string.c_focus), fmt(avg(good.mapNotNull { it.focus?.toFloat() })), fmt(avg(other.mapNotNull { it.focus?.toFloat() })))
         TrendRow(stringResource(R.string.c_mood), fmt(avg(good.mapNotNull { it.mood?.toFloat() })), fmt(avg(other.mapNotNull { it.mood?.toFloat() })))
         TrendRow(stringResource(R.string.tr_breakfast), rate(good) { it.breakfast.isNotBlank() }, rate(other) { it.breakfast.isNotBlank() })
+        TrendRow(stringResource(R.string.tr_alcohol), rate(good) { it.alcohol }, rate(other) { it.alcohol })
+        val bedGood = good.filter { it.bedPhone != null }
+        val bedOther = other.filter { it.bedPhone != null }
+        if (bedGood.isNotEmpty() || bedOther.isNotEmpty()) {
+            TrendRow(stringResource(R.string.tr_bedphone), rate(bedGood) { it.bedPhone!! > 0 }, rate(bedOther) { it.bedPhone!! > 0 })
+        }
         Spacer(Modifier.height(8.dp))
         Text(stringResource(R.string.tr_note), fontSize = 11.sp, color = SubInk, lineHeight = 16.sp)
     }
@@ -534,11 +661,14 @@ fun buildAiPrompt(ctx: android.content.Context, store: Store): String {
     val csv = dates.joinToString("\n") { d ->
         val l = store.day(d)
         val screen = Guard.screenMinutes(d)
+        val goal = Guard.dailyGoal(d)
         listOf(
-            d.toString(), weekday(d.dayOfWeek), n(l.overall),
+            d.toString(), weekday(d.dayOfWeek), n(l.overall), n(l.focus), n(l.mood), n(l.sleep),
             l.sleepHours?.let { String.format(Locale.US, "%.1f", it) } ?: "",
-            n(l.sleep), n(l.focus), n(l.mood),
+            l.bedTime?.let { minutesText(it) } ?: "", l.wakeTime?.let { minutesText(it) } ?: "", n(l.bedPhone),
             if (screen > 0) "$screen" else "", Guard.unlockCount(d).takeIf { it > 0 }?.toString() ?: "",
+            if (l.isEmpty()) "" else if (l.alcohol) "1" else "0",
+            cell(goal), if (goal.isBlank()) "" else if (Guard.isGoalDone(d)) "1" else "0",
             cell(l.breakfast), cell(l.lunch), cell(l.dinner), cell(l.memo),
         ).joinToString(",")
     }
@@ -555,9 +685,7 @@ fun buildAiPrompt(ctx: android.content.Context, store: Store): String {
     val habits = store.habits.joinToString(", ") { it.text }.ifBlank { none }
     val from = dates.firstOrNull()?.toString() ?: ""
     val to = dates.lastOrNull()?.toString() ?: ""
-    val prompt = ctx.getString(R.string.ai_prompt, dates.size, from, to, goals, habits, csv + unlockSection).trim()
-    // 質問文の訳は日本語と英語だけ。ほかの言語のスマホでは、英語の質問文に「その言語で答えて」を足す
+    // 質問文はスマホの言語で作り、答えもその言語で返すように頼む
     val lang = Locale.getDefault()
-    return if (lang.language in listOf("ja", "en")) prompt
-    else prompt + "\n- Please answer in " + lang.getDisplayLanguage(Locale.ENGLISH)
+    return ctx.getString(R.string.ai_prompt, dates.size, from, to, goals, habits, csv + unlockSection, lang.getDisplayLanguage(lang)).trim()
 }

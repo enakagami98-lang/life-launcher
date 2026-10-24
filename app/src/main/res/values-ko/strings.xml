@@ -20,7 +20,7 @@
     <string name="ask_q2">② 휴대폰을 연 이유</string>
     <string name="ask_other">목록에 없나요? 여기에 입력</string>
     <string name="ask_submit">기록하고 휴대폰 사용</string>
-    <string name="ask_hint">①을 고른 뒤 ② 버튼을 누르면 바로 기록돼요. 이 질문은 \'오늘\' 화면에서 끌 수 있어요.</string>
+    <string name="ask_hint">①을 고른 뒤 ② 버튼을 누르면 바로 기록돼요. 이 질문은 \'몸 컨디션\' 화면에서 끌 수 있어요.</string>
     <string name="opt_edit">선택지 편집</string>
     <string name="opt_edit_hint">버튼을 누르면 삭제돼요. 아래에 입력하고 \'추가\'를 누르면 늘릴 수 있어요.</string>
     <string name="opt_remove">%1$s 삭제</string>
@@ -173,7 +173,7 @@
     <string name="yd_condition">컨디션</string>
     <string name="yd_sleep">수면</string>
     <string name="yd_phone">휴대폰</string>
-    <string name="yd_input_today">오늘 기록하기 ›</string>
+    <string name="yd_input_today">몸 컨디션 기록하기 ›</string>
     <string name="settings">설정</string>
     <string name="favorites">즐겨찾기</string>
     <string name="fav_empty">\'앱\' 화면(왼쪽으로 스와이프)에서 앱을 길게 누르면 추가할 수 있어요.</string>
@@ -187,9 +187,6 @@
     <string name="ymd">%1$d년 %2$d개월 %3$d일</string>
     <string name="age_now">현재 %1$d세</string>
     <string name="lifespan_is">수명 %1$d세</string>
-    <string name="page_condition">오늘</string>
-    <string name="c_overall">오늘의 컨디션</string>
-    <string name="c_overall_hint">하루를 돌아보며 종합적으로</string>
     <string name="c_sleep">수면의 질</string>
     <string name="c_sleep_hint">푹 잤나요</string>
     <string name="c_focus">집중도</string>
@@ -215,7 +212,6 @@
     <string name="st_that_day">이날의 화면 사용 시간</string>
     <string name="unit_hours">시간</string>
     <string name="st_unlocks">잠금 해제 %1$d회</string>
-    <string name="st_note">화면이 켜져 있고 잠금이 해제된 시간이에요 (이 앱의 모니터링이 실행 중일 때만 세요).</string>
     <string name="this_month">이번 달</string>
     <string name="mc_none">이번 달 기록이 아직 없어요.</string>
     <string name="mc_wait">지난달 기록이 쌓이면 여기에 지난달과의 비교가 표시돼요.</string>
@@ -233,11 +229,8 @@
     <string name="ul_top">많았던 이유: %1$s</string>
     <string name="tr_title">컨디션 좋은 날의 공통점</string>
     <string name="tr_2w">2주 전</string>
-    <string name="tr_wait">\'오늘\'을 5일 기록하면 컨디션 좋은 날과 아닌 날의 차이가 여기에 나와요 (현재 %1$d일).</string>
-    <string name="tr_good">7점 이상\n(%1$d일)</string>
     <string name="tr_other">그 외\n(%1$d일)</string>
     <string name="tr_breakfast">아침 먹음</string>
-    <string name="tr_note">※ 평균값이에요. 식사 내용까지 분석하려면 아래 \'AI에게 분석 맡기기\'를 추천해요.</string>
     <string name="ai_title">AI에게 분석 맡기기</string>
     <string name="ai_desc">지금까지의 기록(%1$d일)을 AI에게 보낼 질문으로 정리해요. ChatGPT나 Claude에 붙여 넣으면 언제 컨디션이 좋은지 분석해 줘요.</string>
     <string name="ai_copy">질문 복사</string>
@@ -323,7 +316,7 @@
     <string name="tut6_body">\'남은 날\' 아래에 표시돼요. 나중에 \'표시 항목 편집\'에서 언제든 바꿀 수 있어요.</string>
     <string name="tut7_title">준비가 끝났어요</string>
     <string name="tut7_body">화면을 좌우로 스와이프하면 페이지가 바뀌어요.</string>
-    <string name="tut7_page_left">← 오른쪽으로 스와이프: 오늘 (컨디션·수면·화면 시간 기록)</string>
+    <string name="tut7_page_left">← 오른쪽으로 스와이프: 몸 컨디션 (컨디션·수면·화면 시간 기록)</string>
     <string name="tut7_page_top">홈: 남은 날, 고른 정보, 아래로 스크롤하면 즐겨찾기</string>
     <string name="tut7_page_right">→ 왼쪽으로 스와이프: 앱 목록·목표·습관·오늘의 할 일</string>
     <string name="tut7_longpress">앱 목록에서 앱을 길게 누르면 즐겨찾기·사용 제한·숨기기를 설정할 수 있어요.</string>
@@ -340,4 +333,38 @@
     <string name="pay_switch_home">다른 홈 앱으로 바꾸기</string>
     <string name="pay_cancel_note">무료 체험 기간에 해지하면 요금이 청구되지 않아요. 해지는 Google Play의 \'결제 및 구독\'에서 언제든 할 수 있어요.</string>
     <string name="pay_manage">구독 관리 (해지, 결제 수단)</string>
+    <string name="this_month_so_far">이번 달 (어제까지)</string>
+    <string name="c_bed">어젯밤 잠든 시각</string>
+    <string name="c_wake">오늘 아침 일어난 시각</string>
+    <string name="c_time_clear">지우기</string>
+    <string name="c_bedphone">자기 전 30분 휴대폰: %1$s 사용</string>
+    <string name="c_bedphone_none">자기 전 30분 휴대폰: 사용하지 않음</string>
+    <string name="c_bedphone_unknown">자기 전 30분 휴대폰: 알 수 없음 (\'사용 정보 접근\' 허용이 필요해요. 휴대폰 기록은 1주일 정도 지나면 사라져요)</string>
+    <string name="c_alcohol">음주</string>
+    <string name="alc_no">없음</string>
+    <string name="alc_yes">있음</string>
+    <string name="tr_alcohol">음주 있음</string>
+    <string name="tr_bedphone">자기 전 휴대폰</string>
+    <string name="color_cream">연노랑</string>
+    <string name="color_indigo">남색</string>
+    <string name="pie_title">오늘 앱별 사용 시간</string>
+    <string name="pie_other">기타</string>
+    <string name="pie_need">앱별 시간을 보려면 \'사용 정보 접근\'을 허용해야 해요.</string>
+    <string name="pie_none">오늘 1분 이상 사용한 앱이 아직 없어요.</string>
+    <string name="pie_note">휴대폰의 사용 기록(디지털 웰빙과 같은 데이터)으로 계산해요. 이 홈 화면에 있던 시간은 포함하지 않아요.</string>
+    <string name="goal_done">달성</string>
+    <string name="goal_done_btn">해냈어요!</string>
+    <string name="goal_undo">달성 취소</string>
+    <string name="goal_edit_btn">목표 고치기</string>
+    <string name="congrats_title">축하해요!</string>
+    <string name="congrats_body">오늘의 목표를 달성했어요. 정말 잘했어요!</string>
+    <string name="page_condition">몸 컨디션</string>
+    <string name="c_overall">몸 컨디션</string>
+    <string name="c_overall_hint">몸이 얼마나 활기찼는지</string>
+    <string name="st_note">화면을 켜고 잠금을 해제한 시간이에요. \'사용 정보 접근\'을 허용하면 휴대폰 자체 기록(최근 1주일)으로도 채워요.</string>
+    <string name="tr_wait">몸 컨디션·집중도·기분을 5일 기록하면, 컨디션이 좋은 날과 그렇지 않은 날의 차이가 여기에 나와요 (현재 %1$d일).</string>
+    <string name="tr_good">평균 7 이상\n(%1$d일)</string>
+    <string name="tr_note">※ 몸 컨디션·집중도·기분의 평균으로 컨디션이 좋은 날을 나눠요. 식사 내용까지 포함한 분석은 아래 \'AI에게 분석 맡기기\'를 추천해요.</string>
+    <string name="ai_unlock_section"># 휴대폰을 열었을 때의 기록 (최근 14일, 잠금 해제할 때마다 답한 것)\n날짜,시각,그때 하고 있던 일,휴대폰을 연 이유\n%1$s</string>
+    <string name="ai_prompt">당신은 생활 습관과 컨디션 관리에 밝은 코치입니다.\n아래는 제가 매일 휴대폰에 기록하는 데이터입니다 (%1$d일분, %2$s ~ %3$s). 제가 어떤 때에 컨디션이 좋은지 분석해 주세요.\n\n# 기록 항목\n- 몸 컨디션·집중도·기분·수면의 질: 0~10 자기 평가 (10이 최고). 컨디션이 좋은 날은 몸 컨디션·집중도·기분의 평균으로 판단해 주세요\n- 수면 시간: 전날 밤에 잔 시간(시간). 취침·기상: 전날 밤 잠든 시각과 그날 아침 일어난 시각\n- 자기 전 휴대폰(분): 자기 전 30분 동안 휴대폰을 사용한 시간\n- 휴대폰(분): 그날 화면을 켜고 사용한 시간. 잠금 해제 횟수: 잠금을 해제한 횟수\n- 음주: 1 = 마셨음, 0 = 안 마셨음\n- 오늘의 목표·달성: 그날의 목표와 달성 여부 (1 = 달성)\n- 아침·점심·저녁·메모: 먹은 것, 운동, 있었던 일 등\n- 빈칸은 \"기록하지 않음\"이라는 뜻입니다 (0점이 아닙니다)\n\n# 참고: 제 목표와 습관\n- 목표: %4$s\n- 습관: %5$s\n\n# 데이터 (CSV)\n날짜,요일,몸 컨디션,집중도,기분,수면의 질,수면 시간,취침,기상,자기 전 휴대폰(분),휴대폰(분),잠금 해제 횟수,음주,오늘의 목표,달성,아침,점심,저녁,메모\n%6$s\n\n# 부탁하고 싶은 것\n1. 컨디션이 좋은 날과 나쁜 날의 차이 (수면, 취침 시각, 자기 전 휴대폰, 음주, 식사, 휴대폰 사용 시간, 요일 등). 가능한 한 구체적인 숫자로 보여 주세요\n2. \"이럴 때 컨디션이 좋다\"는 패턴 최대 3가지\n3. 컨디션을 떨어뜨리는 것 같은 습관이나 조합 (휴대폰을 연 기록이 있다면, 낭비로 보이는 시간대와 이유도)\n4. 내일부터 작게 시작할 수 있는 행동 3가지\n5. 데이터가 적거나 치우쳐 있는 등 주의할 점과, 앞으로 추가로 기록하면 좋을 항목\n\n# 답변 방식\n- 먼저 결론을 3줄로 정리한 뒤 자세히 설명해 주세요\n- %7$s로, 전문 용어 없이 알기 쉽게\n- 데이터로 말할 수 있는 것과 추측은 나눠서 써 주세요\n- 의학적 진단은 하지 말아 주세요</string>
 </resources>

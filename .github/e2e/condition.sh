@@ -1,5 +1,5 @@
 #!/bin/bash
-# お気に入りの長押しドラッグ並べ替え＋「今日の調子」画面の確認
+# お気に入りの長押しドラッグ並べ替え＋「身体の調子」画面の確認
 PKG=com.enakagami.lifelauncher
 OUT=e2e-out; mkdir -p $OUT; R=$OUT/result.txt; : > $R
 UI="python3 .github/e2e/ui.py"
@@ -52,9 +52,9 @@ $UI tap "Clock" >/dev/null; sleep 3
 t=$(top); if echo "$t" | grep -qv "$PKG"; then ok "タップでアプリが開く ($t)"; else ng "タップしても開かない ($t)"; fi
 key KEYCODE_HOME
 
-log "== 4. 寿命から右へスワイプで今日の調子"
+log "== 4. 寿命から右へスワイプで身体の調子"
 prev_page; snap condition
-expect_text "今日の調子の画面" "今日の調子"
+expect_text "身体の調子の画面" "身体の調子"
 expect_text "睡眠の質" "睡眠の質"
 expect_text "集中度" "集中度"
 expect_text "食事" "朝ごはん"
@@ -63,6 +63,19 @@ $UI tap "＋" >/dev/null; sleep 1; $UI tap "＋" >/dev/null; sleep 1; snap condi
 expect_text "睡眠時間の入力" "7.5時間"
 key KEYCODE_HOME; prev_page
 expect_text "ホームに戻っても記録が残る" "7.5時間"
+
+log "== 4b. 寝た時刻・起きた時刻・お酒"
+$UI tap "昨夜寝た時刻" >/dev/null; sleep 2; snap bed_picker
+$UI tapraw "OK" >/dev/null; sleep 2
+$UI tap "今朝起きた時刻" >/dev/null; sleep 2
+$UI tapraw "OK" >/dev/null; sleep 2; snap bed_wake
+expect_text "寝た時刻が入る（最初は23時）" "23:00"
+expect_text "起きた時刻が入る（最初は7時）" "07:00"
+expect_text "睡眠時間を自動で計算" "8.0時間"
+expect_text "寝る前30分のスマホの表示" "寝る前30分のスマホ"
+$UI tap "お酒" >/dev/null; sleep 1; snap alcohol
+expect_text "お酒をワンタップで「あり」" "あり"
+for i in 1 2 3 4 5; do adb shell input swipe 540 600 540 1900 300; sleep 1; done
 
 log "== 5. 傾向とAI用の質問文"
 $UI tap "質問文をコピー" >/dev/null; snap copied
@@ -73,12 +86,12 @@ $UI tap "前の日" >/dev/null; sleep 1; snap yesterday
 expect_text "前の日に切り替わる" "昨日"
 expect_text "前の日の睡眠時間は未入力" "未入力"
 $UI tap "次の日" >/dev/null; sleep 1
-expect_text "今日に戻ると記録がある" "7.5時間"
+expect_text "今日に戻ると記録がある" "8.0時間"
 
 log "== 6. 6枚で一周"
 key KEYCODE_HOME
 for i in 1 2 3 4 5; do next_page; done
-expect_text "5回進むと今日の調子" "今日の調子"
+expect_text "5回進むと身体の調子" "身体の調子"
 next_page; expect_text "もう1回で寿命に戻る" "まずは誕生日と寿命を設定"
 
 log "== 結果: PASS $(grep -c '^PASS' $R) / FAIL $(grep -c '^FAIL' $R)"

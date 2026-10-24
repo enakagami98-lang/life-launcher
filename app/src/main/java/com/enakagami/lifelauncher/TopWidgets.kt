@@ -7,6 +7,7 @@ import android.os.Build
 import android.provider.Settings
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -48,6 +49,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
@@ -78,13 +81,18 @@ fun TopWidgets(store: Store, today: LocalDate, openCondition: () -> Unit) {
     var editingLayout by remember { mutableStateOf(false) }
     var editingCountdown by remember { mutableStateOf(false) }
     var editingGoal by remember { mutableStateOf(false) }
+    var goalMenu by remember { mutableStateOf(false) }
+    var celebrating by remember { mutableStateOf(false) }
+    var showUsage by remember { mutableStateOf(false) }
 
     Column(Modifier.padding(horizontal = 20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
         store.widgets.forEach { id ->
             when (id) {
                 "motto" -> MottoCard(store.motto) { editingMotto = true }
-                "goal" -> GoalCard(Guard.dailyGoal(today)) { editingGoal = true }
-                "screen" -> ScreenCard(today)
+                "goal" -> GoalCard(Guard.dailyGoal(today), Guard.isGoalDone(today)) {
+                    if (Guard.dailyGoal(today).isBlank()) editingGoal = true else goalMenu = true
+                }
+                "screen" -> ScreenCard(today) { showUsage = true }
                 "spend" -> SpendCard { showSpend = true }
                 "tasks" -> TasksCard(store, today)
                 "countdown" -> CountdownCard(store, today) { editingCountdown = true }
@@ -121,6 +129,18 @@ fun TopWidgets(store: Store, today: LocalDate, openCondition: () -> Unit) {
             onDelete = if (current.isNotEmpty()) ({ Guard.setDailyGoal(today, ""); editingGoal = false }) else null,
         )
     }
+    if (goalMenu) {
+        GoalMenuDialog(
+            goal = Guard.dailyGoal(today),
+            done = Guard.isGoalDone(today),
+            onDone = { Guard.setGoalDone(today, true); goalMenu = false; celebrating = true },
+            onUndo = { Guard.setGoalDone(today, false); goalMenu = false },
+            onEdit = { goalMenu = false; editingGoal = true },
+            onDismiss = { goalMenu = false },
+        )
+    }
+    if (celebrating) CongratsDialog { celebrating = false }
+    if (showUsage) AppUsageDialog { showUsage = false }
     if (showSpend) SpendDialog { showSpend = false }
     if (editingLayout) WidgetEditDialog(store) { editingLayout = false }
     if (editingCountdown) CountdownDialog(store, today) { editingCountdown = false }
@@ -161,25 +181,173 @@ private fun MottoCard(motto: String, onEdit: () -> Unit) {
 
 // ---- 今日の目標 ----
 @Composable
-private fun GoalCard(goal: String, onEdit: () -> Unit) {
-    CardColumn(onEdit) {
-        SmallLabel(stringResource(R.string.goal_title))
+private fun GoalCard(goal: String, done: Boolean, onClick: () -> Unit) {
+    CardColumn(onClick) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            SmallLabel(stringResource(R.string.goal_title), Modifier.weight(1f))
+            if (done) {
+                Row(
+                    Modifier.clip(CircleShape).background(Blue).padding(horizontal = 10.dp, vertical = 3.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Icon(Icons.Filled.Check, null, tint = OnAccent, modifier = Modifier.size(14.dp))
+                    Spacer(Modifier.width(3.dp))
+                    Text(stringResource(R.string.goal_done), fontSize = 12.sp, fontWeight = FontWeight.Black, color = OnAccent)
+                }
+            }
+        }
         Spacer(Modifier.height(4.dp))
         if (goal.isBlank()) Text(stringResource(R.string.goal_empty), fontSize = 15.sp, color = SubInk)
         else Text(goal, fontSize = 20.sp, fontWeight = FontWeight.Black, color = Ink, lineHeight = 28.sp)
     }
 }
 
+/** 目標をタップしたとき：達成した／書き直す */
+@Composable
+private fun GoalMenuDialog(goal: String, done: Boolean, onDone: () -> Unit, onUndo: () -> Unit, onEdit: () -> Unit, onDismiss: () -> Unit) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        containerColor = Bg,
+        title = { Text(stringResource(R.string.goal_title), fontWeight = FontWeight.Bold) },
+        text = {
+            Column {
+                Text(goal, fontSize = 20.sp, fontWeight = FontWeight.Black, color = Ink, lineHeight = 28.sp)
+                Spacer(Modifier.height(16.dp))
+                if (!done) {
+                    androidx.compose.material3.Button(
+                        onClick = onDone,
+                        modifier = Modifier.fillMaxWidth().height(52.dp),
+                        shape = androidx.compose.foundation.shape.RoundedCornerShape(14.dp),
+                        colors = androidx.compose.material3.ButtonDefaults.buttonColors(containerColor = Blue, contentColor = OnAccent),
+                    ) { Text(stringResource(R.string.goal_done_btn), fontWeight = FontWeight.Black, fontSize = 17.sp) }
+                } else {
+                    TextButton(onClick = onUndo) { Text(stringResource(R.string.goal_undo)) }
+                }
+            }
+        },
+        confirmButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.close), fontWeight = FontWeight.Bold) } },
+        dismissButton = { TextButton(onClick = onEdit) { Text(stringResource(R.string.goal_edit_btn)) } },
+    )
+}
+
+/** 目標を達成したときのお祝い */
+@Composable
+private fun CongratsDialog(onDismiss: () -> Unit) {
+    val scale = remember { androidx.compose.animation.core.Animatable(0.4f) }
+    LaunchedEffect(Unit) {
+        scale.animateTo(1f, androidx.compose.animation.core.spring(dampingRatio = 0.45f, stiffness = 220f))
+    }
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        containerColor = Bg,
+        text = {
+            Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(
+                    "🎉", fontSize = 72.sp,
+                    modifier = Modifier.graphicsLayer { scaleX = scale.value; scaleY = scale.value },
+                )
+                Spacer(Modifier.height(8.dp))
+                Text(
+                    stringResource(R.string.congrats_title), fontSize = 28.sp, fontWeight = FontWeight.Black, color = Blue,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.graphicsLayer { scaleX = scale.value; scaleY = scale.value },
+                )
+                Spacer(Modifier.height(8.dp))
+                Text(stringResource(R.string.congrats_body), fontSize = 15.sp, color = Ink, textAlign = TextAlign.Center, lineHeight = 22.sp)
+            }
+        },
+        confirmButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.close), fontWeight = FontWeight.Bold) } },
+    )
+}
+
 // ---- 今日のスマホ ----
 @Composable
-private fun ScreenCard(today: LocalDate) {
-    Row(Modifier.fillMaxWidth().card().padding(horizontal = 22.dp, vertical = 16.dp), verticalAlignment = Alignment.CenterVertically) {
+private fun ScreenCard(today: LocalDate, onClick: () -> Unit) {
+    Row(
+        Modifier.fillMaxWidth().card().clickable(onClick = onClick).padding(horizontal = 22.dp, vertical = 16.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
         Column(Modifier.weight(1f)) {
             SmallLabel(stringResource(R.string.screen_today))
             Text(durationText(Guard.screenMinutes(today)), fontSize = 26.sp, fontWeight = FontWeight.Black, color = Blue)
         }
         Text(stringResource(R.string.unlocks_short, Guard.unlockCount(today)), fontSize = 14.sp, fontWeight = FontWeight.Bold, color = SubInk)
     }
+}
+
+/** 円グラフの色（多い順に使う。最後の灰色は「その他」） */
+private val PieColors = listOf(
+    Color(0xFF1C2E5C), Color(0xFFE5484D), Color(0xFFF2A93B), Color(0xFF2E9E6B), Color(0xFF7B5CD6), Color(0xFF3AA6D9),
+)
+private val PieOther = Color(0xFFB8B8C0)
+
+/** 今日、どのアプリにどれだけ使ったか（スマホ本体の使用記録から） */
+@Composable
+private fun AppUsageDialog(onDismiss: () -> Unit) {
+    val context = LocalContext.current
+    val resume = LocalResumeSignal.current
+    val access = remember(resume) { Guard.hasUsageAccess(context) }
+    val other = stringResource(R.string.pie_other)
+    val slices = remember(resume, access) {
+        if (!access) emptyList()
+        else {
+            val pm = context.packageManager
+            // このアプリ（ホーム画面）と画面の飾り（ステータスバーなど）は除く
+            val skip = setOf(context.packageName, "com.android.systemui")
+            val apps = (Guard.systemUsage() ?: emptyMap())
+                .filter { it.key !in skip && it.value >= 60_000 }
+                .entries.sortedByDescending { it.value }
+            val top = apps.take(PieColors.size).map { e ->
+                val label = runCatching { pm.getApplicationLabel(pm.getApplicationInfo(e.key, 0)).toString() }.getOrDefault(e.key)
+                label to (e.value / 60_000).toInt()
+            }
+            val rest = (apps.drop(PieColors.size).sumOf { it.value } / 60_000).toInt()
+            if (rest > 0) top + (other to rest) else top
+        }
+    }
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        containerColor = Bg,
+        title = { Text(stringResource(R.string.pie_title), fontWeight = FontWeight.Bold) },
+        text = {
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                when {
+                    !access -> {
+                        Text(stringResource(R.string.pie_need), fontSize = 14.sp, color = Ink, lineHeight = 20.sp)
+                        TextButton(onClick = {
+                            runCatching { context.startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) }
+                        }) { Text(stringResource(R.string.allow), fontWeight = FontWeight.Bold) }
+                    }
+                    slices.isEmpty() -> Text(stringResource(R.string.pie_none), fontSize = 14.sp, color = SubInk)
+                    else -> {
+                        val total = slices.sumOf { it.second }.coerceAtLeast(1)
+                        val colors = slices.indices.map { i -> if (slices[i].first == other && i == slices.lastIndex) PieOther else PieColors[i % PieColors.size] }
+                        androidx.compose.foundation.Canvas(Modifier.size(180.dp)) {
+                            var start = -90f
+                            slices.forEachIndexed { i, (_, m) ->
+                                val sweep = 360f * m / total
+                                drawArc(colors[i], start, sweep, useCenter = true)
+                                start += sweep
+                            }
+                        }
+                        Spacer(Modifier.height(14.dp))
+                        slices.forEachIndexed { i, (name, m) ->
+                            Row(Modifier.fillMaxWidth().padding(vertical = 3.dp), verticalAlignment = Alignment.CenterVertically) {
+                                Box(Modifier.size(12.dp).clip(CircleShape).background(colors[i]))
+                                Spacer(Modifier.width(8.dp))
+                                Text(name, fontSize = 14.sp, color = Ink, maxLines = 1, modifier = Modifier.weight(1f))
+                                Text(durationText(m), fontSize = 14.sp, fontWeight = FontWeight.Black, color = Ink)
+                                Text("  ${m * 100 / total}%", fontSize = 12.sp, color = SubInk, modifier = Modifier.width(44.dp), textAlign = TextAlign.End)
+                            }
+                        }
+                        Spacer(Modifier.height(8.dp))
+                        Text(stringResource(R.string.pie_note), fontSize = 11.sp, color = SubInk, lineHeight = 16.sp)
+                    }
+                }
+            }
+        },
+        confirmButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.close), fontWeight = FontWeight.Bold) } },
+    )
 }
 
 // ---- 今日のタスク ----

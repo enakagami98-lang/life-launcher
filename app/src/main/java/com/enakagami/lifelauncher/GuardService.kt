@@ -248,7 +248,7 @@ class GuardService : Service() {
 
     private fun dp(v: Int) = (v * resources.displayMetrics.density).toInt()
 
-    private fun accent(): Int = getSharedPreferences("life", MODE_PRIVATE).getInt("accent", 0xFF1043E5.toInt())
+    private fun accent(): Int = getSharedPreferences("life", MODE_PRIVATE).getInt("accent", 0xFF1C2E5C.toInt())
 
     private fun showPill(text: String) {
         if (!Guard.hasOverlay(this)) { Toast.makeText(this, text, Toast.LENGTH_LONG).show(); return }

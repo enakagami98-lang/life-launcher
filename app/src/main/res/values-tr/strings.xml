@@ -20,7 +20,7 @@
     <string name="ask_q2">② Telefonu neden açtın</string>
     <string name="ask_other">Listede yok mu? Buraya yaz</string>
     <string name="ask_submit">Kaydet ve telefonu kullan</string>
-    <string name="ask_hint">① seç, sonra bir ② düğmesine dokun; hemen kaydedilir. Bu soruyu \"Bugün\" ekranında kapatabilirsin.</string>
+    <string name="ask_hint">① seç, sonra bir ② düğmesine dokun; hemen kaydedilir. Bu soruyu \"Vücut durumu\" ekranında kapatabilirsin.</string>
     <string name="opt_edit">Seçenekleri düzenle</string>
     <string name="opt_edit_hint">Kaldırmak için bir düğmeye dokun. Eklemek için aşağıya yazıp \"Ekle\"ye dokun.</string>
     <string name="opt_remove">%1$s kaldır</string>
@@ -172,7 +172,7 @@
     <string name="yd_condition">Durum</string>
     <string name="yd_sleep">Uyku</string>
     <string name="yd_phone">Telefon</string>
-    <string name="yd_input_today">Bugünü kaydet ›</string>
+    <string name="yd_input_today">Vücut durumuü kaydet ›</string>
     <string name="settings">Ayarlar</string>
     <string name="favorites">Favoriler</string>
     <string name="fav_empty">Uygulamalar ekranında (sola kaydır) bir uygulamaya basılı tutarak ekle.</string>
@@ -186,9 +186,6 @@
     <string name="ymd">%1$d yıl %2$d ay %3$d gün</string>
     <string name="age_now">Yaş %1$d</string>
     <string name="lifespan_is">Beklenen ömür %1$d</string>
-    <string name="page_condition">Bugün</string>
-    <string name="c_overall">Genel</string>
-    <string name="c_overall_hint">Tüm güne bakınca</string>
     <string name="c_sleep">Uyku kalitesi</string>
     <string name="c_sleep_hint">İyi uyudun mu?</string>
     <string name="c_focus">Odak</string>
@@ -213,7 +210,6 @@
     <string name="st_that_day">O günkü ekran süresi</string>
     <string name="unit_hours">sa</string>
     <string name="st_unlocks">%1$d kilit açma</string>
-    <string name="st_note">Ekranın açık ve kilidinin açık olduğu süre (yalnızca bu uygulamanın izlemesi çalışırken sayılır).</string>
     <string name="this_month">Bu ay</string>
     <string name="mc_none">Bu ay için henüz kayıt yok.</string>
     <string name="mc_wait">Geçen aya ait veri olunca karşılaştırma burada görünür.</string>
@@ -231,11 +227,8 @@
     <string name="ul_top">En sık sebepler: %1$s</string>
     <string name="tr_title">İyi günlerinin ortak noktası</string>
     <string name="tr_2w">2 hafta önce</string>
-    <string name="tr_wait">İyi günlerinde neyin farklı olduğunu görmek için 5 gün kaydet (şu ana kadar %1$d).</string>
-    <string name="tr_good">7 ve üzeri\n(%1$d gün)</string>
     <string name="tr_other">Diğerleri\n(%1$d gün)</string>
     <string name="tr_breakfast">Kahvaltı yaptı</string>
-    <string name="tr_note">* Bunlar ortalamadır. Yemekleri de içeren bir analiz için aşağıdaki \"Yapay zekâya sor\"u dene.</string>
     <string name="ai_title">Yapay zekâya sor</string>
     <string name="ai_desc">Kayıtlarını (%1$d gün) bir soruya dönüştürür. ChatGPT veya Claude\'a yapıştırarak ne zaman en iyi olduğunu öğren.</string>
     <string name="ai_copy">Soruyu kopyala</string>
@@ -319,7 +312,7 @@
     <string name="tut6_body">\"Kalan gün\"ün altında gösterilir. İstediğin zaman \"Gösterilenleri düzenle\"den değiştirebilirsin.</string>
     <string name="tut7_title">Her şey hazır</string>
     <string name="tut7_body">Sayfa değiştirmek için sağa veya sola kaydır.</string>
-    <string name="tut7_page_left">← Sağa kaydır: Bugün (durum, uyku, ekran süresi)</string>
+    <string name="tut7_page_left">← Sağa kaydır: Vücut durumu (durum, uyku, ekran süresi)</string>
     <string name="tut7_page_top">Ana ekran: kalan gün, seçtiğin bilgiler, aşağıda favoriler</string>
     <string name="tut7_page_right">→ Sola kaydır: uygulamalar, hedefler, alışkanlıklar, bugünün görevleri</string>
     <string name="tut7_longpress">Favorilere eklemek, süre sınırı koymak veya gizlemek için listede uygulamaya basılı tut.</string>
@@ -336,4 +329,38 @@
     <string name="pay_switch_home">Başka bir ana ekran uygulamasına geç</string>
     <string name="pay_cancel_note">Ücretsiz deneme sırasında iptal edersen ücret alınmaz. İstediğin zaman Google Play → Ödemeler ve abonelikler\'den iptal edebilirsin.</string>
     <string name="pay_manage">Aboneliği yönet (iptal, ödeme yöntemi)</string>
+    <string name="this_month_so_far">Bu ay (düne kadar)</string>
+    <string name="c_bed">Yatış saati (dün gece)</string>
+    <string name="c_wake">Kalkış saati (bu sabah)</string>
+    <string name="c_time_clear">Temizle</string>
+    <string name="c_bedphone">Yatmadan önceki 30 dk telefon: %1$s</string>
+    <string name="c_bedphone_none">Yatmadan önceki 30 dk telefon: kullanılmadı</string>
+    <string name="c_bedphone_unknown">Yatmadan önceki 30 dk telefon: bilinmiyor (“Kullanım erişimi” izni gerekir; telefon kayıtlarını yaklaşık bir hafta tutar)</string>
+    <string name="c_alcohol">Alkol</string>
+    <string name="alc_no">Yok</string>
+    <string name="alc_yes">Var</string>
+    <string name="tr_alcohol">Alkol içildi</string>
+    <string name="tr_bedphone">Yatmadan önce telefon</string>
+    <string name="color_cream">Açık sarı</string>
+    <string name="color_indigo">Lacivert</string>
+    <string name="pie_title">Bugün uygulamaya göre süre</string>
+    <string name="pie_other">Diğer</string>
+    <string name="pie_need">Uygulama başına süreyi görmek için “Kullanım erişimi” iznini verin.</string>
+    <string name="pie_none">Bugün henüz 1 dakika veya daha uzun kullanılan bir uygulama yok.</string>
+    <string name="pie_note">Telefonun kullanım kayıtlarından hesaplanır (Dijital Denge ile aynı veri). Bu ana ekranda geçen süre dahil değildir.</string>
+    <string name="goal_done">Başarıldı</string>
+    <string name="goal_done_btn">Başardım!</string>
+    <string name="goal_undo">Başarılmadı olarak işaretle</string>
+    <string name="goal_edit_btn">Hedefi düzenle</string>
+    <string name="congrats_title">Tebrikler!</string>
+    <string name="congrats_body">Bugünkü hedefine ulaştın. Harika iş!</string>
+    <string name="page_condition">Vücut durumu</string>
+    <string name="c_overall">Vücut</string>
+    <string name="c_overall_hint">Vücudun ne kadar enerjikti</string>
+    <string name="st_note">Ekranın açık ve kilidinin açık olduğu süre. “Kullanım erişimi” izni varsa telefonun kayıtlarıyla da tamamlanır (son 7 gün).</string>
+    <string name="tr_wait">İyi günlerinde neyin farklı olduğunu görmek için 5 gün boyunca vücut, odak ve ruh hâlini kaydet (şu ana kadar %1$d).</string>
+    <string name="tr_good">Ortalama 7 ve üzeri\n(%1$d gün)</string>
+    <string name="tr_note">* İyi günler vücut, odak ve ruh hâli ortalamasına göre ayrılır. Yemekleri de içeren daha derin bir analiz için aşağıdaki “Yapay zekâya sor”u dene.</string>
+    <string name="ai_unlock_section"># Telefonumu neden açtım (son 14 gün, her kilit açışta verilen yanıt)\ntarih,saat,ne yapıyordum,telefonu neden açtım\n%1$s</string>
+    <string name="ai_prompt">Sen günlük alışkanlıklar ve iyi oluş konusunda çok bilgili bir koçsun.\nAşağıda her gün telefonuma kaydettiğim veriler var (%1$d gün, %2$s ile %3$s arası). Kendimi en çok ne zaman iyi hissettiğimi analiz et.\n\n# Alanlar\n- vücut, odak, ruh_hali, uyku_kalitesi: 0–10 arası öz değerlendirme (10 en iyisi). İyi günleri vücut, odak ve ruh hâli ortalamasına göre değerlendir\n- uyku_saat: önceki gece kaç saat uyuduğum. yatış, kalkış: önceki gece ne zaman yattığım ve o sabah ne zaman kalktığım\n- yatmadan_önce_telefon: yatmadan önceki 30 dakikada telefon kullandığım dakika\n- telefon_dk: o gün ekranın açık ve kullanımda olduğu dakika. kilit_açma: kilidi açma sayısı\n- alkol: 1 = alkol içtim, 0 = içmedim\n- hedef, başarıldı: o günün hedefi ve ona ulaşıp ulaşmadığım (1 = ulaştım)\n- kahvaltı, öğle, akşam, notlar: ne yediğim, egzersiz, olaylar vb.\n- Boş, \"kaydedilmedi\" demektir (sıfır değil)\n\n# Bilgi için: hedeflerim ve alışkanlıklarım\n- Hedefler: %4$s\n- Alışkanlıklar: %5$s\n\n# Veriler (CSV)\ntarih,gün,vücut,odak,ruh_hali,uyku_kalitesi,uyku_saat,yatış,kalkış,yatmadan_önce_telefon,telefon_dk,kilit_açma,alkol,hedef,başarıldı,kahvaltı,öğle,akşam,notlar\n%6$s\n\n# İstediklerim\n1. İyi ve kötü günler arasında ne fark var (uyku, yatış saati, yatmadan önce telefon, alkol, yemekler, ekran süresi, haftanın günü vb.), mümkünse somut sayılarla\n2. \"Şu durumda kendimi iyi hissediyorum\" türünden en fazla 3 örüntü\n3. Beni aşağı çekiyor gibi görünen alışkanlıklar veya kombinasyonlar (kilit açma kayıtları varsa, boşa geçmiş gibi görünen saatler ve nedenler de)\n4. Yarından itibaren deneyebileceğim 3 küçük adım\n5. Dikkat edilmesi gerekenler (az veya dengesiz veri vb.) ve ileride kaydetmeye değer şeyler\n\n# Nasıl yanıtlamalısın\n- 3 satırlık bir özetle başla, sonra ayrıntılı açıkla\n- %7$s yanıt ver; sade bir dille, teknik terim kullanmadan\n- Verilerin gösterdiğini tahminlerden ayır\n- Tıbbi teşhis koyma</string>
 </resources>

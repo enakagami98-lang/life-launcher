@@ -20,7 +20,7 @@
     <string name="ask_q2">② কেন ফোন খুললেন</string>
     <string name="ask_other">তালিকায় নেই? এখানে লিখুন</string>
     <string name="ask_submit">সংরক্ষণ করে ফোন ব্যবহার করুন</string>
-    <string name="ask_hint">① বেছে নিয়ে ② এর একটি বোতাম চাপলেই সঙ্গে সঙ্গে সংরক্ষণ হবে। \"আজ\" স্ক্রিনে এই প্রশ্ন বন্ধ করা যায়।</string>
+    <string name="ask_hint">① বেছে নিয়ে ② এর একটি বোতাম চাপলেই সঙ্গে সঙ্গে সংরক্ষণ হবে। \"শরীরের অবস্থা\" স্ক্রিনে এই প্রশ্ন বন্ধ করা যায়।</string>
     <string name="opt_edit">বিকল্প সম্পাদনা</string>
     <string name="opt_edit_hint">মুছতে বোতামে চাপুন। নতুন যোগ করতে নিচে লিখে \"যোগ করুন\" চাপুন।</string>
     <string name="opt_remove">%1$s মুছুন</string>
@@ -172,7 +172,7 @@
     <string name="yd_condition">অবস্থা</string>
     <string name="yd_sleep">ঘুম</string>
     <string name="yd_phone">ফোন</string>
-    <string name="yd_input_today">আজ লিখুন ›</string>
+    <string name="yd_input_today">শরীরের অবস্থা লিখুন ›</string>
     <string name="settings">সেটিংস</string>
     <string name="favorites">প্রিয়</string>
     <string name="fav_empty">অ্যাপ স্ক্রিনে (বাঁয়ে সোয়াইপ করুন) কোনো অ্যাপ চেপে ধরে রাখলে যোগ হবে।</string>
@@ -186,9 +186,6 @@
     <string name="ymd">%1$d বছর %2$d মাস %3$d দিন</string>
     <string name="age_now">বয়স %1$d</string>
     <string name="lifespan_is">প্রত্যাশিত আয়ু %1$d</string>
-    <string name="page_condition">আজ</string>
-    <string name="c_overall">সার্বিক</string>
-    <string name="c_overall_hint">পুরো দিনটা ভেবে</string>
     <string name="c_sleep">ঘুমের মান</string>
     <string name="c_sleep_hint">ভালো ঘুম হয়েছে?</string>
     <string name="c_focus">মনোযোগ</string>
@@ -214,7 +211,6 @@
     <string name="st_that_day">সেই দিনের স্ক্রিন টাইম</string>
     <string name="unit_hours">ঘণ্টা</string>
     <string name="st_unlocks">%1$d বার আনলক</string>
-    <string name="st_note">স্ক্রিন চালু ও আনলক থাকার সময় (এই অ্যাপের পর্যবেক্ষণ চলার সময়ই কেবল গোনা হয়)।</string>
     <string name="this_month">এই মাস</string>
     <string name="mc_none">এই মাসের এখনো কোনো তথ্য নেই।</string>
     <string name="mc_wait">গত মাসের তথ্য হলে এখানে তুলনা দেখাবে।</string>
@@ -232,11 +228,8 @@
     <string name="ul_top">সবচেয়ে বেশি কারণ: %1$s</string>
     <string name="tr_title">আপনার ভালো দিনগুলোর মিল</string>
     <string name="tr_2w">২ সপ্তাহ আগে</string>
-    <string name="tr_wait">ভালো দিনে কী আলাদা তা দেখতে ৫ দিন লিখুন (এখন পর্যন্ত %1$d)।</string>
-    <string name="tr_good">৭ বা বেশি\n(%1$d দিন)</string>
     <string name="tr_other">অন্যান্য\n(%1$d দিন)</string>
     <string name="tr_breakfast">নাস্তা করেছেন</string>
-    <string name="tr_note">* এগুলো গড়। খাবারসহ বিশদ বিশ্লেষণের জন্য নিচের \"AI-কে জিজ্ঞেস করুন\" চেষ্টা করুন।</string>
     <string name="ai_title">AI-কে জিজ্ঞেস করুন</string>
     <string name="ai_desc">আপনার রেকর্ড (%1$d দিন) একটি প্রশ্নে পরিণত করে। ChatGPT বা Claude-এ পেস্ট করে জানুন কখন আপনি সবচেয়ে ভালো থাকেন।</string>
     <string name="ai_copy">প্রশ্ন কপি করুন</string>
@@ -320,7 +313,7 @@
     <string name="tut6_body">\"বাকি দিন\" এর নিচে দেখায়। \"কী দেখাবে তা বদলান\" থেকে যেকোনো সময় বদলানো যায়।</string>
     <string name="tut7_title">সব প্রস্তুত</string>
     <string name="tut7_body">পৃষ্ঠা বদলাতে ডানে বা বাঁয়ে সোয়াইপ করুন।</string>
-    <string name="tut7_page_left">← ডানে সোয়াইপ: আজ (অবস্থা, ঘুম, স্ক্রিন টাইম)</string>
+    <string name="tut7_page_left">← ডানে সোয়াইপ: শরীরের অবস্থা (অবস্থা, ঘুম, স্ক্রিন টাইম)</string>
     <string name="tut7_page_top">হোম: বাকি দিন, বেছে নেওয়া তথ্য, নিচে প্রিয় অ্যাপ</string>
     <string name="tut7_page_right">→ বাঁয়ে সোয়াইপ: অ্যাপ, লক্ষ্য, অভ্যাস, আজকের কাজ</string>
     <string name="tut7_longpress">তালিকায় অ্যাপ চেপে ধরে প্রিয়, সময়সীমা বা লুকানো সেট করুন।</string>
@@ -337,4 +330,38 @@
     <string name="pay_switch_home">অন্য হোম অ্যাপে বদলান</string>
     <string name="pay_cancel_note">ফ্রি ট্রায়ালের মধ্যে বাতিল করলে কোনো চার্জ নেই। Google Play → পেমেন্ট ও সাবস্ক্রিপশন থেকে যেকোনো সময় বাতিল করুন।</string>
     <string name="pay_manage">সাবস্ক্রিপশন পরিচালনা (বাতিল, পেমেন্টের উপায়)</string>
+    <string name="this_month_so_far">এই মাস (গতকাল পর্যন্ত)</string>
+    <string name="c_bed">ঘুমাতে যাওয়ার সময় (গত রাত)</string>
+    <string name="c_wake">ঘুম থেকে ওঠার সময় (আজ সকাল)</string>
+    <string name="c_time_clear">মুছুন</string>
+    <string name="c_bedphone">ঘুমের আগের 30 মিনিটে ফোন: %1$s</string>
+    <string name="c_bedphone_none">ঘুমের আগের 30 মিনিটে ফোন: ব্যবহার হয়নি</string>
+    <string name="c_bedphone_unknown">ঘুমের আগের 30 মিনিটে ফোন: জানা নেই (“ব্যবহারের অ্যাক্সেস” অনুমতি লাগবে; ফোন প্রায় এক সপ্তাহ রেকর্ড রাখে)</string>
+    <string name="c_alcohol">মদ</string>
+    <string name="alc_no">না</string>
+    <string name="alc_yes">হ্যাঁ</string>
+    <string name="tr_alcohol">মদ পান করেছি</string>
+    <string name="tr_bedphone">ঘুমের আগে ফোন</string>
+    <string name="color_cream">হালকা হলুদ</string>
+    <string name="color_indigo">গাঢ় নীল</string>
+    <string name="pie_title">আজ অ্যাপ অনুযায়ী সময়</string>
+    <string name="pie_other">অন্যান্য</string>
+    <string name="pie_need">প্রতিটি অ্যাপের সময় দেখতে “ব্যবহারের অ্যাক্সেস” অনুমতি দিন।</string>
+    <string name="pie_none">আজ এখনও কোনো অ্যাপ 1 মিনিট বা তার বেশি ব্যবহার হয়নি।</string>
+    <string name="pie_note">ফোনের ব্যবহারের রেকর্ড থেকে গোনা (Digital Wellbeing-এর একই ডেটা)। এই হোম স্ক্রিনের সময় ধরা হয়নি।</string>
+    <string name="goal_done">সম্পন্ন</string>
+    <string name="goal_done_btn">আমি পেরেছি!</string>
+    <string name="goal_undo">সম্পন্ন নয় বলে চিহ্নিত করুন</string>
+    <string name="goal_edit_btn">লক্ষ্য বদলান</string>
+    <string name="congrats_title">অভিনন্দন!</string>
+    <string name="congrats_body">আপনি আজকের লক্ষ্য পূরণ করেছেন। দারুণ!</string>
+    <string name="page_condition">শরীরের অবস্থা</string>
+    <string name="c_overall">শরীর</string>
+    <string name="c_overall_hint">শরীর কতটা চনমনে ছিল</string>
+    <string name="st_note">স্ক্রিন চালু ও আনলক থাকার সময়। “ব্যবহারের অ্যাক্সেস” অনুমতি থাকলে ফোনের রেকর্ড (গত 7 দিন) থেকেও পূরণ করা হয়।</string>
+    <string name="tr_wait">5 দিন শরীর, মনোযোগ ও মেজাজ লিখুন, তাহলে ভালো দিনগুলো কোথায় আলাদা তা এখানে দেখা যাবে (এখন পর্যন্ত %1$d দিন)।</string>
+    <string name="tr_good">গড় 7 বা বেশি\n(%1$d দিন)</string>
+    <string name="tr_note">* শরীর, মনোযোগ ও মেজাজের গড় দিয়ে ভালো দিন আলাদা করা হয়। খাবারসহ গভীর বিশ্লেষণের জন্য নিচের “AI-কে জিজ্ঞেস করুন” চেষ্টা করুন।</string>
+    <string name="ai_unlock_section"># আমি কেন ফোন খুলেছিলাম (গত 14 দিন, প্রতিবার আনলকের সময় দেওয়া উত্তর)\nতারিখ,সময়,তখন কী করছিলাম,কেন ফোন খুলেছিলাম\n%1$s</string>
+    <string name="ai_prompt">আপনি একজন কোচ, যিনি দৈনন্দিন অভ্যাস ও সুস্থতা নিয়ে ভালো জানেন।\nনিচে সেই ডেটা আছে যা আমি প্রতিদিন ফোনে লিখে রাখি (%1$d দিন, %2$s থেকে %3$s)। আমি কখন সবচেয়ে ভালো বোধ করি তা বিশ্লেষণ করুন।\n\n# কলাম\n- শরীর, মনোযোগ, মেজাজ, ঘুমের_মান: 0–10 নিজের দেওয়া নম্বর (10 সবচেয়ে ভালো)। ভালো দিন শরীর, মনোযোগ ও মেজাজের গড় দিয়ে বিচার করুন\n- ঘুম_ঘণ্টা: আগের রাতে কত ঘণ্টা ঘুমিয়েছি। ঘুমানো, ওঠা: আগের রাতে কখন ঘুমাতে গেছি আর সেদিন সকালে কখন উঠেছি\n- ঘুমের_আগে_ফোন: ঘুমাতে যাওয়ার আগের 30 মিনিটে ফোন ব্যবহারের মিনিট\n- ফোন_মিনিট: সেদিন স্ক্রিন চালু রেখে ব্যবহারের মিনিট। আনলক: কতবার আনলক করেছি\n- মদ: 1 = পান করেছি, 0 = না\n- লক্ষ্য, পূরণ: সেদিনের লক্ষ্য আর তা পূরণ হয়েছে কি না (1 = পূরণ)\n- সকালের_খাবার, দুপুরের_খাবার, রাতের_খাবার, নোট: কী খেয়েছি, ব্যায়াম, ঘটনা ইত্যাদি\n- ফাঁকা মানে \"লেখা হয়নি\" (শূন্য নয়)\n\n# তথ্যের জন্য: আমার লক্ষ্য ও অভ্যাস\n- লক্ষ্য: %4$s\n- অভ্যাস: %5$s\n\n# ডেটা (CSV)\nতারিখ,বার,শরীর,মনোযোগ,মেজাজ,ঘুমের_মান,ঘুম_ঘণ্টা,ঘুমানো,ওঠা,ঘুমের_আগে_ফোন,ফোন_মিনিট,আনলক,মদ,লক্ষ্য,পূরণ,সকালের_খাবার,দুপুরের_খাবার,রাতের_খাবার,নোট\n%6$s\n\n# আমি যা চাই\n1. ভালো আর খারাপ দিনের মধ্যে কী পার্থক্য (ঘুম, ঘুমানোর সময়, ঘুমের আগে ফোন, মদ, খাবার, স্ক্রিন টাইম, সপ্তাহের দিন ইত্যাদি), যতটা সম্ভব নির্দিষ্ট সংখ্যা দিয়ে\n2. \"আমি তখন ভালো থাকি যখন...\" ধরনের সর্বোচ্চ 3টি প্যাটার্ন\n3. যেসব অভ্যাস বা মিলন আমাকে খারাপ করে বলে মনে হয় (ফোন খোলার রেকর্ড থাকলে, অপচয় মনে হওয়া সময় ও কারণও)\n4. কাল থেকে চেষ্টা করা যায় এমন 3টি ছোট কাজ\n5. সতর্কতা (কম বা একপেশে ডেটা ইত্যাদি) এবং ভবিষ্যতে লিখে রাখার মতো বিষয়\n\n# কীভাবে উত্তর দেবেন\n- প্রথমে 3 লাইনে সারাংশ দিন, তারপর বিস্তারিত বোঝান\n- %7$s ভাষায়, সহজ কথায়, পারিভাষিক শব্দ ছাড়া উত্তর দিন\n- ডেটা যা দেখায় আর যা অনুমান, তা আলাদা করে লিখুন\n- কোনো চিকিৎসা নির্ণয় করবেন না</string>
 </resources>

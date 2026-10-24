@@ -1,5 +1,5 @@
 #!/bin/bash
-# いろいろな言語で表示が崩れないかの確認（アラビア語・ウルドゥー語は右から左）。言語ごとにトップ・今日の調子・質問画面を撮影
+# いろいろな言語で表示が崩れないかの確認（アラビア語・ウルドゥー語は右から左）。言語ごとにトップ・身体の調子・質問画面を撮影
 PKG=com.enakagami.lifelauncher
 OUT=e2e-out; mkdir -p $OUT; R=$OUT/result.txt; : > $R
 UI="python3 .github/e2e/ui.py"

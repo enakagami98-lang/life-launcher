@@ -21,7 +21,7 @@
     <string name="ask_q2">② Why you opened your phone</string>
     <string name="ask_other">Not listed? Type it here</string>
     <string name="ask_submit">Save and use phone</string>
-    <string name="ask_hint">Pick ① and then tap a ② button to save right away. You can turn this off on the \"Today\" screen.</string>
+    <string name="ask_hint">Pick ① and then tap a ② button to save right away. You can turn this off on the \"Condition\" screen.</string>
     <string name="opt_edit">Edit choices</string>
     <string name="opt_edit_hint">Tap a button to remove it. Type below and tap \"Add\" to add one.</string>
     <string name="opt_remove">Remove %1$s</string>
@@ -188,9 +188,6 @@
     <string name="ymd">%1$dy %2$dm %3$dd</string>
     <string name="age_now">Age %1$d</string>
     <string name="lifespan_is">Life expectancy %1$d</string>
-    <string name="page_condition">Today</string>
-    <string name="c_overall">Overall</string>
-    <string name="c_overall_hint">Looking back on the whole day</string>
     <string name="c_sleep">Sleep quality</string>
     <string name="c_sleep_hint">Did you sleep well?</string>
     <string name="c_focus">Focus</string>
@@ -216,7 +213,6 @@
     <string name="st_that_day">Screen time this day</string>
     <string name="unit_hours">h</string>
     <string name="st_unlocks">%1$d unlocks</string>
-    <string name="st_note">Time with the screen on and unlocked (counted only while this app\'s monitor is running).</string>
     <string name="this_month">This month</string>
     <string name="mc_none">No records for this month yet.</string>
     <string name="mc_wait">Once there\'s data for last month, a comparison will show here.</string>
@@ -234,11 +230,8 @@
     <string name="ul_top">Top reasons: %1$s</string>
     <string name="tr_title">What your good days have in common</string>
     <string name="tr_2w">2 weeks ago</string>
-    <string name="tr_wait">Log 5 days to see what\'s different on your good days (%1$d so far).</string>
-    <string name="tr_good">7 or higher\n(%1$d days)</string>
     <string name="tr_other">Others\n(%1$d days)</string>
     <string name="tr_breakfast">Had breakfast</string>
-    <string name="tr_note">* These are averages. For a deeper look including meals, try \"Ask AI\" below.</string>
     <string name="ai_title">Ask AI</string>
     <string name="ai_desc">Turns your records (%1$d days) into a prompt. Paste it into ChatGPT or Claude to learn when you feel your best.</string>
     <string name="ai_copy">Copy prompt</string>
@@ -246,8 +239,6 @@
     <string name="ai_choose">Choose an AI app</string>
     <string name="ai_send">Send to an AI app</string>
     <string name="ai_none">(none)</string>
-    <string name="ai_unlock_section"># Why I opened my phone (last 14 days, answered at each unlock)\ndate,time,what I was doing,why I opened my phone\n%1$s</string>
-    <string name="ai_prompt">You are a coach who knows a lot about daily habits and well-being.\nBelow is the \"Today\" data I log on my phone every day (%1$d days, %2$s to %3$s).\nBased on this data, please analyze when I tend to feel my best.\n\n# Fields\n- overall: how the day went overall (self-rated 0–10, 10 is best)\n- sleep_h: hours slept the night before\n- sleep_quality, focus, mood: self-rated 0–10\n- phone_min: minutes the phone screen was on and in use that day. unlocks: number of unlocks\n- breakfast, lunch, dinner: what I ate\n- notes: exercise, events, drinks, etc.\n- Empty means \"not recorded\" (not zero)\n\n# For reference: my goals and habits\n- Goals: %4$s\n- Habits: %5$s\n\n# Data (CSV)\ndate,weekday,overall,sleep_h,sleep_quality,focus,mood,phone_min,unlocks,breakfast,lunch,dinner,notes\n%6$s\n\n# What I\'d like\n1. What differs between good and bad days (sleep, meals, screen time, weekday, events in notes, etc.), with concrete numbers where possible\n2. Up to 3 patterns of \"I feel good when...\"\n3. Habits or combinations that seem to drag me down (if there are phone-unlock records, also times and reasons that look wasteful)\n4. 3 small actions I can try starting tomorrow\n5. Caveats (little or skewed data, etc.) and items worth recording in the future\n\n# How to answer\n- Start with a 3-line summary, then explain in detail\n- Use plain language without jargon, in the same language as this message\n- Separate what the data shows from guesses\n- Don\'t give medical diagnoses</string>
     <string name="err_birth">Enter a valid birthday (e.g. 1999 / 4 / 29)</string>
     <string name="err_life">Life expectancy must be greater than your age</string>
     <string name="s_birth">Birthday and life expectancy</string>
@@ -326,7 +317,7 @@
     <string name="tut6_body">Shown below \"Days left\". You can change it anytime with \"Edit what\'s shown\".</string>
     <string name="tut7_title">You\'re all set</string>
     <string name="tut7_body">Swipe left or right to move between pages.</string>
-    <string name="tut7_page_left">← Swipe right: Today (condition, sleep, screen time)</string>
+    <string name="tut7_page_left">← Swipe right: Condition (condition, sleep, screen time)</string>
     <string name="tut7_page_top">Home: days left, your info, scroll down for favorites</string>
     <string name="tut7_page_right">→ Swipe left: Apps, Goals, Habits, Today\'s tasks</string>
     <string name="tut7_longpress">Press and hold an app in the list to add it to favorites, set a time limit, or hide it.</string>
@@ -343,4 +334,38 @@
     <string name="pay_switch_home">Switch to another home app</string>
     <string name="pay_cancel_note">Cancel during the free trial and you won\'t be charged. Cancel anytime in Google Play → Payments &amp; subscriptions.</string>
     <string name="pay_manage">Manage subscription (cancel, payment method)</string>
+    <string name="this_month_so_far">This month (through yesterday)</string>
+    <string name="c_bed">Went to bed (last night)</string>
+    <string name="c_wake">Woke up (this morning)</string>
+    <string name="c_time_clear">Clear</string>
+    <string name="c_bedphone">Phone in the 30 min before bed: %1$s</string>
+    <string name="c_bedphone_none">Phone in the 30 min before bed: not used</string>
+    <string name="c_bedphone_unknown">Phone in the 30 min before bed: unknown (needs “Usage access”; the phone keeps its records for about a week)</string>
+    <string name="c_alcohol">Alcohol</string>
+    <string name="alc_no">No</string>
+    <string name="alc_yes">Yes</string>
+    <string name="tr_alcohol">Drank alcohol</string>
+    <string name="tr_bedphone">Phone before bed</string>
+    <string name="color_cream">Light yellow</string>
+    <string name="color_indigo">Indigo</string>
+    <string name="pie_title">Today\'s time by app</string>
+    <string name="pie_other">Other</string>
+    <string name="pie_need">To see time per app, allow “Usage access”.</string>
+    <string name="pie_none">No app has been used for 1 minute or more today yet.</string>
+    <string name="pie_note">Counted from your phone\'s usage records (the same data as Digital Wellbeing). Time on this home screen isn\'t included.</string>
+    <string name="goal_done">Done</string>
+    <string name="goal_done_btn">I did it!</string>
+    <string name="goal_undo">Mark as not done</string>
+    <string name="goal_edit_btn">Edit goal</string>
+    <string name="congrats_title">Congratulations!</string>
+    <string name="congrats_body">You achieved today\'s goal. Great job!</string>
+    <string name="page_condition">Condition</string>
+    <string name="c_overall">Body</string>
+    <string name="c_overall_hint">How energetic you felt</string>
+    <string name="st_note">Time with the screen on and unlocked. With “Usage access” allowed, it\'s also filled in from your phone\'s records (last 7 days).</string>
+    <string name="tr_wait">Log body, focus and mood for 5 days to see what\'s different on your good days (%1$d so far).</string>
+    <string name="tr_good">Avg 7 or higher\n(%1$d days)</string>
+    <string name="tr_note">* Good days are split by the average of body, focus and mood. For a deeper look including meals, try “Ask AI” below.</string>
+    <string name="ai_unlock_section"># Why I opened my phone (last 14 days, answered at each unlock)\ndate,time,what I was doing,why I opened my phone\n%1$s</string>
+    <string name="ai_prompt">You are a coach who knows a lot about daily habits and well-being.\nBelow is the data I record on my phone every day (%1$d days, %2$s to %3$s). Please analyze when I tend to feel my best.\n\n# Fields\n- body, focus, mood, sleep_quality: self-rated 0–10 (10 is best). Judge good days by the average of body, focus and mood\n- sleep_h: hours slept the night before. bedtime, wake_up: when I went to bed the night before and woke up that morning\n- phone_before_bed: minutes I used my phone in the 30 minutes before going to bed\n- phone_min: minutes the screen was on and in use that day. unlocks: number of unlocks\n- alcohol: 1 = drank alcohol, 0 = none\n- goal, achieved: that day\'s goal and whether I achieved it (1 = achieved)\n- breakfast, lunch, dinner, notes: what I ate, exercise, events, etc.\n- Empty means \"not recorded\" (not zero)\n\n# For reference: my goals and habits\n- Goals: %4$s\n- Habits: %5$s\n\n# Data (CSV)\ndate,weekday,body,focus,mood,sleep_quality,sleep_h,bedtime,wake_up,phone_before_bed,phone_min,unlocks,alcohol,goal,achieved,breakfast,lunch,dinner,notes\n%6$s\n\n# What I\'d like\n1. What differs between good and bad days (sleep, bedtime, phone use before bed, alcohol, meals, screen time, weekday, etc.), with concrete numbers where possible\n2. Up to 3 patterns of \"I feel good when...\"\n3. Habits or combinations that seem to drag me down (if there are phone-unlock records, also times and reasons that look wasteful)\n4. 3 small actions I can try starting tomorrow\n5. Caveats (little or skewed data, etc.) and items worth recording in the future\n\n# How to answer\n- Start with a 3-line summary, then explain in detail\n- Answer in %7$s, in plain language without jargon\n- Separate what the data shows from guesses\n- Do not give a medical diagnosis</string>
 </resources>

@@ -68,4 +68,24 @@ log "== 5. もう一度ロック解除しても、もう聞かれない"
 unlock; snap unlock_again
 expect_no_text "2回目は出ない" "夜のおやすみ時間が終わりました"
 
+log "== 6. 目標の達成ボタンとお祝い"
+$UI tap "abc" >/dev/null; sleep 2; snap goal_menu
+expect_text "達成ボタン" "達成した！"
+$UI tap "達成した！" >/dev/null; sleep 3; snap congrats
+expect_text "お祝いが出る" "Congratulations!"
+$UI tap "閉じる" >/dev/null; sleep 1; snap goal_done
+expect_text "目標に達成の印" "達成"
+
+log "== 7. 今日のスマホ → アプリ別の円グラフ"
+adb shell appops set $PKG GET_USAGE_STATS allow
+$UI tap "今日のスマホ" >/dev/null; sleep 3; snap app_pie
+expect_text "円グラフの画面" "今日のアプリ別の使用時間"
+expect_no_text "許可済みなら許可の案内は出ない" "アプリごとの時間を見るには"
+$UI tap "閉じる" >/dev/null; sleep 1
+
+log "== 8. 最初の背景は薄黄色"
+adb exec-out screencap -p > $OUT/px.png
+PX=$(python3 -c "from PIL import Image; im=Image.open('$OUT/px.png').convert('RGB'); print(im.getpixel((20,1000)))")
+[ "$PX" = "(255, 247, 218)" ] && ok "背景が薄黄色 $PX" || ng "背景が薄黄色ではない $PX"
+
 log "== 結果: PASS $(grep -c '^PASS' $R) / FAIL $(grep -c '^FAIL' $R)"

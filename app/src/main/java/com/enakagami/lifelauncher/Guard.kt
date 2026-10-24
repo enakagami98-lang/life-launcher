@@ -101,6 +101,7 @@ object Guard {
         loadOptions()
         goalOn = prefs.getBoolean("goalOn", true)
         JSONObject(prefs.getString("dailyGoals", "{}")!!).let { o -> o.keys().forEach { dailyGoals[it] = o.getString(it) } }
+        JSONArray(prefs.getString("goalDone", "[]")).let { a -> for (i in 0 until a.length()) goalDone.add(a.getString(i)) }
     }
 
     // ---- 設定 ----
@@ -272,6 +273,81 @@ object Guard {
         prefs.edit().putString("screen", s.toString()).putString("unlocks", u.toString()).apply()
     }
 
+    /**
+     * スマホ本体の記録から、ロックを解除して画面を使っていた時間帯（ミリ秒の区間）を出す。
+     * 「使用状況へのアクセス」が無いときは null。本体の記録は数日〜1週間ほどで消える
+     */
+    fun unlockedIntervals(from: Long, to: Long): List<Pair<Long, Long>>? {
+        val ctx = appContext ?: return null
+        if (!hasUsageAccess(ctx)) return null
+        return runCatching {
+            val usm = ctx.getSystemService(android.app.usage.UsageStatsManager::class.java)
+            // 区間の始まりの時点で画面がついていたかを知るため、少し前から読む
+            val events = usm.queryEvents(from - 6 * 3600_000L, to)
+            val e = android.app.usage.UsageEvents.Event()
+            val list = mutableListOf<Pair<Int, Long>>()
+            while (events.hasNextEvent()) {
+                events.getNextEvent(e)
+                if (e.eventType in 15..18) list += e.eventType to e.timeStamp
+            }
+            // ロック画面を使っていない人（鍵の表示・解除の記録が無い）は、画面がついている間を数える
+            val noLock = list.none { it.first == 17 || it.first == 18 }
+            var on = false
+            var locked = !noLock
+            var start = 0L
+            val out = mutableListOf<Pair<Long, Long>>()
+            for ((type, t) in list) {
+                val was = on && !locked
+                when (type) {
+                    15 -> on = true                                   // 画面がついた
+                    16 -> { on = false; if (!noLock) locked = true }  // 画面が消えた
+                    17 -> locked = true                               // ロック画面が出た
+                    18 -> { locked = false; on = true }               // ロックを解除した
+                }
+                val now = on && !locked
+                if (!was && now) start = t
+                if (was && !now) out += start to t
+            }
+            if (on && !locked) out += start to to
+            out.mapNotNull { (a, b) -> val x = maxOf(a, from); val y = minOf(b, to); if (y > x) x to y else null }
+        }.getOrNull()
+    }
+
+    /** from〜to の間にスマホを使っていた分数。分からなければ null */
+    fun phoneMinutesBetween(from: Long, to: Long): Int? =
+        unlockedIntervals(from, to)?.sumOf { it.second - it.first }?.let { (it / 60_000).toInt() }
+
+    private var syncedAt = 0L
+
+    /**
+     * 直近7日分の使用時間とロック解除の回数を、スマホ本体の記録で補う。
+     * 見守りが止められていた日（電池の節約などで）も数えられるようにするため。多い方を使う
+     */
+    fun syncFromSystem() {
+        val ctx = appContext ?: return
+        val now = System.currentTimeMillis()
+        if (now - syncedAt < 10 * 60_000L || !hasUsageAccess(ctx)) return
+        syncedAt = now
+        Thread {
+            val zone = java.time.ZoneId.systemDefault()
+            val today = LocalDate.now()
+            val found = (0L..7L).mapNotNull { back ->
+                val d = today.minusDays(back)
+                val from = d.atStartOfDay(zone).toInstant().toEpochMilli()
+                val to = minOf(d.plusDays(1).atStartOfDay(zone).toInstant().toEpochMilli(), now)
+                val iv = unlockedIntervals(from, to) ?: return@mapNotNull null
+                Triple(d.toString(), iv.sumOf { it.second - it.first }, iv.count { it.first > from })
+            }
+            android.os.Handler(android.os.Looper.getMainLooper()).post {
+                found.forEach { (d, ms, n) ->
+                    if (ms > (screenMs[d] ?: 0)) screenMs[d] = ms
+                    if (n > (unlocks[d] ?: 0)) unlocks[d] = n
+                }
+                saveScreen()
+            }
+        }.start()
+    }
+
     fun screenMinutes(date: LocalDate) = ((screenMs[date.toString()] ?: 0) / 60_000).toInt()
     fun unlockCount(date: LocalDate) = unlocks[date.toString()] ?: 0
 
@@ -330,6 +406,20 @@ object Guard {
         private set
     /** 日付 → その日の目標 */
     val dailyGoals = mutableStateMapOf<String, String>()
+
+    /** 目標を達成した日 */
+    val goalDone = mutableStateListOf<String>()
+
+    fun isGoalDone(date: LocalDate = LocalDate.now()) = date.toString() in goalDone
+
+    fun setGoalDone(date: LocalDate, done: Boolean) {
+        val k = date.toString()
+        goalDone.remove(k)
+        if (done) goalDone.add(k)
+        val keep = date.minusDays(400).toString()
+        goalDone.removeAll { it < keep }
+        prefs.edit().putString("goalDone", JSONArray(goalDone.toList()).toString()).apply()
+    }
 
     fun updateGoalOn(v: Boolean) { goalOn = v; prefs.edit().putBoolean("goalOn", v).apply() }
 

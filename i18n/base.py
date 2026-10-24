@@ -24,8 +24,8 @@ S = {
     "ask_q2": ("② スマホを開いた理由", "② Why you opened your phone"),
     "ask_other": ("ボタンに無いときはここに書く", "Not listed? Type it here"),
     "ask_submit": ("記録してスマホを使う", "Save and use phone"),
-    "ask_hint": ("①を選んでから②のボタンを押すと、すぐに記録されます。この質問は「今日の調子」の画面でオフにできます。",
-                 "Pick ① and then tap a ② button to save right away. You can turn this off on the \"Today\" screen."),
+    "ask_hint": ("①を選んでから②のボタンを押すと、すぐに記録されます。この質問は「身体の調子」の画面でオフにできます。",
+                 "Pick ① and then tap a ② button to save right away. You can turn this off on the \"Condition\" screen."),
     "opt_edit": ("選択肢を編集", "Edit choices"),
     "opt_edit_hint": ("ボタンをタップすると消えます。下の欄に書いて「追加」で増やせます。",
                       "Tap a button to remove it. Type below and tap \"Add\" to add one."),
@@ -80,7 +80,7 @@ S.update({
     "limit_mark": ("使いすぎ防止", "Time limit"),
     "fav_add": ("お気に入りに追加", "Add to favorites"),
     "fav_remove": ("お気に入りから外す", "Remove from favorites"),
-    "fav_sub": ("寿命画面の下に表示されます", "Shown below the home screen"),
+    "fav_sub": ("ホーム画面の下に表示されます", "Shown below the home screen"),
     "hide": ("非表示にする", "Hide"),
     "hide_sub": ("一覧と検索から隠します（設定で戻せます）", "Hide from the list and search (undo in Settings)"),
 
@@ -180,7 +180,7 @@ S.update({
     "yd_condition": ("調子", "Condition"),
     "yd_sleep": ("睡眠", "Sleep"),
     "yd_phone": ("スマホ", "Phone"),
-    "yd_input_today": ("今日の調子を入力 ›", "Log today ›"),
+    "yd_input_today": ("今日の身体の調子を入力 ›", "Log today ›"),
 })
 
 S.update({
@@ -191,7 +191,7 @@ S.update({
                   "On the Apps screen (swipe left), press and hold an app to add it."),
     "rename_title": ("表示名を変更", "Rename"),
     "rename": ("名前を変更", "Rename"),
-    "rename_sub": ("寿命画面での表示名を変えます", "Change the name shown on the home screen"),
+    "rename_sub": ("ホーム画面での表示名を変えます", "Change the name shown on the home screen"),
     "setup_first": ("まずは誕生日と寿命を設定しましょう", "First, set your birthday and life expectancy"),
     "setup": ("設定する", "Set up"),
     "days_left": ("残りの日数", "Days left"),
@@ -202,10 +202,7 @@ S.update({
 })
 
 S.update({
-    # ---- 今日の調子 ----
-    "page_condition": ("今日の調子", "Today"),
-    "c_overall": ("今日の調子", "Overall"),
-    "c_overall_hint": ("1日を振り返って総合的に", "Looking back on the whole day"),
+    # ---- 身体の調子 ----
     "c_sleep": ("睡眠の質", "Sleep quality"),
     "c_sleep_hint": ("ぐっすり眠れたか", "Did you sleep well?"),
     "c_focus": ("集中度", "Focus"),
@@ -231,8 +228,6 @@ S.update({
     "st_that_day": ("この日のスマホ使用時間", "Screen time this day"),
     "unit_hours": ("時間", "h"),
     "st_unlocks": ("ロック解除 %1$d回", "%1$d unlocks"),
-    "st_note": ("画面をつけてロックを解除していた時間です（このアプリの見守りが動いている間だけ数えます）。",
-                "Time with the screen on and unlocked (counted only while this app's monitor is running)."),
     "this_month": ("今月", "This month"),
     "mc_none": ("この月の記録はまだありません。", "No records for this month yet."),
     "mc_wait": ("先月の記録がたまると、ここに先月との比較が出ます。", "Once there's data for last month, a comparison will show here."),
@@ -252,13 +247,8 @@ S.update({
     "ul_top": ("多かった理由：%1$s", "Top reasons: %1$s"),
     "tr_title": ("調子がいいときの傾向", "What your good days have in common"),
     "tr_2w": ("2週間前", "2 weeks ago"),
-    "tr_wait": ("「今日の調子」を5日分つけると、調子がいい日とそうでない日の違いがここに出ます（いま %1$d日）。",
-                "Log 5 days to see what's different on your good days (%1$d so far)."),
-    "tr_good": ("調子 7以上\n(%1$d日)", "7 or higher\n(%1$d days)"),
     "tr_other": ("それ以外\n(%1$d日)", "Others\n(%1$d days)"),
     "tr_breakfast": ("朝ごはんあり", "Had breakfast"),
-    "tr_note": ("※平均です。食事の中身まで含めた分析は、下の「AIに分析してもらう」がおすすめ。",
-                "* These are averages. For a deeper look including meals, try \"Ask AI\" below."),
     "ai_title": ("AIに分析してもらう", "Ask AI"),
     "ai_desc": ("これまでの記録（%1$d日分）を、AIへの質問文にまとめます。ChatGPT や Claude に貼り付けると「どんな時に調子がいいか」を分析してくれます。",
                 "Turns your records (%1$d days) into a prompt. Paste it into ChatGPT or Claude to learn when you feel your best."),
@@ -267,74 +257,6 @@ S.update({
     "ai_choose": ("AIアプリを選ぶ", "Choose an AI app"),
     "ai_send": ("AIアプリに直接送る", "Send to an AI app"),
     "ai_none": ("（未登録）", "(none)"),
-    "ai_unlock_section": ("# スマホを開いたときの記録（直近14日。ロック解除のたびに答えたもの）\n日付,時刻,そのとき何をしていたか,スマホを開いた理由\n%1$s",
-                          "# Why I opened my phone (last 14 days, answered at each unlock)\ndate,time,what I was doing,why I opened my phone\n%1$s"),
-    "ai_prompt": ("""あなたは生活習慣とコンディション管理にくわしいコーチです。
-以下は、私が毎日スマホで記録している「今日の調子」のデータです（%1$d日分、%2$s 〜 %3$s）。
-このデータをもとに、私が「どういう時に調子がいいのか」を分析してください。
-
-# 記録の項目
-- 調子：その日の総合的な調子（0〜10の自己評価。10が最高）
-- 睡眠時間：前の晩に眠った時間（時間）
-- 睡眠の質・集中度・気分：0〜10の自己評価
-- スマホ(分)：その日にスマホの画面をつけて使っていた時間。解除回数：ロックを解除した回数
-- 朝・昼・夜：食べたもの
-- メモ：運動・出来事・飲んだものなど
-- 空欄は「記録していない」という意味です（0点ではありません）
-
-# 参考：私の目標と習慣
-- 目標：%4$s
-- 習慣：%5$s
-
-# データ（CSV）
-日付,曜日,調子,睡眠時間,睡眠の質,集中度,気分,スマホ(分),解除回数,朝,昼,夜,メモ
-%6$s
-
-# お願いしたいこと
-1. 調子がいい日と悪い日で、何が違うか（睡眠・食事・スマホの使用時間・曜日・メモの出来事など）。できるだけ具体的な数字で示してください
-2. 「こういう時に調子がいい」というパターンを3つまで
-3. 調子を下げていそうな習慣や組み合わせ（スマホを開いた記録があれば、無駄になっていそうな時間帯・理由も）
-4. 明日から試せる、小さく始められる行動を3つ
-5. データが少ない・偏っているなど注意すべき点と、今後追加で記録するとよい項目
-
-# 答え方
-- 最初に結論を3行でまとめ、そのあと詳しく説明してください
-- 日本語で、専門用語を使わずにわかりやすく
-- データから言えることと推測は分けて書いてください
-- 医学的な診断はしないでください""",
-"""You are a coach who knows a lot about daily habits and well-being.
-Below is the "Today" data I log on my phone every day (%1$d days, %2$s to %3$s).
-Based on this data, please analyze when I tend to feel my best.
-
-# Fields
-- overall: how the day went overall (self-rated 0–10, 10 is best)
-- sleep_h: hours slept the night before
-- sleep_quality, focus, mood: self-rated 0–10
-- phone_min: minutes the phone screen was on and in use that day. unlocks: number of unlocks
-- breakfast, lunch, dinner: what I ate
-- notes: exercise, events, drinks, etc.
-- Empty means "not recorded" (not zero)
-
-# For reference: my goals and habits
-- Goals: %4$s
-- Habits: %5$s
-
-# Data (CSV)
-date,weekday,overall,sleep_h,sleep_quality,focus,mood,phone_min,unlocks,breakfast,lunch,dinner,notes
-%6$s
-
-# What I'd like
-1. What differs between good and bad days (sleep, meals, screen time, weekday, events in notes, etc.), with concrete numbers where possible
-2. Up to 3 patterns of "I feel good when..."
-3. Habits or combinations that seem to drag me down (if there are phone-unlock records, also times and reasons that look wasteful)
-4. 3 small actions I can try starting tomorrow
-5. Caveats (little or skewed data, etc.) and items worth recording in the future
-
-# How to answer
-- Start with a 3-line summary, then explain in detail
-- Use plain language without jargon, in the same language as this message
-- Separate what the data shows from guesses
-- Don't give medical diagnoses"""),
 })
 
 S.update({
@@ -377,7 +299,7 @@ S.update({
     "s_lock_need": ("※ アプリを閉じるには、上の「他のアプリの上に重ねて表示」の許可が必要です", "* To close apps, allow \"Display over other apps\" above"),
     "morning": ("朝", "Morning"),
     "night": ("夜", "Night"),
-    "s_home_on_off": ("画面を消したら寿命画面に戻す（次に画面をつけたとき必ず寿命画面から）", "Return to the home screen when the screen turns off"),
+    "s_home_on_off": ("画面を消したらホーム画面に戻す（次に画面をつけたとき必ずホーム画面から）", "Return to the home screen when the screen turns off"),
     "range_on": ("%1$sをオンにする", "Turn on %1$s"),
     "range_start": ("%1$sの開始", "%1$s start"),
     "range_end": ("%1$sの終了", "%1$s end"),

@@ -104,6 +104,8 @@ class MainActivity : ComponentActivity() {
         if (!Guard.hasUsageAccess(this)) Guard.endCurrentSession()
         resumeSignal.intValue++
         Billing.refresh()
+        // 見守りが止まっていた日の使用時間を、スマホ本体の記録で補う
+        Guard.syncFromSystem()
         // 見守りサービスを動かす（すでに動いていれば何もしない）
         runCatching { startForegroundService(Intent(this, GuardService::class.java)) }
     }

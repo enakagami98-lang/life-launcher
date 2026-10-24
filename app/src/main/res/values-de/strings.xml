@@ -20,7 +20,7 @@
     <string name="ask_q2">② Warum du das Handy geöffnet hast</string>
     <string name="ask_other">Nicht dabei? Hier eintippen</string>
     <string name="ask_submit">Speichern und Handy nutzen</string>
-    <string name="ask_hint">Wähle ① und tippe dann auf eine ②-Taste, um sofort zu speichern. Du kannst die Frage auf dem Bildschirm „Heute“ ausschalten.</string>
+    <string name="ask_hint">Wähle ① und tippe dann auf eine ②-Taste, um sofort zu speichern. Du kannst die Frage auf dem Bildschirm „Verfassung“ ausschalten.</string>
     <string name="opt_edit">Auswahl bearbeiten</string>
     <string name="opt_edit_hint">Tippe auf eine Taste, um sie zu entfernen. Unten eintippen und „Hinzufügen“ tippen, um eine neue anzulegen.</string>
     <string name="opt_remove">%1$s entfernen</string>
@@ -172,7 +172,7 @@
     <string name="yd_condition">Verfassung</string>
     <string name="yd_sleep">Schlaf</string>
     <string name="yd_phone">Handy</string>
-    <string name="yd_input_today">Heute eintragen ›</string>
+    <string name="yd_input_today">Verfassung eintragen ›</string>
     <string name="settings">Einstellungen</string>
     <string name="favorites">Favoriten</string>
     <string name="fav_empty">Auf dem Apps-Bildschirm (nach links wischen) eine App gedrückt halten, um sie hinzuzufügen.</string>
@@ -186,9 +186,6 @@
     <string name="ymd">%1$d J. %2$d M. %3$d T.</string>
     <string name="age_now">Alter %1$d</string>
     <string name="lifespan_is">Lebenserwartung %1$d</string>
-    <string name="page_condition">Heute</string>
-    <string name="c_overall">Gesamt</string>
-    <string name="c_overall_hint">Rückblick auf den ganzen Tag</string>
     <string name="c_sleep">Schlafqualität</string>
     <string name="c_sleep_hint">Gut geschlafen?</string>
     <string name="c_focus">Konzentration</string>
@@ -213,7 +210,6 @@
     <string name="st_that_day">Bildschirmzeit an diesem Tag</string>
     <string name="unit_hours">Std.</string>
     <string name="st_unlocks">%1$d Entsperrungen</string>
-    <string name="st_note">Zeit mit eingeschaltetem und entsperrtem Bildschirm (nur gezählt, solange die Überwachung dieser App läuft).</string>
     <string name="this_month">Dieser Monat</string>
     <string name="mc_none">Für diesen Monat noch keine Daten.</string>
     <string name="mc_wait">Sobald Daten vom letzten Monat vorliegen, erscheint hier ein Vergleich.</string>
@@ -231,11 +227,8 @@
     <string name="ul_top">Häufigste Gründe: %1$s</string>
     <string name="tr_title">Was deine guten Tage gemeinsam haben</string>
     <string name="tr_2w">Vor 2 Wochen</string>
-    <string name="tr_wait">Trage 5 Tage ein, um zu sehen, was an guten Tagen anders ist (bisher %1$d).</string>
-    <string name="tr_good">7 oder höher\n(%1$d Tage)</string>
     <string name="tr_other">Andere\n(%1$d Tage)</string>
     <string name="tr_breakfast">Gefrühstückt</string>
-    <string name="tr_note">* Das sind Durchschnittswerte. Für eine genauere Analyse inklusive Mahlzeiten probiere unten „KI fragen“.</string>
     <string name="ai_title">KI fragen</string>
     <string name="ai_desc">Macht aus deinen Einträgen (%1$d Tage) eine Anfrage. Füge sie in ChatGPT oder Claude ein, um zu erfahren, wann es dir am besten geht.</string>
     <string name="ai_copy">Anfrage kopieren</string>
@@ -319,7 +312,7 @@
     <string name="tut6_body">Wird unter „Verbleibende Tage“ angezeigt. Jederzeit über „Anzeige bearbeiten“ änderbar.</string>
     <string name="tut7_title">Alles bereit</string>
     <string name="tut7_body">Wische nach links oder rechts, um die Seite zu wechseln.</string>
-    <string name="tut7_page_left">← Nach rechts wischen: Heute (Verfassung, Schlaf, Bildschirmzeit)</string>
+    <string name="tut7_page_left">← Nach rechts wischen: Verfassung (Verfassung, Schlaf, Bildschirmzeit)</string>
     <string name="tut7_page_top">Start: verbleibende Tage, deine Infos, weiter unten Favoriten</string>
     <string name="tut7_page_right">→ Nach links wischen: Apps, Ziele, Gewohnheiten, Aufgaben</string>
     <string name="tut7_longpress">Halte eine App in der Liste gedrückt, um sie zu Favoriten hinzuzufügen, zu begrenzen oder auszublenden.</string>
@@ -336,4 +329,38 @@
     <string name="pay_switch_home">Zu einer anderen Start-App wechseln</string>
     <string name="pay_cancel_note">Kündigst du während des Testzeitraums, wird nichts berechnet. Kündigen jederzeit in Google Play → Zahlungen und Abos.</string>
     <string name="pay_manage">Abo verwalten (kündigen, Zahlungsmethode)</string>
+    <string name="this_month_so_far">Diesen Monat (bis gestern)</string>
+    <string name="c_bed">Ins Bett gegangen (gestern Abend)</string>
+    <string name="c_wake">Aufgestanden (heute Morgen)</string>
+    <string name="c_time_clear">Löschen</string>
+    <string name="c_bedphone">Handy in den 30 Min. vor dem Schlafen: %1$s</string>
+    <string name="c_bedphone_none">Handy in den 30 Min. vor dem Schlafen: nicht benutzt</string>
+    <string name="c_bedphone_unknown">Handy in den 30 Min. vor dem Schlafen: unbekannt (benötigt „Zugriff auf Nutzungsdaten“; das Handy speichert seine Daten etwa eine Woche)</string>
+    <string name="c_alcohol">Alkohol</string>
+    <string name="alc_no">Nein</string>
+    <string name="alc_yes">Ja</string>
+    <string name="tr_alcohol">Alkohol getrunken</string>
+    <string name="tr_bedphone">Handy vor dem Schlafen</string>
+    <string name="color_cream">Hellgelb</string>
+    <string name="color_indigo">Indigo</string>
+    <string name="pie_title">Heutige Zeit nach App</string>
+    <string name="pie_other">Sonstige</string>
+    <string name="pie_need">Um die Zeit pro App zu sehen, erlaube „Zugriff auf Nutzungsdaten“.</string>
+    <string name="pie_none">Heute wurde noch keine App 1 Minute oder länger benutzt.</string>
+    <string name="pie_note">Berechnet aus den Nutzungsdaten des Handys (dieselben Daten wie „Digital Wellbeing“). Die Zeit auf diesem Startbildschirm ist nicht enthalten.</string>
+    <string name="goal_done">Geschafft</string>
+    <string name="goal_done_btn">Geschafft!</string>
+    <string name="goal_undo">Als nicht geschafft markieren</string>
+    <string name="goal_edit_btn">Ziel bearbeiten</string>
+    <string name="congrats_title">Glückwunsch!</string>
+    <string name="congrats_body">Du hast dein heutiges Ziel erreicht. Super gemacht!</string>
+    <string name="page_condition">Verfassung</string>
+    <string name="c_overall">Körper</string>
+    <string name="c_overall_hint">Wie fit sich dein Körper anfühlte</string>
+    <string name="st_note">Zeit mit eingeschaltetem und entsperrtem Bildschirm. Mit „Zugriff auf Nutzungsdaten“ wird sie auch aus den Daten des Handys ergänzt (letzte 7 Tage).</string>
+    <string name="tr_wait">Trage 5 Tage lang Körper, Konzentration und Stimmung ein, um zu sehen, was deine guten Tage ausmacht (bisher %1$d).</string>
+    <string name="tr_good">Schnitt 7 oder mehr\n(%1$d Tage)</string>
+    <string name="tr_note">* Gute Tage werden nach dem Schnitt aus Körper, Konzentration und Stimmung getrennt. Für eine Analyse inkl. Mahlzeiten probiere unten „KI fragen“.</string>
+    <string name="ai_unlock_section"># Warum ich mein Handy geöffnet habe (letzte 14 Tage, bei jedem Entsperren beantwortet)\nDatum,Uhrzeit,was ich gerade tat,warum ich das Handy geöffnet habe\n%1$s</string>
+    <string name="ai_prompt">Du bist ein Coach, der sich mit Alltagsgewohnheiten und Wohlbefinden sehr gut auskennt.\nUnten stehen die Daten, die ich jeden Tag auf meinem Handy festhalte (%1$d Tage, %2$s bis %3$s). Bitte analysiere, wann ich mich am besten fühle.\n\n# Felder\n- Körper, Konzentration, Stimmung, Schlafqualität: Selbsteinschätzung 0–10 (10 ist am besten). Beurteile gute Tage nach dem Schnitt aus Körper, Konzentration und Stimmung\n- Schlaf_h: Stunden Schlaf in der Nacht davor. Zubettgehen, Aufstehen: wann ich am Abend davor ins Bett ging und an dem Morgen aufstand\n- Handy_vor_Schlaf: Minuten Handynutzung in den 30 Minuten vor dem Schlafengehen\n- Handy_min: Minuten mit eingeschaltetem, benutztem Bildschirm an dem Tag. Entsperrungen: Anzahl der Entsperrungen\n- Alkohol: 1 = Alkohol getrunken, 0 = keiner\n- Ziel, erreicht: das Tagesziel und ob ich es erreicht habe (1 = erreicht)\n- Frühstück, Mittagessen, Abendessen, Notizen: was ich gegessen habe, Sport, Ereignisse usw.\n- Leer bedeutet \"nicht erfasst\" (nicht null)\n\n# Zur Info: meine Ziele und Gewohnheiten\n- Ziele: %4$s\n- Gewohnheiten: %5$s\n\n# Daten (CSV)\nDatum,Wochentag,Körper,Konzentration,Stimmung,Schlafqualität,Schlaf_h,Zubettgehen,Aufstehen,Handy_vor_Schlaf,Handy_min,Entsperrungen,Alkohol,Ziel,erreicht,Frühstück,Mittagessen,Abendessen,Notizen\n%6$s\n\n# Was ich mir wünsche\n1. Was unterscheidet gute von schlechten Tagen (Schlaf, Zubettgehzeit, Handy vor dem Schlafen, Alkohol, Mahlzeiten, Bildschirmzeit, Wochentag usw.), möglichst mit konkreten Zahlen\n2. Bis zu 3 Muster nach dem Motto \"Mir geht es gut, wenn...\"\n3. Gewohnheiten oder Kombinationen, die mich herunterzuziehen scheinen (falls es Entsperr-Daten gibt, auch Zeiten und Gründe, die nach Zeitverschwendung aussehen)\n4. 3 kleine Schritte, die ich ab morgen ausprobieren kann\n5. Einschränkungen (wenige oder einseitige Daten usw.) und Dinge, die es sich künftig zu erfassen lohnt\n\n# Wie du antworten sollst\n- Beginne mit einer Zusammenfassung in 3 Zeilen und erkläre dann ausführlich\n- Antworte auf %7$s, in einfacher Sprache ohne Fachbegriffe\n- Trenne, was die Daten zeigen, von Vermutungen\n- Stelle keine medizinische Diagnose</string>
 </resources>
