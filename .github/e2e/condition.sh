@@ -10,7 +10,8 @@ snap() { N=$((N+1)); f=$(printf "%02d_%s" $N "$1"); adb exec-out screencap -p > 
 key() { adb shell input keyevent "$@"; sleep 2; }
 next_page() { adb shell input swipe 950 1200 150 1200 400; sleep 2; }
 prev_page() { adb shell input swipe 150 1200 950 1200 400; sleep 2; }
-favs() { adb shell input swipe 540 1900 540 500 400; sleep 2; }
+# トップの部品が増えて長くなったので、2回スクロールしてお気に入りまで行く
+favs() { for i in 1 2; do adb shell input swipe 540 1900 540 500 400; sleep 1; done; sleep 1; }
 ok() { log "PASS | $1"; }
 ng() { log "FAIL | $1"; }
 expect_text() { if $UI hasp "$2" >/dev/null; then ok "$1 「$2」あり"; else ng "$1 「$2」なし / 画面の文字: $($UI texts | paste -sd' ' | cut -c1-150)"; fi; }
@@ -55,9 +56,11 @@ key KEYCODE_HOME
 log "== 4. 寿命から右へスワイプで身体の調子"
 prev_page; snap condition
 expect_text "身体の調子の画面" "身体の調子"
+see_text() { if $UI see "$2" >/dev/null; then ok "$1 「$2」あり"; else ng "$1 「$2」なし"; fi; }
 expect_text "睡眠の質" "睡眠の質"
-expect_text "集中度" "集中度"
-expect_text "食事" "朝ごはん"
+see_text "集中度" "集中度"
+see_text "食事" "朝ごはん"
+for i in 1 2 3 4 5; do adb shell input swipe 540 600 540 1900 300; sleep 1; done
 $UI tap "8" >/dev/null; sleep 1
 $UI tap "＋" >/dev/null; sleep 1; $UI tap "＋" >/dev/null; sleep 1; snap condition_input
 expect_text "睡眠時間の入力" "7.5時間"

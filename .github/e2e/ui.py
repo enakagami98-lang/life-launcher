@@ -78,6 +78,11 @@ elif cmd == "tapraw":
     if n is None:
         print(f"NOTFOUND: {text}"); sys.exit(1)
     x, y = center(n); adb("shell", "input", "tap", str(x), str(y)); print(f"FOUND: {text}")
+elif cmd == "see":
+    # 画面の外ならスクロールして探す（押さない）
+    pos = visible_center(text, exact=False)
+    print(("FOUND: " if pos is not None else "NOTFOUND: ") + text)
+    sys.exit(0 if pos is not None else 1)
 elif cmd in ("has", "hasp"):
     n = find(text, exact=(cmd == "has"))
     print(("FOUND: " if n is not None else "NOTFOUND: ") + text)
