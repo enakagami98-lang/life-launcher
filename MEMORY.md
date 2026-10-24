@@ -99,3 +99,12 @@
 - 今日の目標：Guard.needGoal()＝ 目標オン・夜のおやすみ時間オン・今は使えない時間ではない・今日の夜の時間が終わった（日付をまたぐなら昨日の曜日）・今日の目標が空。true の間 MainActivity は GoalScreen、GuardService は他アプリから戻す。onUnlock では「今何してる？」より優先
 - トップの部品に "goal"（今日の目標）。設定の「使えない時間帯」にオン/オフ（最初はオン）
 - e2e：`-f only=count`（5/5）、`-f only=goal`（14/14）。e2e の学び：日本語表示だと時計アプリの名前は「時計」、通知の中身は `dumpsys notification --noredact` でないと見えない
+
+## 2026-10-24 使い方（チュートリアル）（v1.0.44）
+- TutorialScreen.kt：7ステップ（ようこそ→寿命→ホームアプリ→お気に入り→使いすぎ防止→トップの情報→使い方）。説明を読みながらその場で設定し、「次へ」で保存
+- 自動で出るのは Store.tutorialDone が false かつ誕生日が未設定のとき（＝入れたばかり）。設定の「使い方をもう一度見る」からも開ける
+- ホームアプリは RoleManager.createRequestRoleIntent(ROLE_HOME) で直接選ばせる（Android 10+）。isDefaultHome() で設定済みか判定
+- 文字は i18n/tutorial.py（KEYS と言語ごとのリスト）。build.py が base.py と合わせて読む
+- e2e：`-f only=tutorial`。新しく入れると使い方が出るので、ほかのテストは日本語にした直後に「スキップ」を押す
+- e2e の学び：画面の下端（y>2150）にある「次へ」などは ui.py の tap では押せない → `ui.py tapraw` を使う
+- 公開に向けて：次は課金（Stripe 希望。Google Play の課金ルールの確認が必要）、その次にセキュリティの相談
