@@ -16,7 +16,7 @@ expect_text() { if $UI hasp "$2" >/dev/null; then ok "$1 「$2」あり"; else n
 
 adb install -r LifeLauncher.apk >/dev/null && log "インストール成功"
 adb shell cmd locale set-app-locales com.enakagami.lifelauncher --locales ja-JP >/dev/null 2>&1  # 仮想スマホは英語なので、このアプリだけ日本語に
-sleep 3; adb shell input keyevent KEYCODE_HOME; sleep 3; for i in 1 2 3 4 5; do python3 .github/e2e/ui.py has "スキップ" >/dev/null || break; python3 .github/e2e/ui.py tapraw "スキップ" >/dev/null; sleep 3; done  # 入れた直後の使い方を閉じる（出なくなるまで）
+sleep 3; adb shell input keyevent KEYCODE_HOME; sleep 3; bash .github/e2e/skip_tutorial.sh  # 入れた直後の使い方を閉じる
 adb shell cmd package set-home-activity $PKG/.MainActivity >/dev/null
 adb shell appops set $PKG SYSTEM_ALERT_WINDOW allow
 log "使用状況へのアクセス: $(adb shell appops get $PKG GET_USAGE_STATS | tr -d '\r')（許可しない）"

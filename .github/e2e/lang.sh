@@ -18,7 +18,7 @@ adb install -r LifeLauncher.apk >/dev/null && log "インストール成功"
 adb shell cmd package set-home-activity $PKG/.MainActivity >/dev/null
 adb shell appops set $PKG SYSTEM_ALERT_WINDOW allow
 key KEYCODE_HOME; sleep 3
-lang ja-JP; for i in 1 2 3 4 5; do $UI has "スキップ" >/dev/null || break; $UI tapraw "スキップ" >/dev/null; sleep 3; done  # 入れた直後の使い方を閉じる
+lang ja-JP; bash .github/e2e/skip_tutorial.sh  # 入れた直後の使い方を閉じる
 
 # 言語タグ  画面に出るはずの文字（トップの「まずは誕生日と寿命を設定しましょう」に当たるもの）
 # adb が標準入力を読んでしまうので、一覧は 3 番から読む

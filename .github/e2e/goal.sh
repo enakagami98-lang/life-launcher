@@ -23,7 +23,7 @@ adb shell cmd package set-home-activity $PKG/.MainActivity >/dev/null
 adb shell appops set $PKG SYSTEM_ALERT_WINDOW allow
 key KEYCODE_HOME; sleep 3
 lang ja-JP
-for i in 1 2 3 4 5; do $UI has "スキップ" >/dev/null || break; $UI tapraw "スキップ" >/dev/null; sleep 3; done  # 入れた直後の使い方を閉じる
+bash .github/e2e/skip_tutorial.sh  # 入れた直後の使い方を閉じる
 
 log "== 1. 夜のおやすみ時間を「さっき終わった」時間にする"
 H=$(adb shell date +%H | sed "s/[^0-9]//g"); S=$(( (10#$H + 22) % 24 ))
