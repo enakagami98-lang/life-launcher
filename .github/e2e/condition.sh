@@ -21,6 +21,7 @@ expect_order() { o=$(order Clock Chrome Settings); if [ "$o" = "$2" ]; then ok "
 
 adb install -r LifeLauncher.apk >/dev/null && log "インストール成功"
 adb shell cmd locale set-app-locales com.enakagami.lifelauncher --locales ja-JP >/dev/null 2>&1  # 仮想スマホは英語なので、このアプリだけ日本語に
+sleep 3; adb shell input keyevent KEYCODE_HOME; sleep 2; python3 .github/e2e/ui.py tap "スキップ" >/dev/null; sleep 2  # 入れた直後の使い方を閉じる
 adb shell cmd package set-home-activity $PKG/.MainActivity >/dev/null
 key KEYCODE_HOME; sleep 3
 

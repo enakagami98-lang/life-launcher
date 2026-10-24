@@ -67,6 +67,15 @@ class Store(context: Context) {
         addAll(prefs.getStringSet("hidden", emptySet()).orEmpty().sorted())
     }
 
+    /** 使い方（チュートリアル）を最後まで見たか、スキップしたか */
+    var tutorialDone by mutableStateOf(prefs.getBoolean("tutorialDone", false))
+        private set
+
+    fun finishTutorial() {
+        tutorialDone = true
+        prefs.edit().putBoolean("tutorialDone", true).apply()
+    }
+
     fun saveProfile(birth: LocalDate, lifespan: Int) {
         this.birth = birth
         this.lifespan = lifespan

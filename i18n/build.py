@@ -58,7 +58,11 @@ def write(folder, entries):
 
 
 def main():
-    base = load("base").S
+    base = dict(load("base").S)
+    # チュートリアルの文字は tutorial.py に言語ごとの並びで入っている
+    tut = load("tutorial")
+    for i, k in enumerate(tut.KEYS):
+        base[k] = (tut.L["ja"][i], tut.L["en"][i])
     ok = True
     write("values", {"app_name": "Loosen", **{k: v[1] for k, v in base.items()}})
     write("values-ja", {k: v[0] for k, v in base.items()})
@@ -68,7 +72,10 @@ def main():
     for code, folder in LANGS.items():
         if not (ROOT / f"tr_{code}.py").exists():
             continue
-        t = load(f"tr_{code}").T
+        t = dict(load(f"tr_{code}").T)
+        if code in tut.L:
+            assert len(tut.L[code]) == len(tut.KEYS), f"tutorial.py の {code} の数が合わない"
+            t.update(dict(zip(tut.KEYS, tut.L[code])))
         out = {}
         for k, (_, en) in base.items():
             v = t.get(k)

@@ -40,7 +40,7 @@ import androidx.compose.ui.window.DialogProperties
 import java.time.LocalDate
 
 @Composable
-fun SettingsDialog(store: Store, apps: List<AppInfo>, onDismiss: () -> Unit) {
+fun SettingsDialog(store: Store, apps: List<AppInfo>, onDismiss: () -> Unit, onTutorial: () -> Unit = {}) {
     val context = LocalContext.current
     val b = store.birth
     var year by remember { mutableStateOf(b?.year?.toString() ?: "") }
@@ -94,6 +94,15 @@ fun SettingsDialog(store: Store, apps: List<AppInfo>, onDismiss: () -> Unit) {
                 ColorSection(store)
                 ReminderSection(apps)
                 LockSection()
+
+                // 使い方をもう一度
+                Column(Modifier.padding(horizontal = 20.dp, vertical = 8.dp).fillMaxWidth()) {
+                    Button(
+                        onClick = onTutorial,
+                        modifier = Modifier.fillMaxWidth().height(50.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = CardBg, contentColor = Ink),
+                    ) { Text(stringResource(R.string.s_tutorial), fontWeight = FontWeight.Bold) }
+                }
 
                 Section(stringResource(R.string.s_home))
                 Column(Modifier.padding(horizontal = 20.dp).fillMaxWidth().card().padding(20.dp)) {

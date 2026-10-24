@@ -21,6 +21,7 @@ adb shell cmd package set-home-activity $PKG/.MainActivity >/dev/null
 adb shell appops set $PKG SYSTEM_ALERT_WINDOW allow
 key KEYCODE_HOME; sleep 3
 lang ja-JP
+$UI tap "スキップ" >/dev/null; sleep 2  # 入れた直後の使い方を閉じる
 
 log "== 1. 名前が Loosen"
 adb shell dumpsys notification --noredact | grep -q "Loosen" && ok "通知の名前が Loosen" || ng "通知に Loosen が無い"

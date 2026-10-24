@@ -148,6 +148,8 @@ fun LauncherApp(
     var query by remember { mutableStateOf("") }
     // 設定画面は、許可を出しに別の画面へ行って戻っても閉じないよう、ここで管理する
     var showSettings by remember { mutableStateOf(false) }
+    // 使い方：入れたばかり（まだ誕生日も無い）のときは自動で。設定の「使い方をもう一度見る」からも
+    var showTutorial by remember { mutableStateOf(!store.tutorialDone && store.birth == null) }
     LaunchedEffect(homePress) { showSettings = false }
 
     suspend fun goHome() {
@@ -203,6 +205,8 @@ fun LauncherApp(
             Surface(Modifier.fillMaxSize(), color = palette.bg) {
                 if (lock != null) {
                     LockScreen(stringResource(lock.first), lock.second, now.toLocalTime())
+                } else if (showTutorial) {
+                    TutorialScreen(store, apps, onFinish = { store.finishTutorial(); showTutorial = false })
                 } else if (Guard.needGoal(now)) {
                     // 夜のおやすみ時間のあと最初：今日の目標を決めるまでホーム画面の代わりに出す
                     GoalScreen()
@@ -229,7 +233,8 @@ fun LauncherApp(
                     }
                 }
                 if (showSettings) {
-                    SettingsDialog(store, apps, onDismiss = { showSettings = false })
+                    SettingsDialog(store, apps, onDismiss = { showSettings = false },
+                        onTutorial = { showSettings = false; showTutorial = true })
                 }
                 guardRequest?.let { req ->
                     val label = apps.firstOrNull { it.pkg == req.pkg }?.label ?: req.pkg
