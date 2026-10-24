@@ -35,6 +35,8 @@ jobs:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           VERSION_CODE: ${{ github.run_number }}
+          # Google Play の署名鍵の指紋（Play Console で確認してリポジトリの変数に登録する。秘密ではない）
+          PLAY_CERT_SHA256: ${{ vars.PLAY_CERT_SHA256 }}
 
       - name: リリースに公開
         run: |

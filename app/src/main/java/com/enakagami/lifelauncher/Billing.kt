@@ -45,15 +45,19 @@ object Billing : PurchasesUpdatedListener {
 
     /** 機能を止めるか（購入画面を出すか） */
     val locked: Boolean
-        get() = BuildConfig.PAYWALL && when (state) {
+        get() = BuildConfig.PAYWALL && (!genuine || when (state) {
             State.ACTIVE -> false
             // 確認中・Play につながらないときは、最近まで有効だったなら止めない
             State.CHECKING, State.UNAVAILABLE -> System.currentTimeMillis() - lastActiveAt > OFFLINE_GRACE_MS
             State.NONE -> true
-        }
+        })
+
+    /** 本物の鍵で署名されているか。改造して署名し直したアプリでは、購入済みでも機能を止める */
+    private var genuine = true
 
     fun init(context: Context) {
         if (!BuildConfig.PAYWALL || client != null) return
+        genuine = Integrity.genuine(context)
         prefs = context.applicationContext.getSharedPreferences("billing", Context.MODE_PRIVATE)
         lastActiveAt = prefs.getLong("lastActiveAt", 0)
         client = BillingClient.newBuilder(context.applicationContext)

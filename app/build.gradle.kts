@@ -4,6 +4,16 @@ plugins {
     id("org.jetbrains.kotlin.plugin.compose")
 }
 
+// 署名鍵の指紋（SHA-256）。改造して別の鍵で署名し直したアプリを見分けるのに使う
+fun certSha256(): String {
+    val ks = System.getenv("KEYSTORE_PATH") ?: return ""
+    val store = java.security.KeyStore.getInstance("PKCS12")
+    file(ks).inputStream().use { store.load(it, System.getenv("KEYSTORE_PASSWORD").toCharArray()) }
+    val cert = store.getCertificate(System.getenv("KEY_ALIAS")) ?: return ""
+    return java.security.MessageDigest.getInstance("SHA-256").digest(cert.encoded)
+        .joinToString("") { "%02x".format(it) }
+}
+
 android {
     namespace = "com.enakagami.lifelauncher"
     // Google Play は 2026/8/31 から新しいアプリに API 36 を求める
@@ -16,6 +26,11 @@ android {
         // GitHub Actions の実行回数をバージョン番号にする（上書きインストールに必要）
         versionCode = (System.getenv("VERSION_CODE") ?: "1").toInt()
         versionName = "1.0.$versionCode"
+        // 本物の署名鍵の指紋。Google Play の鍵（Play Console の「アプリの署名」に出る SHA-256）が
+        // GitHub の変数 PLAY_CERT_SHA256 に入っているときだけ確認する（入っていないと全員止まるため）
+        val play = (System.getenv("PLAY_CERT_SHA256") ?: "").replace(":", "").trim().lowercase()
+        val certs = if (play.isEmpty()) "" else listOf(certSha256(), play).filter { it.isNotEmpty() }.joinToString(",")
+        buildConfigField("String", "CERTS", "\"$certs\"")
     }
 
     signingConfigs {
@@ -48,7 +63,10 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            // 中身を読みにくくし、使っていない部分を消す（盗用・改造対策とサイズ削減）
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             signingConfig = signingConfigs.getByName("release")
         }
     }
