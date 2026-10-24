@@ -117,3 +117,12 @@
 - compileSdk/targetSdk 36（2026-08-31以降の新規アプリは API 36 が必須）。AGP 8.9.1、Gradle 8.11.1
 - Play Console の手順は Obsidian「Loosen_GooglePlay公開と課金の手順.md」
 - e2e：`-f only=paywall`（10/10）。全体テストは使い方のスキップを set-home-activity の後にしないと止まる。全体（Android 15）67/68 合格
+
+## 2026-10-24 セキュリティ対策（v1.0.53）
+- R8 を有効に（isMinifyEnabled + isShrinkResources）。APK 8.5MB → 2.5MB。proguard-rules.pro で Log.d/v/i を消す（count.sh の logcat 表示は出なくなるが合否には使っていない）
+- Integrity.kt：署名の指紋（SHA-256）を確認し、違えば Billing.locked。指紋は build.gradle.kts の certSha256()（release.p12 から自動）＋ GitHub 変数 `PLAY_CERT_SHA256`（Play Console「アプリの署名」の値）
+- **PLAY_CERT_SHA256 が空なら確認しない**（Play から入れたアプリは Google の鍵で署名されるので、空のまま確認すると全員止まる）
+- build.gradle.kts で java.security.* を直接書くと `java` 拡張とぶつかってエラー → 先頭で import する
+- リポジトリは Public だった（フォーク0）。非公開化はユーザーが行う。非公開だと Actions は月2000分まで
+- e2e：paywall 10/10、top 39/39、全体（Android 15）67/68（残りは既知のタイミング）。1回目は入力抜けで 64/68
+- 詳細は Obsidian「Loosen_セキュリティ対策.md」
