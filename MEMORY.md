@@ -108,3 +108,12 @@
 - e2e：`-f only=tutorial`。新しく入れると使い方が出るので、ほかのテストは日本語にした直後に「スキップ」を押す
 - e2e の学び：画面の下端（y>2150）にある「次へ」などは ui.py の tap では押せない → `ui.py tapraw` を使う
 - 公開に向けて：次は課金（Stripe 希望。Google Play の課金ルールの確認が必要）、その次にセキュリティの相談
+
+## 2026-10-24 課金（Google Play 定期購入）（v1.0.47）
+- 版を2つに分けた（productFlavors）：`github`＝com.enakagami.lifelauncher（課金なし、LifeLauncher.apk）、`play`＝com.enakagami.loosen（課金あり、Loosen-play.aab/.apk）。BuildConfig.PAYWALL で切り替え
+- Billing.kt：定期購入 `loosen_yearly`（基本プラン yearly 20ドル、特典 free-trial 3日は Play Console 側で設定）。Billing Library 8.0.0。購入後は acknowledge 必須（3日以内にしないと自動返金）
+- 未購入（3日の無料期間終了後）は PaywallScreen：購入カード＋普通のアプリ一覧。Loosen の機能（使いすぎ防止・夜のロック・質問・目標）は止まるが、スマホ自体は使える（スマホを使えなくするのは Play のポリシー違反）
+- 通信できないときは最後に「購入中」を確認してから7日間は使える
+- compileSdk/targetSdk 36（2026-08-31以降の新規アプリは API 36 が必須）。AGP 8.9.1、Gradle 8.11.1
+- Play Console の手順は Obsidian「Loosen_GooglePlay公開と課金の手順.md」
+- e2e：`-f only=paywall`（10/10）。全体テストは使い方のスキップを set-home-activity の後にしないと止まる。全体（Android 15）67/68 合格
