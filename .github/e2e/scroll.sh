@@ -9,8 +9,8 @@ next_page() { adb shell input swipe 950 1200 150 1200 300; sleep 1.2; }
 prev_page() { adb shell input swipe 150 1200 950 1200 300; sleep 1.2; }
 adb install -r LifeLauncher.apk >/dev/null && log "インストール: $(adb shell dumpsys package $PKG | grep -m1 versionName | tr -d ' ')"
 adb shell cmd locale set-app-locales com.enakagami.lifelauncher --locales ja-JP >/dev/null 2>&1  # 仮想スマホは英語なので、このアプリだけ日本語に
-sleep 3; adb shell input keyevent KEYCODE_HOME; sleep 3; bash .github/e2e/skip_tutorial.sh  # 入れた直後の使い方を閉じる
 adb shell cmd package set-home-activity $PKG/.MainActivity >/dev/null
+sleep 3; adb shell input keyevent KEYCODE_HOME; sleep 3; bash .github/e2e/skip_tutorial.sh  # 入れた直後の使い方を閉じる
 key KEYCODE_HOME
 # お気に入りにChromeを登録
 sleep 5; next_page; sleep 3; $UI long "Settings" >/dev/null; sleep 1; $UI tap "お気に入りに追加" >/dev/null; sleep 1; key KEYCODE_HOME

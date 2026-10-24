@@ -28,8 +28,8 @@ add_task() { lang en-US; to_tasks_en; $UI tap "Add" >/dev/null; sleep 2; $UI tap
 lang() { adb shell cmd locale set-app-locales $PKG --locales $1 >/dev/null 2>&1; sleep 3; adb shell input keyevent KEYCODE_HOME; sleep 3; }
 adb install -r LifeLauncher.apk >/dev/null && log "インストール成功"
 adb shell cmd locale set-app-locales com.enakagami.lifelauncher --locales ja-JP >/dev/null 2>&1  # 仮想スマホは英語なので、このアプリだけ日本語に
-sleep 3; adb shell input keyevent KEYCODE_HOME; sleep 3; bash .github/e2e/skip_tutorial.sh  # 入れた直後の使い方を閉じる
 adb shell cmd package set-home-activity $PKG/.MainActivity >/dev/null
+sleep 3; adb shell input keyevent KEYCODE_HOME; sleep 3; bash .github/e2e/skip_tutorial.sh  # 入れた直後の使い方を閉じる
 adb shell appops set $PKG SYSTEM_ALERT_WINDOW allow
 key KEYCODE_HOME; sleep 3
 
