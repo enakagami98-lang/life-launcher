@@ -45,7 +45,8 @@ object Guard {
 
     /** パッケージ名 → 1日に使ってよい分数 */
     val limits = mutableStateMapOf<String, Int>()
-    var waitSec by mutableIntStateOf(10)
+    // 開く前の待ち時間。最初は30秒（退屈な30秒で「やっぱりやめよう」と思ってもらう）
+    var waitSec by mutableIntStateOf(30)
     var floatingBar by mutableStateOf(true)
     var homeOnScreenOff by mutableStateOf(true)
     var morning by mutableStateOf(LockRange(false, 5 * 60, 7 * 60, (1..7).toSet()))
@@ -77,7 +78,7 @@ object Guard {
         prefs = context.applicationContext.getSharedPreferences("guard", Context.MODE_PRIVATE)
         appContext = context.applicationContext
         JSONObject(prefs.getString("limits", "{}")!!).let { o -> o.keys().forEach { limits[it] = o.getInt(it) } }
-        waitSec = prefs.getInt("waitSec", 10)
+        waitSec = prefs.getInt("waitSec", 30)
         floatingBar = prefs.getBoolean("floatingBar", true)
         homeOnScreenOff = prefs.getBoolean("homeOnScreenOff", true)
         prefs.getString("morning", null)?.let { morning = parseRange(it) }

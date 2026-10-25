@@ -45,7 +45,7 @@ key KEYCODE_BACK; key KEYCODE_HOME
 log "== 2. 簡易モード：ホームから開くと待ち画面"
 next_page; sleep 1; $UI tap "Chrome" >/dev/null; sleep 3; snap wait_dialog
 expect_text "待ち画面" "Chromeを本当に開きますか？"
-sleep 9; $UI tap "5" >/dev/null; T0=$(date +%s)
+sleep 30; $UI tap "5" >/dev/null; T0=$(date +%s)  # 待ち時間は最初30秒
 PILL=0; BAR=0
 for i in $(seq 1 10); do W=$(adb shell dumpsys window windows); echo "$W" | grep -q LifeLauncherPill && PILL=1; echo "$W" | grep -q LifeLauncherBar && BAR=1; [ $i = 3 ] && snap chrome_open; sleep 1; done
 expect_app "Chromeが開く" com.android.chrome
