@@ -21,6 +21,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
@@ -40,6 +41,8 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.StrokeJoin
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
+import androidx.core.view.WindowCompat
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -181,6 +184,15 @@ private val Moon = Color(0xFFF2B84B)
 @Composable
 private fun NightLockScreen(name: String, until: String) {
     val context = LocalContext.current
+    // 夜空の上では、時計や電池のアイコンを白にする（この画面を閉じたら元に戻す）
+    val view = LocalView.current
+    DisposableEffect(Unit) {
+        val window = (view.context as? android.app.Activity)?.window
+        val bars = window?.let { WindowCompat.getInsetsController(it, view) }
+        val before = bars?.isAppearanceLightStatusBars
+        bars?.isAppearanceLightStatusBars = false
+        onDispose { before?.let { bars.isAppearanceLightStatusBars = it } }
+    }
     // 「%1$s まではスマホを使えません」を、時刻の前と後ろに分けて、時刻だけ大きく出す（どの言語でも同じ文字を使う）
     val parts = stringResource(R.string.lock_until, "\u0000").split("\u0000")
     val time = until.removePrefix("0")
@@ -206,7 +218,7 @@ private fun NightLockScreen(name: String, until: String) {
                 Text(parts[1].trim(), color = NightText.copy(alpha = 0.8f), fontSize = 16.sp, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center)
             }
         }
-        Box(Modifier.align(Alignment.BottomCenter).padding(bottom = 56.dp)) {
+        Box(Modifier.align(Alignment.BottomCenter).padding(bottom = 120.dp)) {
             CallButton(NightText.copy(alpha = 0.85f)) { Guard.allowUntil = System.currentTimeMillis() + 10 * 60_000; dial(context) }
         }
     }
