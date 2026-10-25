@@ -210,7 +210,7 @@ fun LauncherApp(
         MaterialTheme(colorScheme = scheme) {
             Surface(Modifier.fillMaxSize(), color = palette.bg) {
                 if (lock != null && !Billing.locked) {
-                    LockScreen(stringResource(lock.first), lock.second, now.toLocalTime())
+                    LockScreen(stringResource(lock.first), lock.second, now.toLocalTime(), night = lock.first == R.string.lock_night)
                 } else if (showTutorial) {
                     TutorialScreen(store, apps, onFinish = { store.finishTutorial(); showTutorial = false })
                 } else if (Billing.locked) {

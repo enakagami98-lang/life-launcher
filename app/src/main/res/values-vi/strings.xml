@@ -358,7 +358,7 @@
     <string name="page_condition">Thể trạng</string>
     <string name="c_overall">Cơ thể</string>
     <string name="c_overall_hint">Cơ thể khỏe khoắn đến mức nào</string>
-    <string name="st_note">Thời gian màn hình bật và đã mở khóa. Nếu cho phép “Quyền truy cập dữ liệu sử dụng”, sẽ bổ sung bằng dữ liệu của điện thoại (7 ngày gần nhất).</string>
+    <string name="st_note">Tổng thời gian dùng ứng dụng, theo dữ liệu của chính điện thoại (tính giống biểu đồ; không tính thời gian trên màn hình chính này). Nếu không có “Quyền truy cập dữ liệu sử dụng”, sẽ tính thời gian màn hình bật và đã mở khóa.</string>
     <string name="tr_wait">Ghi cơ thể, tập trung và tâm trạng trong 5 ngày để xem ngày tốt khác gì (hiện có %1$d ngày).</string>
     <string name="tr_good">TB từ 7 trở lên\n(%1$d ngày)</string>
     <string name="tr_note">* Ngày tốt được chia theo điểm trung bình của cơ thể, tập trung và tâm trạng. Để phân tích cả bữa ăn, hãy thử “Hỏi AI” bên dưới.</string>

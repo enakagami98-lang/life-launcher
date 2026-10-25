@@ -356,7 +356,7 @@
     <string name="page_condition">Forma fisica</string>
     <string name="c_overall">Corpo</string>
     <string name="c_overall_hint">Quanta energia aveva il tuo corpo</string>
-    <string name="st_note">Tempo con lo schermo acceso e sbloccato. Se consenti “Accesso ai dati di utilizzo”, viene completato anche con i dati del telefono (ultimi 7 giorni).</string>
+    <string name="st_note">Tempo totale trascorso nelle app, dai dati del telefono (calcolato come nel grafico; il tempo su questa schermata Home non è incluso). Senza “Accesso ai dati di utilizzo”, si conta il tempo con lo schermo acceso e sbloccato.</string>
     <string name="tr_wait">Registra corpo, concentrazione e umore per 5 giorni per vedere cosa cambia nei giorni buoni (finora %1$d).</string>
     <string name="tr_good">Media 7 o più\n(%1$d giorni)</string>
     <string name="tr_note">* I giorni buoni sono separati in base alla media di corpo, concentrazione e umore. Per un\'analisi che includa i pasti, prova “Chiedi all\'IA” qui sotto.</string>

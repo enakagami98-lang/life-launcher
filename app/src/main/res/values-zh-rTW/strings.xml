@@ -361,7 +361,7 @@
     <string name="page_condition">身體狀態</string>
     <string name="c_overall">身體狀態</string>
     <string name="c_overall_hint">身體有多有精神、是否容易累</string>
-    <string name="st_note">螢幕開啟且已解鎖的時間。若允許「使用情形存取權」，也會用手機本身的紀錄（最近一週）補足。</string>
+    <string name="st_note">使用各應用程式的時間總和（來自手機本身的紀錄，與圓餅圖的計算方式相同，不包含本主畫面的時間）。沒有「使用情形存取權」時，以螢幕開啟並解鎖的時間計算。</string>
     <string name="tr_wait">記錄 5 天的身體狀態、專注度和心情後，這裡會顯示狀態好的日子有什麼不同（目前 %1$d 天）。</string>
     <string name="tr_good">平均 7 以上\n(%1$d 天)</string>
     <string name="tr_note">※ 依身體狀態、專注度和心情的平均分區分狀態好的日子。想連飲食內容一起分析，推薦使用下方的「請 AI 分析」。</string>

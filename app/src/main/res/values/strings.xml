@@ -362,7 +362,7 @@
     <string name="page_condition">Condition</string>
     <string name="c_overall">Body</string>
     <string name="c_overall_hint">How energetic you felt</string>
-    <string name="st_note">Time with the screen on and unlocked. With “Usage access” allowed, it\'s also filled in from your phone\'s records (last 7 days).</string>
+    <string name="st_note">Total time spent in apps, from your phone\'s own records (counted the same way as the chart; time on this home screen isn\'t included). Without “Usage access”, it counts time with the screen on and unlocked.</string>
     <string name="tr_wait">Log body, focus and mood for 5 days to see what\'s different on your good days (%1$d so far).</string>
     <string name="tr_good">Avg 7 or higher\n(%1$d days)</string>
     <string name="tr_note">* Good days are split by the average of body, focus and mood. For a deeper look including meals, try “Ask AI” below.</string>

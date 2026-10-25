@@ -361,7 +361,7 @@
     <string name="page_condition">身体状态</string>
     <string name="c_overall">身体状态</string>
     <string name="c_overall_hint">身体有多有精神、是否容易累</string>
-    <string name="st_note">屏幕开启且已解锁的时间。若允许“使用情况访问权限”，还会用手机本身的记录（最近一周）补全。</string>
+    <string name="st_note">使用各应用的时间总和（来自手机本身的记录，与饼图的统计方式相同，不包括本主屏幕的时间）。没有“使用情况访问权限”时，按屏幕开启并解锁的时间统计。</string>
     <string name="tr_wait">记录 5 天的身体状态、专注度和心情后，这里会显示状态好的日子有什么不同（目前 %1$d 天）。</string>
     <string name="tr_good">平均 7 以上\n(%1$d 天)</string>
     <string name="tr_note">※ 按身体状态、专注度和心情的平均分区分状态好的日子。想连饮食内容一起分析，推荐使用下方的“请 AI 分析”。</string>

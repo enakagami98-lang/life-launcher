@@ -361,7 +361,7 @@
     <string name="page_condition">몸 컨디션</string>
     <string name="c_overall">몸 컨디션</string>
     <string name="c_overall_hint">몸이 얼마나 활기찼는지</string>
-    <string name="st_note">화면을 켜고 잠금을 해제한 시간이에요. \'사용 정보 접근\'을 허용하면 휴대폰 자체 기록(최근 1주일)으로도 채워요.</string>
+    <string name="st_note">앱을 사용한 시간의 합계예요(휴대폰 자체 기록 기준, 원그래프와 같은 방식이며 이 홈 화면에 있던 시간은 포함하지 않아요). \'사용 정보 접근\'이 없으면 화면을 켜고 잠금 해제한 시간으로 계산해요.</string>
     <string name="tr_wait">몸 컨디션·집중도·기분을 5일 기록하면, 컨디션이 좋은 날과 그렇지 않은 날의 차이가 여기에 나와요 (현재 %1$d일).</string>
     <string name="tr_good">평균 7 이상\n(%1$d일)</string>
     <string name="tr_note">※ 몸 컨디션·집중도·기분의 평균으로 컨디션이 좋은 날을 나눠요. 식사 내용까지 포함한 분석은 아래 \'AI에게 분석 맡기기\'를 추천해요.</string>

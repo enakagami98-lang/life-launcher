@@ -169,16 +169,24 @@ object Guard {
         val today = LocalDate.now().toString()
         if (sysDay == today && now - sysAt < 15_000) return sysCache
         val start = LocalDate.now().atStartOfDay(java.time.ZoneId.systemDefault()).toInstant().toEpochMilli()
+        val result = usageBetween(ctx, start, now)
+        // 動作確認用の記録（adb logcat -s Loosen で見られる）
+        android.util.Log.d("Loosen", "usage since=$start limited=" +
+            limits.keys.joinToString { "$it:${(result[it] ?: 0) / 1000}s" })
+        sysCache = result; sysAt = now; sysDay = today
+        return result
+    }
+
+    /** from〜to の間に、アプリごとに前面にあった時間（スマホ本体の使用記録。Digital Wellbeing と同じ元データ） */
+    private fun usageBetween(ctx: Context, from: Long, to: Long): Map<String, Long> {
         val result = mutableMapOf<String, Long>()
-        var count = 0
         runCatching {
             val usm = ctx.getSystemService(android.app.usage.UsageStatsManager::class.java)
-            val events = usm.queryEvents(start, now)
+            val events = usm.queryEvents(from, to)
             val e = android.app.usage.UsageEvents.Event()
             val resumed = mutableMapOf<String, Long>()
             while (events.hasNextEvent()) {
                 events.getNextEvent(e)
-                count++
                 when (e.eventType) {
                     android.app.usage.UsageEvents.Event.ACTIVITY_RESUMED ->
                         if (e.packageName !in resumed) resumed[e.packageName] = e.timeStamp
@@ -186,15 +194,20 @@ object Guard {
                         resumed.remove(e.packageName)?.let { t -> result[e.packageName] = (result[e.packageName] ?: 0) + (e.timeStamp - t) }
                 }
             }
-            // 今も前面にあるアプリ
-            resumed.forEach { (pkg, t) -> result[pkg] = (result[pkg] ?: 0) + (now - t) }
+            // 期間の終わりにも前面にあるアプリ
+            resumed.forEach { (pkg, t) -> result[pkg] = (result[pkg] ?: 0) + (to - t) }
         }.onFailure { android.util.Log.w("Loosen", "usage query failed", it) }
-        // 動作確認用の記録（adb logcat -s Loosen で見られる）
-        android.util.Log.d("Loosen", "usage events=$count since=$start limited=" +
-            limits.keys.joinToString { "$it:${(result[it] ?: 0) / 1000}s" })
-        sysCache = result; sysAt = now; sysDay = today
         return result
     }
+
+    /** スマホの使用時間に数えないアプリ：このホーム画面と、画面の飾り（ステータスバーなど） */
+    fun notCounted(): Set<String> = setOfNotNull(appContext?.packageName, "com.android.systemui")
+
+    /**
+     * スマホの使用時間＝アプリを使っていた時間の合計。「今日のスマホ」と円グラフで同じ数え方にする。
+     * 画面をつけていた時間で数えると、音楽を流しながら画面をつけたままの時間などで円グラフと合わなくなるため
+     */
+    fun appTotalMs(usage: Map<String, Long>): Long = usage.filterKeys { it !in notCounted() }.values.sum()
 
     fun remainingMs(pkg: String): Long = (limits[pkg] ?: 0) * 60_000L - usedMs(pkg)
 
@@ -336,11 +349,12 @@ object Guard {
                 val from = d.atStartOfDay(zone).toInstant().toEpochMilli()
                 val to = minOf(d.plusDays(1).atStartOfDay(zone).toInstant().toEpochMilli(), now)
                 val iv = unlockedIntervals(from, to) ?: return@mapNotNull null
-                Triple(d.toString(), iv.sumOf { it.second - it.first }, iv.count { it.first > from })
+                Triple(d.toString(), appTotalMs(usageBetween(ctx, from, to)), iv.count { it.first > from })
             }
             android.os.Handler(android.os.Looper.getMainLooper()).post {
                 found.forEach { (d, ms, n) ->
-                    if (ms > (screenMs[d] ?: 0)) screenMs[d] = ms
+                    // 本体の記録が残っている日は、円グラフと同じ数え方（アプリを使っていた時間の合計）に置き換える
+                    if (ms > 0) screenMs[d] = ms
                     if (n > (unlocks[d] ?: 0)) unlocks[d] = n
                 }
                 saveScreen()
@@ -348,7 +362,13 @@ object Guard {
         }.start()
     }
 
-    fun screenMinutes(date: LocalDate) = ((screenMs[date.toString()] ?: 0) / 60_000).toInt()
+    /** その日のスマホ使用時間（分）。今日は、許可があればスマホ本体の記録から（円グラフと同じ数え方） */
+    fun screenMinutes(date: LocalDate): Int {
+        // 見守りが数え足すたびに画面を描き直すよう、保存してある値は必ず読む
+        val stored = screenMs[date.toString()] ?: 0
+        if (date == LocalDate.now()) systemUsage()?.let { return (appTotalMs(it) / 60_000).toInt() }
+        return (stored / 60_000).toInt()
+    }
     fun unlockCount(date: LocalDate) = unlocks[date.toString()] ?: 0
 
     // ---- ロック解除時の質問 ----

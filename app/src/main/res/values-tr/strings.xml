@@ -357,7 +357,7 @@
     <string name="page_condition">Vücut durumu</string>
     <string name="c_overall">Vücut</string>
     <string name="c_overall_hint">Vücudun ne kadar enerjikti</string>
-    <string name="st_note">Ekranın açık ve kilidinin açık olduğu süre. “Kullanım erişimi” izni varsa telefonun kayıtlarıyla da tamamlanır (son 7 gün).</string>
+    <string name="st_note">Uygulamalarda geçen toplam süre, telefonun kendi kayıtlarından (grafikle aynı şekilde sayılır; bu ana ekranda geçen süre dahil değildir). “Kullanım erişimi” yoksa ekranın açık ve kilitsiz olduğu süre sayılır.</string>
     <string name="tr_wait">İyi günlerinde neyin farklı olduğunu görmek için 5 gün boyunca vücut, odak ve ruh hâlini kaydet (şu ana kadar %1$d).</string>
     <string name="tr_good">Ortalama 7 ve üzeri\n(%1$d gün)</string>
     <string name="tr_note">* İyi günler vücut, odak ve ruh hâli ortalamasına göre ayrılır. Yemekleri de içeren daha derin bir analiz için aşağıdaki “Yapay zekâya sor”u dene.</string>

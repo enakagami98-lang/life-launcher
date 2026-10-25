@@ -293,15 +293,15 @@ private fun AppUsageDialog(onDismiss: () -> Unit) {
         else {
             val pm = context.packageManager
             // このアプリ（ホーム画面）と画面の飾り（ステータスバーなど）は除く
-            val skip = setOf(context.packageName, "com.android.systemui")
-            val apps = (Guard.systemUsage() ?: emptyMap())
-                .filter { it.key !in skip && it.value >= 60_000 }
-                .entries.sortedByDescending { it.value }
+            // 数え方は「今日のスマホ」と同じ（Guard.appTotalMs）。合計がずれないよう、1分未満のアプリも「その他」に入れる
+            val usage = (Guard.systemUsage() ?: emptyMap()).filterKeys { it !in Guard.notCounted() }
+            val totalMin = (Guard.appTotalMs(usage) / 60_000).toInt()
+            val apps = usage.entries.filter { it.value >= 60_000 }.sortedByDescending { it.value }
             val top = apps.take(PieColors.size).map { e ->
                 val label = runCatching { pm.getApplicationLabel(pm.getApplicationInfo(e.key, 0)).toString() }.getOrDefault(e.key)
                 label to (e.value / 60_000).toInt()
             }
-            val rest = (apps.drop(PieColors.size).sumOf { it.value } / 60_000).toInt()
+            val rest = totalMin - top.sumOf { it.second }
             if (rest > 0) top + (other to rest) else top
         }
     }

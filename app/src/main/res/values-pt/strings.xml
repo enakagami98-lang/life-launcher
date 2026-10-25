@@ -356,7 +356,7 @@
     <string name="page_condition">Condição</string>
     <string name="c_overall">Corpo</string>
     <string name="c_overall_hint">Quanta energia seu corpo tinha</string>
-    <string name="st_note">Tempo com a tela ligada e desbloqueada. Com o “Acesso ao uso” permitido, também é completado com os registros do telefone (últimos 7 dias).</string>
+    <string name="st_note">Tempo total usando apps, pelos registros do próprio telefone (contado como no gráfico; não inclui o tempo nesta tela inicial). Sem o “Acesso ao uso”, conta o tempo com a tela ligada e desbloqueada.</string>
     <string name="tr_wait">Registre corpo, foco e humor por 5 dias para ver o que muda nos seus dias bons (%1$d até agora).</string>
     <string name="tr_good">Média 7 ou mais\n(%1$d dias)</string>
     <string name="tr_note">* Os dias bons são separados pela média de corpo, foco e humor. Para uma análise que inclua as refeições, experimente “Pedir à IA” abaixo.</string>

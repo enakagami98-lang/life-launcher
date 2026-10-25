@@ -356,7 +356,7 @@
     <string name="page_condition">Forme</string>
     <string name="c_overall">Corps</string>
     <string name="c_overall_hint">Votre niveau d\'énergie physique</string>
-    <string name="st_note">Temps avec l\'écran allumé et déverrouillé. Si « Accès aux données d\'utilisation » est autorisé, il est aussi complété par les relevés du téléphone (7 derniers jours).</string>
+    <string name="st_note">Temps total passé dans les applis, d\'après les relevés du téléphone (calculé comme le graphique ; le temps sur cet écran d\'accueil n\'est pas inclus). Sans « Accès aux données d\'utilisation », c\'est le temps écran allumé et déverrouillé qui est compté.</string>
     <string name="tr_wait">Notez corps, concentration et humeur pendant 5 jours pour voir ce qui change vos bons jours (%1$d pour l\'instant).</string>
     <string name="tr_good">Moyenne 7 ou plus\n(%1$d jours)</string>
     <string name="tr_note">* Les bons jours sont séparés selon la moyenne corps, concentration et humeur. Pour une analyse incluant les repas, essayez « Demander à l\'IA » ci-dessous.</string>

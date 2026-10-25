@@ -192,7 +192,7 @@ $UI tap "決定" >/dev/null; sleep 1; snap night_times
 expect_text "開始時刻" "${H}:00"; expect_text "終了時刻" "${E}:00"
 $UI tap "夜をオンにする" >/dev/null; sleep 3; snap locked
 expect_text "ロック画面が出る" "夜のおやすみ時間"
-expect_text "解除時刻" "${E}:00 まではスマホを使えません"
+expect_text "解除時刻（大きく表示）" "$((10#$E)):00"; expect_text "解除時刻の説明" "まではスマホを使えません"
 next_page; expect_text "スワイプしてもロック画面のまま" "夜のおやすみ時間"
 adb shell am start -a android.settings.SETTINGS >/dev/null; sleep 5
 expect_app "設定アプリは使える" com.android.settings

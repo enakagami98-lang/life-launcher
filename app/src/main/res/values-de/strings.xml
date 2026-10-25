@@ -357,7 +357,7 @@
     <string name="page_condition">Verfassung</string>
     <string name="c_overall">Körper</string>
     <string name="c_overall_hint">Wie fit sich dein Körper anfühlte</string>
-    <string name="st_note">Zeit mit eingeschaltetem und entsperrtem Bildschirm. Mit „Zugriff auf Nutzungsdaten“ wird sie auch aus den Daten des Handys ergänzt (letzte 7 Tage).</string>
+    <string name="st_note">Gesamtzeit in Apps laut den Daten des Handys (gleich gezählt wie im Diagramm; die Zeit auf diesem Startbildschirm zählt nicht). Ohne „Zugriff auf Nutzungsdaten“ wird die Zeit mit eingeschaltetem, entsperrtem Bildschirm gezählt.</string>
     <string name="tr_wait">Trage 5 Tage lang Körper, Konzentration und Stimmung ein, um zu sehen, was deine guten Tage ausmacht (bisher %1$d).</string>
     <string name="tr_good">Schnitt 7 oder mehr\n(%1$d Tage)</string>
     <string name="tr_note">* Gute Tage werden nach dem Schnitt aus Körper, Konzentration und Stimmung getrennt. Für eine Analyse inkl. Mahlzeiten probiere unten „KI fragen“.</string>

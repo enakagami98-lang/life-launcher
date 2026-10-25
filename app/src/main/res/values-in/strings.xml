@@ -358,7 +358,7 @@
     <string name="page_condition">Kondisi badan</string>
     <string name="c_overall">Badan</string>
     <string name="c_overall_hint">Seberapa bugar badanmu</string>
-    <string name="st_note">Waktu saat layar menyala dan tidak terkunci. Jika “Akses penggunaan” diizinkan, juga dilengkapi dari catatan HP (7 hari terakhir).</string>
+    <string name="st_note">Total waktu memakai aplikasi, dari catatan HP sendiri (dihitung sama seperti diagram; waktu di layar utama ini tidak termasuk). Tanpa “Akses penggunaan”, dihitung waktu saat layar menyala dan tidak terkunci.</string>
     <string name="tr_wait">Catat badan, fokus, dan suasana hati selama 5 hari untuk melihat apa yang berbeda di hari-hari baikmu (sejauh ini %1$d).</string>
     <string name="tr_good">Rata-rata 7 ke atas\n(%1$d hari)</string>
     <string name="tr_note">* Hari baik dibedakan dari rata-rata badan, fokus, dan suasana hati. Untuk analisis yang juga mencakup makanan, coba “Tanya AI” di bawah.</string>

@@ -361,7 +361,7 @@
     <string name="page_condition">身体の調子</string>
     <string name="c_overall">身体の調子</string>
     <string name="c_overall_hint">体の元気さ・疲れにくさ</string>
-    <string name="st_note">画面をつけてロックを解除していた時間です。「使用状況へのアクセス」を許可していれば、スマホ本体の記録（直近1週間）でも補います。</string>
+    <string name="st_note">アプリを使っていた時間の合計です（スマホ本体の記録から。円グラフと同じ数え方で、このホーム画面の時間は含みません）。「使用状況へのアクセス」が無いときは、画面をつけていた時間で数えます。</string>
     <string name="tr_wait">「身体の調子・集中度・気分」を5日分つけると、調子がいい日とそうでない日の違いがここに出ます（いま %1$d日）。</string>
     <string name="tr_good">平均 7以上\n(%1$d日)</string>
     <string name="tr_note">※「身体の調子・集中度・気分」の平均で、調子がいい日を分けています。食事の中身まで含めた分析は、下の「AIに分析してもらう」がおすすめ。</string>
