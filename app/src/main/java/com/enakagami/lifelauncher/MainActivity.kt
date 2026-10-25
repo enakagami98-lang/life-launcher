@@ -106,6 +106,8 @@ class MainActivity : ComponentActivity() {
         Billing.refresh()
         // 見守りが止まっていた日の使用時間を、スマホ本体の記録で補う
         Guard.syncFromSystem()
+        // 支払いの通知の読み取りが切れていたら、つなぎ直す
+        PaymentListener.rebind(this)
         // 見守りサービスを動かす（すでに動いていれば何もしない）
         runCatching { startForegroundService(Intent(this, GuardService::class.java)) }
     }

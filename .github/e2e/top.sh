@@ -92,6 +92,15 @@ $UI tap "¥3,500を消す" >/dev/null; sleep 2
 expect_text "消すと合計が減る" "今月の支払額 ¥1,280"
 $UI tap "閉じる" >/dev/null; sleep 1
 key KEYCODE_HOME
+notify pay5 "PayPay" "PayPay残高で¥640支払いました"
+key KEYCODE_HOME
+expect_text "PayPay残高での支払いも数える" "¥1,920"
+notify pay6 "PayPay" "最大20%還元！1,000円以上の支払いでPayPayポイントがもらえる"
+key KEYCODE_HOME
+expect_text "PayPayの広告は数えない" "¥1,920"
+notify pay7 "支払い完了" "PayPay ローソンで300円 PayPayポイント3円相当獲得予定"
+key KEYCODE_HOME; snap after_paypay
+expect_text "ポイントの数ではなく支払額を読む" "¥2,220"
 
 log "== 5. 「今何してる？」の選択肢と編集"
 prev_page; $UI tap "今何してるを聞く" >/dev/null; sleep 1

@@ -68,24 +68,45 @@ object Spend {
     }
 
     // ---- 通知の文章から金額を読む ----
-    private val payWords = Regex("支払|決済|利用|購入|引き落とし|引落")
-    // 受け取り・チャージ・広告などは支払いではない
-    private val notPayWords = Regex("受け取|受取|入金|チャージ|返金|キャンセル|取消|OFF|オフ|割引|クーポン|還元|もらえる|プレゼント|キャンペーン|当選|限度|可能額|残高|請求予定|予定額|以上の")
+    private val payWords = Regex("支払|決済|利用|購入|引き落とし|引落|お会計|使いました|payment|paid|purchase|spent|charged", RegexOption.IGNORE_CASE)
+    /** 支払いのアプリ（アプリ名か通知の見出しで判断）。ここからの通知は「残高」「還元」などが入っていても支払いとして読む */
+    private val payApps = Regex("PayPay|楽天ペイ|d払い|au ?PAY|メルペイ|メルカリ|Kyash|Suica|PASMO|Vpass|MyJCB|楽天カード|エポス|三井住友|イオン|セゾン|Revolut|ウォレット|Wallet|銀行|Bank|カード|Card|Pay", RegexOption.IGNORE_CASE)
+    // どのアプリでも支払いではないもの（受け取り・返金・広告など）
+    private val hardNot = Regex("受け取|受取|入金|返金|キャンセル|取消|送金|もらえる|当選|キャンペーン|最大|以上の|限度|可能額|請求予定|予定額|プレゼント")
+    // 支払いのアプリ以外では広告のことが多いもの（支払いのアプリの「PayPay残高で支払いました」などは読む）
+    private val softNot = Regex("チャージ|OFF|オフ|割引|クーポン|還元|残高|[%％]")
     private val yen = Regex("(?:[¥￥]\\s*([0-9][0-9,，]*)|([0-9][0-9,，]*)\\s*円)")
+    // 「3円相当」「10ポイント」のようなポイントの数は金額ではない
+    private val pointAfter = Regex("^\\s*(相当|分の?ポイント|ポイント|pt|P\\b)")
 
-    /** 支払いの通知なら金額を返す。違えば null */
-    fun parse(text: String): Int? {
-        if (!payWords.containsMatchIn(text) || notPayWords.containsMatchIn(text)) return null
-        val m = yen.find(text) ?: return null
+    /** 支払いの通知なら金額を返す。違えば null。fromPayApp は支払いのアプリからの通知か */
+    fun parse(text: String, fromPayApp: Boolean = payApps.containsMatchIn(text)): Int? {
+        if (!payWords.containsMatchIn(text) || hardNot.containsMatchIn(text)) return null
+        if (!fromPayApp && softNot.containsMatchIn(text)) return null
+        val m = yen.findAll(text).firstOrNull { !pointAfter.containsMatchIn(text.substring(it.range.last + 1)) } ?: return null
         val n = (m.groupValues[1].ifEmpty { m.groupValues[2] }).replace(",", "").replace("，", "").toIntOrNull() ?: return null
         return n.takeIf { it in 1..10_000_000 }
     }
 
+    fun isPayApp(name: String) = payApps.containsMatchIn(name)
+
+    // 同じ通知を2回数えないため、読んだ通知の目印（通知のキーと時刻）を残す
+    private val seen = ArrayDeque<String>()
+
+    /** まだ読んでいない通知なら true（読んだ印をつける） */
+    fun firstTime(mark: String): Boolean {
+        if (seen.isEmpty()) prefs.getString("seen", "")!!.split('\n').filter { it.isNotEmpty() }.forEach { seen.addLast(it) }
+        if (mark in seen) return false
+        seen.addLast(mark)
+        while (seen.size > 300) seen.removeFirst()
+        prefs.edit().putString("seen", seen.joinToString("\n")).apply()
+        return true
+    }
+
     /** 同じ支払いが「アプリの通知」と「メール」の両方で来ることがあるので、10分以内の同じ金額は1回と数える */
-    fun onNotification(amount: Int, source: String, note: String) {
-        val now = System.currentTimeMillis()
-        if (payments.any { it.auto && it.amount == amount && now - it.time < 10 * 60_000L }) return
-        add(amount, source, note.take(80), auto = true, time = now)
+    fun onNotification(amount: Int, source: String, note: String, time: Long = System.currentTimeMillis()) {
+        if (payments.any { it.auto && it.amount == amount && kotlin.math.abs(time - it.time) < 10 * 60_000L }) return
+        add(amount, source, note.take(80), auto = true, time = time)
     }
 }
 
@@ -103,19 +124,44 @@ class PaymentListener : NotificationListenerService() {
         Spend.init(this)
     }
 
+    /** つながったとき：つながっていない間に届いて、まだ残っている通知も読む */
+    override fun onListenerConnected() {
+        runCatching { activeNotifications?.forEach { read(it) } }
+    }
+
+    /** 切れたとき（アプリの更新・電池の節約など）は、つなぎ直しを頼む */
+    override fun onListenerDisconnected() {
+        runCatching { NotificationListenerService.requestRebind(ComponentName(this, PaymentListener::class.java)) }
+    }
+
     override fun onNotificationPosted(sbn: StatusBarNotification) {
-        runCatching {
-            if (sbn.packageName == packageName || sbn.isOngoing || sbn.packageName in chatApps) return
-            val ex = sbn.notification.extras
-            val title = ex.getCharSequence("android.title")?.toString().orEmpty()
-            val text = ex.getCharSequence("android.bigText")?.toString()
-                ?: ex.getCharSequence("android.text")?.toString().orEmpty()
-            val all = "$title $text"
-            val amount = Spend.parse(all) ?: return
-            val label = runCatching {
-                packageManager.getApplicationLabel(packageManager.getApplicationInfo(sbn.packageName, 0)).toString()
-            }.getOrDefault(sbn.packageName)
-            Spend.onNotification(amount, label, all.trim())
+        runCatching { read(sbn) }
+    }
+
+    private fun read(sbn: StatusBarNotification) {
+        if (sbn.packageName == packageName || sbn.packageName in chatApps) return
+        val ex = sbn.notification.extras
+        // 見出し・本文・長い本文・まとめ表示の各行・小見出しを全部つなげて読む（アプリによって入れる場所が違う）
+        val parts = listOfNotNull(
+            ex.getCharSequence("android.title"), ex.getCharSequence("android.title.big"),
+            ex.getCharSequence("android.bigText") ?: ex.getCharSequence("android.text"),
+            ex.getCharSequence("android.subText"), ex.getCharSequence("android.summaryText"),
+            sbn.notification.tickerText,
+        ).map { it.toString() } + (ex.getCharSequenceArray("android.textLines")?.map { it.toString() } ?: emptyList())
+        val all = parts.filter { it.isNotBlank() }.distinct().joinToString(" ")
+        val label = runCatching {
+            packageManager.getApplicationLabel(packageManager.getApplicationInfo(sbn.packageName, 0)).toString()
+        }.getOrDefault(sbn.packageName)
+        val amount = Spend.parse(all, Spend.isPayApp("$label $all")) ?: return
+        if (!Spend.firstTime("${sbn.key}|${sbn.postTime}")) return
+        Spend.onNotification(amount, label, all.trim(), sbn.postTime)
+    }
+
+    companion object {
+        /** 許可されているのに切れていたら、つなぎ直す（ホーム画面を開いたときに呼ぶ） */
+        fun rebind(context: android.content.Context) {
+            if (!Spend.hasAccess(context)) return
+            runCatching { NotificationListenerService.requestRebind(ComponentName(context, PaymentListener::class.java)) }
         }
     }
 }
