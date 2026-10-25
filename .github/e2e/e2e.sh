@@ -206,6 +206,7 @@ sleep 20; key KEYCODE_WAKEUP; adb shell wm dismiss-keyguard; sleep 5; snap after
 expect_app "再起動後はLifeLauncher" $PKG; expect_text "再起動後もロック画面" "夜のおやすみ時間"
 adb exec-out screencap -p > $OUT/px2.png
 PX=$(python3 -c "from PIL import Image; im=Image.open('$OUT/px2.png').convert('RGB'); print(im.getpixel((20,1000)))")
-[ "$PX" = "(0, 0, 0)" ] && ok "再起動後も背景は黒 $PX" || ng "再起動後も背景は黒 $PX"
+# 夜のおやすみ時間は、設定の色（黒）に関係なく夜空の色になる（青が赤より強い暗い色）
+python3 -c "import sys; r,g,b=$PX; sys.exit(0 if b>r+20 and b<120 else 1)" && ok "夜の画面は設定の色でなく夜空の色 $PX" || ng "夜の画面が夜空の色ではない $PX"
 
 log "== 結果: PASS $(grep -c '^PASS' $R) / FAIL $(grep -c '^FAIL' $R)"
