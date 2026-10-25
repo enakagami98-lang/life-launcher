@@ -50,6 +50,7 @@ android {
 
     // 配る場所ごとに2種類作る
     //  play  : Google Play 用。定期購入（3日間無料→年額）が無いと機能が止まる。アプリIDは新しい名前
+    //  playtest: クローズドテスト用。play と同じアプリIDで課金なし
     //  github: いま GitHub のリリースで配っているもの（開発・テスト用）。課金なし。アプリIDは今のまま
     flavorDimensions += "store"
     productFlavors {
@@ -61,6 +62,12 @@ android {
             dimension = "store"
             applicationId = "com.enakagami.loosen"
             buildConfigField("boolean", "PAYWALL", "true")
+        }
+        // playtest: Google Play のクローズドテストに配る版。アプリIDは play と同じで、課金なし（14日間ずっと全部使える）
+        create("playtest") {
+            dimension = "store"
+            applicationId = "com.enakagami.loosen"
+            buildConfigField("boolean", "PAYWALL", "false")
         }
     }
 

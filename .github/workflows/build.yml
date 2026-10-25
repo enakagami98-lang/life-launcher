@@ -29,7 +29,7 @@ jobs:
           KEYSTORE_B64: ${{ secrets.KEYSTORE_B64 }}
 
       - name: APKを組み立てる
-        run: gradle assembleGithubRelease assemblePlayRelease bundlePlayRelease --no-daemon --stacktrace
+        run: gradle assembleGithubRelease assemblePlayRelease bundlePlayRelease bundlePlaytestRelease --no-daemon --stacktrace
         env:
           KEYSTORE_PATH: ${{ runner.temp }}/release.p12
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
@@ -44,7 +44,9 @@ jobs:
           # Google Play 用：AAB は Play Console にアップロードするもの、APK は仮想スマホでの確認用
           cp app/build/outputs/bundle/playRelease/app-play-release.aab Loosen-play.aab
           cp app/build/outputs/apk/play/release/app-play-release.apk Loosen-play.apk
-          gh release create "v1.0.${{ github.run_number }}" LifeLauncher.apk Loosen-play.aab Loosen-play.apk \
+          # クローズドテスト用（課金なし）。テスト期間はこちらを Play Console に上げる
+          cp app/build/outputs/bundle/playtestRelease/app-playtest-release.aab Loosen-test.aab
+          gh release create "v1.0.${{ github.run_number }}" LifeLauncher.apk Loosen-play.aab Loosen-play.apk Loosen-test.aab \
             --title "LifeLauncher 1.0.${{ github.run_number }}" \
             --notes "$NOTES" --latest
         env:
