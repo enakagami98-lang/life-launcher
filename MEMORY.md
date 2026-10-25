@@ -146,3 +146,10 @@
 - 見出し・長い本文・まとめ表示の各行（android.textLines）・subText・tickerText まで読む。「3円相当」「ポイント」の前の数字は金額にしない
 - 切れたら requestRebind（onListenerDisconnected と、ホームを開いたとき）。つながったときに残っている通知も読む。通知キー＋時刻で二重に数えない（prefs "seen"、300件）。重複判定は通知の時刻で10分以内・同額
 - e2e top 42/42（PayPay の3パターンを追加）
+
+## 2026-10-25 クローズドテスト用の版（v1.0.62）
+- flavor `playtest` を追加：applicationId は play と同じ com.enakagami.loosen、PAYWALL=false。リリースに **Loosen-test.aab** として出る
+- 使い分け：内部テスト（自分で課金を試す）＝ Loosen-play.aab、クローズドテスト（12人×14日、全部無料で使ってもらう）＝ Loosen-test.aab、本番＝ Loosen-play.aab
+- 同じアプリIDなので、Play に上げるたびに versionCode（＝run_number）が前より大きい必要がある。古い run の AAB を後から上げない
+- Loosen-test.aab にも BILLING 権限は入っている（課金ライブラリから）。Play Console で定期購入を作るのに使える
+- 課金する個人デベロッパーは住所が全部 Google Play に表示される（公式ヘルプ）。公開前に対策を決める（ユーザーはとても嫌がっている）
