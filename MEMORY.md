@@ -162,3 +162,12 @@
   - ずれの原因：前は「画面をつけてロック解除していた時間」で数えていた（8時間19分）が、円グラフはアプリの時間（約5時間20分）だった
 - e2e：simple.sh・condition.sh のお気に入りは、日本語表示だとアプリ名が「時計」「設定」になる点に注意。トップの部品が増えたのでお気に入りまで2回スクロール
 - Python で Kotlin を書き換えるとき "\u0000" のような書き方をすると、本物の NUL 文字が入ってしまった（grep が binary 扱い）。バイトで置き換えて直した
+
+## 2026-10-26 改行・「詳しく」・朝の時間帯の削除・タスクの期限（v1.0.71）
+- 改行：MainActivity で ProvideTextStyle に LineBreak(Balanced, Strict, WordBreak.Phrase) を全体に。日本語は文節で、どの言語も行の長さをそろえて折り返す（「す。」だけ次の行、を防ぐ）。Hyphens.Auto は「Non in-serito」のように単語を切るのでやめた
+- 長い説明は MoreInfo（Ui.kt）：「詳しく ▾」で開く。st_note・ul_note・tr_note・ai_desc・pie_note・s_home_desc・s_reminder_desc・s_lock_desc・ask_hint・goal_note・limit_desc。支払いの許可の説明と購入画面の解約の注意は、隠すと困るので出したまま
+- 設定画面の一番下が画面下のナビゲーションに隠れていた → 最後の余白を120dpに（ダイアログの中では systemBarsPadding が効かない）
+- 朝の集中時間はなくした（設定から消し、Guard.activeLock も夜だけ。前にオンにしていた人も読み込み時にオフ）
+- 「今日のタスク」→「タスク」。Task に due（ミリ秒）。期限が近い順（Store.sortedTasks：未完了→期限→登録順）。長押しの並べ替えはやめた。追加・編集は日付→時刻の順に選ぶ（最初は明日18:00）。期限切れは赤。ホームの部品は上位3件＋「… ほかN件」
+- i18n：tasks.py（page_tasks・w_tasks・task_add・tasks_empty を base/tr から移した、期限と「詳しく」の文字）
+- e2e：tasks 28/28（期限の確認を追加）、top 42/42、condition 26/26、lang 9/9、simple 18/18、goal 20/20
