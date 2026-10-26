@@ -341,7 +341,7 @@ private fun AppUsageDialog(onDismiss: () -> Unit) {
                             }
                         }
                         Spacer(Modifier.height(8.dp))
-                        Text(stringResource(R.string.pie_note), fontSize = 11.sp, color = SubInk, lineHeight = 16.sp)
+                        MoreInfo(stringResource(R.string.pie_note))
                     }
                 }
             }
@@ -353,7 +353,7 @@ private fun AppUsageDialog(onDismiss: () -> Unit) {
 // ---- 今日のタスク ----
 @Composable
 private fun TasksCard(store: Store, today: LocalDate) {
-    val open = store.tasks.filter { it.doneDate == null }
+    val open = store.sortedTasks().filter { it.doneDate == null }
     CardColumn {
         Row(verticalAlignment = Alignment.CenterVertically) {
             SmallLabel(stringResource(R.string.page_tasks), Modifier.weight(1f))
@@ -365,10 +365,11 @@ private fun TasksCard(store: Store, today: LocalDate) {
             open.isEmpty() -> Text(stringResource(R.string.all_done), fontSize = 18.sp, fontWeight = FontWeight.Black, color = Blue)
             else -> open.take(3).forEach { t ->
                 val desc = stringResource(R.string.task_do, t.text)
-                CheckRow(t.text, done = false, desc = desc) { store.toggleTask(t.id, today) }
+                CheckRow(t.text, done = false, desc = desc, trailing = t.due?.let { dueShort(it) }) { store.toggleTask(t.id, today) }
             }
         }
-        if (open.size > 3) Text(stringResource(R.string.more_items, open.size - 3), fontSize = 12.sp, color = SubInk)
+        // 4つ以上あるときは「…」で、まだあることを知らせる
+        if (open.size > 3) Text("… " + stringResource(R.string.more_items, open.size - 3), fontSize = 13.sp, fontWeight = FontWeight.Bold, color = SubInk)
     }
 }
 

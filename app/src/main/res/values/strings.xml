@@ -85,18 +85,15 @@
     <string name="search">Search</string>
     <string name="page_goals">Goals</string>
     <string name="page_habits">Habits</string>
-    <string name="page_tasks">Today\'s tasks</string>
     <string name="items_empty">Add with + at the top right.\nTap to edit or delete. Press and hold, then drag to reorder.</string>
     <string name="goal_add">Add a goal</string>
     <string name="goal_edit">Edit goal</string>
     <string name="habit_add">Add a habit</string>
     <string name="habit_edit">Edit habit</string>
-    <string name="tasks_empty">Add today\'s to-dos with + at the top right.\nTap the circle when done. Finished tasks disappear the next day; unfinished ones carry over.\nPress and hold, then drag to reorder.</string>
     <string name="all_done">All done!</string>
     <string name="tasks_progress">%1$d / %2$d done</string>
     <string name="task_do">Mark %1$s as done</string>
     <string name="task_undo">Mark %1$s as not done</string>
-    <string name="task_add">Add a task</string>
     <string name="task_edit">Edit task</string>
     <string name="guard_used_up">You\'ve used today\'s %1$d minutes.\nSee you tomorrow.</string>
     <string name="guard_extend">Time\'s up. Extend?</string>
@@ -113,7 +110,6 @@
     <string name="w_motto">Life motto</string>
     <string name="w_screen">Today\'s screen time</string>
     <string name="w_spend">Spent this month</string>
-    <string name="w_tasks">Today\'s tasks</string>
     <string name="w_countdown">Countdown</string>
     <string name="w_weather">Weather</string>
     <string name="w_habits">Today\'s habits</string>
@@ -319,7 +315,7 @@
     <string name="tut7_body">Swipe left or right to move between pages.</string>
     <string name="tut7_page_left">← Swipe right: Condition (condition, sleep, screen time)</string>
     <string name="tut7_page_top">Home: days left, your info, scroll down for favorites</string>
-    <string name="tut7_page_right">→ Swipe left: Apps, Goals, Habits, Today\'s tasks</string>
+    <string name="tut7_page_right">→ Swipe left: Apps, Goals, Habits, Tasks</string>
     <string name="tut7_longpress">Press and hold an app in the list to add it to favorites, set a time limit, or hide it.</string>
     <string name="tut7_tip">You can see this guide again anytime from \"Show the guide again\" in Settings (⚙).</string>
     <string name="s_tutorial">Show the guide again</string>
@@ -368,4 +364,15 @@
     <string name="tr_note">* Good days are split by the average of body, focus and mood. For a deeper look including meals, try “Ask AI” below.</string>
     <string name="ai_unlock_section"># Why I opened my phone (last 14 days, answered at each unlock)\ndate,time,what I was doing,why I opened my phone\n%1$s</string>
     <string name="ai_prompt">You are a coach who knows a lot about daily habits and well-being.\nBelow is the data I record on my phone every day (%1$d days, %2$s to %3$s). Please analyze when I tend to feel my best.\n\n# Fields\n- body, focus, mood, sleep_quality: self-rated 0–10 (10 is best). Judge good days by the average of body, focus and mood\n- sleep_h: hours slept the night before. bedtime, wake_up: when I went to bed the night before and woke up that morning\n- phone_before_bed: minutes I used my phone in the 30 minutes before going to bed\n- phone_min: minutes the screen was on and in use that day. unlocks: number of unlocks\n- alcohol: 1 = drank alcohol, 0 = none\n- goal, achieved: that day\'s goal and whether I achieved it (1 = achieved)\n- breakfast, lunch, dinner, notes: what I ate, exercise, events, etc.\n- Empty means \"not recorded\" (not zero)\n\n# For reference: my goals and habits\n- Goals: %4$s\n- Habits: %5$s\n\n# Data (CSV)\ndate,weekday,body,focus,mood,sleep_quality,sleep_h,bedtime,wake_up,phone_before_bed,phone_min,unlocks,alcohol,goal,achieved,breakfast,lunch,dinner,notes\n%6$s\n\n# What I\'d like\n1. What differs between good and bad days (sleep, bedtime, phone use before bed, alcohol, meals, screen time, weekday, etc.), with concrete numbers where possible\n2. Up to 3 patterns of \"I feel good when...\"\n3. Habits or combinations that seem to drag me down (if there are phone-unlock records, also times and reasons that look wasteful)\n4. 3 small actions I can try starting tomorrow\n5. Caveats (little or skewed data, etc.) and items worth recording in the future\n\n# How to answer\n- Start with a 3-line summary, then explain in detail\n- Answer in %7$s, in plain language without jargon\n- Separate what the data shows from guesses\n- Do not give a medical diagnosis</string>
+    <string name="page_tasks">Tasks</string>
+    <string name="w_tasks">Tasks</string>
+    <string name="task_add">Add a task</string>
+    <string name="tasks_empty">Add tasks with + at the top right.\nSet a due date and time, and tasks are sorted by what\'s due first.\nTap the circle when you\'re done. Finished tasks disappear the next day.</string>
+    <string name="task_due">Due</string>
+    <string name="task_due_none">No due date</string>
+    <string name="task_due_until">Due %1$s</string>
+    <string name="task_due_clear">Remove due date</string>
+    <string name="task_overdue">Overdue</string>
+    <string name="info_more">More ▾</string>
+    <string name="info_less">Less ▴</string>
 </resources>

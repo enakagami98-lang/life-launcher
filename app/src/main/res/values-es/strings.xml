@@ -84,18 +84,15 @@
     <string name="search">Buscar</string>
     <string name="page_goals">Metas</string>
     <string name="page_habits">Hábitos</string>
-    <string name="page_tasks">Tareas de hoy</string>
     <string name="items_empty">Añade con + arriba a la derecha.\nToca para editar o eliminar. Mantén pulsado y arrastra para reordenar.</string>
     <string name="goal_add">Añadir meta</string>
     <string name="goal_edit">Editar meta</string>
     <string name="habit_add">Añadir hábito</string>
     <string name="habit_edit">Editar hábito</string>
-    <string name="tasks_empty">Añade las tareas de hoy con + arriba a la derecha.\nToca el círculo al terminar. Las tareas hechas desaparecen al día siguiente; las pendientes pasan al día siguiente.\nMantén pulsado y arrastra para reordenar.</string>
     <string name="all_done">¡Todo listo!</string>
     <string name="tasks_progress">%1$d / %2$d hechas</string>
     <string name="task_do">Marcar %1$s como hecha</string>
     <string name="task_undo">Marcar %1$s como pendiente</string>
-    <string name="task_add">Añadir tarea</string>
     <string name="task_edit">Editar tarea</string>
     <string name="guard_used_up">Ya usaste los %1$d minutos de hoy.\nHasta mañana.</string>
     <string name="guard_extend">Se acabó el tiempo. ¿Quieres ampliarlo?</string>
@@ -112,7 +109,6 @@
     <string name="w_motto">Lema de vida</string>
     <string name="w_screen">Tiempo de pantalla de hoy</string>
     <string name="w_spend">Gasto de este mes</string>
-    <string name="w_tasks">Tareas de hoy</string>
     <string name="w_countdown">Cuenta atrás</string>
     <string name="w_weather">Tiempo</string>
     <string name="w_habits">Hábitos de hoy</string>
@@ -362,4 +358,15 @@
     <string name="tr_note">* Los días buenos se separan por la media de cuerpo, concentración y ánimo. Para un análisis que incluya las comidas, prueba “Pedir a la IA” abajo.</string>
     <string name="ai_unlock_section"># Por qué abrí el móvil (últimos 14 días, respondido en cada desbloqueo)\nfecha,hora,qué estaba haciendo,por qué abrí el móvil\n%1$s</string>
     <string name="ai_prompt">Eres un coach que sabe mucho de hábitos diarios y bienestar.\nAbajo están los datos que registro cada día en mi móvil (%1$d días, del %2$s al %3$s). Analiza cuándo suelo sentirme mejor.\n\n# Campos\n- cuerpo, concentración, ánimo, calidad_sueño: autoevaluación de 0 a 10 (10 es lo mejor). Juzga los días buenos por la media de cuerpo, concentración y ánimo\n- horas_sueño: horas que dormí la noche anterior. acostarse, levantarse: a qué hora me acosté la noche anterior y a qué hora me levanté esa mañana\n- móvil_antes_dormir: minutos que usé el móvil en los 30 minutos antes de acostarme\n- móvil_min: minutos con la pantalla encendida y en uso ese día. desbloqueos: número de desbloqueos\n- alcohol: 1 = bebí alcohol, 0 = no\n- objetivo, logrado: el objetivo de ese día y si lo cumplí (1 = cumplido)\n- desayuno, comida, cena, notas: lo que comí, ejercicio, sucesos, etc.\n- Vacío significa \"sin registrar\" (no es cero)\n\n# Como referencia: mis objetivos y hábitos\n- Objetivos: %4$s\n- Hábitos: %5$s\n\n# Datos (CSV)\nfecha,día,cuerpo,concentración,ánimo,calidad_sueño,horas_sueño,acostarse,levantarse,móvil_antes_dormir,móvil_min,desbloqueos,alcohol,objetivo,logrado,desayuno,comida,cena,notas\n%6$s\n\n# Lo que me gustaría\n1. Qué cambia entre los días buenos y los malos (sueño, hora de acostarme, móvil antes de dormir, alcohol, comidas, tiempo de pantalla, día de la semana, etc.), con cifras concretas cuando sea posible\n2. Hasta 3 patrones del tipo \"me siento bien cuando...\"\n3. Hábitos o combinaciones que parecen bajarme el ánimo (si hay registros de desbloqueo, también horas y motivos que parecen tiempo perdido)\n4. 3 acciones pequeñas que pueda probar desde mañana\n5. Advertencias (pocos datos o sesgados, etc.) y datos que valdría la pena registrar en el futuro\n\n# Cómo responder\n- Empieza con un resumen de 3 líneas y luego explica en detalle\n- Responde en %7$s, con lenguaje sencillo y sin tecnicismos\n- Separa lo que muestran los datos de las suposiciones\n- No hagas diagnósticos médicos</string>
+    <string name="page_tasks">Tareas</string>
+    <string name="w_tasks">Tareas</string>
+    <string name="task_add">Añadir tarea</string>
+    <string name="tasks_empty">Añade tareas con + arriba a la derecha.\nSi pones fecha y hora límite, se ordenan por lo que vence antes.\nToca el círculo al terminar. Las tareas hechas desaparecen al día siguiente.</string>
+    <string name="task_due">Vence</string>
+    <string name="task_due_none">Sin fecha límite</string>
+    <string name="task_due_until">Vence %1$s</string>
+    <string name="task_due_clear">Quitar fecha límite</string>
+    <string name="task_overdue">Vencida</string>
+    <string name="info_more">Más ▾</string>
+    <string name="info_less">Menos ▴</string>
 </resources>

@@ -84,18 +84,15 @@
     <string name="search">Buscar</string>
     <string name="page_goals">Metas</string>
     <string name="page_habits">Hábitos</string>
-    <string name="page_tasks">Tarefas de hoje</string>
     <string name="items_empty">Adicione com + no canto superior direito.\nToque para editar ou excluir. Mantenha pressionado e arraste para reordenar.</string>
     <string name="goal_add">Adicionar meta</string>
     <string name="goal_edit">Editar meta</string>
     <string name="habit_add">Adicionar hábito</string>
     <string name="habit_edit">Editar hábito</string>
-    <string name="tasks_empty">Adicione as tarefas de hoje com + no canto superior direito.\nToque no círculo ao terminar. Tarefas concluídas somem no dia seguinte; as pendentes passam para o dia seguinte.\nMantenha pressionado e arraste para reordenar.</string>
     <string name="all_done">Tudo feito!</string>
     <string name="tasks_progress">%1$d / %2$d feitas</string>
     <string name="task_do">Marcar %1$s como feita</string>
     <string name="task_undo">Marcar %1$s como pendente</string>
-    <string name="task_add">Adicionar tarefa</string>
     <string name="task_edit">Editar tarefa</string>
     <string name="guard_used_up">Você usou os %1$d minutos de hoje.\nAté amanhã.</string>
     <string name="guard_extend">O tempo acabou. Estender?</string>
@@ -112,7 +109,6 @@
     <string name="w_motto">Lema de vida</string>
     <string name="w_screen">Tempo de tela de hoje</string>
     <string name="w_spend">Gastos do mês</string>
-    <string name="w_tasks">Tarefas de hoje</string>
     <string name="w_countdown">Contagem regressiva</string>
     <string name="w_weather">Clima</string>
     <string name="w_habits">Hábitos de hoje</string>
@@ -362,4 +358,15 @@
     <string name="tr_note">* Os dias bons são separados pela média de corpo, foco e humor. Para uma análise que inclua as refeições, experimente “Pedir à IA” abaixo.</string>
     <string name="ai_unlock_section"># Por que abri o celular (últimos 14 dias, respondido a cada desbloqueio)\ndata,hora,o que eu estava fazendo,por que abri o celular\n%1$s</string>
     <string name="ai_prompt">Você é um coach que entende muito de hábitos diários e bem-estar.\nAbaixo estão os dados que registro todos os dias no celular (%1$d dias, de %2$s a %3$s). Analise quando eu costumo me sentir melhor.\n\n# Campos\n- corpo, foco, humor, qualidade_sono: autoavaliação de 0 a 10 (10 é o melhor). Avalie os dias bons pela média de corpo, foco e humor\n- horas_sono: horas que dormi na noite anterior. dormir, acordar: a que horas fui dormir na noite anterior e acordei naquela manhã\n- celular_antes_dormir: minutos de uso do celular nos 30 minutos antes de dormir\n- celular_min: minutos com a tela ligada e em uso naquele dia. desbloqueios: número de desbloqueios\n- álcool: 1 = bebi álcool, 0 = não\n- meta, concluída: a meta do dia e se eu a cumpri (1 = cumprida)\n- café da manhã, almoço, jantar, notas: o que comi, exercícios, acontecimentos etc.\n- Vazio significa \"não registrado\" (não é zero)\n\n# Para referência: minhas metas e hábitos\n- Metas: %4$s\n- Hábitos: %5$s\n\n# Dados (CSV)\ndata,dia,corpo,foco,humor,qualidade_sono,horas_sono,dormir,acordar,celular_antes_dormir,celular_min,desbloqueios,álcool,meta,concluída,café da manhã,almoço,jantar,notas\n%6$s\n\n# O que eu gostaria\n1. O que muda entre dias bons e ruins (sono, hora de dormir, celular antes de dormir, álcool, refeições, tempo de tela, dia da semana etc.), com números concretos quando possível\n2. Até 3 padrões do tipo \"eu me sinto bem quando...\"\n3. Hábitos ou combinações que parecem me derrubar (se houver registros de desbloqueio, também horários e motivos que parecem desperdício)\n4. 3 pequenas ações que posso testar a partir de amanhã\n5. Ressalvas (poucos dados, dados enviesados etc.) e itens que valeria a pena registrar no futuro\n\n# Como responder\n- Comece com um resumo de 3 linhas e depois explique em detalhes\n- Responda em %7$s, com linguagem simples e sem jargões\n- Separe o que os dados mostram das suposições\n- Não faça diagnósticos médicos</string>
+    <string name="page_tasks">Tarefas</string>
+    <string name="w_tasks">Tarefas</string>
+    <string name="task_add">Adicionar tarefa</string>
+    <string name="tasks_empty">Adicione tarefas com + no canto superior direito.\nCom prazo (dia e hora), elas ficam ordenadas pelo que vence primeiro.\nToque no círculo ao terminar. Tarefas concluídas somem no dia seguinte.</string>
+    <string name="task_due">Prazo</string>
+    <string name="task_due_none">Sem prazo</string>
+    <string name="task_due_until">Até %1$s</string>
+    <string name="task_due_clear">Remover prazo</string>
+    <string name="task_overdue">Atrasada</string>
+    <string name="info_more">Mais ▾</string>
+    <string name="info_less">Menos ▴</string>
 </resources>

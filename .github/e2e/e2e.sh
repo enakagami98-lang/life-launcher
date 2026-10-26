@@ -6,7 +6,7 @@ UI="python3 .github/e2e/ui.py"
 N=0
 log() { echo "$*" | tee -a $R; }
 top() { adb shell dumpsys activity activities | grep -m1 topResumedActivity | grep -o '[a-z0-9.]*/[A-Za-z0-9.]*' | head -1; }
-page() { for t in 生年月日と寿命 目標を追加 お気に入り アプリ 目標 習慣 今日のタスク 身体の調子; do $UI has "$t" >/dev/null && { echo "$t"; return; }; done; echo "?"; }
+page() { for t in 生年月日と寿命 目標を追加 お気に入り アプリ 目標 習慣 タスク 身体の調子; do $UI has "$t" >/dev/null && { echo "$t"; return; }; done; echo "?"; }
 snap() { N=$((N+1)); f=$(printf "%02d_%s" $N "$1"); adb exec-out screencap -p > $OUT/$f.png; log "   [撮影 $f] 表示中アプリ=$(top) 画面=$(page)"; }
 # 画面キーボード（Gboard）のキーを指でタップして入力する
 declare -A K=( [1]="140 1724" [2]="404 1724" [3]="672 1724" [4]="140 1880" [5]="404 1880" [6]="672 1880" [7]="140 2036" [8]="404 2036" [9]="672 2036" [0]="404 2192" [BS]="944 2036"
@@ -91,7 +91,7 @@ log "== 8. 6枚で一周"
 next_page; expect_text "1回目→アプリ" "アプリ"
 next_page; expect_text "2回目→目標" "目標"
 next_page; expect_text "3回目→習慣" "習慣"
-next_page; expect_text "4回目→今日のタスク" "今日のタスク"
+next_page; expect_text "4回目→タスク" "タスク"
 next_page; expect_text "5回目→身体の調子" "身体の調子"
 next_page; expect_text "6回目→寿命に戻る" "残りの日数"; snap loop_back
 prev_page; expect_text "逆方向→身体の調子" "身体の調子"

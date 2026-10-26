@@ -84,18 +84,15 @@
     <string name="search">搜尋</string>
     <string name="page_goals">目標</string>
     <string name="page_habits">習慣</string>
-    <string name="page_tasks">今日任務</string>
     <string name="items_empty">點右上角的＋新增。\n點按可編輯或刪除，長按後上下拖曳可排序。</string>
     <string name="goal_add">新增目標</string>
     <string name="goal_edit">編輯目標</string>
     <string name="habit_add">新增習慣</string>
     <string name="habit_edit">編輯習慣</string>
-    <string name="tasks_empty">點右上角的＋新增今天要做的事。\n完成後點左邊的圓圈。完成的任務隔天會消失，沒完成的會延到隔天。\n長按後上下拖曳可排序。</string>
     <string name="all_done">全部完成！</string>
     <string name="tasks_progress">%1$d / %2$d 已完成</string>
     <string name="task_do">將%1$s標為完成</string>
     <string name="task_undo">將%1$s標為未完成</string>
-    <string name="task_add">新增任務</string>
     <string name="task_edit">編輯任務</string>
     <string name="guard_used_up">今天的使用時間（%1$d 分鐘）已用完。\n明天見。</string>
     <string name="guard_extend">時間到了。要延長嗎？</string>
@@ -112,7 +109,6 @@
     <string name="w_motto">人生座右銘</string>
     <string name="w_screen">今日螢幕使用時間</string>
     <string name="w_spend">本月支出</string>
-    <string name="w_tasks">今日任務</string>
     <string name="w_countdown">倒數計時</string>
     <string name="w_weather">天氣</string>
     <string name="w_habits">今日習慣打卡</string>
@@ -318,7 +314,7 @@
     <string name="tut7_body">左右滑動畫面即可切換頁面。</string>
     <string name="tut7_page_left">← 向右滑：身體狀態（狀態、睡眠、螢幕時間記錄）</string>
     <string name="tut7_page_top">主畫面：剩餘天數、所選資訊，向下捲動是最愛</string>
-    <string name="tut7_page_right">→ 向左滑：應用程式、目標、習慣、今日任務</string>
+    <string name="tut7_page_right">→ 向左滑：應用程式、目標、習慣、任務</string>
     <string name="tut7_longpress">在應用程式清單中長按應用程式，可以設定最愛、使用限制或隱藏。</string>
     <string name="tut7_tip">隨時可在設定（⚙）的「再看一次使用說明」中重新查看。</string>
     <string name="s_tutorial">再看一次使用說明</string>
@@ -367,4 +363,15 @@
     <string name="tr_note">※ 依身體狀態、專注度和心情的平均分區分狀態好的日子。想連飲食內容一起分析，推薦使用下方的「請 AI 分析」。</string>
     <string name="ai_unlock_section"># 打開手機時的紀錄（最近 14 天，每次解鎖時的回答）\n日期,時間,當時在做什麼,打開手機的原因\n%1$s</string>
     <string name="ai_prompt">你是一位精通生活習慣和身心狀態管理的教練。\n以下是我每天在手機上記錄的資料（%1$d 天，%2$s 至 %3$s）。請分析我在什麼時候狀態最好。\n\n# 記錄項目\n- 身體狀態、專注度、心情、睡眠品質：0～10 的自我評分（10 為最好）。請用身體狀態、專注度和心情的平均分判斷狀態好的日子\n- 睡眠時數：前一晚睡了幾個小時。就寢、起床：前一晚就寢的時間和當天早上起床的時間\n- 睡前手機(分鐘)：睡前 30 分鐘內使用手機的時間\n- 手機(分鐘)：當天螢幕開啟並使用的時間。解鎖次數：解鎖的次數\n- 飲酒：1＝喝了，0＝沒喝\n- 當天目標、達成：當天的目標以及是否達成（1＝達成）\n- 早餐、午餐、晚餐、備註：吃了什麼、運動、發生的事等\n- 空白表示「沒有記錄」（不是 0 分）\n\n# 參考：我的目標和習慣\n- 目標：%4$s\n- 習慣：%5$s\n\n# 資料（CSV）\n日期,星期,身體狀態,專注度,心情,睡眠品質,睡眠時數,就寢,起床,睡前手機(分鐘),手機(分鐘),解鎖次數,飲酒,當天目標,達成,早餐,午餐,晚餐,備註\n%6$s\n\n# 希望你做的事\n1. 狀態好的日子和不好的日子有什麼不同（睡眠、就寢時間、睡前用手機、飲酒、飲食、手機使用時間、星期等），盡量用具體數字說明\n2. 最多 3 個「我在這種時候狀態好」的規律\n3. 似乎讓狀態變差的習慣或組合（如有打開手機的紀錄，也請指出看起來浪費的時段和原因）\n4. 從明天起就能嘗試的 3 個小行動\n5. 需要注意的地方（資料少或有偏差等），以及今後值得增加記錄的項目\n\n# 回答方式\n- 先用 3 行總結結論，再詳細說明\n- 請用%7$s回答，淺顯易懂，不用專業術語\n- 把資料能說明的事和推測分開寫\n- 請不要做醫學診斷</string>
+    <string name="page_tasks">任務</string>
+    <string name="w_tasks">任務</string>
+    <string name="task_add">新增任務</string>
+    <string name="tasks_empty">點右上角的＋新增任務。\n設定截止時間後，會依截止時間由近到遠排列。\n完成後點左邊的圓圈。已完成的任務會在隔天消失。</string>
+    <string name="task_due">截止</string>
+    <string name="task_due_none">無截止時間</string>
+    <string name="task_due_until">%1$s 前</string>
+    <string name="task_due_clear">取消截止時間</string>
+    <string name="task_overdue">已逾期</string>
+    <string name="info_more">詳細 ▾</string>
+    <string name="info_less">收起 ▴</string>
 </resources>

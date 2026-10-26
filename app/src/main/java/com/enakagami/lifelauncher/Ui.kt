@@ -1,6 +1,12 @@
 package com.enakagami.lifelauncher
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -89,6 +95,24 @@ fun RoundButton(
         colors = IconButtonDefaults.iconButtonColors(containerColor = container, contentColor = tint),
     ) {
         Icon(icon, contentDescription = description, tint = tint, modifier = Modifier.size(28.dp))
+    }
+}
+
+/**
+ * 長い説明は最初は隠し、「詳しく」を押したときだけ出す（画面をすっきりさせるため。どの言語でも同じ）
+ */
+@Composable
+fun MoreInfo(text: String, modifier: Modifier = Modifier, fontSize: TextUnit = 12.sp) {
+    var open by rememberSaveable { mutableStateOf(false) }
+    Column(modifier) {
+        Text(
+            stringResource(if (open) R.string.info_less else R.string.info_more),
+            color = Blue, fontSize = 13.sp, fontWeight = FontWeight.Bold,
+            modifier = Modifier.clip(RoundedCornerShape(8.dp)).clickable { open = !open }.padding(vertical = 6.dp),
+        )
+        AnimatedVisibility(open) {
+            Text(text, color = SubInk, fontSize = fontSize, lineHeight = fontSize * 1.5f)
+        }
     }
 }
 

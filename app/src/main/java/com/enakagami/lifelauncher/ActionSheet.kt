@@ -119,11 +119,7 @@ fun LimitChooser(pkg: String, onBack: () -> Unit, onDone: () -> Unit) {
         Spacer(Modifier.width(10.dp))
         Text(stringResource(R.string.limit_title), color = Ink, fontSize = 17.sp, fontWeight = FontWeight.Bold)
     }
-    Text(
-        stringResource(R.string.limit_desc),
-        color = SubInk, fontSize = 13.sp, lineHeight = 19.sp,
-        modifier = Modifier.padding(horizontal = 24.dp, vertical = 4.dp),
-    )
+    MoreInfo(stringResource(R.string.limit_desc), Modifier.padding(horizontal = 24.dp, vertical = 4.dp), fontSize = 13.sp)
     Spacer(Modifier.height(10.dp))
     LimitChoices.chunked(4).forEach { row ->
         Row(Modifier.padding(horizontal = 20.dp, vertical = 5.dp), horizontalArrangement = Arrangement.spacedBy(10.dp)) {

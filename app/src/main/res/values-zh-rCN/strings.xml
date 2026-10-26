@@ -84,18 +84,15 @@
     <string name="search">搜索</string>
     <string name="page_goals">目标</string>
     <string name="page_habits">习惯</string>
-    <string name="page_tasks">今日任务</string>
     <string name="items_empty">点右上角的＋添加。\n点按可编辑或删除，长按后上下拖动可排序。</string>
     <string name="goal_add">添加目标</string>
     <string name="goal_edit">编辑目标</string>
     <string name="habit_add">添加习惯</string>
     <string name="habit_edit">编辑习惯</string>
-    <string name="tasks_empty">点右上角的＋添加今天要做的事。\n完成后点左边的圆圈。已完成的任务第二天会消失，未完成的会顺延到第二天。\n长按后上下拖动可排序。</string>
     <string name="all_done">全部完成！</string>
     <string name="tasks_progress">%1$d / %2$d 已完成</string>
     <string name="task_do">将%1$s标为完成</string>
     <string name="task_undo">将%1$s标为未完成</string>
-    <string name="task_add">添加任务</string>
     <string name="task_edit">编辑任务</string>
     <string name="guard_used_up">今天的使用时间（%1$d 分钟）已用完。\n明天见。</string>
     <string name="guard_extend">时间到了。要延长吗？</string>
@@ -112,7 +109,6 @@
     <string name="w_motto">人生座右铭</string>
     <string name="w_screen">今日屏幕时间</string>
     <string name="w_spend">本月支出</string>
-    <string name="w_tasks">今日任务</string>
     <string name="w_countdown">倒计时</string>
     <string name="w_weather">天气</string>
     <string name="w_habits">今日习惯打卡</string>
@@ -318,7 +314,7 @@
     <string name="tut7_body">左右滑动屏幕即可切换页面。</string>
     <string name="tut7_page_left">← 向右滑：身体状态（状态、睡眠、屏幕时间记录）</string>
     <string name="tut7_page_top">主屏幕：剩余天数、所选信息，向下滚动是收藏</string>
-    <string name="tut7_page_right">→ 向左滑：应用列表、目标、习惯、今日任务</string>
+    <string name="tut7_page_right">→ 向左滑：应用列表、目标、习惯、任务</string>
     <string name="tut7_longpress">在应用列表中长按应用，可以设置收藏、使用限制或隐藏。</string>
     <string name="tut7_tip">随时可在设置（⚙）的“再看一遍使用说明”中重新查看。</string>
     <string name="s_tutorial">再看一遍使用说明</string>
@@ -367,4 +363,15 @@
     <string name="tr_note">※ 按身体状态、专注度和心情的平均分区分状态好的日子。想连饮食内容一起分析，推荐使用下方的“请 AI 分析”。</string>
     <string name="ai_unlock_section"># 打开手机时的记录（最近 14 天，每次解锁时的回答）\n日期,时间,当时在做什么,打开手机的原因\n%1$s</string>
     <string name="ai_prompt">你是一位精通生活习惯和身心状态管理的教练。\n以下是我每天在手机上记录的数据（%1$d 天，%2$s 至 %3$s）。请分析我在什么时候状态最好。\n\n# 记录项目\n- 身体状态、专注度、心情、睡眠质量：0～10 的自我评分（10 为最好）。请用身体状态、专注度和心情的平均分判断状态好的日子\n- 睡眠时长：前一晚睡了几个小时。入睡、起床：前一晚入睡的时间和当天早上起床的时间\n- 睡前手机(分钟)：睡前 30 分钟内使用手机的时间\n- 手机(分钟)：当天屏幕开启并使用的时间。解锁次数：解锁的次数\n- 饮酒：1＝喝了，0＝没喝\n- 当天目标、达成：当天的目标以及是否达成（1＝达成）\n- 早餐、午餐、晚餐、备注：吃了什么、运动、发生的事等\n- 空白表示\"没有记录\"（不是 0 分）\n\n# 参考：我的目标和习惯\n- 目标：%4$s\n- 习惯：%5$s\n\n# 数据（CSV）\n日期,星期,身体状态,专注度,心情,睡眠质量,睡眠时长,入睡,起床,睡前手机(分钟),手机(分钟),解锁次数,饮酒,当天目标,达成,早餐,午餐,晚餐,备注\n%6$s\n\n# 希望你做的事\n1. 状态好的日子和不好的日子有什么不同（睡眠、入睡时间、睡前用手机、饮酒、饮食、手机使用时间、星期等），尽量用具体数字说明\n2. 最多 3 个\"我在这种时候状态好\"的规律\n3. 似乎让状态变差的习惯或组合（如有打开手机的记录，也请指出看起来浪费的时间段和原因）\n4. 从明天起就能尝试的 3 个小行动\n5. 需要注意的地方（数据少或有偏差等），以及今后值得增加记录的项目\n\n# 回答方式\n- 先用 3 行总结结论，再详细说明\n- 请用%7$s回答，通俗易懂，不用专业术语\n- 把数据能说明的事和推测分开写\n- 请不要做医学诊断</string>
+    <string name="page_tasks">任务</string>
+    <string name="w_tasks">任务</string>
+    <string name="task_add">添加任务</string>
+    <string name="tasks_empty">点右上角的＋添加任务。\n设定截止时间后，会按截止时间由近到远排列。\n完成后点左边的圆圈。已完成的任务会在第二天消失。</string>
+    <string name="task_due">截止</string>
+    <string name="task_due_none">无截止时间</string>
+    <string name="task_due_until">%1$s 前</string>
+    <string name="task_due_clear">取消截止时间</string>
+    <string name="task_overdue">已逾期</string>
+    <string name="info_more">详细 ▾</string>
+    <string name="info_less">收起 ▴</string>
 </resources>

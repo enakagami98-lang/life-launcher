@@ -18,15 +18,17 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -35,39 +37,42 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import sh.calvin.reorderable.ReorderableItem
-import sh.calvin.reorderable.rememberReorderableLazyListState
+import java.time.Instant
 import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
-/** 今日のタスク（チェックボックス式）。習慣の右隣の画面 */
+/** 期限の短い表示（例：10/28 18:00。並びはスマホの言語に合わせる） */
+fun dueShort(ms: Long): String {
+    val pattern = android.text.format.DateFormat.getBestDateTimePattern(Locale.getDefault(), "MdHm")
+    return Instant.ofEpochMilli(ms).atZone(ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern(pattern, Locale.getDefault()))
+}
+
+/** タスク（チェックボックス式）。期限がある場合は、期限が近い順に並ぶ。習慣の右隣の画面 */
 @Composable
 fun TasksPage(store: Store, today: LocalDate) {
     LaunchedEffect(today) { store.pruneTasks(today) }
-    val list = store.tasks
+    val list = store.sortedTasks()
     var adding by remember { mutableStateOf(false) }
     var editing by remember { mutableStateOf<Task?>(null) }
-
-    val listState = rememberLazyListState()
-    val reorder = rememberReorderableLazyListState(listState) { from, to ->
-        // 先頭の「◯/◯ 完了」の行の分だけずらす
-        store.moveTask(from.index - 1, to.index - 1)
-    }
     val done = list.count { it.doneDate != null }
+    val now = System.currentTimeMillis()
 
     Column(Modifier.fillMaxSize()) {
         PageHeader(stringResource(R.string.page_tasks)) {
             RoundButton(Icons.Filled.Add, stringResource(R.string.add), Blue, OnAccent) { adding = true }
         }
         LazyColumn(
-            state = listState,
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(start = 20.dp, end = 20.dp, top = 4.dp, bottom = 48.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
@@ -96,40 +101,38 @@ fun TasksPage(store: Store, today: LocalDate) {
                 }
             }
             items(list, key = { it.id }) { task ->
-                ReorderableItem(reorder, key = task.id) { dragging ->
-                    val isDone = task.doneDate != null
-                    Row(
+                val isDone = task.doneDate != null
+                Row(
+                    Modifier
+                        .fillMaxWidth()
+                        .card()
+                        .clickable { editing = task }
+                        .padding(start = 14.dp, end = 22.dp, top = 10.dp, bottom = 10.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    // チェックボックス（丸）
+                    val checkDesc = stringResource(if (isDone) R.string.task_undo else R.string.task_do, task.text)
+                    Box(
                         Modifier
-                            .fillMaxWidth()
-                            .alpha(if (dragging) 0.85f else 1f)
-                            .card()
-                            .longPressDraggableHandle()
-                            .clickable { editing = task }
-                            .padding(start = 14.dp, end = 22.dp, top = 10.dp, bottom = 10.dp),
-                        verticalAlignment = Alignment.CenterVertically,
+                            .size(48.dp)
+                            .clip(CircleShape)
+                            .clickable { store.toggleTask(task.id, today) }
+                            .semantics { contentDescription = checkDesc },
+                        contentAlignment = Alignment.Center,
                     ) {
-                        // チェックボックス（丸）
-                        val checkDesc = stringResource(if (isDone) R.string.task_undo else R.string.task_do, task.text)
                         Box(
                             Modifier
-                                .size(48.dp)
+                                .size(28.dp)
                                 .clip(CircleShape)
-                                .clickable { store.toggleTask(task.id, today) }
-                                .semantics { contentDescription = checkDesc },
+                                .background(if (isDone) Blue else CardBg)
+                                .border(2.dp, if (isDone) Blue else SubInk, CircleShape),
                             contentAlignment = Alignment.Center,
                         ) {
-                            Box(
-                                Modifier
-                                    .size(28.dp)
-                                    .clip(CircleShape)
-                                    .background(if (isDone) Blue else CardBg)
-                                    .border(2.dp, if (isDone) Blue else SubInk, CircleShape),
-                                contentAlignment = Alignment.Center,
-                            ) {
-                                if (isDone) Icon(Icons.Filled.Check, null, tint = OnAccent, modifier = Modifier.size(18.dp))
-                            }
+                            if (isDone) Icon(Icons.Filled.Check, null, tint = OnAccent, modifier = Modifier.size(18.dp))
                         }
-                        Spacer(Modifier.width(8.dp))
+                    }
+                    Spacer(Modifier.width(8.dp))
+                    Column(Modifier.weight(1f)) {
                         Text(
                             task.text,
                             fontSize = 16.sp,
@@ -137,6 +140,15 @@ fun TasksPage(store: Store, today: LocalDate) {
                             color = if (isDone) SubInk else Ink,
                             textDecoration = if (isDone) TextDecoration.LineThrough else null,
                         )
+                        task.due?.let { due ->
+                            val late = !isDone && due < now
+                            Text(
+                                if (late) stringResource(R.string.task_overdue) + " · " + dueShort(due)
+                                else stringResource(R.string.task_due_until, dueShort(due)),
+                                fontSize = 13.sp, fontWeight = FontWeight.Bold,
+                                color = if (late) Danger else SubInk,
+                            )
+                        }
                     }
                 }
             }
@@ -144,20 +156,81 @@ fun TasksPage(store: Store, today: LocalDate) {
     }
 
     if (adding) {
-        TextInputDialog(
+        TaskDialog(
             title = stringResource(R.string.task_add),
-            initial = "",
-            onSave = { store.addTask(it); adding = false },
+            initial = null,
+            onSave = { text, due -> store.addTask(text, due); adding = false },
             onDismiss = { adding = false },
         )
     }
     editing?.let { task ->
-        TextInputDialog(
+        TaskDialog(
             title = stringResource(R.string.task_edit),
-            initial = task.text,
-            onSave = { store.updateTask(task.id, it); editing = null },
+            initial = task,
+            onSave = { text, due -> store.updateTask(task.id, text, due); editing = null },
             onDismiss = { editing = null },
             onDelete = { store.deleteTask(task.id); editing = null },
         )
     }
+}
+
+/** タスクの追加・編集。名前と「何日の何時までに」 */
+@Composable
+private fun TaskDialog(
+    title: String,
+    initial: Task?,
+    onSave: (String, Long?) -> Unit,
+    onDismiss: () -> Unit,
+    onDelete: (() -> Unit)? = null,
+) {
+    val context = LocalContext.current
+    var text by remember { mutableStateOf(initial?.text ?: "") }
+    var due by remember { mutableStateOf(initial?.due) }
+
+    // 日付 → 時刻の順に選ぶ（最初は明日の18:00）
+    fun pickDue() {
+        val zone = ZoneId.systemDefault()
+        val start = due?.let { LocalDateTime.ofInstant(Instant.ofEpochMilli(it), zone) }
+            ?: LocalDate.now().plusDays(1).atTime(18, 0)
+        android.app.DatePickerDialog(context, { _, y, m, d ->
+            android.app.TimePickerDialog(context, { _, h, min ->
+                due = LocalDateTime.of(y, m + 1, d, h, min).atZone(zone).toInstant().toEpochMilli()
+            }, start.hour, start.minute, android.text.format.DateFormat.is24HourFormat(context)).show()
+        }, start.year, start.monthValue - 1, start.dayOfMonth).show()
+    }
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        containerColor = Bg,
+        title = { Text(title, fontWeight = FontWeight.Bold) },
+        text = {
+            Column {
+                OutlinedTextField(value = text, onValueChange = { text = it }, maxLines = 3, modifier = Modifier.fillMaxWidth())
+                Spacer(Modifier.height(14.dp))
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(stringResource(R.string.task_due), fontSize = 15.sp, fontWeight = FontWeight.Bold, color = Ink, modifier = Modifier.weight(1f))
+                    Text(
+                        due?.let { stringResource(R.string.task_due_until, dueShort(it)) } ?: stringResource(R.string.task_due_none),
+                        fontSize = 15.sp, fontWeight = FontWeight.Bold, color = if (due == null) SubInk else Blue,
+                        modifier = Modifier.clip(RoundedCornerShape(12.dp)).background(CardBg).clickable { pickDue() }
+                            .padding(horizontal = 14.dp, vertical = 10.dp),
+                    )
+                }
+                if (due != null) {
+                    TextButton(onClick = { due = null }) { Text(stringResource(R.string.task_due_clear)) }
+                }
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = { if (text.isNotBlank()) onSave(text.trim(), due) }, enabled = text.isNotBlank()) {
+                Text(stringResource(R.string.save), fontWeight = FontWeight.Bold)
+            }
+        },
+        dismissButton = {
+            Row {
+                if (onDelete != null) TextButton(onClick = onDelete) { Text(stringResource(R.string.delete), color = Danger) }
+                TextButton(onClick = onDismiss) { Text(stringResource(R.string.cancel)) }
+            }
+        },
+    )
 }

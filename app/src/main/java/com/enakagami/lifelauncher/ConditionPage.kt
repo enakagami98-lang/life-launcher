@@ -225,10 +225,7 @@ private fun ScreenTimeCard(date: LocalDate, today: LocalDate) {
         Spacer(Modifier.height(10.dp))
         MonthCompare(date, today)
         Spacer(Modifier.height(6.dp))
-        Text(
-            stringResource(R.string.st_note),
-            fontSize = 11.sp, color = SubInk, lineHeight = 16.sp,
-        )
+        MoreInfo(stringResource(R.string.st_note))
     }
 }
 
@@ -305,10 +302,7 @@ private fun UnlockLogCard(date: LocalDate) {
                 colors = SwitchDefaults.colors(checkedTrackColor = Blue, checkedThumbColor = OnAccent),
             )
         }
-        Text(
-            stringResource(R.string.ul_note),
-            fontSize = 12.sp, color = SubInk, lineHeight = 18.sp,
-        )
+        MoreInfo(stringResource(R.string.ul_note))
         if (Guard.askEnabled && !overlayOk) {
             Spacer(Modifier.height(6.dp))
             Text(
@@ -581,7 +575,7 @@ private fun TrendCard(days: Map<LocalDate, DayLog>) {
             TrendRow(stringResource(R.string.tr_bedphone), rate(bedGood) { it.bedPhone!! > 0 }, rate(bedOther) { it.bedPhone!! > 0 })
         }
         Spacer(Modifier.height(8.dp))
-        Text(stringResource(R.string.tr_note), fontSize = 11.sp, color = SubInk, lineHeight = 16.sp)
+        MoreInfo(stringResource(R.string.tr_note))
     }
 }
 
@@ -610,10 +604,7 @@ private fun AiPromptCard(store: Store) {
     Column(Modifier.fillMaxWidth().card().padding(20.dp)) {
         Text(stringResource(R.string.ai_title), fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Ink)
         Spacer(Modifier.height(6.dp))
-        Text(
-            stringResource(R.string.ai_desc, count),
-            fontSize = 13.sp, color = SubInk, lineHeight = 19.sp,
-        )
+        MoreInfo(stringResource(R.string.ai_desc, count), fontSize = 13.sp)
         Spacer(Modifier.height(14.dp))
         Button(
             onClick = {

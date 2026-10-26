@@ -32,7 +32,8 @@ val ALL_WIDGETS = linkedMapOf(
 data class Countdown(val id: Long, val title: String, val date: LocalDate)
 
 /** 今日のタスク。doneDate は完了した日（未完了は null） */
-data class Task(val id: Long, val text: String, val doneDate: String? = null)
+/** タスク1件。due は「何日の何時までに」（ミリ秒）。期限なしは null */
+data class Task(val id: Long, val text: String, val doneDate: String? = null, val due: Long? = null)
 
 /** お気に入りアプリ（label はユーザーが変えた表示名） */
 data class Fav(val key: String, val label: String)
@@ -257,7 +258,7 @@ class Store(context: Context) {
         val arr = JSONArray(prefs.getString("tasks", "[]"))
         for (i in 0 until arr.length()) {
             val o = arr.getJSONObject(i)
-            add(Task(o.getLong("id"), o.getString("text"), if (o.isNull("done")) null else o.optString("done")))
+            add(Task(o.getLong("id"), o.getString("text"), if (o.isNull("done")) null else o.optString("done"), o.optLong("due", -1).takeIf { it > 0 }))
         }
     }
 
@@ -267,8 +268,8 @@ class Store(context: Context) {
         if (tasks.removeAll { it.doneDate != null && it.doneDate < t }) saveTasks()
     }
 
-    fun addTask(text: String) {
-        tasks.add(Task(System.currentTimeMillis(), text))
+    fun addTask(text: String, due: Long? = null) {
+        tasks.add(Task(System.currentTimeMillis(), text, due = due))
         saveTasks()
     }
 
@@ -279,9 +280,9 @@ class Store(context: Context) {
         saveTasks()
     }
 
-    fun updateTask(id: Long, text: String) {
+    fun updateTask(id: Long, text: String, due: Long?) {
         val i = tasks.indexOfFirst { it.id == id }
-        if (i >= 0) tasks[i] = tasks[i].copy(text = text)
+        if (i >= 0) tasks[i] = tasks[i].copy(text = text, due = due)
         saveTasks()
     }
 
@@ -296,9 +297,14 @@ class Store(context: Context) {
         saveTasks()
     }
 
+    /** 並び順：終わっていないものが先。その中は期限が近い順（期限なしは後ろ、登録した順） */
+    fun sortedTasks(): List<Task> = tasks.sortedWith(compareBy<Task>({ it.doneDate != null }, { it.due ?: Long.MAX_VALUE }, { it.id }))
+
     private fun saveTasks() {
         val arr = JSONArray()
-        tasks.forEach { arr.put(JSONObject().put("id", it.id).put("text", it.text).put("done", it.doneDate ?: JSONObject.NULL)) }
+        tasks.forEach { t ->
+            arr.put(JSONObject().put("id", t.id).put("text", t.text).put("done", t.doneDate ?: JSONObject.NULL).apply { t.due?.let { put("due", it) } })
+        }
         prefs.edit().putString("tasks", arr.toString()).apply()
     }
 

@@ -84,18 +84,15 @@
     <string name="search">検索</string>
     <string name="page_goals">目標</string>
     <string name="page_habits">習慣</string>
-    <string name="page_tasks">今日のタスク</string>
     <string name="items_empty">右上の＋から追加できます。\nタップで編集・削除、長押ししたまま上下に動かすと並べ替えできます。</string>
     <string name="goal_add">目標を追加</string>
     <string name="goal_edit">目標を編集</string>
     <string name="habit_add">習慣を追加</string>
     <string name="habit_edit">習慣を編集</string>
-    <string name="tasks_empty">右上の＋から今日やることを追加できます。\n終わったら左の丸をタップ。終わったタスクは次の日に消え、終わらなかったタスクは次の日に持ち越されます。\n長押ししたまま上下に動かすと並べ替えできます。</string>
     <string name="all_done">全部おわり！</string>
     <string name="tasks_progress">%1$d / %2$d 完了</string>
     <string name="task_do">%1$sを完了にする</string>
     <string name="task_undo">%1$sを未完了に戻す</string>
-    <string name="task_add">今日のタスクを追加</string>
     <string name="task_edit">タスクを編集</string>
     <string name="guard_used_up">今日の使用時間（%1$d分）を使い切りました。\nまた明日。</string>
     <string name="guard_extend">時間になりました。延長しますか？</string>
@@ -112,7 +109,6 @@
     <string name="w_motto">人生のモットー</string>
     <string name="w_screen">今日のスマホ使用時間</string>
     <string name="w_spend">今月の支払額</string>
-    <string name="w_tasks">今日のタスク</string>
     <string name="w_countdown">カウントダウン</string>
     <string name="w_weather">天気</string>
     <string name="w_habits">今日の習慣チェック</string>
@@ -318,7 +314,7 @@
     <string name="tut7_body">画面を左右にスワイプすると、ページが切り替わります。</string>
     <string name="tut7_page_left">← 右にスワイプ：身体の調子（調子・睡眠・スマホ時間の記録）</string>
     <string name="tut7_page_top">トップ：残りの日数、選んだ情報、下にスクロールでお気に入り</string>
-    <string name="tut7_page_right">→ 左にスワイプ：アプリ一覧・目標・習慣・今日のタスク</string>
+    <string name="tut7_page_right">→ 左にスワイプ：アプリ一覧・目標・習慣・タスク</string>
     <string name="tut7_longpress">アプリ一覧でアプリを長押しすると、お気に入り・使いすぎ防止・非表示を設定できます。</string>
     <string name="tut7_tip">設定（⚙）の「使い方をもう一度見る」から、いつでもこの説明を見られます。</string>
     <string name="s_tutorial">使い方をもう一度見る</string>
@@ -367,4 +363,15 @@
     <string name="tr_note">※「身体の調子・集中度・気分」の平均で、調子がいい日を分けています。食事の中身まで含めた分析は、下の「AIに分析してもらう」がおすすめ。</string>
     <string name="ai_unlock_section"># スマホを開いたときの記録（直近14日。ロック解除のたびに答えたもの）\n日付,時刻,そのとき何をしていたか,スマホを開いた理由\n%1$s</string>
     <string name="ai_prompt">あなたは生活習慣とコンディション管理にくわしいコーチです。\n以下は、私が毎日スマホで記録しているデータです（%1$d日分、%2$s 〜 %3$s）。私が「どういう時に調子がいいのか」を分析してください。\n\n# 記録の項目\n- 身体の調子・集中度・気分・睡眠の質：0〜10の自己評価（10が最高）。調子がいい日かどうかは「身体の調子・集中度・気分」の平均で判断してください\n- 睡眠時間：前の晩に眠った時間（時間）。就寝・起床：前の晩に寝た時刻と、その日の朝に起きた時刻\n- 寝る前スマホ(分)：寝る前の30分間にスマホを使っていた時間\n- スマホ(分)：その日にスマホの画面をつけて使っていた時間。解除回数：ロックを解除した回数\n- お酒：1＝飲んだ、0＝飲んでいない\n- 今日の目標・達成：その日の目標と、達成できたか（1＝達成）\n- 朝・昼・夜・メモ：食べたもの、運動・出来事など\n- 空欄は「記録していない」という意味です（0点ではありません）\n\n# 参考：私の目標と習慣\n- 目標：%4$s\n- 習慣：%5$s\n\n# データ（CSV）\n日付,曜日,身体の調子,集中度,気分,睡眠の質,睡眠時間,就寝,起床,寝る前スマホ(分),スマホ(分),解除回数,お酒,今日の目標,達成,朝,昼,夜,メモ\n%6$s\n\n# お願いしたいこと\n1. 調子がいい日と悪い日で、何が違うか（睡眠・寝る時刻・寝る前のスマホ・お酒・食事・スマホの使用時間・曜日など）。できるだけ具体的な数字で示してください\n2. 「こういう時に調子がいい」というパターンを3つまで\n3. 調子を下げていそうな習慣や組み合わせ（スマホを開いた記録があれば、無駄になっていそうな時間帯・理由も）\n4. 明日から試せる、小さく始められる行動を3つ\n5. データが少ない・偏っているなど注意すべき点と、今後追加で記録するとよい項目\n\n# 答え方\n- 最初に結論を3行でまとめ、そのあと詳しく説明してください\n- %7$sで、専門用語を使わずにわかりやすく\n- データから言えることと推測は分けて書いてください\n- 医学的な診断はしないでください</string>
+    <string name="page_tasks">タスク</string>
+    <string name="w_tasks">タスク</string>
+    <string name="task_add">タスクを追加</string>
+    <string name="tasks_empty">右上の＋でタスクを追加できます。\n期限（何日の何時までに）を決めると、期限が近い順に並びます。\n終わったら左の丸をタップ。終わったタスクは次の日に消えます。</string>
+    <string name="task_due">期限</string>
+    <string name="task_due_none">期限なし</string>
+    <string name="task_due_until">%1$s まで</string>
+    <string name="task_due_clear">期限をなくす</string>
+    <string name="task_overdue">期限切れ</string>
+    <string name="info_more">詳しく ▾</string>
+    <string name="info_less">閉じる ▴</string>
 </resources>

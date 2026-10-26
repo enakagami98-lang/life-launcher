@@ -35,7 +35,7 @@ expect_no_text "命日は無い" "命日"
 expect_text "モットーの部品" "タップして、人生のモットーを入力"
 expect_text "使用時間の部品" "今日のスマホ"
 expect_text "支払額の部品" "今月の支払額"
-expect_no_text "タスクは最初は出ない" "今日のタスク"
+expect_no_text "タスクは最初は出ない" "タスク"
 expect_text "許可のお願い" "通知へのアクセス"
 o=$(order タップして、人生のモットーを入力 今日のスマホ 今月の支払額)
 [ "$o" = "タップして、人生のモットーを入力<今日のスマホ<今月の支払額" ] && ok "最初の並び ($o)" || ng "最初の並び ($o)"
@@ -48,16 +48,16 @@ expect_text "部品の候補：習慣チェック" "今日の習慣チェック"
 expect_text "部品の候補：歩数" "歩数"
 $UI tapp "昨日のふり返り" >/dev/null; sleep 1
 expect_text "部品の候補：昨日のふり返り" "昨日のふり返り"
-$UI tap "今日のタスクを表示" >/dev/null; sleep 1
-for i in 1 2 3; do $UI tap "今日のタスクを上へ" >/dev/null; sleep 1; done
+$UI tap "タスクを表示" >/dev/null; sleep 1
+for i in 1 2 3; do $UI tap "タスクを上へ" >/dev/null; sleep 1; done
 $UI tap "人生のモットーを表示" >/dev/null; sleep 1
 $UI tap "保存" >/dev/null; sleep 2; snap edited
 expect_no_text "モットーを非表示" "タップして、人生のモットーを入力"
-o=$(order 今日のタスク 今日のスマホ 今月の支払額)
-[ "$o" = "今日のタスク<今日のスマホ<今月の支払額" ] && ok "タスクが一番上 ($o)" || ng "並び順 (期待 今日のタスク<今日のスマホ<今月の支払額 / 実際 $o)"
+o=$(order タスク 今日のスマホ 今月の支払額)
+[ "$o" = "タスク<今日のスマホ<今月の支払額" ] && ok "タスクが一番上 ($o)" || ng "並び順 (期待 タスク<今日のスマホ<今月の支払額 / 実際 $o)"
 key KEYCODE_HOME
-o=$(order 今日のタスク 今日のスマホ 今月の支払額)
-[ "$o" = "今日のタスク<今日のスマホ<今月の支払額" ] && ok "ホームに戻っても並びが残る" || ng "並びが戻った ($o)"
+o=$(order タスク 今日のスマホ 今月の支払額)
+[ "$o" = "タスク<今日のスマホ<今月の支払額" ] && ok "ホームに戻っても並びが残る" || ng "並びが戻った ($o)"
 
 log "== 3. 新しい部品"
 $UI tap "表示する項目を編集" >/dev/null; sleep 2

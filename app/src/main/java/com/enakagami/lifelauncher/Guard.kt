@@ -81,7 +81,8 @@ object Guard {
         waitSec = prefs.getInt("waitSec", 30)
         floatingBar = prefs.getBoolean("floatingBar", true)
         homeOnScreenOff = prefs.getBoolean("homeOnScreenOff", true)
-        prefs.getString("morning", null)?.let { morning = parseRange(it) }
+        // 朝の集中時間はなくした（夜のおやすみ時間だけ）。前に朝をオンにしていた人も止める
+        prefs.getString("morning", null)?.let { morning = parseRange(it).copy(enabled = false) }
         prefs.getString("night", null)?.let { night = parseRange(it) }
         usageDay = prefs.getString("usageDay", "")!!
         JSONObject(prefs.getString("usage", "{}")!!).let { o -> o.keys().forEach { usage[it] = o.getLong(it) } }
@@ -129,7 +130,6 @@ object Guard {
     // ---- 使えない時間帯 ----
     /** 今が使えない時間なら (名前, 解除時刻) を返す */
     fun activeLock(now: LocalDateTime = LocalDateTime.now()): Pair<Int, String>? = when {
-        morning.activeAt(now) -> R.string.lock_morning to minutesText(morning.end)
         night.activeAt(now) -> R.string.lock_night to minutesText(night.end)
         else -> null
     }

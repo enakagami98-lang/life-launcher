@@ -84,18 +84,15 @@
     <string name="search">Cerca</string>
     <string name="page_goals">Obiettivi</string>
     <string name="page_habits">Abitudini</string>
-    <string name="page_tasks">Attività di oggi</string>
     <string name="items_empty">Aggiungi con + in alto a destra.\nTocca per modificare o eliminare. Tieni premuto e trascina per riordinare.</string>
     <string name="goal_add">Aggiungi obiettivo</string>
     <string name="goal_edit">Modifica obiettivo</string>
     <string name="habit_add">Aggiungi abitudine</string>
     <string name="habit_edit">Modifica abitudine</string>
-    <string name="tasks_empty">Aggiungi le attività di oggi con + in alto a destra.\nTocca il cerchio quando hai finito. Le attività fatte spariscono il giorno dopo; quelle non fatte passano al giorno dopo.\nTieni premuto e trascina per riordinare.</string>
     <string name="all_done">Tutto fatto!</string>
     <string name="tasks_progress">%1$d / %2$d fatte</string>
     <string name="task_do">Segna %1$s come fatta</string>
     <string name="task_undo">Segna %1$s come non fatta</string>
-    <string name="task_add">Aggiungi attività</string>
     <string name="task_edit">Modifica attività</string>
     <string name="guard_used_up">Hai usato i %1$d minuti di oggi.\nA domani.</string>
     <string name="guard_extend">Tempo scaduto. Vuoi prolungare?</string>
@@ -112,7 +109,6 @@
     <string name="w_motto">Motto di vita</string>
     <string name="w_screen">Tempo di utilizzo di oggi</string>
     <string name="w_spend">Spese del mese</string>
-    <string name="w_tasks">Attività di oggi</string>
     <string name="w_countdown">Conto alla rovescia</string>
     <string name="w_weather">Meteo</string>
     <string name="w_habits">Abitudini di oggi</string>
@@ -362,4 +358,15 @@
     <string name="tr_note">* I giorni buoni sono separati in base alla media di corpo, concentrazione e umore. Per un\'analisi che includa i pasti, prova “Chiedi all\'IA” qui sotto.</string>
     <string name="ai_unlock_section"># Perché ho aperto il telefono (ultimi 14 giorni, risposta a ogni sblocco)\ndata,ora,cosa stavo facendo,perché ho aperto il telefono\n%1$s</string>
     <string name="ai_prompt">Sei un coach che conosce molto bene le abitudini quotidiane e il benessere.\nQui sotto ci sono i dati che registro ogni giorno sul telefono (%1$d giorni, dal %2$s al %3$s). Analizza quando tendo a sentirmi meglio.\n\n# Campi\n- corpo, concentrazione, umore, qualità_sonno: autovalutazione da 0 a 10 (10 è il massimo). Valuta i giorni buoni in base alla media di corpo, concentrazione e umore\n- ore_sonno: ore dormite la notte prima. a_letto, sveglia: quando sono andato a letto la sera prima e quando mi sono svegliato quella mattina\n- telefono_prima_di_dormire: minuti di uso del telefono nei 30 minuti prima di andare a letto\n- telefono_min: minuti con lo schermo acceso e in uso quel giorno. sblocchi: numero di sblocchi\n- alcol: 1 = bevuto alcol, 0 = no\n- obiettivo, raggiunto: l\'obiettivo del giorno e se l\'ho raggiunto (1 = raggiunto)\n- colazione, pranzo, cena, note: cosa ho mangiato, attività fisica, eventi ecc.\n- Vuoto significa \"non registrato\" (non zero)\n\n# Per riferimento: i miei obiettivi e abitudini\n- Obiettivi: %4$s\n- Abitudini: %5$s\n\n# Dati (CSV)\ndata,giorno,corpo,concentrazione,umore,qualità_sonno,ore_sonno,a_letto,sveglia,telefono_prima_di_dormire,telefono_min,sblocchi,alcol,obiettivo,raggiunto,colazione,pranzo,cena,note\n%6$s\n\n# Cosa vorrei\n1. Cosa cambia tra giorni buoni e cattivi (sonno, ora di andare a letto, telefono prima di dormire, alcol, pasti, tempo davanti allo schermo, giorno della settimana ecc.), con numeri concreti se possibile\n2. Fino a 3 schemi del tipo \"sto bene quando...\"\n3. Abitudini o combinazioni che sembrano abbattermi (se ci sono dati sugli sblocchi, anche orari e motivi che sembrano tempo sprecato)\n4. 3 piccole azioni da provare a partire da domani\n5. Avvertenze (pochi dati o dati sbilanciati ecc.) e cose che varrebbe la pena registrare in futuro\n\n# Come rispondere\n- Inizia con un riassunto di 3 righe, poi spiega nel dettaglio\n- Rispondi in %7$s, con parole semplici e senza termini tecnici\n- Separa ciò che mostrano i dati dalle supposizioni\n- Non fare diagnosi mediche</string>
+    <string name="page_tasks">Attività</string>
+    <string name="w_tasks">Attività</string>
+    <string name="task_add">Aggiungi attività</string>
+    <string name="tasks_empty">Aggiungi attività con + in alto a destra.\nCon una scadenza (giorno e ora), vengono ordinate dalla più vicina.\nTocca il cerchio quando hai finito. Le attività fatte spariscono il giorno dopo.</string>
+    <string name="task_due">Scadenza</string>
+    <string name="task_due_none">Nessuna scadenza</string>
+    <string name="task_due_until">Entro %1$s</string>
+    <string name="task_due_clear">Rimuovi scadenza</string>
+    <string name="task_overdue">Scaduta</string>
+    <string name="info_more">Altro ▾</string>
+    <string name="info_less">Meno ▴</string>
 </resources>

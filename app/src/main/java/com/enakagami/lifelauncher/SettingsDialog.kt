@@ -116,10 +116,7 @@ fun SettingsDialog(store: Store, apps: List<AppInfo>, onDismiss: () -> Unit, onT
 
                 Section(stringResource(R.string.s_home))
                 Column(Modifier.padding(horizontal = 20.dp).fillMaxWidth().card().padding(20.dp)) {
-                    Text(
-                        stringResource(R.string.s_home_desc),
-                        fontSize = 14.sp, color = SubInk,
-                    )
+                    MoreInfo(stringResource(R.string.s_home_desc), fontSize = 14.sp)
                     Spacer(Modifier.height(12.dp))
                     Button(
                         onClick = {
@@ -153,7 +150,8 @@ fun SettingsDialog(store: Store, apps: List<AppInfo>, onDismiss: () -> Unit, onT
                         }
                     }
                 }
-                Spacer(Modifier.height(40.dp))
+                // 一番下が、画面下のナビゲーションの線に隠れないように余白をとる
+                Spacer(Modifier.height(120.dp))
             }
         }
     }

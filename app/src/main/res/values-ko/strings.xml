@@ -84,18 +84,15 @@
     <string name="search">검색</string>
     <string name="page_goals">목표</string>
     <string name="page_habits">습관</string>
-    <string name="page_tasks">오늘의 할 일</string>
     <string name="items_empty">오른쪽 위 ＋로 추가할 수 있어요.\n누르면 편집·삭제, 길게 누른 채 위아래로 움직이면 순서를 바꿀 수 있어요.</string>
     <string name="goal_add">목표 추가</string>
     <string name="goal_edit">목표 편집</string>
     <string name="habit_add">습관 추가</string>
     <string name="habit_edit">습관 편집</string>
-    <string name="tasks_empty">오른쪽 위 ＋로 오늘 할 일을 추가하세요.\n끝나면 왼쪽 동그라미를 누르세요. 끝낸 일은 다음 날 사라지고, 못 끝낸 일은 다음 날로 넘어가요.\n길게 누른 채 위아래로 움직이면 순서를 바꿀 수 있어요.</string>
     <string name="all_done">모두 끝!</string>
     <string name="tasks_progress">%1$d / %2$d 완료</string>
     <string name="task_do">%1$s 완료로 표시</string>
     <string name="task_undo">%1$s 미완료로 되돌리기</string>
-    <string name="task_add">할 일 추가</string>
     <string name="task_edit">할 일 편집</string>
     <string name="guard_used_up">오늘 사용 시간(%1$d분)을 다 썼어요.\n내일 만나요.</string>
     <string name="guard_extend">시간이 됐어요. 연장할까요?</string>
@@ -112,7 +109,6 @@
     <string name="w_motto">인생 좌우명</string>
     <string name="w_screen">오늘의 화면 사용 시간</string>
     <string name="w_spend">이번 달 지출</string>
-    <string name="w_tasks">오늘의 할 일</string>
     <string name="w_countdown">카운트다운</string>
     <string name="w_weather">날씨</string>
     <string name="w_habits">오늘의 습관 체크</string>
@@ -318,7 +314,7 @@
     <string name="tut7_body">화면을 좌우로 스와이프하면 페이지가 바뀌어요.</string>
     <string name="tut7_page_left">← 오른쪽으로 스와이프: 몸 컨디션 (컨디션·수면·화면 시간 기록)</string>
     <string name="tut7_page_top">홈: 남은 날, 고른 정보, 아래로 스크롤하면 즐겨찾기</string>
-    <string name="tut7_page_right">→ 왼쪽으로 스와이프: 앱 목록·목표·습관·오늘의 할 일</string>
+    <string name="tut7_page_right">→ 왼쪽으로 스와이프: 앱 목록·목표·습관·할 일</string>
     <string name="tut7_longpress">앱 목록에서 앱을 길게 누르면 즐겨찾기·사용 제한·숨기기를 설정할 수 있어요.</string>
     <string name="tut7_tip">설정(⚙)의 \'사용법 다시 보기\'에서 언제든 이 설명을 볼 수 있어요.</string>
     <string name="s_tutorial">사용법 다시 보기</string>
@@ -367,4 +363,15 @@
     <string name="tr_note">※ 몸 컨디션·집중도·기분의 평균으로 컨디션이 좋은 날을 나눠요. 식사 내용까지 포함한 분석은 아래 \'AI에게 분석 맡기기\'를 추천해요.</string>
     <string name="ai_unlock_section"># 휴대폰을 열었을 때의 기록 (최근 14일, 잠금 해제할 때마다 답한 것)\n날짜,시각,그때 하고 있던 일,휴대폰을 연 이유\n%1$s</string>
     <string name="ai_prompt">당신은 생활 습관과 컨디션 관리에 밝은 코치입니다.\n아래는 제가 매일 휴대폰에 기록하는 데이터입니다 (%1$d일분, %2$s ~ %3$s). 제가 어떤 때에 컨디션이 좋은지 분석해 주세요.\n\n# 기록 항목\n- 몸 컨디션·집중도·기분·수면의 질: 0~10 자기 평가 (10이 최고). 컨디션이 좋은 날은 몸 컨디션·집중도·기분의 평균으로 판단해 주세요\n- 수면 시간: 전날 밤에 잔 시간(시간). 취침·기상: 전날 밤 잠든 시각과 그날 아침 일어난 시각\n- 자기 전 휴대폰(분): 자기 전 30분 동안 휴대폰을 사용한 시간\n- 휴대폰(분): 그날 화면을 켜고 사용한 시간. 잠금 해제 횟수: 잠금을 해제한 횟수\n- 음주: 1 = 마셨음, 0 = 안 마셨음\n- 오늘의 목표·달성: 그날의 목표와 달성 여부 (1 = 달성)\n- 아침·점심·저녁·메모: 먹은 것, 운동, 있었던 일 등\n- 빈칸은 \"기록하지 않음\"이라는 뜻입니다 (0점이 아닙니다)\n\n# 참고: 제 목표와 습관\n- 목표: %4$s\n- 습관: %5$s\n\n# 데이터 (CSV)\n날짜,요일,몸 컨디션,집중도,기분,수면의 질,수면 시간,취침,기상,자기 전 휴대폰(분),휴대폰(분),잠금 해제 횟수,음주,오늘의 목표,달성,아침,점심,저녁,메모\n%6$s\n\n# 부탁하고 싶은 것\n1. 컨디션이 좋은 날과 나쁜 날의 차이 (수면, 취침 시각, 자기 전 휴대폰, 음주, 식사, 휴대폰 사용 시간, 요일 등). 가능한 한 구체적인 숫자로 보여 주세요\n2. \"이럴 때 컨디션이 좋다\"는 패턴 최대 3가지\n3. 컨디션을 떨어뜨리는 것 같은 습관이나 조합 (휴대폰을 연 기록이 있다면, 낭비로 보이는 시간대와 이유도)\n4. 내일부터 작게 시작할 수 있는 행동 3가지\n5. 데이터가 적거나 치우쳐 있는 등 주의할 점과, 앞으로 추가로 기록하면 좋을 항목\n\n# 답변 방식\n- 먼저 결론을 3줄로 정리한 뒤 자세히 설명해 주세요\n- %7$s로, 전문 용어 없이 알기 쉽게\n- 데이터로 말할 수 있는 것과 추측은 나눠서 써 주세요\n- 의학적 진단은 하지 말아 주세요</string>
+    <string name="page_tasks">할 일</string>
+    <string name="w_tasks">할 일</string>
+    <string name="task_add">할 일 추가</string>
+    <string name="tasks_empty">오른쪽 위 ＋로 할 일을 추가하세요.\n마감(며칠 몇 시까지)을 정하면 마감이 가까운 순으로 정렬돼요.\n끝나면 왼쪽 동그라미를 탭하세요. 끝난 할 일은 다음 날 사라져요.</string>
+    <string name="task_due">마감</string>
+    <string name="task_due_none">마감 없음</string>
+    <string name="task_due_until">%1$s까지</string>
+    <string name="task_due_clear">마감 없애기</string>
+    <string name="task_overdue">마감 지남</string>
+    <string name="info_more">자세히 ▾</string>
+    <string name="info_less">접기 ▴</string>
 </resources>

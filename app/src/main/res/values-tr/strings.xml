@@ -84,18 +84,15 @@
     <string name="search">Ara</string>
     <string name="page_goals">Hedefler</string>
     <string name="page_habits">Alışkanlıklar</string>
-    <string name="page_tasks">Bugünün görevleri</string>
     <string name="items_empty">Sağ üstteki + ile ekle.\nDüzenlemek veya silmek için dokun. Sıralamak için basılı tutup sürükle.</string>
     <string name="goal_add">Hedef ekle</string>
     <string name="goal_edit">Hedefi düzenle</string>
     <string name="habit_add">Alışkanlık ekle</string>
     <string name="habit_edit">Alışkanlığı düzenle</string>
-    <string name="tasks_empty">Bugün yapacaklarını sağ üstteki + ile ekle.\nBitince soldaki daireye dokun. Biten görevler ertesi gün kaybolur, bitmeyenler ertesi güne aktarılır.\nSıralamak için basılı tutup sürükle.</string>
     <string name="all_done">Hepsi bitti!</string>
     <string name="tasks_progress">%1$d / %2$d bitti</string>
     <string name="task_do">%1$s bitti olarak işaretle</string>
     <string name="task_undo">%1$s bitmedi olarak işaretle</string>
-    <string name="task_add">Görev ekle</string>
     <string name="task_edit">Görevi düzenle</string>
     <string name="guard_used_up">Bugünkü %1$d dakikanı kullandın.\nYarın görüşürüz.</string>
     <string name="guard_extend">Süre doldu. Uzatılsın mı?</string>
@@ -112,7 +109,6 @@
     <string name="w_motto">Hayat sloganı</string>
     <string name="w_screen">Bugünkü ekran süresi</string>
     <string name="w_spend">Bu ayki harcama</string>
-    <string name="w_tasks">Bugünün görevleri</string>
     <string name="w_countdown">Geri sayım</string>
     <string name="w_weather">Hava durumu</string>
     <string name="w_habits">Bugünün alışkanlıkları</string>
@@ -363,4 +359,15 @@
     <string name="tr_note">* İyi günler vücut, odak ve ruh hâli ortalamasına göre ayrılır. Yemekleri de içeren daha derin bir analiz için aşağıdaki “Yapay zekâya sor”u dene.</string>
     <string name="ai_unlock_section"># Telefonumu neden açtım (son 14 gün, her kilit açışta verilen yanıt)\ntarih,saat,ne yapıyordum,telefonu neden açtım\n%1$s</string>
     <string name="ai_prompt">Sen günlük alışkanlıklar ve iyi oluş konusunda çok bilgili bir koçsun.\nAşağıda her gün telefonuma kaydettiğim veriler var (%1$d gün, %2$s ile %3$s arası). Kendimi en çok ne zaman iyi hissettiğimi analiz et.\n\n# Alanlar\n- vücut, odak, ruh_hali, uyku_kalitesi: 0–10 arası öz değerlendirme (10 en iyisi). İyi günleri vücut, odak ve ruh hâli ortalamasına göre değerlendir\n- uyku_saat: önceki gece kaç saat uyuduğum. yatış, kalkış: önceki gece ne zaman yattığım ve o sabah ne zaman kalktığım\n- yatmadan_önce_telefon: yatmadan önceki 30 dakikada telefon kullandığım dakika\n- telefon_dk: o gün ekranın açık ve kullanımda olduğu dakika. kilit_açma: kilidi açma sayısı\n- alkol: 1 = alkol içtim, 0 = içmedim\n- hedef, başarıldı: o günün hedefi ve ona ulaşıp ulaşmadığım (1 = ulaştım)\n- kahvaltı, öğle, akşam, notlar: ne yediğim, egzersiz, olaylar vb.\n- Boş, \"kaydedilmedi\" demektir (sıfır değil)\n\n# Bilgi için: hedeflerim ve alışkanlıklarım\n- Hedefler: %4$s\n- Alışkanlıklar: %5$s\n\n# Veriler (CSV)\ntarih,gün,vücut,odak,ruh_hali,uyku_kalitesi,uyku_saat,yatış,kalkış,yatmadan_önce_telefon,telefon_dk,kilit_açma,alkol,hedef,başarıldı,kahvaltı,öğle,akşam,notlar\n%6$s\n\n# İstediklerim\n1. İyi ve kötü günler arasında ne fark var (uyku, yatış saati, yatmadan önce telefon, alkol, yemekler, ekran süresi, haftanın günü vb.), mümkünse somut sayılarla\n2. \"Şu durumda kendimi iyi hissediyorum\" türünden en fazla 3 örüntü\n3. Beni aşağı çekiyor gibi görünen alışkanlıklar veya kombinasyonlar (kilit açma kayıtları varsa, boşa geçmiş gibi görünen saatler ve nedenler de)\n4. Yarından itibaren deneyebileceğim 3 küçük adım\n5. Dikkat edilmesi gerekenler (az veya dengesiz veri vb.) ve ileride kaydetmeye değer şeyler\n\n# Nasıl yanıtlamalısın\n- 3 satırlık bir özetle başla, sonra ayrıntılı açıkla\n- %7$s yanıt ver; sade bir dille, teknik terim kullanmadan\n- Verilerin gösterdiğini tahminlerden ayır\n- Tıbbi teşhis koyma</string>
+    <string name="page_tasks">Görevler</string>
+    <string name="w_tasks">Görevler</string>
+    <string name="task_add">Görev ekle</string>
+    <string name="tasks_empty">Sağ üstteki + ile görev ekleyin.\nSon tarih (gün ve saat) belirlerseniz görevler en yakın tarihe göre sıralanır.\nBitince soldaki daireye dokunun. Biten görevler ertesi gün kaybolur.</string>
+    <string name="task_due">Son tarih</string>
+    <string name="task_due_none">Son tarih yok</string>
+    <string name="task_due_until">%1$s tarihine kadar</string>
+    <string name="task_due_clear">Son tarihi kaldır</string>
+    <string name="task_overdue">Süresi geçti</string>
+    <string name="info_more">Daha fazla ▾</string>
+    <string name="info_less">Daha az ▴</string>
 </resources>

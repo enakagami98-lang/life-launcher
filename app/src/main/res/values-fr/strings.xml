@@ -84,18 +84,15 @@
     <string name="search">Rechercher</string>
     <string name="page_goals">Objectifs</string>
     <string name="page_habits">Habitudes</string>
-    <string name="page_tasks">Tâches du jour</string>
     <string name="items_empty">Ajoutez avec + en haut à droite.\nTouchez pour modifier ou supprimer. Maintenez puis glissez pour réordonner.</string>
     <string name="goal_add">Ajouter un objectif</string>
     <string name="goal_edit">Modifier l\'objectif</string>
     <string name="habit_add">Ajouter une habitude</string>
     <string name="habit_edit">Modifier l\'habitude</string>
-    <string name="tasks_empty">Ajoutez les tâches du jour avec + en haut à droite.\nTouchez le cercle une fois terminé. Les tâches faites disparaissent le lendemain ; les autres sont reportées.\nMaintenez puis glissez pour réordonner.</string>
     <string name="all_done">Tout est fait !</string>
     <string name="tasks_progress">%1$d / %2$d faites</string>
     <string name="task_do">Marquer %1$s comme faite</string>
     <string name="task_undo">Marquer %1$s comme non faite</string>
-    <string name="task_add">Ajouter une tâche</string>
     <string name="task_edit">Modifier la tâche</string>
     <string name="guard_used_up">Vous avez utilisé les %1$d minutes du jour.\nÀ demain.</string>
     <string name="guard_extend">C\'est l\'heure. Prolonger ?</string>
@@ -112,7 +109,6 @@
     <string name="w_motto">Devise de vie</string>
     <string name="w_screen">Temps d\'écran du jour</string>
     <string name="w_spend">Dépenses du mois</string>
-    <string name="w_tasks">Tâches du jour</string>
     <string name="w_countdown">Compte à rebours</string>
     <string name="w_weather">Météo</string>
     <string name="w_habits">Habitudes du jour</string>
@@ -362,4 +358,15 @@
     <string name="tr_note">* Les bons jours sont séparés selon la moyenne corps, concentration et humeur. Pour une analyse incluant les repas, essayez « Demander à l\'IA » ci-dessous.</string>
     <string name="ai_unlock_section"># Pourquoi j\'ai ouvert mon téléphone (14 derniers jours, répondu à chaque déverrouillage)\ndate,heure,ce que je faisais,pourquoi j\'ai ouvert mon téléphone\n%1$s</string>
     <string name="ai_prompt">Tu es un coach qui connaît très bien les habitudes de vie et le bien-être.\nVoici les données que je note chaque jour sur mon téléphone (%1$d jours, du %2$s au %3$s). Analyse à quels moments je me sens le mieux.\n\n# Champs\n- corps, concentration, humeur, qualité_sommeil : auto-évaluation de 0 à 10 (10 = le mieux). Juge les bons jours d\'après la moyenne de corps, concentration et humeur\n- heures_sommeil : heures dormies la nuit précédente. coucher, lever : l\'heure du coucher la veille et du lever ce matin-là\n- téléphone_avant_coucher : minutes d\'utilisation du téléphone dans les 30 minutes avant le coucher\n- téléphone_min : minutes avec l\'écran allumé et utilisé ce jour-là. déverrouillages : nombre de déverrouillages\n- alcool : 1 = bu de l\'alcool, 0 = non\n- objectif, réussi : l\'objectif du jour et si je l\'ai atteint (1 = atteint)\n- petit-déjeuner, déjeuner, dîner, notes : ce que j\'ai mangé, sport, événements, etc.\n- Vide signifie \"non noté\" (pas zéro)\n\n# Pour info : mes objectifs et habitudes\n- Objectifs : %4$s\n- Habitudes : %5$s\n\n# Données (CSV)\ndate,jour,corps,concentration,humeur,qualité_sommeil,heures_sommeil,coucher,lever,téléphone_avant_coucher,téléphone_min,déverrouillages,alcool,objectif,réussi,petit-déjeuner,déjeuner,dîner,notes\n%6$s\n\n# Ce que j\'aimerais\n1. Ce qui diffère entre les bons et les mauvais jours (sommeil, heure du coucher, téléphone avant de dormir, alcool, repas, temps d\'écran, jour de la semaine, etc.), avec des chiffres concrets si possible\n2. Jusqu\'à 3 schémas du type \"je me sens bien quand...\"\n3. Les habitudes ou combinaisons qui semblent me tirer vers le bas (s\'il y a des relevés de déverrouillage, aussi les moments et raisons qui semblent du temps perdu)\n4. 3 petites actions à essayer dès demain\n5. Les précautions (peu de données, données biaisées, etc.) et ce qu\'il serait utile de noter à l\'avenir\n\n# Comment répondre\n- Commence par un résumé en 3 lignes, puis explique en détail\n- Réponds en %7$s, avec des mots simples et sans jargon\n- Sépare ce que montrent les données de ce qui relève de la supposition\n- Ne pose pas de diagnostic médical</string>
+    <string name="page_tasks">Tâches</string>
+    <string name="w_tasks">Tâches</string>
+    <string name="task_add">Ajouter une tâche</string>
+    <string name="tasks_empty">Ajoutez des tâches avec + en haut à droite.\nAvec une échéance (jour et heure), elles sont triées par ce qui arrive en premier.\nTouchez le cercle une fois terminé. Les tâches faites disparaissent le lendemain.</string>
+    <string name="task_due">Échéance</string>
+    <string name="task_due_none">Sans échéance</string>
+    <string name="task_due_until">Avant le %1$s</string>
+    <string name="task_due_clear">Retirer l\'échéance</string>
+    <string name="task_overdue">En retard</string>
+    <string name="info_more">Plus ▾</string>
+    <string name="info_less">Moins ▴</string>
 </resources>

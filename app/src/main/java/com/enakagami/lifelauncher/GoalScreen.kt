@@ -79,7 +79,7 @@ fun GoalScreen() {
             colors = ButtonDefaults.buttonColors(containerColor = Blue, contentColor = OnAccent),
         ) { Text(stringResource(R.string.goal_start), fontWeight = FontWeight.Bold, fontSize = 16.sp) }
         Spacer(Modifier.height(10.dp))
-        Text(stringResource(R.string.goal_note), color = SubInk, fontSize = 12.sp, lineHeight = 18.sp)
+        MoreInfo(stringResource(R.string.goal_note))
         Spacer(Modifier.height(64.dp))
     }
 }

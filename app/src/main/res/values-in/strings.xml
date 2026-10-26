@@ -84,18 +84,15 @@
     <string name="search">Cari</string>
     <string name="page_goals">Tujuan</string>
     <string name="page_habits">Kebiasaan</string>
-    <string name="page_tasks">Tugas hari ini</string>
     <string name="items_empty">Tambah dengan + di kanan atas.\nKetuk untuk mengubah atau menghapus. Tekan lama lalu seret untuk mengurutkan.</string>
     <string name="goal_add">Tambah tujuan</string>
     <string name="goal_edit">Ubah tujuan</string>
     <string name="habit_add">Tambah kebiasaan</string>
     <string name="habit_edit">Ubah kebiasaan</string>
-    <string name="tasks_empty">Tambah tugas hari ini dengan + di kanan atas.\nKetuk lingkaran jika selesai. Tugas selesai hilang besok; yang belum selesai pindah ke besok.\nTekan lama lalu seret untuk mengurutkan.</string>
     <string name="all_done">Semua selesai!</string>
     <string name="tasks_progress">%1$d / %2$d selesai</string>
     <string name="task_do">Tandai %1$s selesai</string>
     <string name="task_undo">Tandai %1$s belum selesai</string>
-    <string name="task_add">Tambah tugas</string>
     <string name="task_edit">Ubah tugas</string>
     <string name="guard_used_up">Kamu sudah memakai %1$d menit hari ini.\nSampai besok.</string>
     <string name="guard_extend">Waktu habis. Perpanjang?</string>
@@ -112,7 +109,6 @@
     <string name="w_motto">Moto hidup</string>
     <string name="w_screen">Waktu layar hari ini</string>
     <string name="w_spend">Pengeluaran bulan ini</string>
-    <string name="w_tasks">Tugas hari ini</string>
     <string name="w_countdown">Hitung mundur</string>
     <string name="w_weather">Cuaca</string>
     <string name="w_habits">Kebiasaan hari ini</string>
@@ -364,4 +360,15 @@
     <string name="tr_note">* Hari baik dibedakan dari rata-rata badan, fokus, dan suasana hati. Untuk analisis yang juga mencakup makanan, coba “Tanya AI” di bawah.</string>
     <string name="ai_unlock_section"># Alasan saya membuka HP (14 hari terakhir, dijawab setiap kali membuka kunci)\ntanggal,jam,apa yang sedang saya lakukan,alasan membuka HP\n%1$s</string>
     <string name="ai_prompt">Kamu adalah pelatih yang paham betul soal kebiasaan sehari-hari dan kesehatan.\nDi bawah ini data yang saya catat setiap hari di HP (%1$d hari, %2$s sampai %3$s). Tolong analisis kapan saya biasanya merasa paling baik.\n\n# Kolom\n- badan, fokus, suasana_hati, kualitas_tidur: penilaian diri 0–10 (10 terbaik). Nilai hari baik dari rata-rata badan, fokus, dan suasana hati\n- jam_tidur: berapa jam saya tidur malam sebelumnya. tidur, bangun: jam saya tidur malam sebelumnya dan bangun pagi itu\n- hp_sebelum_tidur: menit saya memakai HP dalam 30 menit sebelum tidur\n- hp_menit: menit layar menyala dan dipakai hari itu. buka_kunci: berapa kali membuka kunci\n- alkohol: 1 = minum alkohol, 0 = tidak\n- target, tercapai: target hari itu dan apakah tercapai (1 = tercapai)\n- sarapan, makan_siang, makan_malam, catatan: apa yang saya makan, olahraga, kejadian, dll.\n- Kosong berarti \"tidak dicatat\" (bukan nol)\n\n# Sebagai referensi: target dan kebiasaan saya\n- Target: %4$s\n- Kebiasaan: %5$s\n\n# Data (CSV)\ntanggal,hari,badan,fokus,suasana_hati,kualitas_tidur,jam_tidur,tidur,bangun,hp_sebelum_tidur,hp_menit,buka_kunci,alkohol,target,tercapai,sarapan,makan_siang,makan_malam,catatan\n%6$s\n\n# Yang saya minta\n1. Apa yang berbeda antara hari baik dan hari buruk (tidur, jam tidur, HP sebelum tidur, alkohol, makanan, waktu layar, hari dalam seminggu, dll.), dengan angka konkret bila memungkinkan\n2. Paling banyak 3 pola \"saya merasa baik ketika...\"\n3. Kebiasaan atau kombinasi yang tampaknya membuat kondisi saya turun (jika ada catatan membuka HP, juga waktu dan alasan yang tampak sia-sia)\n4. 3 tindakan kecil yang bisa saya coba mulai besok\n5. Hal yang perlu diperhatikan (data sedikit atau berat sebelah, dll.) dan hal yang sebaiknya dicatat ke depannya\n\n# Cara menjawab\n- Mulailah dengan ringkasan 3 baris, lalu jelaskan secara rinci\n- Jawab dalam %7$s, dengan bahasa sederhana tanpa istilah teknis\n- Pisahkan apa yang ditunjukkan data dari dugaan\n- Jangan memberikan diagnosis medis</string>
+    <string name="page_tasks">Tugas</string>
+    <string name="w_tasks">Tugas</string>
+    <string name="task_add">Tambah tugas</string>
+    <string name="tasks_empty">Tambahkan tugas dengan + di kanan atas.\nJika diberi tenggat (tanggal dan jam), tugas diurutkan dari yang paling dekat.\nKetuk lingkaran jika sudah selesai. Tugas selesai hilang keesokan harinya.</string>
+    <string name="task_due">Tenggat</string>
+    <string name="task_due_none">Tanpa tenggat</string>
+    <string name="task_due_until">Sampai %1$s</string>
+    <string name="task_due_clear">Hapus tenggat</string>
+    <string name="task_overdue">Lewat tenggat</string>
+    <string name="info_more">Selengkapnya ▾</string>
+    <string name="info_less">Tutup ▴</string>
 </resources>

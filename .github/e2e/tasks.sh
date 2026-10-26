@@ -1,5 +1,5 @@
 #!/bin/bash
-# 今日のタスク・スマホ使用時間・ロック解除時の「今何してる？」の確認（簡易モード）
+# タスク・スマホ使用時間・ロック解除時の「今何してる？」の確認（簡易モード）
 PKG=com.enakagami.lifelauncher
 OUT=e2e-out; mkdir -p $OUT; R=$OUT/result.txt; : > $R
 UI="python3 .github/e2e/ui.py"
@@ -20,8 +20,8 @@ expect_app() { sleep 1; t=$(top); if echo "$t" | grep -q "$2"; then ok "$1 ($t)"
 expect_text() { if $UI hasp "$2" >/dev/null; then ok "$1 「$2」あり"; else ng "$1 「$2」なし / 画面の文字: $($UI texts | paste -sd' ' | cut -c1-150)"; fi; }
 expect_no_text() { if $UI hasp "$2" >/dev/null; then ng "$1 「$2」が出ている"; else ok "$1 「$2」なし"; fi; }
 unlock() { key KEYCODE_POWER; sleep 3; key KEYCODE_WAKEUP; adb shell wm dismiss-keyguard; sleep 4; }
-to_tasks() { for i in 1 2 3 4 5 6; do $UI has "今日のタスク" >/dev/null && $UI has "追加" >/dev/null && return; next_page; done; }
-to_tasks_en() { for i in 1 2 3 4 5 6; do $UI has "Today's tasks" >/dev/null && $UI has "Add" >/dev/null && return; next_page; done; }
+to_tasks() { for i in 1 2 3 4 5 6; do $UI has "タスク" >/dev/null && $UI has "追加" >/dev/null && return; next_page; done; }
+to_tasks_en() { for i in 1 2 3 4 5 6; do $UI has "Tasks" >/dev/null && $UI has "Add" >/dev/null && return; next_page; done; }
 add_task() { lang en-US; to_tasks_en; $UI tap "Add" >/dev/null; sleep 2; $UI tapclass android.widget.EditText >/dev/null; sleep 4; softword $1; sleep 1; $UI tap "Save" >/dev/null; sleep 2; lang ja-JP; to_tasks; }
 
 # アプリの言語を切り替える。日本語のままだと文字入力のキーボードが日本語入力になり、英字を打てないので、打つ間だけ英語にする
@@ -33,10 +33,10 @@ sleep 3; adb shell input keyevent KEYCODE_HOME; sleep 3; bash .github/e2e/skip_t
 adb shell appops set $PKG SYSTEM_ALERT_WINDOW allow
 key KEYCODE_HOME; sleep 3
 
-log "== 1. 今日のタスク（習慣の右隣）"
+log "== 1. タスク（習慣の右隣）"
 to_tasks; snap tasks_empty
-expect_text "今日のタスクの画面" "今日のタスク"
-expect_text "使い方の説明" "終わらなかったタスクは次の日に持ち越されます"
+expect_text "タスクの画面" "タスク"
+expect_text "使い方の説明" "期限が近い順に並びます"
 add_task abc; snap task_added
 expect_text "タスクが追加される" "abc"
 expect_text "進み具合" "0 / 1 完了"
@@ -49,6 +49,11 @@ expect_text "ホームに戻っても残る" "xyz"
 expect_text "完了の状態も残る" "abcを未完了に戻す"
 $UI tap "abcを未完了に戻す" >/dev/null; sleep 1
 expect_text "チェックを外せる" "0 / 2 完了"
+log "== 1b. 期限（何日の何時までに）"
+$UI tap "追加" >/dev/null; sleep 2; expect_text "期限の欄" "期限なし"
+$UI tap "期限なし" >/dev/null; sleep 2; $UI tapraw "OK" >/dev/null; sleep 2; $UI tapraw "OK" >/dev/null; sleep 2; snap due_set
+expect_text "期限が入る（最初は明日の18時）" "18:00 まで"
+$UI tap "キャンセル" >/dev/null; sleep 1
 key KEYCODE_HOME
 
 log "== 2. 身体の調子の画面にスマホ使用時間"

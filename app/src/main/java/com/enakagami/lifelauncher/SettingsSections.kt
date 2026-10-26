@@ -112,10 +112,7 @@ fun ReminderSection(apps: List<AppInfo>) {
 
     Section(stringResource(R.string.s_reminder))
     Column(cardPad.fillMaxWidth().card().padding(vertical = 12.dp)) {
-        Text(
-            stringResource(R.string.s_reminder_desc),
-            color = SubInk, fontSize = 14.sp, lineHeight = 21.sp, modifier = Modifier.padding(horizontal = 20.dp),
-        )
+        MoreInfo(stringResource(R.string.s_reminder_desc), Modifier.padding(horizontal = 20.dp), fontSize = 14.sp)
         Spacer(Modifier.height(12.dp))
         // 必須：重ねて表示（お知らせ・進捗バー・時間切れでホームに戻すため）
         if (!overlayOk) {
@@ -243,14 +240,10 @@ fun LockSection() {
     val ok = remember(resume) { Guard.hasOverlay(context) }
     Section(stringResource(R.string.s_lock))
     Column(cardPad.fillMaxWidth().card().padding(vertical = 12.dp)) {
-        Text(
-            stringResource(R.string.s_lock_desc),
-            color = SubInk, fontSize = 14.sp, lineHeight = 21.sp, modifier = Modifier.padding(horizontal = 20.dp),
-        )
+        MoreInfo(stringResource(R.string.s_lock_desc), Modifier.padding(horizontal = 20.dp), fontSize = 14.sp)
         if (!ok) {
             Text(stringResource(R.string.s_lock_need), color = Danger, fontSize = 13.sp, modifier = Modifier.padding(horizontal = 20.dp, vertical = 6.dp))
         }
-        RangeEditor(stringResource(R.string.morning), Guard.morning) { Guard.updateMorning(it) }
         RangeEditor(stringResource(R.string.night), Guard.night) { Guard.updateNight(it) }
         SwitchRow(stringResource(R.string.s_goal_on), Guard.goalOn) { Guard.updateGoalOn(it) }
         SwitchRow(stringResource(R.string.s_home_on_off), Guard.homeOnScreenOff) { Guard.updateHomeOnScreenOff(it) }

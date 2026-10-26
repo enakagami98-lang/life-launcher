@@ -84,18 +84,15 @@
     <string name="search">Tìm</string>
     <string name="page_goals">Mục tiêu</string>
     <string name="page_habits">Thói quen</string>
-    <string name="page_tasks">Việc hôm nay</string>
     <string name="items_empty">Thêm bằng nút + ở góc trên bên phải.\nChạm để sửa hoặc xóa. Nhấn giữ rồi kéo để sắp xếp.</string>
     <string name="goal_add">Thêm mục tiêu</string>
     <string name="goal_edit">Sửa mục tiêu</string>
     <string name="habit_add">Thêm thói quen</string>
     <string name="habit_edit">Sửa thói quen</string>
-    <string name="tasks_empty">Thêm việc cần làm hôm nay bằng nút + ở góc trên bên phải.\nXong thì chạm vào vòng tròn. Việc đã xong sẽ biến mất vào hôm sau, việc chưa xong được chuyển sang hôm sau.\nNhấn giữ rồi kéo để sắp xếp.</string>
     <string name="all_done">Xong hết rồi!</string>
     <string name="tasks_progress">Đã xong %1$d / %2$d</string>
     <string name="task_do">Đánh dấu %1$s là đã xong</string>
     <string name="task_undo">Đánh dấu %1$s là chưa xong</string>
-    <string name="task_add">Thêm việc</string>
     <string name="task_edit">Sửa việc</string>
     <string name="guard_used_up">Bạn đã dùng hết %1$d phút của hôm nay.\nHẹn mai gặp lại.</string>
     <string name="guard_extend">Hết giờ rồi. Gia hạn không?</string>
@@ -112,7 +109,6 @@
     <string name="w_motto">Châm ngôn sống</string>
     <string name="w_screen">Thời gian dùng màn hình hôm nay</string>
     <string name="w_spend">Chi tiêu tháng này</string>
-    <string name="w_tasks">Việc hôm nay</string>
     <string name="w_countdown">Đếm ngược</string>
     <string name="w_weather">Thời tiết</string>
     <string name="w_habits">Thói quen hôm nay</string>
@@ -364,4 +360,15 @@
     <string name="tr_note">* Ngày tốt được chia theo điểm trung bình của cơ thể, tập trung và tâm trạng. Để phân tích cả bữa ăn, hãy thử “Hỏi AI” bên dưới.</string>
     <string name="ai_unlock_section"># Lý do tôi mở điện thoại (14 ngày gần nhất, trả lời mỗi lần mở khóa)\nngày,giờ,lúc đó đang làm gì,lý do mở điện thoại\n%1$s</string>
     <string name="ai_prompt">Bạn là một huấn luyện viên am hiểu về thói quen hằng ngày và sức khỏe.\nDưới đây là dữ liệu tôi ghi lại mỗi ngày trên điện thoại (%1$d ngày, từ %2$s đến %3$s). Hãy phân tích khi nào tôi thường cảm thấy tốt nhất.\n\n# Các cột\n- cơ_thể, tập_trung, tâm_trạng, chất_lượng_ngủ: tự đánh giá từ 0–10 (10 là tốt nhất). Hãy đánh giá ngày tốt bằng trung bình của cơ thể, tập trung và tâm trạng\n- giờ_ngủ: số giờ ngủ đêm trước. đi_ngủ, thức_dậy: giờ tôi đi ngủ tối hôm trước và thức dậy sáng hôm đó\n- đt_trước_khi_ngủ: số phút dùng điện thoại trong 30 phút trước khi đi ngủ\n- đt_phút: số phút màn hình bật và được dùng trong ngày. mở_khóa: số lần mở khóa\n- rượu_bia: 1 = có uống, 0 = không\n- mục_tiêu, đạt: mục tiêu của ngày đó và tôi có đạt không (1 = đạt)\n- sáng, trưa, tối, ghi_chú: những gì tôi ăn, tập thể dục, sự kiện, v.v.\n- Ô trống nghĩa là \"không ghi\" (không phải 0)\n\n# Tham khảo: mục tiêu và thói quen của tôi\n- Mục tiêu: %4$s\n- Thói quen: %5$s\n\n# Dữ liệu (CSV)\nngày,thứ,cơ_thể,tập_trung,tâm_trạng,chất_lượng_ngủ,giờ_ngủ,đi_ngủ,thức_dậy,đt_trước_khi_ngủ,đt_phút,mở_khóa,rượu_bia,mục_tiêu,đạt,sáng,trưa,tối,ghi_chú\n%6$s\n\n# Điều tôi muốn\n1. Ngày tốt và ngày xấu khác nhau thế nào (giấc ngủ, giờ đi ngủ, điện thoại trước khi ngủ, rượu bia, bữa ăn, thời gian dùng màn hình, thứ trong tuần, v.v.), dùng số liệu cụ thể nếu có thể\n2. Tối đa 3 quy luật kiểu \"tôi thấy khỏe khi...\"\n3. Thói quen hoặc kết hợp có vẻ làm tôi đi xuống (nếu có dữ liệu mở khóa, cả khung giờ và lý do có vẻ lãng phí)\n4. 3 hành động nhỏ tôi có thể thử từ ngày mai\n5. Lưu ý (dữ liệu ít hoặc lệch, v.v.) và những mục nên ghi thêm trong tương lai\n\n# Cách trả lời\n- Bắt đầu bằng phần tóm tắt 3 dòng, sau đó giải thích chi tiết\n- Trả lời bằng %7$s, ngôn ngữ dễ hiểu, không dùng thuật ngữ\n- Tách riêng điều dữ liệu cho thấy và điều chỉ là phỏng đoán\n- Không đưa ra chẩn đoán y khoa</string>
+    <string name="page_tasks">Việc cần làm</string>
+    <string name="w_tasks">Việc cần làm</string>
+    <string name="task_add">Thêm việc</string>
+    <string name="tasks_empty">Thêm việc bằng nút + ở góc trên bên phải.\nNếu đặt hạn (ngày và giờ), việc sẽ được sắp theo hạn gần nhất.\nChạm vào vòng tròn khi xong. Việc đã xong sẽ biến mất vào hôm sau.</string>
+    <string name="task_due">Hạn</string>
+    <string name="task_due_none">Không có hạn</string>
+    <string name="task_due_until">Hạn %1$s</string>
+    <string name="task_due_clear">Bỏ hạn</string>
+    <string name="task_overdue">Quá hạn</string>
+    <string name="info_more">Xem thêm ▾</string>
+    <string name="info_less">Thu gọn ▴</string>
 </resources>

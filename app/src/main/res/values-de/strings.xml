@@ -84,18 +84,15 @@
     <string name="search">Suchen</string>
     <string name="page_goals">Ziele</string>
     <string name="page_habits">Gewohnheiten</string>
-    <string name="page_tasks">Heutige Aufgaben</string>
     <string name="items_empty">Oben rechts mit + hinzufügen.\nTippen zum Bearbeiten oder Löschen. Gedrückt halten und ziehen zum Sortieren.</string>
     <string name="goal_add">Ziel hinzufügen</string>
     <string name="goal_edit">Ziel bearbeiten</string>
     <string name="habit_add">Gewohnheit hinzufügen</string>
     <string name="habit_edit">Gewohnheit bearbeiten</string>
-    <string name="tasks_empty">Füge die heutigen Aufgaben oben rechts mit + hinzu.\nTippe auf den Kreis, wenn erledigt. Erledigte Aufgaben verschwinden am nächsten Tag, unerledigte werden übernommen.\nGedrückt halten und ziehen zum Sortieren.</string>
     <string name="all_done">Alles erledigt!</string>
     <string name="tasks_progress">%1$d / %2$d erledigt</string>
     <string name="task_do">%1$s als erledigt markieren</string>
     <string name="task_undo">%1$s als unerledigt markieren</string>
-    <string name="task_add">Aufgabe hinzufügen</string>
     <string name="task_edit">Aufgabe bearbeiten</string>
     <string name="guard_used_up">Du hast die %1$d Minuten für heute verbraucht.\nBis morgen.</string>
     <string name="guard_extend">Die Zeit ist um. Verlängern?</string>
@@ -112,7 +109,6 @@
     <string name="w_motto">Lebensmotto</string>
     <string name="w_screen">Bildschirmzeit heute</string>
     <string name="w_spend">Ausgaben diesen Monat</string>
-    <string name="w_tasks">Heutige Aufgaben</string>
     <string name="w_countdown">Countdown</string>
     <string name="w_weather">Wetter</string>
     <string name="w_habits">Heutige Gewohnheiten</string>
@@ -363,4 +359,15 @@
     <string name="tr_note">* Gute Tage werden nach dem Schnitt aus Körper, Konzentration und Stimmung getrennt. Für eine Analyse inkl. Mahlzeiten probiere unten „KI fragen“.</string>
     <string name="ai_unlock_section"># Warum ich mein Handy geöffnet habe (letzte 14 Tage, bei jedem Entsperren beantwortet)\nDatum,Uhrzeit,was ich gerade tat,warum ich das Handy geöffnet habe\n%1$s</string>
     <string name="ai_prompt">Du bist ein Coach, der sich mit Alltagsgewohnheiten und Wohlbefinden sehr gut auskennt.\nUnten stehen die Daten, die ich jeden Tag auf meinem Handy festhalte (%1$d Tage, %2$s bis %3$s). Bitte analysiere, wann ich mich am besten fühle.\n\n# Felder\n- Körper, Konzentration, Stimmung, Schlafqualität: Selbsteinschätzung 0–10 (10 ist am besten). Beurteile gute Tage nach dem Schnitt aus Körper, Konzentration und Stimmung\n- Schlaf_h: Stunden Schlaf in der Nacht davor. Zubettgehen, Aufstehen: wann ich am Abend davor ins Bett ging und an dem Morgen aufstand\n- Handy_vor_Schlaf: Minuten Handynutzung in den 30 Minuten vor dem Schlafengehen\n- Handy_min: Minuten mit eingeschaltetem, benutztem Bildschirm an dem Tag. Entsperrungen: Anzahl der Entsperrungen\n- Alkohol: 1 = Alkohol getrunken, 0 = keiner\n- Ziel, erreicht: das Tagesziel und ob ich es erreicht habe (1 = erreicht)\n- Frühstück, Mittagessen, Abendessen, Notizen: was ich gegessen habe, Sport, Ereignisse usw.\n- Leer bedeutet \"nicht erfasst\" (nicht null)\n\n# Zur Info: meine Ziele und Gewohnheiten\n- Ziele: %4$s\n- Gewohnheiten: %5$s\n\n# Daten (CSV)\nDatum,Wochentag,Körper,Konzentration,Stimmung,Schlafqualität,Schlaf_h,Zubettgehen,Aufstehen,Handy_vor_Schlaf,Handy_min,Entsperrungen,Alkohol,Ziel,erreicht,Frühstück,Mittagessen,Abendessen,Notizen\n%6$s\n\n# Was ich mir wünsche\n1. Was unterscheidet gute von schlechten Tagen (Schlaf, Zubettgehzeit, Handy vor dem Schlafen, Alkohol, Mahlzeiten, Bildschirmzeit, Wochentag usw.), möglichst mit konkreten Zahlen\n2. Bis zu 3 Muster nach dem Motto \"Mir geht es gut, wenn...\"\n3. Gewohnheiten oder Kombinationen, die mich herunterzuziehen scheinen (falls es Entsperr-Daten gibt, auch Zeiten und Gründe, die nach Zeitverschwendung aussehen)\n4. 3 kleine Schritte, die ich ab morgen ausprobieren kann\n5. Einschränkungen (wenige oder einseitige Daten usw.) und Dinge, die es sich künftig zu erfassen lohnt\n\n# Wie du antworten sollst\n- Beginne mit einer Zusammenfassung in 3 Zeilen und erkläre dann ausführlich\n- Antworte auf %7$s, in einfacher Sprache ohne Fachbegriffe\n- Trenne, was die Daten zeigen, von Vermutungen\n- Stelle keine medizinische Diagnose</string>
+    <string name="page_tasks">Aufgaben</string>
+    <string name="w_tasks">Aufgaben</string>
+    <string name="task_add">Aufgabe hinzufügen</string>
+    <string name="tasks_empty">Füge Aufgaben mit + oben rechts hinzu.\nMit Fälligkeit (Tag und Uhrzeit) werden sie nach dem nächsten Termin sortiert.\nTippe auf den Kreis, wenn du fertig bist. Erledigte Aufgaben verschwinden am nächsten Tag.</string>
+    <string name="task_due">Fällig</string>
+    <string name="task_due_none">Ohne Fälligkeit</string>
+    <string name="task_due_until">Fällig %1$s</string>
+    <string name="task_due_clear">Fälligkeit entfernen</string>
+    <string name="task_overdue">Überfällig</string>
+    <string name="info_more">Mehr ▾</string>
+    <string name="info_less">Weniger ▴</string>
 </resources>

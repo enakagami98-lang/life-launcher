@@ -12,7 +12,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ProvideTextStyle
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.Hyphens
+import androidx.compose.ui.text.style.LineBreak
 import androidx.compose.material3.Surface
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
@@ -208,6 +213,15 @@ fun LauncherApp(
         LocalResumeSignal provides resumeSignal,
     ) {
         MaterialTheme(colorScheme = scheme) {
+          // 改行：日本語は文節の切れ目で、どの言語も行の長さをそろえて折り返す（「す。」だけ次の行、を防ぐ）。英語などは単語の途中でハイフン
+          ProvideTextStyle(
+              LocalTextStyle.current.merge(
+                  TextStyle(
+                      lineBreak = LineBreak(LineBreak.Strategy.Balanced, LineBreak.Strictness.Strict, LineBreak.WordBreak.Phrase),
+                      hyphens = Hyphens.Auto,
+                  ),
+              ),
+          ) {
             Surface(Modifier.fillMaxSize(), color = palette.bg) {
                 if (lock != null && !Billing.locked) {
                     LockScreen(stringResource(lock.first), lock.second, now.toLocalTime(), night = lock.first == R.string.lock_night)
@@ -261,6 +275,7 @@ fun LauncherApp(
                 }
                 }
             }
+          }
         }
     }
 }
