@@ -16,7 +16,6 @@ import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ProvideTextStyle
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.style.Hyphens
 import androidx.compose.ui.text.style.LineBreak
 import androidx.compose.material3.Surface
 import androidx.compose.material3.darkColorScheme
@@ -213,12 +212,11 @@ fun LauncherApp(
         LocalResumeSignal provides resumeSignal,
     ) {
         MaterialTheme(colorScheme = scheme) {
-          // 改行：日本語は文節の切れ目で、どの言語も行の長さをそろえて折り返す（「す。」だけ次の行、を防ぐ）。英語などは単語の途中でハイフン
+          // 改行：日本語は文節の切れ目で、どの言語も行の長さをそろえて折り返す（「す。」だけ次の行、を防ぐ）。単語の途中では切らない
           ProvideTextStyle(
               LocalTextStyle.current.merge(
                   TextStyle(
                       lineBreak = LineBreak(LineBreak.Strategy.Balanced, LineBreak.Strictness.Strict, LineBreak.WordBreak.Phrase),
-                      hyphens = Hyphens.Auto,
                   ),
               ),
           ) {
