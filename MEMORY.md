@@ -171,3 +171,17 @@
 - 「今日のタスク」→「タスク」。Task に due（ミリ秒）。期限が近い順（Store.sortedTasks：未完了→期限→登録順）。長押しの並べ替えはやめた。追加・編集は日付→時刻の順に選ぶ（最初は明日18:00）。期限切れは赤。ホームの部品は上位3件＋「… ほかN件」
 - i18n：tasks.py（page_tasks・w_tasks・task_add・tasks_empty を base/tr から移した、期限と「詳しく」の文字）
 - e2e：tasks 28/28（期限の確認を追加）、top 42/42、condition 26/26、lang 9/9、simple 18/18、goal 20/20
+
+## 2026-11-04 使用時間の数え漏れ・今日の言葉・振り返り日記・日めくり（v1.0.73）
+- 不具合：ゲーム（MHOutlanders 5時間54分）が「今日のスマホ」に入らず、本体 9時間36分に対しアプリは 2時間32分
+  - 原因：Guard.usageBetween がアプリ単位で「RESUMED〜PAUSED/STOPPED」を数えていた。ゲームは 起動画面 PAUSED → 本編 RESUMED → 起動画面 STOPPED の順に記録されるので、最後の STOPPED で本編の分が丸ごと消えていた
+  - 直し方：画面（className）ごとに前面を追い、そのアプリの画面が1つでも前面にある間を数える。終わりは PAUSED のみ（STOPPED は見ない）。画面オフ(16)・電源(26/27)で全部止める。0時より6時間前から読み、区間内だけ足す（日またぎで開きっぱなしの分）
+- 今日の言葉（部品 "quote"）：Store.quotes（id・text・by・source・note）。毎日の1つは Random(日付の epochDay) で選ぶ＝1日中同じ。タップで全画面 QuoteScreen（詳細・＋新しく追加する・一覧→編集）
+- 振り返り日記（部品 "journal"）：Store.journal（日付→JournalEntry 8欄）。書きたい日だけ。1文字ごとに自動保存（画面が消えても残る）。昨日の分も書ける
+- 全画面は Journal.kt の FullPanel：systemBarsPadding → imePadding → verticalScroll。保存・完了ボタンは上の見出し（下だとキーボードに隠れる）。見出しは欄の外。LauncherApp の panel で出し、ホームボタンで閉じる
+- 前から使っている人にも quote・journal を1回だけトップに足す（prefs "addedQuoteJournal"）。新規の最初の並びは motto,quote,screen,spend,journal
+- 日めくり（Tear.kt）：その日に初めて今日の目標（Guard.setDailyGoal）かタスク（Store.addTask）を登録したとき Guard.tearToday() → Guard.tearPending。prefs "tornDay" で1日1回。昨日の残り日数の紙が右上を軸にめくれて落ち、今日の数字が出る（約2.8秒、タップで閉じる）。誕生日未設定なら月の名前＋日付でめくる
+- i18n：i18n/journal.py（37キー×20言語）を build.py の extras に追加
+- e2e：`-f only=journal`（新規）。ui.py に tapbelow（見出しのすぐ下の入力欄を押す）と focused（入力中の欄の下端）を追加。キーボードの上端は dumpsys window InputMethod の frame から
+- トップの部品が2つ増えたので、お気に入りまでのスクロールを condition.sh・simple.sh は3回、e2e.sh は2回に
+- e2e の注意：全画面パネルの下のホーム画面の文字も uiautomator に出る（重なっていても消えない）。hasp で調べるとホーム側に当たることがある

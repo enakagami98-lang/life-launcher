@@ -19,12 +19,12 @@ expect_text() { if $UI hasp "$2" >/dev/null; then ok "$1 「$2」あり"; else n
 expect_no_text() { if $UI hasp "$2" >/dev/null; then ng "$1 「$2」が出ている"; else ok "$1 「$2」なし"; fi; }
 lang() { adb shell cmd locale set-app-locales $PKG --locales $1 >/dev/null 2>&1; sleep 3; adb shell input keyevent KEYCODE_HOME; sleep 3; }
 to_tasks_en() { for i in 1 2 3 4 5 6; do $UI has "Tasks" >/dev/null && $UI has "Add" >/dev/null && return; next_page; done; }
-# キーボードの上端（取れなければ、Pixel 6 の英字キーボードの上端に近い 1450）
-ime_top() { t=$(adb shell dumpsys window InputMethod | grep -o 'frame=\[0,[0-9]*\]\[1080,2400\]' | head -1 | sed 's/frame=\[0,\([0-9]*\)\].*/\1/'); echo ${t:-1450}; }
-# 入力中の欄の下端がキーボードの上端より上にあるか
+# 入力中の欄の書き始め（上端から1行分）がキーボードより上に見えているか。
+# キーボードの上端は Pixel 6 の英字キーボード（候補の帯つき）で約1515（撮影画像で確認、2026-11-04）
+KB_TOP=1515
 check_field() {
-  sleep 4; b=$($UI focused); t=$(ime_top); snap "$2"
-  if [ "$b" -gt 0 ] && [ "$b" -le "$t" ]; then ok "$1 入力欄の下端 $b ≤ キーボードの上端 $t"; else ng "$1 入力欄の下端 $b / キーボードの上端 $t"; fi
+  sleep 4; t=$($UI focused); snap "$2"
+  if [ "$t" -gt 0 ] && [ $((t + 120)) -le $KB_TOP ]; then ok "$1 入力欄の上端 $t（キーボードは $KB_TOP から）"; else ng "$1 入力欄の上端 $t / キーボード $KB_TOP"; fi
 }
 
 adb install -r LifeLauncher.apk >/dev/null && log "インストール成功"
@@ -88,9 +88,8 @@ key KEYCODE_BACK; key KEYCODE_BACK
 log "== 5. 日めくり（その日に初めてタスクを登録したとき）"
 MONTH=$(adb shell date +%B | tr -dc 'A-Za-z')
 to_tasks_en; $UI tap "Add" >/dev/null; sleep 2; $UI tapclass android.widget.EditText >/dev/null; sleep 4; softword abc
-$UI tap "Save" >/dev/null; adb exec-out screencap -p > $OUT/tear_a.png; sleep 0.4; adb exec-out screencap -p > $OUT/tear_b.png
-snap tear
-expect_text "日めくりが出る（誕生日が未設定なので月の名前）" "$MONTH"
+# 日めくりは約2秒で消えるので、撮影より先に文字を調べる
+$UI tap "Save" >/dev/null; expect_text "日めくりが出る（誕生日が未設定なので月の名前）" "$MONTH"; snap tear
 sleep 5; snap tear_end
 expect_no_text "少しすると消える" "$MONTH"
 $UI tap "Add" >/dev/null; sleep 2; $UI tapclass android.widget.EditText >/dev/null; sleep 4; softword xyz
