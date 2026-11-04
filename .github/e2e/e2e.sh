@@ -99,7 +99,7 @@ key KEYCODE_HOME
 
 log "== 9. お気に入り"
 next_page; $UI long "Chrome" >/dev/null; sleep 1; snap long_press_menu; $UI tap "お気に入りに追加" >/dev/null; sleep 1
-key KEYCODE_HOME; adb shell input swipe 540 2000 540 400 400; sleep 2; snap favorites
+key KEYCODE_HOME; for i in 1 2; do adb shell input swipe 540 2000 540 400 400; sleep 1; done; sleep 1; snap favorites
 expect_text "ホーム画面の下にChrome" "Chrome"
 $UI tap "Chrome" >/dev/null; sleep 3; expect_app "お気に入りからChromeが開く" com.android.chrome
 key KEYCODE_HOME

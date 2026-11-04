@@ -178,25 +178,54 @@ object Guard {
         return result
     }
 
-    /** from〜to の間に、アプリごとに前面にあった時間（スマホ本体の使用記録。Digital Wellbeing と同じ元データ） */
+    /**
+     * from〜to の間に、アプリごとに前面にあった時間（スマホ本体の使用記録。Digital Wellbeing と同じ元データ）。
+     * 画面（Activity）ごとに開いた・閉じたを追い、そのアプリの画面が1つでも前面にある間を数える。
+     * 前はアプリ単位で「裏に回った（STOPPED）」でも終わりにしていたため、ゲームのように
+     * 起動画面→本編と画面が切り替わるアプリでは、起動画面が裏に回った時点で終わり扱いになり、
+     * 本編の何時間分が丸ごと抜けていた（2026-11 の不具合：9時間36分のうち2時間32分しか出なかった）
+     */
     private fun usageBetween(ctx: Context, from: Long, to: Long): Map<String, Long> {
         val result = mutableMapOf<String, Long>()
         runCatching {
             val usm = ctx.getSystemService(android.app.usage.UsageStatsManager::class.java)
-            val events = usm.queryEvents(from, to)
+            // 0時より前から開きっぱなしのアプリも数えるため、少し前から読んで区間の中だけ足す
+            val events = usm.queryEvents(from - 6 * 3600_000L, to)
             val e = android.app.usage.UsageEvents.Event()
-            val resumed = mutableMapOf<String, Long>()
+            // アプリ → 前面にある画面の名前／前面になった時刻
+            val open = mutableMapOf<String, MutableSet<String>>()
+            val since = mutableMapOf<String, Long>()
+            fun add(pkg: String, a: Long, b: Long) {
+                val x = maxOf(a, from); val y = minOf(b, to)
+                if (y > x) result[pkg] = (result[pkg] ?: 0) + (y - x)
+            }
+            fun close(pkg: String, t: Long) {
+                since.remove(pkg)?.let { add(pkg, it, t) }
+                open.remove(pkg)
+            }
             while (events.hasNextEvent()) {
                 events.getNextEvent(e)
+                val pkg = e.packageName ?: continue
+                val cls = e.className ?: ""
                 when (e.eventType) {
-                    android.app.usage.UsageEvents.Event.ACTIVITY_RESUMED ->
-                        if (e.packageName !in resumed) resumed[e.packageName] = e.timeStamp
-                    android.app.usage.UsageEvents.Event.ACTIVITY_PAUSED, 23 /* ACTIVITY_STOPPED */ ->
-                        resumed.remove(e.packageName)?.let { t -> result[e.packageName] = (result[e.packageName] ?: 0) + (e.timeStamp - t) }
+                    android.app.usage.UsageEvents.Event.ACTIVITY_RESUMED -> {
+                        val set = open.getOrPut(pkg) { mutableSetOf() }
+                        if (set.isEmpty()) since[pkg] = e.timeStamp
+                        set += cls
+                    }
+                    // 終わりは PAUSED だけで見る（STOPPED は前の画面が裏に回っただけのことが多い）
+                    android.app.usage.UsageEvents.Event.ACTIVITY_PAUSED -> {
+                        val set = open[pkg] ?: continue
+                        set -= cls
+                        if (set.isEmpty()) close(pkg, e.timeStamp)
+                    }
+                    // 画面が消えた・電源が切れた：記録が抜けても数えすぎないよう、ここで全部止める
+                    16 /* SCREEN_NON_INTERACTIVE */, 26 /* DEVICE_SHUTDOWN */, 27 /* DEVICE_STARTUP */ ->
+                        open.keys.toList().forEach { close(it, e.timeStamp) }
                 }
             }
             // 期間の終わりにも前面にあるアプリ
-            resumed.forEach { (pkg, t) -> result[pkg] = (result[pkg] ?: 0) + (to - t) }
+            since.forEach { (pkg, t) -> add(pkg, t, to) }
         }.onFailure { android.util.Log.w("Loosen", "usage query failed", it) }
         return result
     }
@@ -446,9 +475,23 @@ object Guard {
 
     fun dailyGoal(date: LocalDate = LocalDate.now()) = dailyGoals[date.toString()] ?: ""
 
+    // ---- 日めくり（その日に初めて目標・タスクを登録したとき、残り日数の紙を1枚ちぎる演出） ----
+    /** true の間、MainActivity が日めくりの演出を出す */
+    var tearPending by mutableStateOf(false)
+
+    /** 今日まだ日めくりをしていなければ出す（1日1回） */
+    fun tearToday() {
+        if (!ready) return
+        val today = LocalDate.now().toString()
+        if (prefs.getString("tornDay", "") == today) return
+        prefs.edit().putString("tornDay", today).apply()
+        tearPending = true
+    }
+
     fun setDailyGoal(date: LocalDate, text: String) {
         val t = text.trim()
         if (t.isEmpty()) dailyGoals.remove(date.toString()) else dailyGoals[date.toString()] = t
+        if (t.isNotEmpty() && date == LocalDate.now()) tearToday()
         // 古い目標は400日分だけ残す
         val keep = date.minusDays(400).toString()
         dailyGoals.keys.filter { it < keep }.forEach { dailyGoals.remove(it) }

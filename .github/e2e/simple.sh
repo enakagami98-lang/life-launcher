@@ -35,9 +35,9 @@ $UI long "Chrome" >/dev/null; sleep 2; snap sheet_limited
 expect_text "登録済みの表示" "使いすぎ防止：1日 5分"
 expect_text "外す項目" "使いすぎ防止から外す"
 key KEYCODE_BACK
-# 日本語表示ではアプリ名が「時計」になる。トップの部品が増えたので2回スクロールしてお気に入りへ
+# 日本語表示ではアプリ名が「時計」になる。トップの部品が増えたので3回スクロールしてお気に入りへ
 $UI long "時計" >/dev/null; sleep 2; $UI tap "お気に入りに追加" >/dev/null; sleep 2
-key KEYCODE_HOME; for i in 1 2; do adb shell input swipe 540 1900 540 500 400; sleep 1; done; sleep 1
+key KEYCODE_HOME; for i in 1 2 3; do adb shell input swipe 540 1900 540 500 400; sleep 1; done; sleep 1
 expect_text "お気に入りに追加された" "時計"
 $UI long "時計" >/dev/null; sleep 2; snap sheet_favorite
 expect_text "お気に入りのパネル" "名前を変更"

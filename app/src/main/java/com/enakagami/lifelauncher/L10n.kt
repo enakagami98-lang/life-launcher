@@ -31,6 +31,9 @@ fun shortDate(date: LocalDate, locale: Locale = Locale.getDefault()): String =
 fun longDate(date: LocalDate, locale: Locale = Locale.getDefault()): String =
     date.format(DateTimeFormatter.ofPattern(DateFormat.getBestDateTimePattern(locale, "yMMMd"), locale))
 
+fun longDateWithWeekday(date: LocalDate, locale: Locale = Locale.getDefault()): String =
+    date.format(DateTimeFormatter.ofPattern(DateFormat.getBestDateTimePattern(locale, "yMMMdEEE"), locale))
+
 /** 「今何してる？」の最初から入っている選択肢（"@キー"）の表示名 */
 private val OptionNames = mapOf(
     "@study" to R.string.opt_study, "@work" to R.string.opt_work, "@class" to R.string.opt_class,

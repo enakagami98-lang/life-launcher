@@ -72,6 +72,27 @@ elif cmd == "tapnear":
     pos = center(find(text))
     best = min(ns, key=lambda n: abs(center(n)[1] - pos[1]))
     x, y = center(best); adb("shell", "input", "tap", str(x), str(y)); print("FOUND")
+elif cmd == "tapbelow":
+    # text（入力欄の見出し）のすぐ下にある class の部品をタップ。画面外ならスクロールしてから
+    cls = sys.argv[3]
+    if visible_center(text) is None:
+        print(f"NOTFOUND: {text}"); sys.exit(1)
+    ns = nodes()
+    label = next(n for n in ns if text in (n.get("text"), n.get("content-desc")))
+    ly = int(re.findall(r"\d+", label.get("bounds"))[3])
+    below = [n for n in ns if n.get("class") == cls and int(re.findall(r"\d+", n.get("bounds"))[1]) >= ly - 5]
+    if not below:
+        print(f"NOTFOUND: {cls}"); sys.exit(1)
+    best = min(below, key=lambda n: int(re.findall(r"\d+", n.get("bounds"))[1]))
+    x, y = center(best)
+    if y > 2150:
+        adb("shell", "input", "swipe", "540", "1700", "540", "1100", "400"); time.sleep(1)
+        y -= 600
+    adb("shell", "input", "tap", str(x), str(y)); print("FOUND")
+elif cmd == "focused":
+    # 入力中の欄の下端の高さ（キーボードに隠れていないかの確認用）。無ければ -1
+    n = next((n for n in nodes() if n.get("focused") == "true" and n.get("class") == "android.widget.EditText"), None)
+    print(int(re.findall(r"\d+", n.get("bounds"))[3]) if n is not None else -1)
 elif cmd == "tapraw":
     # 画面の下端（ナビゲーションの近く）にあるボタンもそのまま押す
     n = find(text)

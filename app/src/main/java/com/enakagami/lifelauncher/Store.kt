@@ -26,7 +26,29 @@ val ALL_WIDGETS = linkedMapOf(
     "habits" to R.string.w_habits,
     "steps" to R.string.w_steps,
     "yesterday" to R.string.w_yesterday,
+    "quote" to R.string.w_quote,
+    "journal" to R.string.w_journal,
 )
+
+/** 振り返り日記の1日分。書きたい日だけ。空の欄は "" */
+data class JournalEntry(
+    val story: String = "", val good: String = "", val goals: String = "", val noticed: String = "",
+    val music: String = "", val waste: String = "", val happy: String = "", val challenge: String = "",
+) {
+    fun fields() = listOf(story, good, goals, noticed, music, waste, happy, challenge)
+    fun isEmpty() = fields().all { it.isBlank() }
+    fun toJson(): JSONObject = JSONObject().apply { JOURNAL_KEYS.zip(fields()).forEach { (k, v) -> if (v.isNotBlank()) put(k, v) } }
+    companion object {
+        val JOURNAL_KEYS = listOf("story", "good", "goals", "noticed", "music", "waste", "happy", "challenge")
+        fun fromJson(o: JSONObject) = JOURNAL_KEYS.map { o.optString(it) }.let {
+            JournalEntry(it[0], it[1], it[2], it[3], it[4], it[5], it[6], it[7])
+        }
+        fun of(list: List<String>) = JournalEntry(list[0], list[1], list[2], list[3], list[4], list[5], list[6], list[7])
+    }
+}
+
+/** 心に残った言葉。by＝誰の言葉・誰から聞いたか、source＝本・番組など、note＝前後の文脈やメモ */
+data class Quote(val id: Long, val text: String, val by: String = "", val source: String = "", val note: String = "")
 
 /** カウントダウン（例：入社まであと◯日） */
 data class Countdown(val id: Long, val title: String, val date: LocalDate)
@@ -184,7 +206,13 @@ class Store(context: Context) {
     // ---- トップ画面の部品（残り日数の下に並べるもの） ----
     /** 表示する部品の id を上から順に（ALL_WIDGETS のキー）。最初は モットー・今日のスマホ・支払額 */
     val widgets = mutableStateListOf<String>().apply {
-        addAll((prefs.getString("widgets", null) ?: "motto,screen,spend").split(',').filter { it in ALL_WIDGETS })
+        addAll((prefs.getString("widgets", null) ?: "motto,quote,screen,spend,journal").split(',').filter { it in ALL_WIDGETS })
+        // 今日の言葉・振り返り日記（2026-11 追加）は、前から使っている人にも1回だけ出す
+        if (!prefs.getBoolean("addedQuoteJournal", false)) {
+            if ("quote" !in this) add(indexOf("motto") + 1, "quote")
+            if ("journal" !in this) add("journal")
+            prefs.edit().putBoolean("addedQuoteJournal", true).putString("widgets", joinToString(",")).apply()
+        }
     }
 
     fun saveWidgets(list: List<String>) {
@@ -271,6 +299,7 @@ class Store(context: Context) {
     fun addTask(text: String, due: Long? = null) {
         tasks.add(Task(System.currentTimeMillis(), text, due = due))
         saveTasks()
+        Guard.tearToday()
     }
 
     fun toggleTask(id: Long, today: LocalDate) {
@@ -314,6 +343,50 @@ class Store(context: Context) {
         o.keys().forEach { k ->
             runCatching { put(LocalDate.parse(k), DayLog.fromJson(o.getJSONObject(k))) }
         }
+    }
+
+    // ---- 振り返り日記（書きたい日だけ。日付 → 1日分） ----
+    val journal = mutableStateMapOf<LocalDate, JournalEntry>().apply {
+        val o = JSONObject(prefs.getString("journal", "{}") ?: "{}")
+        o.keys().forEach { k -> runCatching { put(LocalDate.parse(k), JournalEntry.fromJson(o.getJSONObject(k))) } }
+    }
+
+    /** 書いている途中も1文字ごとに保存する（画面が消えても書いた分が残るように） */
+    fun saveJournal(date: LocalDate, entry: JournalEntry) {
+        if (entry.isEmpty()) journal.remove(date) else journal[date] = entry
+        val o = JSONObject()
+        journal.forEach { (d, e) -> o.put(d.toString(), e.toJson()) }
+        prefs.edit().putString("journal", o.toString()).apply()
+    }
+
+    // ---- 今日の言葉（登録した言葉から毎日1つ） ----
+    val quotes = mutableStateListOf<Quote>().apply {
+        val a = JSONArray(prefs.getString("quotes", "[]"))
+        for (i in 0 until a.length()) {
+            val o = a.getJSONObject(i)
+            add(Quote(o.getLong("id"), o.getString("text"), o.optString("by"), o.optString("source"), o.optString("note")))
+        }
+    }
+
+    /** 今日の1つ。日付で決まるので、1日の間は何度開いても同じ言葉 */
+    fun quoteOf(date: LocalDate): Quote? {
+        if (quotes.isEmpty()) return null
+        val list = quotes.sortedBy { it.id }
+        return list[kotlin.random.Random(date.toEpochDay()).nextInt(list.size)]
+    }
+
+    fun saveQuote(q: Quote) {
+        val i = quotes.indexOfFirst { it.id == q.id }
+        if (i >= 0) quotes[i] = q else quotes.add(q)
+        saveQuotes()
+    }
+
+    fun deleteQuote(id: Long) { quotes.removeAll { it.id == id }; saveQuotes() }
+
+    private fun saveQuotes() {
+        val a = JSONArray()
+        quotes.forEach { a.put(JSONObject().put("id", it.id).put("text", it.text).put("by", it.by).put("source", it.source).put("note", it.note)) }
+        prefs.edit().putString("quotes", a.toString()).apply()
     }
 
     fun day(date: LocalDate) = days[date] ?: DayLog()

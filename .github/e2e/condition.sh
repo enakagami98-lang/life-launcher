@@ -10,8 +10,8 @@ snap() { N=$((N+1)); f=$(printf "%02d_%s" $N "$1"); adb exec-out screencap -p > 
 key() { adb shell input keyevent "$@"; sleep 2; }
 next_page() { adb shell input swipe 950 1200 150 1200 400; sleep 2; }
 prev_page() { adb shell input swipe 150 1200 950 1200 400; sleep 2; }
-# トップの部品が増えて長くなったので、2回スクロールしてお気に入りまで行く
-favs() { for i in 1 2; do adb shell input swipe 540 1900 540 500 400; sleep 1; done; sleep 1; }
+# トップの部品が増えて長くなったので、3回スクロールしてお気に入りまで行く（2026-11 に今日の言葉・日記が増えた）
+favs() { for i in 1 2 3; do adb shell input swipe 540 1900 540 500 400; sleep 1; done; sleep 1; }
 ok() { log "PASS | $1"; }
 ng() { log "FAIL | $1"; }
 expect_text() { if $UI hasp "$2" >/dev/null; then ok "$1 「$2」あり"; else ng "$1 「$2」なし / 画面の文字: $($UI texts | paste -sd' ' | cut -c1-150)"; fi; }

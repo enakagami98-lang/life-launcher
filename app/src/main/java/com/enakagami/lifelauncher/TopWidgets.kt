@@ -100,6 +100,8 @@ fun TopWidgets(store: Store, today: LocalDate, openCondition: () -> Unit) {
                 "habits" -> HabitsCard(store, today)
                 "steps" -> StepsCard()
                 "yesterday" -> YesterdayCard(store, today, openCondition)
+                "quote" -> QuoteCard(store, today)
+                "journal" -> JournalCard(store, today)
             }
         }
         Text(

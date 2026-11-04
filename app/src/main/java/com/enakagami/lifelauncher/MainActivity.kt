@@ -160,7 +160,9 @@ fun LauncherApp(
     var showSettings by remember { mutableStateOf(false) }
     // 使い方：入れたばかり（まだ誕生日も無い）のときは自動で。設定の「使い方をもう一度見る」からも
     var showTutorial by remember { mutableStateOf(!store.tutorialDone && store.birth == null) }
-    LaunchedEffect(homePress) { showSettings = false }
+    // 振り返り日記・今日の言葉の全画面（"journal" / "quote"）。ホームボタンで閉じる（書いた分は保存済み）
+    var panel by remember { mutableStateOf<String?>(null) }
+    LaunchedEffect(homePress) { showSettings = false; panel = null }
 
     suspend fun goHome() {
         query = ""
@@ -210,6 +212,7 @@ fun LauncherApp(
         LocalPalette provides palette,
         LocalOpenApp provides openApp,
         LocalResumeSignal provides resumeSignal,
+        LocalOpenPanel provides { panel = it },
     ) {
         MaterialTheme(colorScheme = scheme) {
           // 改行：日本語は文節の切れ目で、どの言語も行の長さをそろえて折り返す（「す。」だけ次の行、を防ぐ）。単語の途中では切らない
@@ -253,6 +256,12 @@ fun LauncherApp(
                         }
                     }
                 }
+                when (panel) {
+                    "journal" -> JournalScreen(store, today) { panel = null }
+                    "quote" -> QuoteScreen(store, today) { panel = null }
+                }
+                // その日に初めて目標・タスクを登録したときの日めくり
+                if (Guard.tearPending) TearOverlay(store, LocalDate.now()) { Guard.tearPending = false }
                 if (showSettings) {
                     SettingsDialog(store, apps, onDismiss = { showSettings = false },
                         onTutorial = { showSettings = false; showTutorial = true })
