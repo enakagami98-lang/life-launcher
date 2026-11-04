@@ -185,3 +185,8 @@
 - e2e：`-f only=journal`（新規）。ui.py に tapbelow（見出しのすぐ下の入力欄を押す）と focused（入力中の欄の下端）を追加。キーボードの上端は dumpsys window InputMethod の frame から
 - トップの部品が2つ増えたので、お気に入りまでのスクロールを condition.sh・simple.sh は3回、e2e.sh は2回に
 - e2e の注意：全画面パネルの下のホーム画面の文字も uiautomator に出る（重なっていても消えない）。hasp で調べるとホーム側に当たることがある
+- e2e 結果：journal 28/28、tasks 28/28、goal 20/20、condition 26/26（v1.0.73〜74）
+- e2e の学び：キーボードが出ている間に画面の下半分でスワイプすると、Gboard のなぞり入力で「to」などが入る → tapbelow のスクロールは上半分（y 600〜1200）で行う
+- e2e の学び：dumpsys からキーボードの高さを取る方法はうまくいかなかった（128 が返った）。Pixel 6 の英字キーボードの上端は撮影画像で約1515 → journal.sh の KB_TOP に固定
+- e2e の学び：日めくりは約2秒で消える。撮影してから uiautomator で調べると間に合わない → 先に hasp で調べる
+- 使用時間の直り具合（ゲーム）は仮想スマホでは試せない（ゲームが無い）。実機で確認してもらう
