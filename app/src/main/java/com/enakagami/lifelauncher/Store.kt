@@ -27,7 +27,6 @@ val ALL_WIDGETS = linkedMapOf(
     "steps" to R.string.w_steps,
     "yesterday" to R.string.w_yesterday,
     "quote" to R.string.w_quote,
-    "journal" to R.string.w_journal,
 )
 
 /** 振り返り日記の1日分。書きたい日だけ。空の欄は "" */
@@ -206,11 +205,10 @@ class Store(context: Context) {
     // ---- トップ画面の部品（残り日数の下に並べるもの） ----
     /** 表示する部品の id を上から順に（ALL_WIDGETS のキー）。最初は モットー・今日のスマホ・支払額 */
     val widgets = mutableStateListOf<String>().apply {
-        addAll((prefs.getString("widgets", null) ?: "motto,quote,screen,spend,journal").split(',').filter { it in ALL_WIDGETS })
-        // 今日の言葉・振り返り日記（2026-11 追加）は、前から使っている人にも1回だけ出す
+        addAll((prefs.getString("widgets", null) ?: "motto,quote,screen,spend").split(',').filter { it in ALL_WIDGETS })
+        // 今日の言葉（2026-11 追加）は、前から使っている人にも1回だけ出す。振り返り日記は専用のページに移した
         if (!prefs.getBoolean("addedQuoteJournal", false)) {
             if ("quote" !in this) add(indexOf("motto") + 1, "quote")
-            if ("journal" !in this) add("journal")
             prefs.edit().putBoolean("addedQuoteJournal", true).putString("widgets", joinToString(",")).apply()
         }
     }

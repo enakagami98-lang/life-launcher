@@ -28,6 +28,14 @@ jobs:
         env:
           KEYSTORE_B64: ${{ secrets.KEYSTORE_B64 }}
 
+      - name: 使用時間の数え方などのテスト（失敗したらAPKを作らない）
+        run: gradle testGithubReleaseUnitTest --no-daemon --stacktrace
+        env:
+          KEYSTORE_PATH: ${{ runner.temp }}/release.p12
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          VERSION_CODE: ${{ github.run_number }}
+
       - name: APKを組み立てる
         run: gradle assembleGithubRelease assemblePlayRelease bundlePlayRelease bundlePlaytestRelease --no-daemon --stacktrace
         env:

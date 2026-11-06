@@ -314,7 +314,7 @@
     <string name="tut7_body">화면을 좌우로 스와이프하면 페이지가 바뀌어요.</string>
     <string name="tut7_page_left">← 오른쪽으로 스와이프: 몸 컨디션 (컨디션·수면·화면 시간 기록)</string>
     <string name="tut7_page_top">홈: 남은 날, 고른 정보, 아래로 스크롤하면 즐겨찾기</string>
-    <string name="tut7_page_right">→ 왼쪽으로 스와이프: 앱 목록·목표·습관·할 일</string>
+    <string name="tut7_page_right">→ 왼쪽으로 스와이프: 앱 목록·목표·습관·일기·할 일</string>
     <string name="tut7_longpress">앱 목록에서 앱을 길게 누르면 즐겨찾기·사용 제한·숨기기를 설정할 수 있어요.</string>
     <string name="tut7_tip">설정(⚙)의 \'사용법 다시 보기\'에서 언제든 이 설명을 볼 수 있어요.</string>
     <string name="s_tutorial">사용법 다시 보기</string>
@@ -411,4 +411,11 @@
     <string name="j_waste">오늘 하루 중 낭비였던 것</string>
     <string name="j_happy">행복하다고 느낀 것</string>
     <string name="j_challenge">도전한 것</string>
+    <string name="tut_more_title">하루를 돌아보는 기능도 있어요</string>
+    <string name="tut_more_body">쓰고 싶을 때만 쓰면 됩니다.</string>
+    <string name="tut_more_journal">\'습관\'과 \'할 일\' 사이의 페이지입니다. 쓰고 싶은 날에만 오늘 있었던 일과 좋았던 일을 남기세요.</string>
+    <string name="tut_more_quote">마음에 남은 말이나 책의 한 구절을 저장하면 매일 하나씩 홈 화면에 나타납니다.</string>
+    <string name="tut_more_tasks">기한(날짜와 시간)을 정하면 기한이 가까운 순서로 정렬됩니다.</string>
+    <string name="tut_more_tear_title">달력 넘기기</string>
+    <string name="tut_more_tear">그날 처음으로 오늘의 목표나 할 일을 등록하면 달력이 넘어가고 남은 날이 하루 줄어듭니다.</string>
 </resources>

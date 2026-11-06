@@ -311,7 +311,7 @@
     <string name="tut7_body">पान बदलण्यासाठी डावीकडे किंवा उजवीकडे स्वाइप करा.</string>
     <string name="tut7_page_left">← उजवीकडे स्वाइप: शरीराची स्थिती (स्थिती, झोप, स्क्रीन टाइम)</string>
     <string name="tut7_page_top">होम: उरलेले दिवस, निवडलेली माहिती, खाली आवडी</string>
-    <string name="tut7_page_right">→ डावीकडे स्वाइप: ॲप्स, ध्येये, सवयी, कामे</string>
+    <string name="tut7_page_right">→ डावीकडे स्वाइप: ॲप्स, ध्येये, सवयी, डायरी, कामे</string>
     <string name="tut7_longpress">यादीत ॲप दाबून धरून आवडी, वेळ मर्यादा किंवा लपवणे सेट करा.</string>
     <string name="tut7_tip">सेटिंग्ज (⚙) मधील \"मार्गदर्शन पुन्हा पहा\" मधून हे कधीही पाहता येईल.</string>
     <string name="s_tutorial">मार्गदर्शन पुन्हा पहा</string>
@@ -408,4 +408,11 @@
     <string name="j_waste">आज वाया गेलेल्या गोष्टी</string>
     <string name="j_happy">ज्याने आनंद वाटला</string>
     <string name="j_challenge">मी स्वीकारलेले आव्हान</string>
+    <string name="tut_more_title">प्रत्येक दिवसाकडे मागे वळून पाहण्याच्या सुविधाही आहेत</string>
+    <string name="tut_more_body">हवे तेव्हाच वापरा.</string>
+    <string name="tut_more_journal">सवयी आणि कामे यांच्या मधले पान. ज्या दिवशी वाटेल त्या दिवशी आज काय घडले आणि काय चांगले झाले ते लिहा.</string>
+    <string name="tut_more_quote">मनात राहिलेले शब्द किंवा पुस्तकातील उतारे जतन करा, दररोज त्यातील एक होम स्क्रीनवर दिसेल.</string>
+    <string name="tut_more_tasks">अंतिम तारीख आणि वेळ ठरवा, कामे जवळच्या मुदतीनुसार लावली जातील.</string>
+    <string name="tut_more_tear_title">दैनिक कॅलेंडर</string>
+    <string name="tut_more_tear">दिवसात पहिल्यांदा आजचे ध्येय किंवा काम जोडल्यावर कॅलेंडरचे पान फाटते आणि उरलेले दिवस एकने कमी होतात.</string>
 </resources>

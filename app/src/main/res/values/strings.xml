@@ -315,7 +315,7 @@
     <string name="tut7_body">Swipe left or right to move between pages.</string>
     <string name="tut7_page_left">← Swipe right: Condition (condition, sleep, screen time)</string>
     <string name="tut7_page_top">Home: days left, your info, scroll down for favorites</string>
-    <string name="tut7_page_right">→ Swipe left: Apps, Goals, Habits, Tasks</string>
+    <string name="tut7_page_right">→ Swipe left: Apps, Goals, Habits, Journal, Tasks</string>
     <string name="tut7_longpress">Press and hold an app in the list to add it to favorites, set a time limit, or hide it.</string>
     <string name="tut7_tip">You can see this guide again anytime from \"Show the guide again\" in Settings (⚙).</string>
     <string name="s_tutorial">Show the guide again</string>
@@ -412,4 +412,11 @@
     <string name="j_waste">What was wasted today</string>
     <string name="j_happy">What made me happy</string>
     <string name="j_challenge">What I challenged myself to do</string>
+    <string name="tut_more_title">Features for looking back on each day</string>
+    <string name="tut_more_body">Use them only when you want to.</string>
+    <string name="tut_more_journal">The page between Habits and Tasks. On days you feel like it, write down what happened and what went well.</string>
+    <string name="tut_more_quote">Save words or book passages that stayed with you, and one appears on the home screen each day.</string>
+    <string name="tut_more_tasks">Set a due date and time, and tasks are sorted by what\'s due first.</string>
+    <string name="tut_more_tear_title">Daily calendar</string>
+    <string name="tut_more_tear">The first time you add today\'s goal or a task each day, a calendar page tears off and your days left go down by one.</string>
 </resources>

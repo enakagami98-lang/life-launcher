@@ -314,7 +314,7 @@
     <string name="tut7_body">画面を左右にスワイプすると、ページが切り替わります。</string>
     <string name="tut7_page_left">← 右にスワイプ：身体の調子（調子・睡眠・スマホ時間の記録）</string>
     <string name="tut7_page_top">トップ：残りの日数、選んだ情報、下にスクロールでお気に入り</string>
-    <string name="tut7_page_right">→ 左にスワイプ：アプリ一覧・目標・習慣・タスク</string>
+    <string name="tut7_page_right">→ 左にスワイプ：アプリ一覧・目標・習慣・日記・タスク</string>
     <string name="tut7_longpress">アプリ一覧でアプリを長押しすると、お気に入り・使いすぎ防止・非表示を設定できます。</string>
     <string name="tut7_tip">設定（⚙）の「使い方をもう一度見る」から、いつでもこの説明を見られます。</string>
     <string name="s_tutorial">使い方をもう一度見る</string>
@@ -411,4 +411,11 @@
     <string name="j_waste">今日の1日で無駄だったこと</string>
     <string name="j_happy">幸せと感じたこと</string>
     <string name="j_challenge">挑戦したこと</string>
+    <string name="tut_more_title">毎日を振り返る機能も使えます</string>
+    <string name="tut_more_body">どれも、使いたいときだけで大丈夫です。</string>
+    <string name="tut_more_journal">「習慣」と「タスク」の間のページです。書きたい日だけ、今日あったことや良かったことを残せます。</string>
+    <string name="tut_more_quote">心に残った言葉や本の一節を登録すると、毎日1つトップ画面に出ます。</string>
+    <string name="tut_more_tasks">「何日の何時までに」と期限を決めると、期限が近い順に並びます。</string>
+    <string name="tut_more_tear_title">日めくり</string>
+    <string name="tut_more_tear">その日に初めて今日の目標かタスクを登録すると、カレンダーがめくれて残りの日数が1日減ります。</string>
 </resources>

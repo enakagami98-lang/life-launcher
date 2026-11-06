@@ -66,7 +66,7 @@ import androidx.compose.ui.unit.sp
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
 
-private const val STEPS = 7
+private const val STEPS = 8
 
 /** このアプリが「ホームアプリ」になっているか */
 fun isDefaultHome(context: Context): Boolean {
@@ -80,7 +80,8 @@ fun isDefaultHome(context: Context): Boolean {
 
 /**
  * インストール直後の使い方（チュートリアル）。説明を読みながら、その場で実際に設定していく。
- * 1 ようこそ → 2 寿命 → 3 ホームアプリ → 4 お気に入り → 5 使いすぎ防止 → 6 トップに出す情報 → 7 使い方
+ * 1 ようこそ → 2 寿命 → 3 ホームアプリ → 4 お気に入り → 5 使いすぎ防止 → 6 トップに出す情報 → 7 毎日の記録 → 8 使い方
+ * 新しい機能を足したら、ここ（7 か 8）にも必ず説明を足す。
  * 設定の「使い方をもう一度見る」からも開ける。
  */
 @Composable
@@ -141,6 +142,7 @@ fun TutorialScreen(store: Store, apps: List<AppInfo>, onFinish: () -> Unit) {
                 3 -> StepPickApps(R.string.tut4_title, R.string.tut4_body, apps.distinctBy { it.key }.map { it.key to it.label }, favKeys)
                 4 -> StepLimits(apps, limitPkgs, limitMin) { limitMin = it }
                 5 -> StepWidgets(widgetsOn)
+                6 -> StepDaily()
                 else -> StepDone()
             }
         }
@@ -371,7 +373,28 @@ private fun ColumnScope.StepWidgets(on: MutableList<String>) {
     }
 }
 
-// ---- 7 使い方 ----
+// ---- 7 毎日の記録（日記・今日の言葉・タスクの期限・日めくり） ----
+@Composable
+private fun StepDaily() {
+    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState())) {
+        Title(R.string.tut_more_title)
+        Body(R.string.tut_more_body)
+        listOf(
+            R.string.w_journal to R.string.tut_more_journal,
+            R.string.w_quote to R.string.tut_more_quote,
+            R.string.page_tasks to R.string.tut_more_tasks,
+            R.string.tut_more_tear_title to R.string.tut_more_tear,
+        ).forEach { (name, desc) ->
+            Column(Modifier.fillMaxWidth().padding(vertical = 4.dp).card().padding(16.dp)) {
+                Text(stringResource(name), color = Blue, fontSize = 15.sp, fontWeight = FontWeight.Bold)
+                Spacer(Modifier.height(4.dp))
+                Text(stringResource(desc), color = Ink, fontSize = 15.sp, lineHeight = 22.sp)
+            }
+        }
+    }
+}
+
+// ---- 8 使い方 ----
 @Composable
 private fun StepDone() {
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState())) {

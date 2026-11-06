@@ -311,7 +311,7 @@
     <string name="tut7_body">صفحہ بدلنے کے لیے دائیں یا بائیں سوائپ کریں۔</string>
     <string name="tut7_page_left">جسم کی حالت: حالت، نیند، اسکرین ٹائم</string>
     <string name="tut7_page_top">ہوم: باقی دن، منتخب معلومات، نیچے پسندیدہ</string>
-    <string name="tut7_page_right">ایپس، اہداف، عادات، کام</string>
+    <string name="tut7_page_right">ایپس، اہداف، عادات، ڈائری، کام</string>
     <string name="tut7_longpress">فہرست میں کسی ایپ کو دبا کر رکھیں اور پسندیدہ، وقت کی حد یا چھپانا ترتیب دیں۔</string>
     <string name="tut7_tip">یہ رہنمائی ترتیبات (⚙) میں \"رہنمائی دوبارہ دیکھیں\" سے کبھی بھی دیکھ سکتے ہیں۔</string>
     <string name="s_tutorial">رہنمائی دوبارہ دیکھیں</string>
@@ -408,4 +408,11 @@
     <string name="j_waste">آج کا ضائع ہونے والا وقت</string>
     <string name="j_happy">جس سے خوشی ملی</string>
     <string name="j_challenge">جو چیلنج میں نے لیا</string>
+    <string name="tut_more_title">ہر دن پر نظر ڈالنے کی سہولتیں بھی ہیں</string>
+    <string name="tut_more_body">جب دل چاہے تبھی استعمال کریں۔</string>
+    <string name="tut_more_journal">یہ عادات اور کاموں کے درمیان والا صفحہ ہے۔ جس دن دل چاہے لکھیں کہ آج کیا ہوا اور کیا اچھا رہا۔</string>
+    <string name="tut_more_quote">دل کو چھو جانے والے الفاظ یا کتاب کے اقتباس محفوظ کریں، ہر روز ان میں سے ایک ہوم اسکرین پر نظر آئے گا۔</string>
+    <string name="tut_more_tasks">آخری تاریخ اور وقت طے کریں، کام قریب ترین وقت کی ترتیب سے نظر آئیں گے۔</string>
+    <string name="tut_more_tear_title">روزانہ کیلنڈر</string>
+    <string name="tut_more_tear">دن میں پہلی بار آج کا ہدف یا کام شامل کرنے پر کیلنڈر کا ایک ورق پھٹتا ہے اور باقی دن ایک کم ہو جاتے ہیں۔</string>
 </resources>

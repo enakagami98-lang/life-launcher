@@ -309,7 +309,7 @@
     <string name="tut7_body">Scorri a sinistra o a destra per cambiare pagina.</string>
     <string name="tut7_page_left">← Scorri a destra: Forma fisica (forma, sonno, tempo di utilizzo)</string>
     <string name="tut7_page_top">Home: giorni rimasti, le tue info e, più in basso, i preferiti</string>
-    <string name="tut7_page_right">→ Scorri a sinistra: app, obiettivi, abitudini, attività di oggi</string>
+    <string name="tut7_page_right">→ Scorri a sinistra: app, obiettivi, abitudini, diario, attività</string>
     <string name="tut7_longpress">Tieni premuta un\'app nell\'elenco per aggiungerla ai preferiti, limitarla o nasconderla.</string>
     <string name="tut7_tip">Puoi rivedere questa guida quando vuoi da \"Rivedi la guida\" in Impostazioni (⚙).</string>
     <string name="s_tutorial">Rivedi la guida</string>
@@ -406,4 +406,11 @@
     <string name="j_waste">Cosa è stato tempo perso oggi</string>
     <string name="j_happy">Cosa mi ha reso felice</string>
     <string name="j_challenge">Cosa ho osato provare</string>
+    <string name="tut_more_title">Funzioni per ripensare a ogni giornata</string>
+    <string name="tut_more_body">Usale solo quando vuoi.</string>
+    <string name="tut_more_journal">È la pagina tra Abitudini e Attività. Nei giorni in cui ti va, annota cosa è successo e cosa è andato bene.</string>
+    <string name="tut_more_quote">Salva parole o passi di libri che ti hanno colpito: ogni giorno uno apparirà nella schermata iniziale.</string>
+    <string name="tut_more_tasks">Imposta data e ora di scadenza e le attività saranno ordinate dalla più vicina.</string>
+    <string name="tut_more_tear_title">Calendario a strappo</string>
+    <string name="tut_more_tear">La prima volta che aggiungi l\'obiettivo di oggi o un\'attività, un foglio del calendario si strappa e i giorni rimasti calano di uno.</string>
 </resources>

@@ -310,7 +310,7 @@
     <string name="tut7_body">Sayfa değiştirmek için sağa veya sola kaydır.</string>
     <string name="tut7_page_left">← Sağa kaydır: Vücut durumu (durum, uyku, ekran süresi)</string>
     <string name="tut7_page_top">Ana ekran: kalan gün, seçtiğin bilgiler, aşağıda favoriler</string>
-    <string name="tut7_page_right">→ Sola kaydır: uygulamalar, hedefler, alışkanlıklar, bugünün görevleri</string>
+    <string name="tut7_page_right">→ Sola kaydır: uygulamalar, hedefler, alışkanlıklar, günlük, görevler</string>
     <string name="tut7_longpress">Favorilere eklemek, süre sınırı koymak veya gizlemek için listede uygulamaya basılı tut.</string>
     <string name="tut7_tip">Bu rehberi Ayarlar\'daki (⚙) \"Rehberi tekrar gör\"den istediğin zaman açabilirsin.</string>
     <string name="s_tutorial">Rehberi tekrar gör</string>
@@ -407,4 +407,11 @@
     <string name="j_waste">Bugün boşa gidenler</string>
     <string name="j_happy">Beni mutlu eden şeyler</string>
     <string name="j_challenge">Cesaret edip denediklerim</string>
+    <string name="tut_more_title">Her güne dönüp bakmak için özellikler de var</string>
+    <string name="tut_more_body">Yalnızca istediğinde kullan.</string>
+    <string name="tut_more_journal">Alışkanlıklar ile Görevler arasındaki sayfa. İstediğin günlerde, neler olduğunu ve neyin iyi gittiğini yaz.</string>
+    <string name="tut_more_quote">Aklında kalan sözleri veya kitap alıntılarını kaydet, her gün biri ana ekranda görünsün.</string>
+    <string name="tut_more_tasks">Son tarih ve saat belirle, görevler en yakın tarihe göre sıralansın.</string>
+    <string name="tut_more_tear_title">Günlük takvim</string>
+    <string name="tut_more_tear">Gün içinde ilk kez bugünün hedefini veya bir görev eklediğinde takvim yaprağı kopar ve kalan günlerin bir azalır.</string>
 </resources>

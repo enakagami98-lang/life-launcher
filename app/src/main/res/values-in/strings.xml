@@ -311,7 +311,7 @@
     <string name="tut7_body">Geser ke kiri atau kanan untuk pindah halaman.</string>
     <string name="tut7_page_left">← Geser ke kanan: Kondisi badan (kondisi, tidur, waktu layar)</string>
     <string name="tut7_page_top">Utama: hari tersisa, info pilihanmu, gulir ke bawah untuk favorit</string>
-    <string name="tut7_page_right">→ Geser ke kiri: aplikasi, tujuan, kebiasaan, tugas hari ini</string>
+    <string name="tut7_page_right">→ Geser ke kiri: aplikasi, tujuan, kebiasaan, jurnal, tugas</string>
     <string name="tut7_longpress">Tekan lama aplikasi di daftar untuk menambah ke favorit, memberi batas waktu, atau menyembunyikannya.</string>
     <string name="tut7_tip">Panduan ini bisa dibuka lagi kapan saja dari \"Lihat panduan lagi\" di Setelan (⚙).</string>
     <string name="s_tutorial">Lihat panduan lagi</string>
@@ -408,4 +408,11 @@
     <string name="j_waste">Yang sia-sia hari ini</string>
     <string name="j_happy">Yang membuatku bahagia</string>
     <string name="j_challenge">Yang kucoba tantang</string>
+    <string name="tut_more_title">Ada juga fitur untuk melihat kembali setiap hari</string>
+    <string name="tut_more_body">Gunakan hanya saat kamu mau.</string>
+    <string name="tut_more_journal">Halaman di antara Kebiasaan dan Tugas. Di hari yang kamu mau, tulis apa yang terjadi dan hal baik hari ini.</string>
+    <string name="tut_more_quote">Simpan kata-kata atau kutipan buku yang berkesan, dan satu akan muncul di layar utama setiap hari.</string>
+    <string name="tut_more_tasks">Tetapkan tanggal dan jam tenggat, dan tugas diurutkan dari yang paling dekat.</string>
+    <string name="tut_more_tear_title">Kalender harian</string>
+    <string name="tut_more_tear">Saat pertama kali menambahkan tujuan hari ini atau tugas setiap hari, lembar kalender tersobek dan sisa harimu berkurang satu.</string>
 </resources>

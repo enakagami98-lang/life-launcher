@@ -311,7 +311,7 @@
     <string name="tut7_body">اسحب يمينًا أو يسارًا للتنقل بين الصفحات.</string>
     <string name="tut7_page_left">حالة الجسم: الحالة والنوم ووقت الشاشة</string>
     <string name="tut7_page_top">الرئيسية: الأيام المتبقية ومعلوماتك والمفضلة بالأسفل</string>
-    <string name="tut7_page_right">التطبيقات والأهداف والعادات والمهام</string>
+    <string name="tut7_page_right">التطبيقات والأهداف والعادات واليوميات والمهام</string>
     <string name="tut7_longpress">اضغط مطولًا على تطبيق في القائمة لإضافته إلى المفضلة أو تحديد وقته أو إخفائه.</string>
     <string name="tut7_tip">يمكنك رؤية هذا الدليل مجددًا من \"عرض الدليل مرة أخرى\" في الإعدادات (⚙).</string>
     <string name="s_tutorial">عرض الدليل مرة أخرى</string>
@@ -408,4 +408,11 @@
     <string name="j_waste">ما كان مضيعة في يومي</string>
     <string name="j_happy">ما شعرت معه بالسعادة</string>
     <string name="j_challenge">ما تحدّيت نفسي فيه</string>
+    <string name="tut_more_title">هناك أيضًا ميزات لمراجعة كل يوم</string>
+    <string name="tut_more_body">استخدمها فقط عندما تريد.</string>
+    <string name="tut_more_journal">هي الصفحة بين العادات والمهام. في الأيام التي ترغب فيها، دوّن ما حدث وما كان جيدًا.</string>
+    <string name="tut_more_quote">احفظ الكلمات أو مقاطع الكتب التي أثرت فيك، وستظهر واحدة منها كل يوم على الشاشة الرئيسية.</string>
+    <string name="tut_more_tasks">حدد تاريخ ووقت الاستحقاق، وستُرتَّب المهام حسب الأقرب موعدًا.</string>
+    <string name="tut_more_tear_title">التقويم اليومي</string>
+    <string name="tut_more_tear">عند إضافة هدف اليوم أو مهمة لأول مرة في اليوم، تتمزق ورقة من التقويم وينقص يوم من أيامك المتبقية.</string>
 </resources>

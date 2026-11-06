@@ -311,7 +311,7 @@
     <string name="tut7_body">पेज बदलने के लिए बाएं या दाएं स्वाइप करें।</string>
     <string name="tut7_page_left">← दाएं स्वाइप: शरीर की हालत (हालत, नींद, स्क्रीन टाइम)</string>
     <string name="tut7_page_top">होम: बचे दिन, चुनी हुई जानकारी, नीचे स्क्रॉल करने पर पसंदीदा</string>
-    <string name="tut7_page_right">→ बाएं स्वाइप: ऐप्स, लक्ष्य, आदतें, काम</string>
+    <string name="tut7_page_right">→ बाएं स्वाइप: ऐप्स, लक्ष्य, आदतें, डायरी, काम</string>
     <string name="tut7_longpress">सूची में किसी ऐप को दबाकर रखें और पसंदीदा, समय सीमा या छिपाना सेट करें।</string>
     <string name="tut7_tip">यह गाइड सेटिंग (⚙) में \"गाइड फिर से देखें\" से कभी भी देख सकते हैं।</string>
     <string name="s_tutorial">गाइड फिर से देखें</string>
@@ -408,4 +408,11 @@
     <string name="j_waste">आज का बेकार गया समय</string>
     <string name="j_happy">जिससे खुशी मिली</string>
     <string name="j_challenge">जो चुनौती मैंने ली</string>
+    <string name="tut_more_title">हर दिन पर नज़र डालने की सुविधाएँ भी हैं</string>
+    <string name="tut_more_body">जब मन हो तभी इस्तेमाल करें।</string>
+    <string name="tut_more_journal">यह आदतों और कामों के बीच का पेज है। जिस दिन मन हो, लिखें कि आज क्या हुआ और क्या अच्छा रहा।</string>
+    <string name="tut_more_quote">दिल को छू गए शब्द या किताब के अंश सहेजें, हर दिन उनमें से एक होम स्क्रीन पर दिखेगा।</string>
+    <string name="tut_more_tasks">समय सीमा की तारीख और समय तय करें, काम सबसे नज़दीकी समय सीमा के क्रम में दिखेंगे।</string>
+    <string name="tut_more_tear_title">दैनिक कैलेंडर</string>
+    <string name="tut_more_tear">दिन में पहली बार आज का लक्ष्य या काम जोड़ने पर कैलेंडर का एक पन्ना फटता है और बचे दिन एक कम हो जाते हैं।</string>
 </resources>

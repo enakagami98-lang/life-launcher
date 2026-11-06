@@ -95,10 +95,10 @@ expect_text "前の日の睡眠時間は未入力" "未入力"
 $UI tap "次の日" >/dev/null; sleep 1
 expect_text "今日に戻ると記録がある" "8.0時間"
 
-log "== 6. 6枚で一周"
+log "== 6. 7枚で一周"
 key KEYCODE_HOME
-for i in 1 2 3 4 5; do next_page; done
-expect_text "5回進むと身体の調子" "身体の調子"
+for i in 1 2 3 4 5 6; do next_page; done
+expect_text "6回進むと身体の調子" "身体の調子"
 next_page; expect_text "もう1回で寿命に戻る" "まずは誕生日と寿命を設定"
 
 log "== 結果: PASS $(grep -c '^PASS' $R) / FAIL $(grep -c '^FAIL' $R)"

@@ -309,7 +309,7 @@
     <string name="tut7_body">Desliza a izquierda o derecha para cambiar de página.</string>
     <string name="tut7_page_left">← Desliza a la derecha: Condición (estado, sueño, tiempo de pantalla)</string>
     <string name="tut7_page_top">Inicio: días restantes, tu información y, más abajo, favoritos</string>
-    <string name="tut7_page_right">→ Desliza a la izquierda: apps, metas, hábitos, tareas de hoy</string>
+    <string name="tut7_page_right">→ Desliza a la izquierda: apps, metas, hábitos, diario, tareas</string>
     <string name="tut7_longpress">Mantén pulsada una app en la lista para añadirla a favoritos, ponerle límite u ocultarla.</string>
     <string name="tut7_tip">Puedes volver a ver esta guía en \"Ver la guía de nuevo\" en Ajustes (⚙).</string>
     <string name="s_tutorial">Ver la guía de nuevo</string>
@@ -406,4 +406,11 @@
     <string name="j_waste">Lo que fue tiempo perdido hoy</string>
     <string name="j_happy">Lo que me hizo feliz</string>
     <string name="j_challenge">Lo que me atreví a intentar</string>
+    <string name="tut_more_title">También puedes repasar cada día</string>
+    <string name="tut_more_body">Úsalo solo cuando quieras.</string>
+    <string name="tut_more_journal">Es la página entre Hábitos y Tareas. Los días que quieras, anota lo que pasó y lo que salió bien.</string>
+    <string name="tut_more_quote">Guarda frases o pasajes de libros que te marcaron y cada día aparecerá uno en la pantalla de inicio.</string>
+    <string name="tut_more_tasks">Pon fecha y hora límite, y las tareas se ordenan por la más próxima.</string>
+    <string name="tut_more_tear_title">Calendario diario</string>
+    <string name="tut_more_tear">La primera vez que añades la meta de hoy o una tarea cada día, se arranca una hoja del calendario y tus días restantes bajan en uno.</string>
 </resources>

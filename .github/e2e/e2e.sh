@@ -87,13 +87,14 @@ next_page; next_page; $UI tap "追加" >/dev/null; sleep 1; snap goal_dialog_ope
 key KEYCODE_HOME; snap home_while_dialog
 expect_no_text "入力画面が閉じる" "目標を追加"; expect_text "ホーム画面" "残りの日数"
 
-log "== 8. 6枚で一周"
+log "== 8. 7枚で一周"
 next_page; expect_text "1回目→アプリ" "アプリ"
 next_page; expect_text "2回目→目標" "目標"
 next_page; expect_text "3回目→習慣" "習慣"
-next_page; expect_text "4回目→タスク" "タスク"
-next_page; expect_text "5回目→身体の調子" "身体の調子"
-next_page; expect_text "6回目→寿命に戻る" "残りの日数"; snap loop_back
+next_page; expect_text "4回目→日記" "振り返り日記"
+next_page; expect_text "5回目→タスク" "タスク"
+next_page; expect_text "6回目→身体の調子" "身体の調子"
+next_page; expect_text "7回目→寿命に戻る" "残りの日数"; snap loop_back
 prev_page; expect_text "逆方向→身体の調子" "身体の調子"
 key KEYCODE_HOME
 

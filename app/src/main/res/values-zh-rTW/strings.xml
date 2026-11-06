@@ -314,7 +314,7 @@
     <string name="tut7_body">左右滑動畫面即可切換頁面。</string>
     <string name="tut7_page_left">← 向右滑：身體狀態（狀態、睡眠、螢幕時間記錄）</string>
     <string name="tut7_page_top">主畫面：剩餘天數、所選資訊，向下捲動是最愛</string>
-    <string name="tut7_page_right">→ 向左滑：應用程式、目標、習慣、任務</string>
+    <string name="tut7_page_right">→ 向左滑：應用程式、目標、習慣、日記、任務</string>
     <string name="tut7_longpress">在應用程式清單中長按應用程式，可以設定最愛、使用限制或隱藏。</string>
     <string name="tut7_tip">隨時可在設定（⚙）的「再看一次使用說明」中重新查看。</string>
     <string name="s_tutorial">再看一次使用說明</string>
@@ -411,4 +411,11 @@
     <string name="j_waste">今天浪費掉的事</string>
     <string name="j_happy">感到幸福的事</string>
     <string name="j_challenge">挑戰過的事</string>
+    <string name="tut_more_title">還有回顧每一天的功能</string>
+    <string name="tut_more_body">只在想用的時候使用就好。</string>
+    <string name="tut_more_journal">位於「習慣」和「任務」之間的頁面。只在想寫的日子，記下今天發生的事和好事。</string>
+    <string name="tut_more_quote">儲存打動你的話或書中的段落，每天會有一則顯示在主畫面上。</string>
+    <string name="tut_more_tasks">設定截止日期和時間後，任務會依截止時間由近到遠排列。</string>
+    <string name="tut_more_tear_title">日曆翻頁</string>
+    <string name="tut_more_tear">每天第一次新增今日目標或任務時，日曆會翻過一頁，剩餘天數減少一天。</string>
 </resources>

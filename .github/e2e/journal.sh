@@ -18,7 +18,8 @@ ng() { log "FAIL | $1"; }
 expect_text() { if $UI hasp "$2" >/dev/null; then ok "$1 「$2」あり"; else ng "$1 「$2」なし / 画面の文字: $($UI texts | paste -sd' ' | cut -c1-200)"; fi; }
 expect_no_text() { if $UI hasp "$2" >/dev/null; then ng "$1 「$2」が出ている"; else ok "$1 「$2」なし"; fi; }
 lang() { adb shell cmd locale set-app-locales $PKG --locales $1 >/dev/null 2>&1; sleep 3; adb shell input keyevent KEYCODE_HOME; sleep 3; }
-to_tasks_en() { for i in 1 2 3 4 5 6; do $UI has "Tasks" >/dev/null && $UI has "Add" >/dev/null && return; next_page; done; }
+to_tasks_en() { for i in 1 2 3 4 5 6 7; do $UI has "Tasks" >/dev/null && $UI has "Add" >/dev/null && return; next_page; done; }
+to_journal() { key KEYCODE_HOME; for i in 1 2 3 4; do next_page; done; }
 # 入力中の欄の書き始め（上端から1行分）がキーボードより上に見えているか。
 # キーボードの上端は Pixel 6 の英字キーボード（候補の帯つき）で約1515（撮影画像で確認、2026-11-04）
 KB_TOP=1515
@@ -34,11 +35,15 @@ sleep 3; adb shell input keyevent KEYCODE_HOME; sleep 3; bash .github/e2e/skip_t
 adb shell appops set $PKG SYSTEM_ALERT_WINDOW allow
 key KEYCODE_HOME; sleep 3
 
-log "== 1. トップに新しい部品が最初から出る"
+log "== 1. トップに今日の言葉、日記は習慣とタスクの間のページ"
 snap top_ja
 expect_text "今日の言葉の部品" "今日の言葉"
 $UI see "振り返り日記" >/dev/null
-expect_text "振り返り日記の部品" "振り返り日記"
+expect_no_text "トップに日記の部品は出ない" "振り返り日記"
+key KEYCODE_HOME
+for i in 1 2 3; do next_page; done; expect_text "3回進むと習慣" "習慣"
+next_page; snap journal_page; expect_text "その次が日記" "振り返り日記"
+next_page; expect_text "その次がタスク" "タスク"
 lang en-US
 
 log "== 2. 今日の言葉を登録する"
@@ -58,7 +63,7 @@ expect_text "トップに今日の言葉" "“abc”"
 expect_text "トップに出どころ" "— bac"
 
 log "== 3. 振り返り日記を書く（キーボードと入力欄が重ならないか）"
-$UI tap "Journal" >/dev/null; sleep 2; snap journal_empty
+to_journal; snap journal_empty
 expect_text "義務ではない説明" "No need to write every day"
 expect_text "まだ無い" "No entries yet"
 $UI tap "Write today's journal" >/dev/null; sleep 2; snap journal_editor
@@ -73,14 +78,12 @@ expect_no_text "空の欄は出さない" "What made me happy"
 key KEYCODE_BACK; snap journal_list
 expect_text "これまでの日記に出る" "abc"
 expect_text "日数" "1 entries"
-key KEYCODE_BACK
-$UI see "Journal" >/dev/null
-expect_text "トップは「書きました」" "You wrote today's journal"
+expect_text "ページは「書きました」" "You wrote today's journal"
 
 log "== 4. 書いている途中でホームに戻っても、書いた分は残る"
-$UI tap "Journal" >/dev/null; sleep 2; $UI tap "Open today's journal" >/dev/null; sleep 2
+$UI tap "Open today's journal" >/dev/null; sleep 2
 $UI tapbelow "Things I noticed" android.widget.EditText >/dev/null; sleep 4; softword ab
-key KEYCODE_HOME; $UI see "Journal" >/dev/null; $UI tap "Journal" >/dev/null; sleep 2
+to_journal
 $UI tap "abc" >/dev/null; sleep 2; snap journal_kept
 expect_text "途中まで書いた欄が残る" "Things I noticed"
 key KEYCODE_BACK; key KEYCODE_BACK
@@ -97,8 +100,7 @@ $UI tap "Save" >/dev/null; sleep 0.5; snap tear_second
 expect_no_text "2つ目のタスクでは出ない（1日1回）" "$MONTH"
 
 log "== 6. 日本語の表示"
-lang ja-JP; snap top_ja_after
-$UI see "振り返り日記" >/dev/null
+lang ja-JP; for i in 1 2 3 4; do next_page; done; snap journal_ja
 expect_text "日本語で「書きました」" "今日の日記を書きました"
 
 log "== 結果: PASS $(grep -c '^PASS' $R) / FAIL $(grep -c '^FAIL' $R)"

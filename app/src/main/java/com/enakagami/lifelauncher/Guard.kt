@@ -179,56 +179,21 @@ object Guard {
     }
 
     /**
-     * from〜to の間に、アプリごとに前面にあった時間（スマホ本体の使用記録。Digital Wellbeing と同じ元データ）。
-     * 画面（Activity）ごとに開いた・閉じたを追い、そのアプリの画面が1つでも前面にある間を数える。
-     * 前はアプリ単位で「裏に回った（STOPPED）」でも終わりにしていたため、ゲームのように
-     * 起動画面→本編と画面が切り替わるアプリでは、起動画面が裏に回った時点で終わり扱いになり、
-     * 本編の何時間分が丸ごと抜けていた（2026-11 の不具合：9時間36分のうち2時間32分しか出なかった）
+     * from〜to の間の、アプリごとの使用時間（スマホ本体の記録から）。数え方は UsageTimeline を参照。
+     * 開始時点の状態（画面がついていたか・開きっぱなしのアプリ）を知るため、少し前から読む
      */
-    private fun usageBetween(ctx: Context, from: Long, to: Long): Map<String, Long> {
-        val result = mutableMapOf<String, Long>()
+    private fun usageBetween(ctx: Context, from: Long, to: Long): Map<String, Long> =
         runCatching {
             val usm = ctx.getSystemService(android.app.usage.UsageStatsManager::class.java)
-            // 0時より前から開きっぱなしのアプリも数えるため、少し前から読んで区間の中だけ足す
             val events = usm.queryEvents(from - 6 * 3600_000L, to)
             val e = android.app.usage.UsageEvents.Event()
-            // アプリ → 前面にある画面の名前／前面になった時刻
-            val open = mutableMapOf<String, MutableSet<String>>()
-            val since = mutableMapOf<String, Long>()
-            fun add(pkg: String, a: Long, b: Long) {
-                val x = maxOf(a, from); val y = minOf(b, to)
-                if (y > x) result[pkg] = (result[pkg] ?: 0) + (y - x)
-            }
-            fun close(pkg: String, t: Long) {
-                since.remove(pkg)?.let { add(pkg, it, t) }
-                open.remove(pkg)
-            }
+            val list = ArrayList<UsageEv>()
             while (events.hasNextEvent()) {
                 events.getNextEvent(e)
-                val pkg = e.packageName ?: continue
-                val cls = e.className ?: ""
-                when (e.eventType) {
-                    android.app.usage.UsageEvents.Event.ACTIVITY_RESUMED -> {
-                        val set = open.getOrPut(pkg) { mutableSetOf() }
-                        if (set.isEmpty()) since[pkg] = e.timeStamp
-                        set += cls
-                    }
-                    // 終わりは PAUSED だけで見る（STOPPED は前の画面が裏に回っただけのことが多い）
-                    android.app.usage.UsageEvents.Event.ACTIVITY_PAUSED -> {
-                        val set = open[pkg] ?: continue
-                        set -= cls
-                        if (set.isEmpty()) close(pkg, e.timeStamp)
-                    }
-                    // 画面が消えた・電源が切れた：記録が抜けても数えすぎないよう、ここで全部止める
-                    16 /* SCREEN_NON_INTERACTIVE */, 26 /* DEVICE_SHUTDOWN */, 27 /* DEVICE_STARTUP */ ->
-                        open.keys.toList().forEach { close(it, e.timeStamp) }
-                }
+                if (e.eventType in UsageTimeline.TYPES) list += UsageEv(e.eventType, e.timeStamp, e.packageName ?: "", e.className ?: "")
             }
-            // 期間の終わりにも前面にあるアプリ
-            since.forEach { (pkg, t) -> add(pkg, t, to) }
-        }.onFailure { android.util.Log.w("Loosen", "usage query failed", it) }
-        return result
-    }
+            UsageTimeline.compute(list, from, to)
+        }.getOrElse { android.util.Log.w("Loosen", "usage query failed", it); emptyMap() }
 
     /** スマホの使用時間に数えないアプリ：このホーム画面と、画面の飾り（ステータスバーなど） */
     fun notCounted(): Set<String> = setOfNotNull(appContext?.packageName, "com.android.systemui")

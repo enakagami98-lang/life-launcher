@@ -311,7 +311,7 @@
     <string name="tut7_body">Vuốt trái hoặc phải để chuyển trang.</string>
     <string name="tut7_page_left">← Vuốt sang phải: Thể trạng (thể trạng, giấc ngủ, thời gian màn hình)</string>
     <string name="tut7_page_top">Màn hình chính: số ngày còn lại, thông tin đã chọn, cuộn xuống là yêu thích</string>
-    <string name="tut7_page_right">→ Vuốt sang trái: ứng dụng, mục tiêu, thói quen, việc hôm nay</string>
+    <string name="tut7_page_right">→ Vuốt sang trái: ứng dụng, mục tiêu, thói quen, nhật ký, công việc</string>
     <string name="tut7_longpress">Nhấn giữ ứng dụng trong danh sách để thêm vào yêu thích, đặt giới hạn hoặc ẩn.</string>
     <string name="tut7_tip">Xem lại hướng dẫn này bất cứ lúc nào ở \"Xem lại hướng dẫn\" trong Cài đặt (⚙).</string>
     <string name="s_tutorial">Xem lại hướng dẫn</string>
@@ -408,4 +408,11 @@
     <string name="j_waste">Điều lãng phí trong ngày</string>
     <string name="j_happy">Điều khiến mình hạnh phúc</string>
     <string name="j_challenge">Điều mình đã thử thách</string>
+    <string name="tut_more_title">Còn có tính năng nhìn lại mỗi ngày</string>
+    <string name="tut_more_body">Chỉ cần dùng khi bạn muốn.</string>
+    <string name="tut_more_journal">Là trang nằm giữa Thói quen và Công việc. Vào những ngày muốn viết, hãy ghi lại điều đã xảy ra và điều tốt đẹp.</string>
+    <string name="tut_more_quote">Lưu những lời nói hoặc đoạn sách đọng lại trong bạn, mỗi ngày một câu sẽ hiện trên màn hình chính.</string>
+    <string name="tut_more_tasks">Đặt ngày giờ hạn chót, công việc sẽ được xếp theo hạn gần nhất.</string>
+    <string name="tut_more_tear_title">Lịch xé</string>
+    <string name="tut_more_tear">Lần đầu trong ngày bạn thêm mục tiêu hôm nay hoặc công việc, một tờ lịch được xé đi và số ngày còn lại giảm một.</string>
 </resources>

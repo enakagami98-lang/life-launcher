@@ -311,7 +311,7 @@
     <string name="tut7_body">ปัดซ้ายหรือขวาเพื่อเปลี่ยนหน้า</string>
     <string name="tut7_page_left">← ปัดไปทางขวา: สภาพร่างกาย (สภาพร่างกาย การนอน เวลาหน้าจอ)</string>
     <string name="tut7_page_top">หน้าหลัก: วันที่เหลือ ข้อมูลที่เลือก เลื่อนลงเป็นรายการโปรด</string>
-    <string name="tut7_page_right">→ ปัดไปทางซ้าย: แอป เป้าหมาย นิสัย งาน</string>
+    <string name="tut7_page_right">→ ปัดไปทางซ้าย: แอป เป้าหมาย นิสัย บันทึก งาน</string>
     <string name="tut7_longpress">กดค้างที่แอปในรายการเพื่อเพิ่มในรายการโปรด จำกัดเวลา หรือซ่อน</string>
     <string name="tut7_tip">ดูคำแนะนำนี้อีกครั้งได้ทุกเมื่อที่ \"ดูวิธีใช้อีกครั้ง\" ในการตั้งค่า (⚙)</string>
     <string name="s_tutorial">ดูวิธีใช้อีกครั้ง</string>
@@ -408,4 +408,11 @@
     <string name="j_waste">สิ่งที่เสียเปล่าในวันนี้</string>
     <string name="j_happy">สิ่งที่รู้สึกมีความสุข</string>
     <string name="j_challenge">สิ่งที่ได้ลองท้าทาย</string>
+    <string name="tut_more_title">มีฟีเจอร์สำหรับทบทวนแต่ละวันด้วย</string>
+    <string name="tut_more_body">ใช้เฉพาะตอนที่อยากใช้ก็พอ</string>
+    <string name="tut_more_journal">หน้าระหว่าง \"นิสัย\" กับ \"งาน\" เขียนเฉพาะวันที่อยากเขียน เล่าเรื่องที่เกิดขึ้นและสิ่งดีๆ ของวันนี้</string>
+    <string name="tut_more_quote">บันทึกคำพูดหรือข้อความจากหนังสือที่ประทับใจ แล้วจะมีหนึ่งข้อความขึ้นบนหน้าจอหลักทุกวัน</string>
+    <string name="tut_more_tasks">กำหนดวันและเวลาครบกำหนด งานจะเรียงตามกำหนดที่ใกล้ที่สุด</string>
+    <string name="tut_more_tear_title">ปฏิทินรายวัน</string>
+    <string name="tut_more_tear">เมื่อเพิ่มเป้าหมายวันนี้หรืองานเป็นครั้งแรกของวัน ปฏิทินจะฉีกออกหนึ่งแผ่นและจำนวนวันที่เหลือจะลดลงหนึ่งวัน</string>
 </resources>

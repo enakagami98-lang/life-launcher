@@ -44,8 +44,8 @@ import kotlinx.coroutines.withContext
 import java.time.LocalDate
 import java.time.LocalDateTime
 
-/** 6枚の画面：0=寿命＋お気に入り / 1=アプリ一覧 / 2=目標 / 3=習慣 / 4=今日のタスク / 5=今日の調子（寿命の1つ手前） */
-const val PAGES = 6
+/** 7枚の画面：0=寿命＋お気に入り / 1=アプリ一覧 / 2=目標 / 3=習慣 / 4=振り返り日記 / 5=タスク / 6=身体の調子（寿命の1つ手前） */
+const val PAGES = 7
 private const val START_PAGE = PAGES * 1000
 
 /** アプリを開く処理（リマインダー対象なら、待ち画面をはさむ） */
@@ -160,7 +160,7 @@ fun LauncherApp(
     var showSettings by remember { mutableStateOf(false) }
     // 使い方：入れたばかり（まだ誕生日も無い）のときは自動で。設定の「使い方をもう一度見る」からも
     var showTutorial by remember { mutableStateOf(!store.tutorialDone && store.birth == null) }
-    // 振り返り日記・今日の言葉の全画面（"journal" / "quote"）。ホームボタンで閉じる（書いた分は保存済み）
+    // 振り返り日記の1日分・今日の言葉の全画面。ホームボタンで閉じる（書いた分は保存済み）
     var panel by remember { mutableStateOf<String?>(null) }
     LaunchedEffect(homePress) { showSettings = false; panel = null }
 
@@ -251,14 +251,17 @@ fun LauncherApp(
                             1 -> AppsPage(store, apps, query, onQuery = { query = it })
                             2 -> ItemsPage(store, kind = "goals")
                             3 -> ItemsPage(store, kind = "habits")
-                            4 -> TasksPage(store, today)
+                            4 -> JournalPage(store, today)
+                            5 -> TasksPage(store, today)
                             else -> ConditionPage(store, today)
                         }
                     }
                 }
-                when (panel) {
-                    "journal" -> JournalScreen(store, today) { panel = null }
-                    "quote" -> QuoteScreen(store, today) { panel = null }
+                panel?.let { p ->
+                    key(p) {
+                        if (p == "quote") QuoteScreen(store, today) { panel = null }
+                        else JournalPanel(store, p) { panel = null }
+                    }
                 }
                 // その日に初めて目標・タスクを登録したときの日めくり
                 if (Guard.tearPending) TearOverlay(store, LocalDate.now()) { Guard.tearPending = false }

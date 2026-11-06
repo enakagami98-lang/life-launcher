@@ -67,12 +67,20 @@ $UI tap "今日の目標を表示" >/dev/null; sleep 1
 snap widgets
 next "次へ"
 
-log "== 7. 使い方"
+log "== 7. 毎日の記録（日記など）"
+expect_text "毎日の記録のページ" "毎日を振り返る機能も使えます"
+expect_text "日記の説明" "振り返り日記"
+expect_text "日めくりの説明" "日めくり"
+snap daily
+next "次へ"
+
+log "== 8. 使い方"
 expect_text "最後のページ" "準備ができました"
+expect_text "ページの案内に日記がある" "習慣・日記・タスク"
 snap done
 next "使いはじめる"
 
-log "== 8. 設定した内容がトップ画面に反映されている"
+log "== 9. 設定した内容がトップ画面に反映されている"
 snap top
 expect_no_text "使い方が閉じる" "準備ができました"
 expect_text "残りの日数" "残りの日数"
@@ -81,7 +89,7 @@ adb shell input swipe 540 1900 540 500 400; sleep 2
 expect_text "お気に入りに Chrome" "Chrome"
 key KEYCODE_HOME
 
-log "== 9. もう一度開いても出ない／設定から見直せる"
+log "== 10. もう一度開いても出ない／設定から見直せる"
 key KEYCODE_HOME
 expect_no_text "2回目は出ない" "Loosen へようこそ"
 $UI tap "設定" >/dev/null; sleep 2

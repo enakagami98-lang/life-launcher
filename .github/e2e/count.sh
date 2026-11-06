@@ -38,6 +38,9 @@ key KEYCODE_HOME
 # 時計アプリを（このホーム画面を通さずに）直接2分ちょっと開いておく
 adb shell monkey -p com.google.android.deskclock -c android.intent.category.LAUNCHER 1 >/dev/null
 sleep 135
+# 開いたまま画面を消した間は数えない（2026-11 の不具合：画面を消していた分も使用時間に入っていた）
+adb shell input keyevent KEYCODE_SLEEP; sleep 240
+adb shell input keyevent KEYCODE_WAKEUP; sleep 2; adb shell wm dismiss-keyguard; sleep 3
 key KEYCODE_HOME
 add_limit 時計
 open_settings_reminder; snap with_access

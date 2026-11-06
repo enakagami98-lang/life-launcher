@@ -311,7 +311,7 @@
     <string name="tut7_body">పేజీ మార్చడానికి ఎడమ లేదా కుడికి స్వైప్ చేయండి.</string>
     <string name="tut7_page_left">← కుడికి స్వైప్: శరీర స్థితి (స్థితి, నిద్ర, స్క్రీన్ సమయం)</string>
     <string name="tut7_page_top">హోమ్: మిగిలిన రోజులు, ఎంచుకున్న సమాచారం, కింద ఇష్టమైనవి</string>
-    <string name="tut7_page_right">→ ఎడమకు స్వైప్: యాప్‌లు, లక్ష్యాలు, అలవాట్లు, పనులు</string>
+    <string name="tut7_page_right">→ ఎడమకు స్వైప్: యాప్‌లు, లక్ష్యాలు, అలవాట్లు, డైరీ, పనులు</string>
     <string name="tut7_longpress">జాబితాలో యాప్‌ను నొక్కి పట్టి ఇష్టమైనవి, సమయ పరిమితి లేదా దాచడం సెట్ చేయండి.</string>
     <string name="tut7_tip">సెట్టింగ్‌ల (⚙) లోని \"గైడ్ మళ్లీ చూడు\" నుండి ఎప్పుడైనా ఇది చూడవచ్చు.</string>
     <string name="s_tutorial">గైడ్ మళ్లీ చూడు</string>
@@ -408,4 +408,11 @@
     <string name="j_waste">ఈ రోజు వృథా అయినవి</string>
     <string name="j_happy">సంతోషం కలిగించినవి</string>
     <string name="j_challenge">నేను స్వీకరించిన సవాళ్లు</string>
+    <string name="tut_more_title">ప్రతి రోజును వెనక్కి చూసుకునే సదుపాయాలు కూడా ఉన్నాయి</string>
+    <string name="tut_more_body">కావాలనుకున్నప్పుడు మాత్రమే వాడండి.</string>
+    <string name="tut_more_journal">అలవాట్లు, పనుల మధ్య ఉన్న పేజీ. రాయాలనిపించిన రోజుల్లో ఈ రోజు ఏం జరిగిందో, ఏది బాగుందో రాయండి.</string>
+    <string name="tut_more_quote">మనసులో నిలిచిన మాటలు లేదా పుస్తక భాగాలను సేవ్ చేస్తే, రోజుకు ఒకటి హోమ్ స్క్రీన్‌పై కనిపిస్తుంది.</string>
+    <string name="tut_more_tasks">గడువు తేదీ, సమయం పెడితే పనులు దగ్గరి గడువు క్రమంలో వస్తాయి.</string>
+    <string name="tut_more_tear_title">రోజువారీ క్యాలెండర్</string>
+    <string name="tut_more_tear">రోజులో మొదటిసారి ఈ రోజు లక్ష్యం లేదా పని జోడిస్తే క్యాలెండర్ పేజీ చిరిగి, మిగిలిన రోజులు ఒకటి తగ్గుతాయి.</string>
 </resources>

@@ -314,7 +314,7 @@
     <string name="tut7_body">左右滑动屏幕即可切换页面。</string>
     <string name="tut7_page_left">← 向右滑：身体状态（状态、睡眠、屏幕时间记录）</string>
     <string name="tut7_page_top">主屏幕：剩余天数、所选信息，向下滚动是收藏</string>
-    <string name="tut7_page_right">→ 向左滑：应用列表、目标、习惯、任务</string>
+    <string name="tut7_page_right">→ 向左滑：应用列表、目标、习惯、日记、任务</string>
     <string name="tut7_longpress">在应用列表中长按应用，可以设置收藏、使用限制或隐藏。</string>
     <string name="tut7_tip">随时可在设置（⚙）的“再看一遍使用说明”中重新查看。</string>
     <string name="s_tutorial">再看一遍使用说明</string>
@@ -411,4 +411,11 @@
     <string name="j_waste">今天浪费掉的事</string>
     <string name="j_happy">感到幸福的事</string>
     <string name="j_challenge">挑战过的事</string>
+    <string name="tut_more_title">还有回顾每一天的功能</string>
+    <string name="tut_more_body">只在想用的时候使用就好。</string>
+    <string name="tut_more_journal">位于“习惯”和“任务”之间的页面。只在想写的日子，记下今天发生的事和好事。</string>
+    <string name="tut_more_quote">保存打动你的话或书中的段落，每天会有一条显示在主屏幕上。</string>
+    <string name="tut_more_tasks">设定截止日期和时间后，任务会按截止时间由近到远排列。</string>
+    <string name="tut_more_tear_title">日历翻页</string>
+    <string name="tut_more_tear">每天第一次添加今日目标或任务时，日历会翻过一页，剩余天数减少一天。</string>
 </resources>

@@ -108,4 +108,6 @@ dependencies {
     implementation("com.android.billingclient:billing-ktx:8.0.0")
     // 目標・習慣の並べ替え（長押しドラッグ）
     implementation("sh.calvin.reorderable:reorderable:2.4.0")
+    // 使用時間の数え方などの確認（ビルドのたびに GitHub 上で実行）
+    testImplementation("junit:junit:4.13.2")
 }

@@ -309,7 +309,7 @@
     <string name="tut7_body">Balayez à gauche ou à droite pour changer de page.</string>
     <string name="tut7_page_left">← Balayer vers la droite : Forme (forme, sommeil, temps d\'écran)</string>
     <string name="tut7_page_top">Accueil : jours restants, vos infos, favoris plus bas</string>
-    <string name="tut7_page_right">→ Balayer vers la gauche : applis, objectifs, habitudes, tâches du jour</string>
+    <string name="tut7_page_right">→ Balayer vers la gauche : applis, objectifs, habitudes, journal, tâches</string>
     <string name="tut7_longpress">Maintenez une appli dans la liste pour l\'ajouter aux favoris, la limiter ou la masquer.</string>
     <string name="tut7_tip">Revoyez ce guide à tout moment via « Revoir le guide » dans Paramètres (⚙).</string>
     <string name="s_tutorial">Revoir le guide</string>
@@ -406,4 +406,11 @@
     <string name="j_waste">Ce qui a été du temps perdu aujourd\'hui</string>
     <string name="j_happy">Ce qui m\'a rendu heureux</string>
     <string name="j_challenge">Ce que j\'ai osé tenter</string>
+    <string name="tut_more_title">Des fonctions pour revenir sur chaque journée</string>
+    <string name="tut_more_body">À utiliser seulement quand vous en avez envie.</string>
+    <string name="tut_more_journal">La page entre Habitudes et Tâches. Les jours où vous en avez envie, notez ce qui s\'est passé et ce qui a bien marché.</string>
+    <string name="tut_more_quote">Enregistrez des mots ou des passages de livres qui vous ont marqué : l\'un d\'eux s\'affiche chaque jour sur l\'écran d\'accueil.</string>
+    <string name="tut_more_tasks">Fixez une date et une heure limites : les tâches sont triées par échéance la plus proche.</string>
+    <string name="tut_more_tear_title">Éphéméride</string>
+    <string name="tut_more_tear">La première fois que vous ajoutez l\'objectif du jour ou une tâche, une page du calendrier se détache et vos jours restants baissent d\'un.</string>
 </resources>

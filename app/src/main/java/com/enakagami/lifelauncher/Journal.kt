@@ -8,7 +8,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -49,7 +52,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import java.time.LocalDate
 
-/** トップの部品から全画面の「振り返り日記」「今日の言葉」を開く（"journal" / "quote"） */
+/** 全画面の「今日の言葉」（"quote"）や日記の1日分（journalPanelKey）を開く */
 val LocalOpenPanel = compositionLocalOf<(String) -> Unit> { {} }
 
 /** 日記の欄（JournalEntry.fields() と同じ順） */
@@ -156,61 +159,67 @@ fun QuoteCard(store: Store, today: LocalDate) {
 private fun quoteCredit(q: Quote): String? =
     listOf(q.by, q.source).filter { it.isNotBlank() }.takeIf { it.isNotEmpty() }?.joinToString("　", prefix = "— ")
 
+// ---- 振り返り日記 ----
+
+/** 日記の1日分を全画面で開くときの合図（LocalOpenPanel に渡す） */
+private fun journalPanelKey(date: LocalDate, edit: Boolean) = "${if (edit) "edit" else "view"}:$date"
+
+/** 習慣とタスクの間のページ。今日の日記を開くボタンと、これまでの日記の一覧 */
 @Composable
-fun JournalCard(store: Store, today: LocalDate) {
+fun JournalPage(store: Store, today: LocalDate) {
     val open = LocalOpenPanel.current
-    val written = store.journal[today]?.isEmpty() == false
-    Row(
-        Modifier.fillMaxWidth().card().clickable { open("journal") }.padding(horizontal = 22.dp, vertical = 16.dp),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Column(Modifier.weight(1f)) {
-            Text(stringResource(R.string.w_journal), fontSize = 12.sp, fontWeight = FontWeight.Bold, color = SubInk)
-            Spacer(Modifier.height(4.dp))
-            Text(
-                stringResource(if (written) R.string.j_card_done else R.string.j_card_empty),
-                fontSize = 17.sp, fontWeight = FontWeight.Black, color = if (written) Blue else Ink,
-            )
-        }
-        if (store.journal.isNotEmpty()) {
-            Text(stringResource(R.string.j_count, store.journal.size) + " ›", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = SubInk)
+    val yesterday = today.minusDays(1)
+    val writtenToday = store.journal.containsKey(today)
+    val dates = store.journal.keys.sortedDescending()
+    Column(Modifier.fillMaxSize()) {
+        PageHeader(stringResource(R.string.w_journal))
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            contentPadding = PaddingValues(start = 20.dp, end = 20.dp, top = 4.dp, bottom = 48.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+        ) {
+            item(key = "top") {
+                Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                    Text(
+                        stringResource(if (writtenToday) R.string.j_card_done else R.string.j_intro),
+                        fontSize = 14.sp, lineHeight = 21.sp,
+                        color = if (writtenToday) Blue else SubInk,
+                        fontWeight = if (writtenToday) FontWeight.Bold else FontWeight.Normal,
+                    )
+                    BigButton(stringResource(if (writtenToday) R.string.j_open else R.string.j_write)) { open(journalPanelKey(today, true)) }
+                    if (!store.journal.containsKey(yesterday)) {
+                        TextButton(onClick = { open(journalPanelKey(yesterday, true)) }, modifier = Modifier.align(Alignment.CenterHorizontally)) {
+                            Text(stringResource(R.string.j_yesterday), fontWeight = FontWeight.Bold)
+                        }
+                    }
+                    Row(verticalAlignment = Alignment.Bottom) {
+                        Text(stringResource(R.string.j_past), fontSize = 16.sp, fontWeight = FontWeight.Black, color = Ink, modifier = Modifier.weight(1f))
+                        if (dates.isNotEmpty()) Text(stringResource(R.string.j_count, dates.size), fontSize = 13.sp, color = SubInk)
+                    }
+                    if (dates.isEmpty()) Text(stringResource(R.string.j_none), fontSize = 14.sp, color = SubInk)
+                }
+            }
+            items(dates, key = { it.toString() }) { d ->
+                val e = store.journal[d] ?: return@items
+                Column(Modifier.fillMaxWidth().card().clickable { open(journalPanelKey(d, false)) }.padding(horizontal = 18.dp, vertical = 14.dp)) {
+                    Text(longDateWithWeekday(d), fontSize = 13.sp, fontWeight = FontWeight.Bold, color = SubInk)
+                    Spacer(Modifier.height(2.dp))
+                    Text(e.fields().first { it.isNotBlank() }, fontSize = 15.sp, color = Ink, maxLines = 2, overflow = TextOverflow.Ellipsis, lineHeight = 21.sp)
+                }
+            }
         }
     }
 }
 
-// ---- 振り返り日記 ----
-
+/** 日記の1日分を全画面で読む・書く。書き終えたら読む画面へ、読む画面を閉じたらページに戻る */
 @Composable
-fun JournalScreen(store: Store, today: LocalDate, onClose: () -> Unit) {
-    // null＝一覧、そのほか＝その日を見る／書く
-    var viewing by remember { mutableStateOf<LocalDate?>(null) }
-    var editing by remember { mutableStateOf<LocalDate?>(null) }
-    editing?.let { d -> JournalEditor(store, d) { editing = null; viewing = if (store.journal.containsKey(d)) d else null }; return }
-    viewing?.let { d -> JournalView(store, d, onBack = { viewing = null }, onEdit = { editing = d }); return }
-
-    FullPanel(stringResource(R.string.w_journal), onClose) {
-        Text(stringResource(R.string.j_intro), fontSize = 14.sp, color = SubInk, lineHeight = 21.sp)
-        BigButton(stringResource(if (store.journal.containsKey(today)) R.string.j_open else R.string.j_write)) { editing = today }
-        val yesterday = today.minusDays(1)
-        if (!store.journal.containsKey(yesterday)) {
-            TextButton(onClick = { editing = yesterday }, modifier = Modifier.align(Alignment.CenterHorizontally)) {
-                Text(stringResource(R.string.j_yesterday), fontWeight = FontWeight.Bold)
-            }
-        }
-        Spacer(Modifier.height(4.dp))
-        Row(verticalAlignment = Alignment.Bottom) {
-            Text(stringResource(R.string.j_past), fontSize = 16.sp, fontWeight = FontWeight.Black, color = Ink, modifier = Modifier.weight(1f))
-            if (store.journal.isNotEmpty()) Text(stringResource(R.string.j_count, store.journal.size), fontSize = 13.sp, color = SubInk)
-        }
-        if (store.journal.isEmpty()) Text(stringResource(R.string.j_none), fontSize = 14.sp, color = SubInk)
-        store.journal.keys.sortedDescending().forEach { d ->
-            val e = store.journal[d] ?: return@forEach
-            Column(Modifier.fillMaxWidth().card().clickable { viewing = d }.padding(horizontal = 18.dp, vertical = 14.dp)) {
-                Text(longDateWithWeekday(d), fontSize = 13.sp, fontWeight = FontWeight.Bold, color = SubInk)
-                Spacer(Modifier.height(2.dp))
-                Text(e.fields().first { it.isNotBlank() }, fontSize = 15.sp, color = Ink, maxLines = 2, overflow = TextOverflow.Ellipsis, lineHeight = 21.sp)
-            }
-        }
+fun JournalPanel(store: Store, panelKey: String, onClose: () -> Unit) {
+    val date = remember(panelKey) { LocalDate.parse(panelKey.substringAfter(':')) }
+    var editing by remember(panelKey) { mutableStateOf(panelKey.startsWith("edit:")) }
+    if (editing) {
+        JournalEditor(store, date) { if (store.journal.containsKey(date)) editing = false else onClose() }
+    } else {
+        JournalView(store, date, onBack = onClose, onEdit = { editing = true })
     }
 }
 
