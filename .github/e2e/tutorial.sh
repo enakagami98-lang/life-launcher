@@ -31,7 +31,7 @@ next "はじめる"
 
 log "== 2. 寿命"
 expect_text "寿命のページ" "あなたの寿命を設定しよう"
-$UI tap "年" >/dev/null; sleep 2; softword 1999
+$UI tap "年" >/dev/null; sleep 5; softword 1999
 $UI tap "月" >/dev/null; sleep 1; softword 4
 $UI tap "日" >/dev/null; sleep 1; softword 29
 $UI tap "寿命（歳）" >/dev/null; sleep 1; soft BS BS BS; softword 30
