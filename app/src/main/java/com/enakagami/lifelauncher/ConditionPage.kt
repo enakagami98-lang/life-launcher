@@ -409,6 +409,7 @@ private fun StepButton(label: String, onClick: () -> Unit) {
 @Composable
 private fun MemoField(label: String, value: String, onChange: (String) -> Unit) {
     OutlinedTextField(
+        textStyle = userTextStyle(),
         value = value,
         onValueChange = onChange,
         label = { Text(label) },

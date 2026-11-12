@@ -96,7 +96,6 @@ fun TopWidgets(store: Store, today: LocalDate, openCondition: () -> Unit) {
                 "spend" -> SpendCard { showSpend = true }
                 "tasks" -> TasksCard(store, today)
                 "countdown" -> CountdownCard(store, today) { editingCountdown = true }
-                "weather" -> WeatherCard()
                 "habits" -> HabitsCard(store, today)
                 "steps" -> StepsCard()
                 "yesterday" -> YesterdayCard(store, today, openCondition)
@@ -174,7 +173,7 @@ private fun MottoCard(motto: String, onEdit: () -> Unit) {
             Text(
                 "“$motto”",
                 fontSize = 19.sp, fontWeight = FontWeight.Bold, fontStyle = FontStyle.Italic,
-                color = Ink, textAlign = TextAlign.Center, lineHeight = 28.sp,
+                color = Ink, textAlign = TextAlign.Center, lineHeight = 28.sp, style = userTextStyle(),
             )
         }
     }
@@ -199,7 +198,7 @@ private fun GoalCard(goal: String, done: Boolean, onClick: () -> Unit) {
         }
         Spacer(Modifier.height(4.dp))
         if (goal.isBlank()) Text(stringResource(R.string.goal_empty), fontSize = 15.sp, color = SubInk)
-        else Text(goal, fontSize = 20.sp, fontWeight = FontWeight.Black, color = Ink, lineHeight = 28.sp)
+        else Text(goal, fontSize = 20.sp, fontWeight = FontWeight.Black, color = Ink, lineHeight = 28.sp, style = userTextStyle())
     }
 }
 
@@ -212,7 +211,7 @@ private fun GoalMenuDialog(goal: String, done: Boolean, onDone: () -> Unit, onUn
         title = { Text(stringResource(R.string.goal_title), fontWeight = FontWeight.Bold) },
         text = {
             Column {
-                Text(goal, fontSize = 20.sp, fontWeight = FontWeight.Black, color = Ink, lineHeight = 28.sp)
+                Text(goal, fontSize = 20.sp, fontWeight = FontWeight.Black, color = Ink, lineHeight = 28.sp, style = userTextStyle())
                 Spacer(Modifier.height(16.dp))
                 if (!done) {
                     androidx.compose.material3.Button(
@@ -386,7 +385,7 @@ private fun CheckRow(text: String, done: Boolean, desc: String, trailing: String
             contentAlignment = Alignment.Center,
         ) { if (done) Icon(Icons.Filled.Check, null, tint = OnAccent, modifier = Modifier.size(14.dp)) }
         Spacer(Modifier.width(12.dp))
-        Text(text, fontSize = 16.sp, fontWeight = FontWeight.Bold, color = if (done) SubInk else Ink, maxLines = 1, modifier = Modifier.weight(1f))
+        Text(text, fontSize = 16.sp, fontWeight = FontWeight.Bold, color = if (done) SubInk else Ink, maxLines = 1, modifier = Modifier.weight(1f), style = userTextStyle())
         if (trailing != null) Text(trailing, fontSize = 12.sp, fontWeight = FontWeight.Bold, color = Blue)
     }
 }
@@ -485,12 +484,14 @@ private fun AddPaymentDialog(onDismiss: () -> Unit) {
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 OutlinedTextField(
+                    textStyle = userTextStyle(),
                     value = amount, onValueChange = { v -> amount = v.filter { it.isDigit() }.take(8) },
                     label = { Text(stringResource(R.string.spend_amount)) }, singleLine = true,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     modifier = Modifier.fillMaxWidth(),
                 )
                 OutlinedTextField(
+                    textStyle = userTextStyle(),
                     value = memo, onValueChange = { memo = it.replace("\n", "") },
                     label = { Text(stringResource(R.string.spend_memo)) }, singleLine = true, modifier = Modifier.fillMaxWidth(),
                 )
@@ -558,6 +559,7 @@ private fun CountdownDialog(store: Store, today: LocalDate, onDismiss: () -> Uni
                 }
                 Spacer(Modifier.height(8.dp))
                 OutlinedTextField(
+                    textStyle = userTextStyle(),
                     value = title, onValueChange = { title = it.replace("\n", "").take(20) },
                     label = { Text(stringResource(R.string.cd_title)) }, singleLine = true, modifier = Modifier.fillMaxWidth(),
                 )
@@ -581,44 +583,11 @@ private fun CountdownDialog(store: Store, today: LocalDate, onDismiss: () -> Uni
 @Composable
 private fun NumField(label: String, value: String, max: Int, modifier: Modifier, onChange: (String) -> Unit) {
     OutlinedTextField(
+        textStyle = userTextStyle(),
         value = value, onValueChange = { v -> onChange(v.filter { it.isDigit() }.take(max)) },
         label = { Text(label) }, singleLine = true,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number), modifier = modifier,
     )
-}
-
-// ---- 天気 ----
-@Composable
-private fun WeatherCard() {
-    val context = LocalContext.current
-    val scope = rememberCoroutineScope()
-    val resume = LocalResumeSignal.current
-    val ask = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { ok ->
-        if (ok) scope.launch { Weather.refresh(context, force = true) }
-    }
-    LaunchedEffect(resume) { Weather.refresh(context) }
-    val w = Weather.data
-    CardColumn(onClick = {
-        if (!Weather.hasPermission(context)) ask.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
-        else scope.launch { Weather.refresh(context, force = true) }
-    }) {
-        SmallLabel(stringResource(R.string.w_weather))
-        if (w != null) {
-            Row(verticalAlignment = Alignment.Bottom) {
-                Text(stringResource(Weather.nameOf(w.code)), fontSize = 22.sp, fontWeight = FontWeight.Black, color = Ink)
-                Spacer(Modifier.width(10.dp))
-                Text("${w.temp.roundToInt()}°", fontSize = 26.sp, fontWeight = FontWeight.Black, color = Blue)
-                Spacer(Modifier.weight(1f))
-                Text(stringResource(R.string.wx_maxmin, w.max.roundToInt(), w.min.roundToInt()), fontSize = 14.sp, fontWeight = FontWeight.Bold, color = SubInk)
-            }
-        }
-        val err = Weather.error
-        when {
-            !Weather.hasPermission(context) -> Text(stringResource(R.string.weather_tap_allow), fontSize = 13.sp, color = Danger, lineHeight = 18.sp)
-            err != null && w == null -> Text(stringResource(err), fontSize = 13.sp, color = SubInk)
-            w == null -> Text(stringResource(R.string.loading), fontSize = 13.sp, color = SubInk)
-        }
-    }
 }
 
 // ---- 今日の習慣チェック ----

@@ -139,6 +139,7 @@ fun TasksPage(store: Store, today: LocalDate) {
                             fontWeight = FontWeight.Bold,
                             color = if (isDone) SubInk else Ink,
                             textDecoration = if (isDone) TextDecoration.LineThrough else null,
+                            style = userTextStyle(),
                         )
                         task.due?.let { due ->
                             val late = !isDone && due < now
@@ -205,7 +206,7 @@ private fun TaskDialog(
         title = { Text(title, fontWeight = FontWeight.Bold) },
         text = {
             Column {
-                OutlinedTextField(value = text, onValueChange = { text = it }, maxLines = 3, modifier = Modifier.fillMaxWidth())
+                OutlinedTextField(textStyle = userTextStyle(), value = text, onValueChange = { text = it }, maxLines = 3, modifier = Modifier.fillMaxWidth())
                 Spacer(Modifier.height(14.dp))
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(stringResource(R.string.task_due), fontSize = 15.sp, fontWeight = FontWeight.Bold, color = Ink, modifier = Modifier.weight(1f))

@@ -86,7 +86,7 @@ fun ItemsPage(store: Store, kind: String) {
                             Icon(Icons.Filled.Menu, null, tint = Blue, modifier = Modifier.size(22.dp))
                         }
                         Spacer(Modifier.width(14.dp))
-                        Text(item.text, fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Ink)
+                        Text(item.text, fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Ink, style = userTextStyle())
                     }
                 }
             }

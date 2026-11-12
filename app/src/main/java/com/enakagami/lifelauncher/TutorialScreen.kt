@@ -169,8 +169,8 @@ fun TutorialScreen(store: Store, apps: List<AppInfo>, onFinish: () -> Unit) {
 }
 
 @Composable
-private fun Title(id: Int) {
-    Text(stringResource(id), color = Ink, fontSize = 26.sp, fontWeight = FontWeight.Black, lineHeight = 34.sp)
+private fun Title(id: Int, size: androidx.compose.ui.unit.TextUnit = 26.sp) {
+    Text(stringResource(id), color = Ink, fontSize = size, fontWeight = FontWeight.Black, lineHeight = 34.sp)
     Spacer(Modifier.height(10.dp))
 }
 
@@ -228,6 +228,7 @@ private fun StepLife(
 @Composable
 private fun Num(label: String, value: String, max: Int, modifier: Modifier, onChange: (String) -> Unit) {
     OutlinedTextField(
+        textStyle = userTextStyle(),
         value = value, onValueChange = { v -> onChange(v.filter { it.isDigit() }.take(max)) },
         label = { Text(label) }, singleLine = true,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number), modifier = modifier,
@@ -308,7 +309,8 @@ private fun ColumnScope.StepLimits(apps: List<AppInfo>, picked: MutableList<Stri
     val overlayOk = remember(resume) { Guard.hasOverlay(context) }
     val usageOk = remember(resume) { Guard.hasUsageAccess(context) }
     Title(R.string.tut5_title)
-    Text(stringResource(R.string.tut5_body), color = SubInk, fontSize = 14.sp, lineHeight = 21.sp)
+    // この説明は区切らずに、画面の端まで書いて自然に折り返す（2026-11-12 依頼）
+    Text(stringResource(R.string.tut5_body), color = SubInk, fontSize = 14.sp, lineHeight = 21.sp, style = userTextStyle())
     Spacer(Modifier.height(10.dp))
     Row(verticalAlignment = Alignment.CenterVertically) {
         Text(stringResource(R.string.tut5_limit), color = Ink, fontSize = 14.sp, fontWeight = FontWeight.Bold)
@@ -377,7 +379,8 @@ private fun ColumnScope.StepWidgets(on: MutableList<String>) {
 @Composable
 private fun StepDaily() {
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState())) {
-        Title(R.string.tut_more_title)
+        // 「毎日を振り返る機能も使えます」は26だと最後の1文字だけ次の行になるので、少し小さくして1行に（2026-11-12 依頼）
+        Title(R.string.tut_more_title, 24.sp)
         Body(R.string.tut_more_body)
         listOf(
             R.string.w_journal to R.string.tut_more_journal,

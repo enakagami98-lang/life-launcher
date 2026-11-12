@@ -22,7 +22,6 @@ val ALL_WIDGETS = linkedMapOf(
     "spend" to R.string.w_spend,
     "tasks" to R.string.w_tasks,
     "countdown" to R.string.w_countdown,
-    "weather" to R.string.w_weather,
     "habits" to R.string.w_habits,
     "steps" to R.string.w_steps,
     "yesterday" to R.string.w_yesterday,
@@ -47,7 +46,11 @@ data class JournalEntry(
 }
 
 /** 心に残った言葉。by＝誰の言葉・誰から聞いたか、source＝本・番組など、note＝前後の文脈やメモ */
-data class Quote(val id: Long, val text: String, val by: String = "", val source: String = "", val note: String = "")
+/** fav = お気に入り（毎日のくじで、ほかの言葉より FAV_WEIGHT 倍出やすい） */
+data class Quote(val id: Long, val text: String, val by: String = "", val source: String = "", val note: String = "", val fav: Boolean = false)
+
+/** お気に入りの言葉が出やすくなる倍率 */
+const val FAV_WEIGHT = 3
 
 /** カウントダウン（例：入社まであと◯日） */
 data class Countdown(val id: Long, val title: String, val date: LocalDate)
@@ -362,18 +365,36 @@ class Store(context: Context) {
         val a = JSONArray(prefs.getString("quotes", "[]"))
         for (i in 0 until a.length()) {
             val o = a.getJSONObject(i)
-            add(Quote(o.getLong("id"), o.getString("text"), o.optString("by"), o.optString("source"), o.optString("note")))
+            add(Quote(o.getLong("id"), o.getString("text"), o.optString("by"), o.optString("source"), o.optString("note"), o.optBoolean("fav")))
         }
     }
 
-    /** 今日の1つ。日付で決まるので、1日の間は何度開いても同じ言葉 */
+    /** 「今日表示する」で選んだ言葉（日付と id）。その日だけ有効で、次の日は元のくじに戻る */
+    private var quotePick by mutableStateOf(
+        prefs.getString("quotePick", null)?.split(':')?.takeIf { it.size == 2 }?.let { (d, id) ->
+            runCatching { LocalDate.parse(d) to id.toLong() }.getOrNull()
+        }
+    )
+
+    /** 今日の1つ。選んだ言葉があればそれ。無ければ日付で決まるくじ（1日の間は何度開いても同じ言葉） */
     fun quoteOf(date: LocalDate): Quote? {
         if (quotes.isEmpty()) return null
-        val list = quotes.sortedBy { it.id }
-        return list[kotlin.random.Random(date.toEpochDay()).nextInt(list.size)]
+        quotePick?.let { (d, id) -> if (d == date) quotes.firstOrNull { it.id == id }?.let { return it } }
+        // お気に入りはくじを FAV_WEIGHT 枚入れる（ほかの言葉より出やすい）
+        val tickets = quotes.sortedBy { it.id }.flatMap { q -> List(if (q.fav) FAV_WEIGHT else 1) { q } }
+        return tickets[kotlin.random.Random(date.toEpochDay()).nextInt(tickets.size)]
+    }
+
+    /** 「今日表示する」：今日だけこの言葉を出す */
+    fun showQuoteToday(id: Long, today: LocalDate = LocalDate.now()) {
+        quotePick = today to id
+        prefs.edit().putString("quotePick", "$today:$id").apply()
     }
 
     fun saveQuote(q: Quote) {
+        // お気に入りを変えたり言葉を足したりすると、くじの枚数が変わって今日の言葉が入れ替わってしまう → 今出ている言葉を今日はそのまま残す
+        val today = LocalDate.now()
+        if (quotes.firstOrNull { it.id == q.id }?.fav != q.fav && quotePick?.first != today) quoteOf(today)?.let { showQuoteToday(it.id, today) }
         val i = quotes.indexOfFirst { it.id == q.id }
         if (i >= 0) quotes[i] = q else quotes.add(q)
         saveQuotes()
@@ -383,7 +404,7 @@ class Store(context: Context) {
 
     private fun saveQuotes() {
         val a = JSONArray()
-        quotes.forEach { a.put(JSONObject().put("id", it.id).put("text", it.text).put("by", it.by).put("source", it.source).put("note", it.note)) }
+        quotes.forEach { a.put(JSONObject().put("id", it.id).put("text", it.text).put("by", it.by).put("source", it.source).put("note", it.note).put("fav", it.fav)) }
         prefs.edit().putString("quotes", a.toString()).apply()
     }
 

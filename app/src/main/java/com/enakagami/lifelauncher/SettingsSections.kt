@@ -215,7 +215,7 @@ private fun AppPickerDialog(apps: List<AppInfo>, onPick: (AppInfo) -> Unit, onDi
         title = { Text(stringResource(R.string.s_pick_app), fontWeight = FontWeight.Bold) },
         text = {
             Column {
-                OutlinedTextField(value = q, onValueChange = { q = it }, singleLine = true, placeholder = { Text(stringResource(R.string.search_apps)) }, modifier = Modifier.fillMaxWidth())
+                OutlinedTextField(textStyle = userTextStyle(), value = q, onValueChange = { q = it }, singleLine = true, placeholder = { Text(stringResource(R.string.search_apps)) }, modifier = Modifier.fillMaxWidth())
                 Spacer(Modifier.height(8.dp))
                 LazyColumn(Modifier.heightIn(max = 380.dp)) {
                     items(shown, key = { it.key }) { app ->

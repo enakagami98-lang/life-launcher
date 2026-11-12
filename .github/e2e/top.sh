@@ -43,7 +43,7 @@ o=$(order タップして、人生のモットーを入力 今日のスマホ �
 log "== 2. 並べ替えと表示の切り替え"
 $UI tap "表示する項目を編集" >/dev/null; sleep 2; snap edit_dialog
 expect_text "部品の候補：カウントダウン" "カウントダウン"
-expect_text "部品の候補：天気" "天気"
+expect_no_text "天気の部品は削除済み" "天気を表示"
 expect_text "部品の候補：習慣チェック" "今日の習慣チェック"
 expect_text "部品の候補：歩数" "歩数"
 $UI tapp "昨日のふり返り" >/dev/null; sleep 1
@@ -61,14 +61,13 @@ o=$(order タスク 今日のスマホ 今月の支払額)
 
 log "== 3. 新しい部品"
 $UI tap "表示する項目を編集" >/dev/null; sleep 2
-for w in カウントダウン 天気 今日の習慣チェック 歩数 昨日のふり返り; do $UI tap "${w}を表示" >/dev/null; sleep 1; done
+for w in カウントダウン 今日の習慣チェック 歩数 昨日のふり返り; do $UI tap "${w}を表示" >/dev/null; sleep 1; done
 $UI tap "保存" >/dev/null; sleep 3; snap new_widgets
 expect_text "カウントダウン" "タップして、目標の日を登録"
 expect_text "習慣チェック" "「習慣」の画面で追加すると"
 adb shell input swipe 540 1800 540 700 400; sleep 2; snap new_widgets_lower
 expect_text "歩数（許可のお願いかセンサー無し）" "歩"
 expect_text "昨日のふり返り" "今日の身体の調子を入力"
-expect_text "天気（許可のお願い）" "だいたいの位置"
 $UI tap "今日の身体の調子を入力 ›" >/dev/null; sleep 2; snap to_condition
 expect_text "ふり返りから身体の調子へ" "睡眠の質"
 key KEYCODE_HOME

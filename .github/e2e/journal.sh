@@ -62,6 +62,29 @@ key KEYCODE_BACK; snap quote_top
 expect_text "トップに今日の言葉" "“abc”"
 expect_text "トップに出どころ" "— bac"
 
+log "== 2b. お気に入りと「今日表示する」（2026-11-12）"
+$UI tap "“abc”" >/dev/null; sleep 2
+$UI tap "＋ Add new" >/dev/null; sleep 2
+$UI tapbelow "Words" android.widget.EditText >/dev/null; sleep 5; softword xyz
+$UI tap "Save" >/dev/null; sleep 2; snap quote_two
+expect_text "2つ目を足しても今日の言葉はそのまま" "“abc”"
+expect_text "一覧は2件" "Saved words (2)"
+$UI tap "xyz" >/dev/null; sleep 2; snap quote_edit_xyz
+expect_text "編集画面に今日表示するボタン" "Show today"
+$UI tap "☆" >/dev/null; sleep 1
+expect_text "お気に入りに" "★"
+$UI tap "Show today" >/dev/null; sleep 2; snap quote_show_xyz
+expect_text "選んだ言葉が今日の言葉に" "“xyz”"
+$UI tap "xyz" >/dev/null; sleep 2
+expect_text "今日表示中の印" "✓ Showing today"
+key KEYCODE_BACK; key KEYCODE_BACK; snap quote_top_xyz
+expect_text "トップも選んだ言葉に" "“xyz”"
+$UI tap "“xyz”" >/dev/null; sleep 2
+$UI tap "abc" >/dev/null; sleep 2
+$UI tap "Show today" >/dev/null; sleep 2
+expect_text "もう一度選び直せる" "“abc”"
+key KEYCODE_BACK
+
 log "== 3. 振り返り日記を書く（キーボードと入力欄が重ならないか）"
 to_journal; snap journal_empty
 expect_text "義務ではない説明" "No need to write every day"

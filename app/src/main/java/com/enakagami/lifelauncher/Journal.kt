@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.layout.fillMaxSize
@@ -100,9 +101,10 @@ private fun HeaderButton(text: String, enabled: Boolean = true, onClick: () -> U
 }
 
 @Composable
-private fun BigButton(text: String, onClick: () -> Unit) {
+private fun BigButton(text: String, enabled: Boolean = true, onClick: () -> Unit) {
     Button(
         onClick = onClick,
+        enabled = enabled,
         modifier = Modifier.fillMaxWidth().height(54.dp),
         shape = RoundedCornerShape(14.dp),
         colors = ButtonDefaults.buttonColors(containerColor = Blue, contentColor = OnAccent),
@@ -120,6 +122,7 @@ private fun LabeledField(label: String, value: String, hint: String? = null, min
             onValueChange = onChange,
             placeholder = hint?.let { { Text(it, color = SubInk) } },
             minLines = minLines,
+            textStyle = userTextStyle(),
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(14.dp),
             colors = OutlinedTextFieldDefaults.colors(focusedContainerColor = CardBg, unfocusedContainerColor = CardBg),
@@ -144,7 +147,7 @@ fun QuoteCard(store: Store, today: LocalDate) {
         } else {
             Text(
                 "“${q.text}”", fontSize = 18.sp, fontWeight = FontWeight.Bold, fontStyle = FontStyle.Italic,
-                color = Ink, textAlign = TextAlign.Center, lineHeight = 26.sp,
+                color = Ink, textAlign = TextAlign.Center, lineHeight = 26.sp, style = userTextStyle(),
                 maxLines = 5, overflow = TextOverflow.Ellipsis,
             )
             quoteCredit(q)?.let {
@@ -204,7 +207,7 @@ fun JournalPage(store: Store, today: LocalDate) {
                 Column(Modifier.fillMaxWidth().card().clickable { open(journalPanelKey(d, false)) }.padding(horizontal = 18.dp, vertical = 14.dp)) {
                     Text(longDateWithWeekday(d), fontSize = 13.sp, fontWeight = FontWeight.Bold, color = SubInk)
                     Spacer(Modifier.height(2.dp))
-                    Text(e.fields().first { it.isNotBlank() }, fontSize = 15.sp, color = Ink, maxLines = 2, overflow = TextOverflow.Ellipsis, lineHeight = 21.sp)
+                    Text(e.fields().first { it.isNotBlank() }, fontSize = 15.sp, color = Ink, maxLines = 2, overflow = TextOverflow.Ellipsis, lineHeight = 21.sp, style = userTextStyle())
                 }
             }
         }
@@ -233,7 +236,7 @@ private fun JournalView(store: Store, date: LocalDate, onBack: () -> Unit, onEdi
             Column(Modifier.fillMaxWidth().card().padding(horizontal = 18.dp, vertical = 14.dp)) {
                 Text(stringResource(label), fontSize = 13.sp, fontWeight = FontWeight.Bold, color = Blue)
                 Spacer(Modifier.height(4.dp))
-                Text(text, fontSize = 16.sp, color = Ink, lineHeight = 24.sp)
+                Text(text, fontSize = 16.sp, color = Ink, lineHeight = 24.sp, style = userTextStyle())
             }
         }
         TextButton(onClick = { askDelete = true }, modifier = Modifier.align(Alignment.CenterHorizontally)) {
@@ -292,7 +295,7 @@ fun QuoteScreen(store: Store, today: LocalDate, onClose: () -> Unit) {
             // 今日の言葉と、その詳しいこと（誰の言葉・出どころ・前後の文脈）
             Column(Modifier.fillMaxWidth().card().padding(22.dp), horizontalAlignment = Alignment.CenterHorizontally) {
                 Text("“${q.text}”", fontSize = 21.sp, fontWeight = FontWeight.Bold, fontStyle = FontStyle.Italic,
-                    color = Ink, textAlign = TextAlign.Center, lineHeight = 31.sp)
+                    color = Ink, textAlign = TextAlign.Center, lineHeight = 31.sp, style = userTextStyle())
             }
             listOf(R.string.q_by to q.by, R.string.q_source to q.source, R.string.q_note to q.note)
                 .filter { it.second.isNotBlank() }
@@ -300,7 +303,7 @@ fun QuoteScreen(store: Store, today: LocalDate, onClose: () -> Unit) {
                     Column(Modifier.fillMaxWidth().card().padding(horizontal = 18.dp, vertical = 14.dp)) {
                         Text(stringResource(label), fontSize = 13.sp, fontWeight = FontWeight.Bold, color = Blue)
                         Spacer(Modifier.height(4.dp))
-                        Text(text, fontSize = 16.sp, color = Ink, lineHeight = 24.sp)
+                        Text(text, fontSize = 16.sp, color = Ink, lineHeight = 24.sp, style = userTextStyle())
                     }
                 }
             TextButton(onClick = { editing = q }, modifier = Modifier.align(Alignment.End)) {
@@ -312,9 +315,12 @@ fun QuoteScreen(store: Store, today: LocalDate, onClose: () -> Unit) {
             Spacer(Modifier.height(4.dp))
             Text(stringResource(R.string.q_all, store.quotes.size), fontSize = 16.sp, fontWeight = FontWeight.Black, color = Ink)
             store.quotes.sortedByDescending { it.id }.forEach { item ->
-                Column(Modifier.fillMaxWidth().card().clickable { editing = item }.padding(horizontal = 18.dp, vertical = 14.dp)) {
-                    Text(item.text, fontSize = 15.sp, color = Ink, maxLines = 3, overflow = TextOverflow.Ellipsis, lineHeight = 21.sp)
-                    quoteCredit(item)?.let { Text(it, fontSize = 12.sp, color = SubInk, maxLines = 1, overflow = TextOverflow.Ellipsis) }
+                Row(Modifier.fillMaxWidth().card().clickable { editing = item }.padding(horizontal = 18.dp, vertical = 14.dp)) {
+                    Column(Modifier.weight(1f)) {
+                        Text(item.text, fontSize = 15.sp, color = Ink, maxLines = 3, overflow = TextOverflow.Ellipsis, lineHeight = 21.sp, style = userTextStyle())
+                        quoteCredit(item)?.let { Text(it, fontSize = 12.sp, color = SubInk, maxLines = 1, overflow = TextOverflow.Ellipsis) }
+                    }
+                    if (item.fav) Text("★", fontSize = 18.sp, color = Blue, modifier = Modifier.padding(start = 8.dp))
                 }
             }
         }
@@ -327,12 +333,38 @@ private fun QuoteEditor(store: Store, initial: Quote, onDone: () -> Unit) {
     var by by remember { mutableStateOf(initial.by) }
     var source by remember { mutableStateOf(initial.source) }
     var note by remember { mutableStateOf(initial.note) }
+    var fav by remember { mutableStateOf(initial.fav) }
     val exists = store.quotes.any { it.id == initial.id }
+    val current = { Quote(initial.id, text.trim(), by.trim(), source.trim(), note.trim(), fav) }
+    val today = LocalDate.now()
+    val isToday = exists && store.quoteOf(today)?.id == initial.id
     FullPanel(stringResource(if (exists) R.string.q_edit else R.string.q_add), onDone, action = {
-        HeaderButton(stringResource(R.string.save), enabled = text.isNotBlank()) {
-            store.saveQuote(Quote(initial.id, text.trim(), by.trim(), source.trim(), note.trim())); onDone()
-        }
+        HeaderButton(stringResource(R.string.save), enabled = text.isNotBlank()) { store.saveQuote(current()); onDone() }
     }) {
+        // 「今日表示する」：書いた内容を保存して、今日の言葉をこれにする（次の日は元のくじに戻る）
+        if (isToday) {
+            Text("✓ " + stringResource(R.string.q_showing_today), fontSize = 15.sp, fontWeight = FontWeight.Bold, color = Blue,
+                modifier = Modifier.align(Alignment.CenterHorizontally))
+        } else {
+            BigButton(stringResource(R.string.q_show_today), enabled = text.isNotBlank()) {
+                store.saveQuote(current()); store.showQuoteToday(initial.id, today); onDone()
+            }
+        }
+        // お気に入り：登録済みの言葉はその場で保存する（保存を押し忘れても残るように）
+        Row(
+            Modifier.fillMaxWidth().card().clickable {
+                fav = !fav
+                if (exists) store.quotes.firstOrNull { it.id == initial.id }?.let { store.saveQuote(it.copy(fav = fav)) }
+            }.padding(horizontal = 18.dp, vertical = 14.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text(if (fav) "★" else "☆", fontSize = 24.sp, color = if (fav) Blue else SubInk)
+            Spacer(Modifier.width(12.dp))
+            Column(Modifier.weight(1f)) {
+                Text(stringResource(R.string.q_fav), fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Ink)
+                Text(stringResource(R.string.q_fav_note, FAV_WEIGHT), fontSize = 13.sp, color = SubInk, lineHeight = 19.sp)
+            }
+        }
         LabeledField(stringResource(R.string.q_text), text, minLines = 3) { text = it }
         LabeledField(stringResource(R.string.q_by), by, hint = stringResource(R.string.q_by_hint), minLines = 1) { by = it }
         LabeledField(stringResource(R.string.q_source), source, hint = stringResource(R.string.q_source_hint), minLines = 1) { source = it }

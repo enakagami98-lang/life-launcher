@@ -176,6 +176,7 @@ private fun OptionSection(title: String, doing: Boolean, input: String, onInput:
     Spacer(Modifier.height(8.dp))
     Row(verticalAlignment = Alignment.CenterVertically) {
         OutlinedTextField(
+            textStyle = userTextStyle(),
             value = input,
             onValueChange = { onInput(it.replace("\n", "").take(20)) },
             placeholder = { Text(stringResource(R.string.opt_new)) },
@@ -208,6 +209,7 @@ private fun AnswerChip(text: String, selected: Boolean, onClick: () -> Unit) {
 @Composable
 private fun OtherField(label: String, value: String, onChange: (String) -> Unit) {
     OutlinedTextField(
+        textStyle = userTextStyle(),
         value = value,
         onValueChange = { onChange(it.replace("\n", "")) },
         label = { Text(label) },

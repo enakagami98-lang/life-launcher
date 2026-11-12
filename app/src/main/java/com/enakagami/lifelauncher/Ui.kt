@@ -131,6 +131,7 @@ fun TextInputDialog(
         title = { Text(title, fontWeight = FontWeight.Bold) },
         text = {
             OutlinedTextField(
+                textStyle = userTextStyle(),
                 value = text,
                 onValueChange = { text = it },
                 singleLine = false,
@@ -155,3 +156,14 @@ fun TextInputDialog(
         containerColor = Bg,
     )
 }
+
+/**
+ * ユーザーが書いた文（日記・言葉・タスク・目標・入力欄など）の改行。
+ * アプリの文言は「行の長さをそろえる・文節で切る」（MainActivity の ProvideTextStyle）だが、
+ * 自分の文がそれで途中で折り返されると気持ち悪い（2026-11-12 ユーザーの指摘）ので、画面の端まで書いて自然に折り返す
+ */
+@Composable
+fun userTextStyle(): androidx.compose.ui.text.TextStyle =
+    androidx.compose.material3.LocalTextStyle.current.merge(
+        androidx.compose.ui.text.TextStyle(lineBreak = androidx.compose.ui.text.style.LineBreak.Simple)
+    )

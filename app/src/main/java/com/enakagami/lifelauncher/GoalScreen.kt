@@ -60,6 +60,7 @@ fun GoalScreen() {
         }
         Spacer(Modifier.height(20.dp))
         OutlinedTextField(
+            textStyle = userTextStyle(),
             value = text,
             onValueChange = { text = it.replace("\n", "").take(60) },
             placeholder = { Text(stringResource(R.string.goal_hint)) },

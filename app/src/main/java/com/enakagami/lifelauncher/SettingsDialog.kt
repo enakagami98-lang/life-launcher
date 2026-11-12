@@ -171,6 +171,7 @@ fun Section(title: String) {
 @Composable
 private fun NumberField(label: String, value: String, onChange: (String) -> Unit, modifier: Modifier) {
     OutlinedTextField(
+        textStyle = userTextStyle(),
         value = value,
         onValueChange = { v -> onChange(v.filter { it.isDigit() }.take(4)) },
         label = { Text(label) },
