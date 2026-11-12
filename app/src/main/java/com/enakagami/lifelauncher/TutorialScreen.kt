@@ -379,8 +379,8 @@ private fun ColumnScope.StepWidgets(on: MutableList<String>) {
 @Composable
 private fun StepDaily() {
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState())) {
-        // 「毎日を振り返る機能も使えます」は26だと最後の1文字だけ次の行になるので、少し小さくして1行に（2026-11-12 依頼）
-        Title(R.string.tut_more_title, 24.sp)
+        // 文字を小さくしてまで1行にはしない（2026-11-12 ユーザーの判断）。入らなければ2行に分かれてよい
+        Title(R.string.tut_more_title)
         Body(R.string.tut_more_body)
         listOf(
             R.string.w_journal to R.string.tut_more_journal,
