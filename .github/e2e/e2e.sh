@@ -68,7 +68,7 @@ expect_app "キーボードの決定キーで先頭の検索結果(Settings)が�
 
 log "== 4. 他アプリ→ホームボタン"
 lang ja-JP; snap home_from_settings
-expect_app "LifeLauncherに戻る" $PKG; expect_text "ホーム画面に戻る" "残りの日数"
+expect_app "LifeLauncherに戻る" $PKG; $UI see "残りの日数" >/dev/null; expect_text "ホーム画面に戻る" "残りの日数"
 
 log "== 5. 他アプリ→戻るボタン"
 next_page; $UI tap "Chrome" >/dev/null; sleep 4; snap chrome_opened
@@ -150,7 +150,7 @@ $UI tap "10秒" >/dev/null; sleep 1; snap reminder_settings
 $UI tap "閉じる" >/dev/null; sleep 2
 
 log "== 15. 履歴・通知のつもりで直接Chromeを開く → 待ち画面に戻される"
-adb shell am start -n com.android.chrome/com.google.android.apps.chrome.Main >/dev/null; sleep 5; snap bypass
+adb shell am start -n com.android.chrome/com.google.android.apps.chrome.Main >/dev/null; sleep 3; snap bypass
 expect_app "直接開いてもLifeLauncherに戻される" $PKG
 expect_text "待ち画面" "Chromeを本当に開きますか？"
 sleep 10; snap choose_minutes; expect_text "待つと時間の選択肢が出る" "Chromeにどのくらいの時間を使いますか？"
