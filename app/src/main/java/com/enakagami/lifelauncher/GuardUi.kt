@@ -225,7 +225,7 @@ private fun NightLockScreen(name: String, until: String) {
 }
 
 @Composable
-private fun CallButton(color: Color, onClick: () -> Unit) {
+fun CallButton(color: Color, onClick: () -> Unit) {
     Text(
         stringResource(R.string.lock_call),
         color = color,
@@ -237,6 +237,6 @@ private fun CallButton(color: Color, onClick: () -> Unit) {
     )
 }
 
-private fun dial(context: android.content.Context) {
+fun dial(context: android.content.Context) {
     runCatching { context.startActivity(Intent(Intent.ACTION_DIAL).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) }
 }

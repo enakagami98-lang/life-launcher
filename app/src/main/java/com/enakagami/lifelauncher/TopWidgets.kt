@@ -75,7 +75,7 @@ fun yenText(n: Int) = "¥%,d".format(n)
 
 /** 残り日数の下に並べる部品（並び順・表示する部品は「表示する項目を編集」で選ぶ） */
 @Composable
-fun TopWidgets(store: Store, today: LocalDate, openCondition: () -> Unit) {
+fun TopWidgets(store: Store, today: LocalDate, apps: List<AppInfo>, openCondition: () -> Unit) {
     var editingMotto by remember { mutableStateOf(false) }
     var showSpend by remember { mutableStateOf(false) }
     var editingLayout by remember { mutableStateOf(false) }
@@ -84,6 +84,7 @@ fun TopWidgets(store: Store, today: LocalDate, openCondition: () -> Unit) {
     var goalMenu by remember { mutableStateOf(false) }
     var celebrating by remember { mutableStateOf(false) }
     var showUsage by remember { mutableStateOf(false) }
+    var showFocus by remember { mutableStateOf(false) }
 
     Column(Modifier.padding(horizontal = 20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
         store.widgets.forEach { id ->
@@ -100,6 +101,7 @@ fun TopWidgets(store: Store, today: LocalDate, openCondition: () -> Unit) {
                 "steps" -> StepsCard()
                 "yesterday" -> YesterdayCard(store, today, openCondition)
                 "quote" -> QuoteCard(store, today)
+                "focus" -> FocusCard(today) { showFocus = true }
             }
         }
         Text(
@@ -141,6 +143,7 @@ fun TopWidgets(store: Store, today: LocalDate, openCondition: () -> Unit) {
     }
     if (celebrating) CongratsDialog { celebrating = false }
     if (showUsage) AppUsageDialog { showUsage = false }
+    if (showFocus) FocusDialog(apps) { showFocus = false }
     if (showSpend) SpendDialog { showSpend = false }
     if (editingLayout) WidgetEditDialog(store) { editingLayout = false }
     if (editingCountdown) CountdownDialog(store, today) { editingCountdown = false }
@@ -272,6 +275,29 @@ private fun ScreenCard(today: LocalDate, onClick: () -> Unit) {
             Text(durationText(Guard.screenMinutes(today)), fontSize = 26.sp, fontWeight = FontWeight.Black, color = Blue)
         }
         Text(stringResource(R.string.unlocks_short, Guard.unlockCount(today)), fontSize = 14.sp, fontWeight = FontWeight.Bold, color = SubInk)
+    }
+}
+
+// ---- 集中タイム（押すと、長さと使えるアプリを選んで始める） ----
+@Composable
+private fun FocusCard(today: LocalDate, onClick: () -> Unit) {
+    val m = Guard.focusMinutes(today)
+    Row(
+        Modifier.fillMaxWidth().card().clickable(onClick = onClick).padding(horizontal = 22.dp, vertical = 16.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Column(Modifier.weight(1f)) {
+            SmallLabel(stringResource(R.string.w_focus))
+            Text(
+                if (m > 0) stringResource(R.string.focus_today, durationText(m)) else stringResource(R.string.focus_none_today),
+                fontSize = 15.sp, fontWeight = FontWeight.Bold, color = if (m > 0) Blue else SubInk,
+            )
+        }
+        Spacer(Modifier.width(12.dp))
+        Text(
+            stringResource(R.string.focus_start), color = OnAccent, fontSize = 14.sp, fontWeight = FontWeight.Bold,
+            modifier = Modifier.clip(CircleShape).background(Blue).clickable(onClick = onClick).padding(horizontal = 16.dp, vertical = 10.dp),
+        )
     }
 }
 

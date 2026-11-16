@@ -309,7 +309,6 @@ S.update({
     'goal_title': ('今日の目標', "Today's goal"),
     'goal_sub': ('夜のおやすみ時間が終わりました。今日の目標を決めてから、スマホを使いましょう。', "Night rest time is over. Set today's goal before using your phone."),
     'goal_yesterday': ('昨日の目標：%1$s', "Yesterday's goal: %1$s"),
-    'goal_hint': ('例：ESを1社出す', 'e.g. Finish the report'),
     'goal_start': ('決めて1日を始める', 'Set it and start the day'),
     'goal_note': ('決めるまでは、ほかのアプリを開いてもこの画面に戻ります（電話は使えます）。決めた目標はトップ画面の「今日の目標」に出せます。', 'Until you set it, other apps bring you back here (calls still work). You can show the goal on the home screen with "Today\'s goal".'),
     'goal_empty': ('タップして、今日の目標を入力', "Tap to set today's goal"),

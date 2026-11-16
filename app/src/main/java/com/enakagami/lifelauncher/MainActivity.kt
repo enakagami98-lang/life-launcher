@@ -44,9 +44,11 @@ import kotlinx.coroutines.withContext
 import java.time.LocalDate
 import java.time.LocalDateTime
 
-/** 7枚の画面：0=寿命＋お気に入り / 1=アプリ一覧 / 2=目標 / 3=習慣 / 4=振り返り日記 / 5=タスク / 6=身体の調子（寿命の1つ手前） */
-const val PAGES = 7
-private const val START_PAGE = PAGES * 1000
+/**
+ * 画面の並び：寿命＋お気に入り → アプリ一覧 → 習慣 → 目標 → 振り返り日記 → タスク → 身体の調子（寿命の1つ手前）。
+ * 習慣・目標・日記・タスクは設定の「表示するページ」で隠せる（OPTIONAL_PAGES）。2026-11-16 に目標と習慣を入れ替えた
+ */
+fun pageIds(store: Store) = listOf("life", "apps") + OPTIONAL_PAGES.keys.filter { it !in store.hiddenPages } + "condition"
 
 /** アプリを開く処理（リマインダー対象なら、待ち画面をはさむ） */
 val LocalOpenApp = compositionLocalOf<(String) -> Unit> { {} }
@@ -104,6 +106,8 @@ class MainActivity : ComponentActivity() {
     override fun onResume() {
         super.onResume()
         Guard.launcherResumed = true
+        // 集中タイムの画面に戻ってきた（簡易モードで、集中の画面から開いたアプリを閉じた）
+        Guard.focusOpened = null
         // 簡易モードでは、ホームに戻ってきたら今回の利用は終わり（次に開くときはまた待つ）
         if (!Guard.hasUsageAccess(this)) Guard.endCurrentSession()
         resumeSignal.intValue++
@@ -154,7 +158,11 @@ fun LauncherApp(
     }
     val lock = Guard.activeLock(now)
 
-    val pager = rememberPagerState(initialPage = START_PAGE) { PAGES * 2000 }
+    // ページの数は設定で変わる。変わったら最初（寿命の画面）から作り直す
+    val pages = pageIds(store)
+    val count = pages.size
+    val startPage = count * 1000
+    val pager = key(count) { rememberPagerState(initialPage = startPage) { count * 2000 } }
     var query by remember { mutableStateOf("") }
     // 設定画面は、許可を出しに別の画面へ行って戻っても閉じないよう、ここで管理する
     var showSettings by remember { mutableStateOf(false) }
@@ -167,13 +175,13 @@ fun LauncherApp(
     suspend fun goHome() {
         query = ""
         focus.clearFocus()
-        pager.scrollToPage(START_PAGE)
+        pager.scrollToPage(startPage)
     }
 
     LaunchedEffect(homeSignal) { if (homeSignal > 0) goHome() }
     // アプリ一覧から離れたら検索欄を空にしてキーボードを閉じる
     LaunchedEffect(pager.settledPage) {
-        if (pager.settledPage % PAGES != 1) {
+        if (pager.settledPage % count != 1) {
             query = ""
             focus.clearFocus()
         }
@@ -231,6 +239,14 @@ fun LauncherApp(
                 } else if (Billing.locked) {
                     // Play 版で定期購入が無いとき：機能は止めて、購入画面＋アプリ一覧
                     PaywallScreen(store, apps, query, onQuery = { query = it })
+                } else if (Guard.focusEndSignal >= 0 && Guard.focusCelebrate()) {
+                    // （focusEndSignal を読むのは、集中の時間になった瞬間にここを描き直すため）
+                    // 集中タイムが最後まで終わった：おつかれさまでした
+                    FocusDoneScreen()
+                } else if (Guard.focusActive()) {
+                    // 集中タイム中：電話と選んだアプリしか使えない
+                    FocusScreen(apps)
+                    guardRequest?.let { req -> GuardDialogFor(req, apps, context, setGuardRequest) }
                 } else if (Guard.needGoal(now)) {
                     // 夜のおやすみ時間のあと最初：今日の目標を決めるまでホーム画面の代わりに出す
                     GoalScreen()
@@ -245,14 +261,14 @@ fun LauncherApp(
                 ) { page ->
                     // ホームに戻るたびに作り直し、開きっぱなしの入力画面やメニューを必ず閉じる
                     key(homeSignal) {
-                        when (page % PAGES) {
-                            0 -> LifePage(store, today, apps, openSettings = { showSettings = true },
+                        when (pages[page % count]) {
+                            "life" -> LifePage(store, today, apps, openSettings = { showSettings = true },
                                 openCondition = { scope.launch { pager.animateScrollToPage(pager.currentPage - 1) } })
-                            1 -> AppsPage(store, apps, query, onQuery = { query = it })
-                            2 -> ItemsPage(store, kind = "goals")
-                            3 -> ItemsPage(store, kind = "habits")
-                            4 -> JournalPage(store, today)
-                            5 -> TasksPage(store, today)
+                            "apps" -> AppsPage(store, apps, query, onQuery = { query = it })
+                            "habits" -> ItemsPage(store, kind = "habits")
+                            "goals" -> ItemsPage(store, kind = "goals")
+                            "journal" -> JournalPage(store, today)
+                            "tasks" -> TasksPage(store, today)
                             else -> ConditionPage(store, today)
                         }
                     }
@@ -269,23 +285,27 @@ fun LauncherApp(
                     SettingsDialog(store, apps, onDismiss = { showSettings = false },
                         onTutorial = { showSettings = false; showTutorial = true })
                 }
-                guardRequest?.let { req ->
-                    val label = apps.firstOrNull { it.pkg == req.pkg }?.label ?: req.pkg
-                    GuardDialog(
-                        req = req,
-                        label = label,
-                        onLaunch = { minutes ->
-                            Guard.startSession(req.pkg, minutes)
-                            setGuardRequest(null)
-                            val key = req.key ?: apps.firstOrNull { it.pkg == req.pkg }?.key
-                            if (key != null) launchApp(context, key)
-                        },
-                        onClose = { setGuardRequest(null) },
-                    )
-                }
+                guardRequest?.let { req -> GuardDialogFor(req, apps, context, setGuardRequest) }
                 }
             }
           }
         }
     }
+}
+
+/** 使いすぎ防止の待ち画面（ホーム画面と、集中タイムの画面の両方から出す） */
+@Composable
+private fun GuardDialogFor(req: GuardRequest, apps: List<AppInfo>, context: android.content.Context, setGuardRequest: (GuardRequest?) -> Unit) {
+    val label = apps.firstOrNull { it.pkg == req.pkg }?.label ?: req.pkg
+    GuardDialog(
+        req = req,
+        label = label,
+        onLaunch = { minutes ->
+            Guard.startSession(req.pkg, minutes)
+            setGuardRequest(null)
+            val key = req.key ?: apps.firstOrNull { it.pkg == req.pkg }?.key
+            if (key != null) launchApp(context, key)
+        },
+        onClose = { setGuardRequest(null) },
+    )
 }

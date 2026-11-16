@@ -1,6 +1,16 @@
 package com.enakagami.lifelauncher
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
+import kotlinx.coroutines.delay
+import java.time.LocalDate
 import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -17,7 +27,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -35,10 +45,16 @@ import androidx.compose.ui.unit.sp
 import sh.calvin.reorderable.ReorderableItem
 import sh.calvin.reorderable.rememberReorderableLazyListState
 
-/** 目標（kind="goals"）と習慣（kind="habits"）で共通の画面 */
+/**
+ * 目標（kind="goals"）と習慣（kind="habits"）で共通の画面。
+ * 習慣は左の丸でその日のチェック、右に続けた日数。チェックは日付ごとに残すので、0:00 になると自然に外れる
+ */
 @Composable
 fun ItemsPage(store: Store, kind: String) {
     val goals = kind == "goals"
+    // 開いたまま日付が変わっても、0:00 にチェックが外れて見えるよう、日付を読み直す
+    var today by remember { mutableStateOf(LocalDate.now()) }
+    LaunchedEffect(Unit) { while (true) { today = LocalDate.now(); delay(20_000) } }
     val title = stringResource(if (goals) R.string.page_goals else R.string.page_habits)
     val list = store.listFor(kind)
     var adding by remember { mutableStateOf(false) }
@@ -52,6 +68,13 @@ fun ItemsPage(store: Store, kind: String) {
     Column(Modifier.fillMaxSize()) {
         PageHeader(title) {
             RoundButton(Icons.Filled.Add, stringResource(R.string.add), Blue, OnAccent) { adding = true }
+        }
+        if (!goals && list.isNotEmpty()) {
+            Text(
+                stringResource(R.string.habits_reset),
+                color = SubInk, fontSize = 13.sp, lineHeight = 19.sp,
+                modifier = Modifier.padding(start = 24.dp, end = 24.dp, bottom = 8.dp),
+            )
         }
         if (list.isEmpty()) {
             Text(
@@ -77,16 +100,37 @@ fun ItemsPage(store: Store, kind: String) {
                             .card()
                             .longPressDraggableHandle()
                             .clickable { editing = item }
-                            .padding(horizontal = 22.dp, vertical = 20.dp),
+                            .padding(horizontal = if (goals) 22.dp else 12.dp, vertical = if (goals) 20.dp else 10.dp),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
-                        if (kind == "goals") {
+                        if (goals) {
                             Icon(painterResource(R.drawable.ic_flag), null, tint = Blue, modifier = Modifier.size(22.dp))
+                            Spacer(Modifier.width(14.dp))
+                            Text(item.text, fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Ink, style = userTextStyle())
                         } else {
-                            Icon(Icons.Filled.Menu, null, tint = Blue, modifier = Modifier.size(22.dp))
+                            val done = store.isHabitDone(item.id, today)
+                            val streak = store.habitStreak(item.id, today)
+                            val desc = stringResource(if (done) R.string.task_undo else R.string.task_do, item.text)
+                            // チェックの丸（押すと今日の分をつける・外す）
+                            Box(
+                                Modifier.size(40.dp).clip(CircleShape).clickable { store.toggleHabit(item.id, today) }
+                                    .semantics { contentDescription = desc },
+                                contentAlignment = Alignment.Center,
+                            ) {
+                                Box(
+                                    Modifier.size(26.dp).clip(CircleShape)
+                                        .then(if (done) Modifier.background(Blue) else Modifier.border(2.dp, SubInk, CircleShape)),
+                                    contentAlignment = Alignment.Center,
+                                ) { if (done) Icon(Icons.Filled.Check, null, tint = OnAccent, modifier = Modifier.size(18.dp)) }
+                            }
+                            Spacer(Modifier.width(10.dp))
+                            Text(item.text, fontSize = 16.sp, fontWeight = FontWeight.Bold, color = if (done) SubInk else Ink,
+                                style = userTextStyle(), modifier = Modifier.weight(1f))
+                            if (streak > 0) {
+                                Spacer(Modifier.width(8.dp))
+                                Text(stringResource(R.string.streak, streak), fontSize = 13.sp, fontWeight = FontWeight.Bold, color = Blue)
+                            }
                         }
-                        Spacer(Modifier.width(14.dp))
-                        Text(item.text, fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Ink, style = userTextStyle())
                     }
                 }
             }

@@ -112,6 +112,14 @@ elif cmd in ("has", "hasp"):
     n = find(text, exact=(cmd == "has"))
     print(("FOUND: " if n is not None else "NOTFOUND: ") + text)
     sys.exit(0 if n is not None else 1)
+elif cmd == "hold":
+    # 長く押し続ける（3つ目の引数がミリ秒。集中タイムの「長押しでやめる」用）
+    pos = visible_center(text)
+    if pos is None:
+        print(f"NOTFOUND: {text}"); sys.exit(1)
+    x, y = pos
+    adb("shell", "input", "swipe", str(x), str(y), str(x), str(y), sys.argv[3] if len(sys.argv) > 3 else "3500")
+    print(f"FOUND: {text}")
 elif cmd in ("tap", "long", "tapp"):
     pos = visible_center(text, exact=(cmd != "tapp"))
     if pos is None:

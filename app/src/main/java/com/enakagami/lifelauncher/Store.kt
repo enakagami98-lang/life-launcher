@@ -26,6 +26,15 @@ val ALL_WIDGETS = linkedMapOf(
     "steps" to R.string.w_steps,
     "yesterday" to R.string.w_yesterday,
     "quote" to R.string.w_quote,
+    "focus" to R.string.w_focus,
+)
+
+/** 表示する・しないを選べるページ（左から順に。アプリ一覧の右隣が習慣） */
+val OPTIONAL_PAGES = linkedMapOf(
+    "habits" to R.string.page_habits,
+    "goals" to R.string.page_goals,
+    "journal" to R.string.w_journal,
+    "tasks" to R.string.page_tasks,
 )
 
 /** 振り返り日記の1日分。書きたい日だけ。空の欄は "" */
@@ -214,7 +223,28 @@ class Store(context: Context) {
             if ("quote" !in this) add(indexOf("motto") + 1, "quote")
             prefs.edit().putBoolean("addedQuoteJournal", true).putString("widgets", joinToString(",")).apply()
         }
+        // 集中タイム（2026-11-16 追加）も、前から使っている人に1回だけ出す（今日のスマホの下。無ければ一番下）
+        if (!prefs.getBoolean("addedFocus", false)) {
+            if ("focus" !in this) { val i = indexOf("screen"); if (i >= 0) add(i + 1, "focus") else add("focus") }
+            prefs.edit().putBoolean("addedFocus", true).putString("widgets", joinToString(",")).apply()
+        }
     }
+
+    // ---- 表示しないページ（OPTIONAL_PAGES のキー）。隠しても中身は消さない ----
+    val hiddenPages = mutableStateListOf<String>().apply {
+        addAll(prefs.getStringSet("hiddenPages", emptySet()).orEmpty().filter { it in OPTIONAL_PAGES })
+    }
+
+    fun setPageShown(id: String, shown: Boolean) {
+        if (shown) hiddenPages.remove(id) else if (id !in hiddenPages) hiddenPages.add(id)
+        prefs.edit().putStringSet("hiddenPages", hiddenPages.toSet()).apply()
+    }
+
+    // ---- AIに渡す期間（日数。0＝全期間） ----
+    var aiRange by mutableIntStateOf(prefs.getInt("aiRange", 0))
+        private set
+
+    fun saveAiRange(days: Int) { aiRange = days; prefs.edit().putInt("aiRange", days).apply() }
 
     fun saveWidgets(list: List<String>) {
         widgets.clear(); widgets.addAll(list)

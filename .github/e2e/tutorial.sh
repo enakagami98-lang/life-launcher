@@ -76,7 +76,7 @@ next "次へ"
 
 log "== 8. 使い方"
 expect_text "最後のページ" "準備ができました"
-expect_text "ページの案内に日記がある" "習慣・日記・タスク"
+expect_text "ページの案内に日記がある" "習慣・目標・日記・タスク"
 snap done
 next "使いはじめる"
 

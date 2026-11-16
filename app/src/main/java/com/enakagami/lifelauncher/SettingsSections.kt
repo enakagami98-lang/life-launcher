@@ -232,6 +232,20 @@ private fun AppPickerDialog(apps: List<AppInfo>, onPick: (AppInfo) -> Unit, onDi
     )
 }
 
+// ======================== 表示するページ ========================
+/** 目標・習慣・振り返り日記・タスクのページを、表示する・しないを選ぶ（隠しても中身は消さない） */
+@Composable
+fun PagesSection(store: Store) {
+    Section(stringResource(R.string.s_pages))
+    Column(cardPad.fillMaxWidth().card().padding(vertical = 8.dp)) {
+        Text(stringResource(R.string.s_pages_desc), color = SubInk, fontSize = 13.sp, lineHeight = 19.sp,
+            modifier = Modifier.padding(horizontal = 20.dp, vertical = 6.dp))
+        OPTIONAL_PAGES.forEach { (id, name) ->
+            SwitchRow(stringResource(name), id !in store.hiddenPages) { store.setPageShown(id, it) }
+        }
+    }
+}
+
 // ======================== 使えない時間帯 ========================
 @Composable
 fun LockSection() {
@@ -363,7 +377,8 @@ private fun Chip(text: String, selected: Boolean, onClick: () -> Unit) {
 
 @Composable
 private fun SwitchRow(label: String, checked: Boolean, onChange: (Boolean) -> Unit) {
-    Row(Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 10.dp), verticalAlignment = Alignment.CenterVertically) {
+    // 文字の部分を押しても切り替わる
+    Row(Modifier.fillMaxWidth().clickable { onChange(!checked) }.padding(horizontal = 20.dp, vertical = 10.dp), verticalAlignment = Alignment.CenterVertically) {
         Text(label, color = Ink, fontSize = 15.sp, lineHeight = 21.sp, modifier = Modifier.weight(1f))
         Spacer(Modifier.width(12.dp))
         AccentSwitch(checked, label, onChange)

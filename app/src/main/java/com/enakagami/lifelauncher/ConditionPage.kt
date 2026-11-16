@@ -3,6 +3,7 @@ package com.enakagami.lifelauncher
 import android.content.Intent
 import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -47,6 +48,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.contentDescription
@@ -600,12 +602,29 @@ private fun AiPromptCard(store: Store) {
     val context = LocalContext.current
     var copied by remember { mutableStateOf(false) }
     LaunchedEffect(copied) { if (copied) { delay(5000); copied = false } }
-    val count = store.days.size
+    val count = aiDates(store, store.aiRange).size
 
     Column(Modifier.fillMaxWidth().card().padding(20.dp)) {
         Text(stringResource(R.string.ai_title), fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Ink)
         Spacer(Modifier.height(6.dp))
         MoreInfo(stringResource(R.string.ai_desc, count), fontSize = 13.sp)
+        Spacer(Modifier.height(10.dp))
+        // AIに渡す期間：1週間・1ヶ月・全期間（選んだものを覚えておく）
+        Text(stringResource(R.string.ai_range), fontSize = 13.sp, fontWeight = FontWeight.Bold, color = SubInk)
+        Spacer(Modifier.height(6.dp))
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            listOf(7 to R.string.ai_range_week, 30 to R.string.ai_range_month, 0 to R.string.ai_range_all).forEach { (days, label) ->
+                val on = store.aiRange == days
+                Box(
+                    Modifier.weight(1f).clip(RoundedCornerShape(12.dp))
+                        .background(if (on) Blue else Color.Transparent)
+                        .border(1.dp, if (on) Blue else SubInk, RoundedCornerShape(12.dp))
+                        .clickable { store.saveAiRange(days); copied = false }
+                        .padding(vertical = 10.dp),
+                    contentAlignment = Alignment.Center,
+                ) { Text(stringResource(label), color = if (on) OnAccent else Ink, fontSize = 14.sp, fontWeight = FontWeight.Bold, maxLines = 1) }
+            }
+        }
         Spacer(Modifier.height(14.dp))
         Button(
             onClick = {
@@ -643,11 +662,22 @@ private fun AiPromptCard(store: Store) {
     }
 }
 
-/** 記録を、そのままAIに貼れる質問文にする（直近120日分まで） */
+/**
+ * AIに渡す日付：調子を記録した日・スマホの使用時間がある日・集中した日をあわせる。
+ * rangeDays は直近何日分か（7＝1週間、30＝1ヶ月、0＝全期間。スマホに残っている記録は最大400日）
+ */
+fun aiDates(store: Store, rangeDays: Int): List<LocalDate> {
+    val today = LocalDate.now()
+    val from = if (rangeDays > 0) today.minusDays(rangeDays - 1L) else LocalDate.MIN
+    val zone = java.time.ZoneId.systemDefault()
+    val focusDays = Guard.focusLog.map { java.time.Instant.ofEpochMilli(it.first).atZone(zone).toLocalDate() }
+    return (store.days.keys + Guard.screenMs.keys.mapNotNull { runCatching { LocalDate.parse(it) }.getOrNull() } + focusDays)
+        .filter { it >= from && it <= today }.toSortedSet().toList()
+}
+
+/** 記録を、そのままAIに貼れる質問文にする（期間は「AIに渡す期間」で選んだもの） */
 fun buildAiPrompt(ctx: android.content.Context, store: Store): String {
-    // 調子を記録した日と、スマホの使用時間がある日をあわせる
-    val dates = (store.days.keys + Guard.screenMs.keys.mapNotNull { runCatching { LocalDate.parse(it) }.getOrNull() })
-        .toSortedSet().toList().takeLast(120)
+    val dates = aiDates(store, store.aiRange)
     fun cell(s: String) = s.replace(",", " ").replace("\n", " ").trim()
     fun n(x: Int?) = x?.toString() ?: ""
     val csv = dates.joinToString("\n") { d ->
@@ -672,6 +702,15 @@ fun buildAiPrompt(ctx: android.content.Context, store: Store): String {
         java.time.Instant.ofEpochMilli(it.time).atZone(zone).format(logFmt) + "," + cell(it.doing) + "," + cell(it.purpose)
     }
     val unlockSection = if (unlockCsv.isBlank()) "" else "\n\n" + ctx.getString(R.string.ai_unlock_section, unlockCsv)
+    // 集中タイムの記録（選んだ期間の分）
+    val timeFmt = java.time.format.DateTimeFormatter.ofPattern("HH:mm")
+    val focusFrom = dates.firstOrNull()?.atStartOfDay(zone)?.toInstant()?.toEpochMilli() ?: Long.MAX_VALUE
+    val focusCsv = Guard.focusSessionsSince(focusFrom).joinToString("\n") { (a, b) ->
+        val s = java.time.Instant.ofEpochMilli(a).atZone(zone)
+        val e = java.time.Instant.ofEpochMilli(b).atZone(zone)
+        "${s.toLocalDate()},${s.format(timeFmt)},${e.format(timeFmt)},${(b - a) / 60_000}"
+    }
+    val focusSection = if (focusCsv.isBlank()) "" else "\n\n" + ctx.getString(R.string.ai_focus_section, focusCsv)
     val none = ctx.getString(R.string.ai_none)
     val goals = store.goals.joinToString(", ") { it.text }.ifBlank { none }
     val habits = store.habits.joinToString(", ") { it.text }.ifBlank { none }
@@ -679,5 +718,5 @@ fun buildAiPrompt(ctx: android.content.Context, store: Store): String {
     val to = dates.lastOrNull()?.toString() ?: ""
     // 質問文はスマホの言語で作り、答えもその言語で返すように頼む
     val lang = Locale.getDefault()
-    return ctx.getString(R.string.ai_prompt, dates.size, from, to, goals, habits, csv + unlockSection, lang.getDisplayLanguage(lang)).trim()
+    return ctx.getString(R.string.ai_prompt, dates.size, from, to, goals, habits, csv + unlockSection + focusSection, lang.getDisplayLanguage(lang)).trim()
 }

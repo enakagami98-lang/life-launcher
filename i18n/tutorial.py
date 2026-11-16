@@ -1,4 +1,5 @@
 # チュートリアル（使い方）の文字。build.py が base.py / tr_xx.py と合わせて読む
+# ※ tut7_page_right は 2026-11-16 から focus.py の訳を使う（目標と習慣のページを入れ替えたため。ここに残っている訳は使われない）
 # KEYS の順に、各言語の訳を並べる
 KEYS = [
     "tut_skip", "tut_start", "tut_next", "tut_done", "tut_selected",

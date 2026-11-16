@@ -8,6 +8,7 @@ import android.os.Process
 import android.provider.Settings
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
@@ -104,6 +105,7 @@ object Guard {
         goalOn = prefs.getBoolean("goalOn", true)
         JSONObject(prefs.getString("dailyGoals", "{}")!!).let { o -> o.keys().forEach { dailyGoals[it] = o.getString(it) } }
         JSONArray(prefs.getString("goalDone", "[]")).let { a -> for (i in 0 until a.length()) goalDone.add(a.getString(i)) }
+        loadFocus()
     }
 
     // ---- 設定 ----
@@ -383,6 +385,8 @@ object Guard {
         saveScreen()
         // 夜のおやすみ時間のあと最初の解除：まず今日の目標（このときは「今何してる？」は聞かない）
         if (needGoal()) return true
+        // 集中タイム中は「今何してる？」を聞かない（集中の画面を出す）
+        if (focusActive()) return false
         if (!askEnabled || askPending) return askPending
         if (System.currentTimeMillis() - lastAnswerAt < ASK_GAP_MS) return false
         // 使えない時間帯は、そもそもスマホを使えないので聞かない
@@ -480,6 +484,103 @@ object Guard {
         // 22時〜6時のように日付をまたぐなら「昨日の夜」、またがないなら「今日」の分が終わったか
         val endedToday = if (n.start > n.end) yesterday in n.days else dow in n.days
         return endedToday && t >= n.end
+    }
+
+    // ---- 集中タイム（終わるまで、電話と選んだアプリ以外は使えない） ----
+    /** 今の集中の始まりと終わり（ミリ秒）。終わりを過ぎたら集中していない */
+    var focusStart by mutableLongStateOf(0L)
+        private set
+    var focusUntil by mutableLongStateOf(0L)
+        private set
+    /** 「おつかれさまでした」を見た集中（focusUntil の値）。これと違えば、終わった後にお祝いを出す */
+    private var focusSeen by mutableLongStateOf(0L)
+    /** 最後に選んだ長さ（分） */
+    var focusLastMin by mutableIntStateOf(50)
+        private set
+    /** 集中タイム中も使えるアプリ（パッケージ名） */
+    val focusApps = mutableStateListOf<String>()
+    /** これまでの集中（開始, 終了）。途中でやめたら終了をその時刻に書き換える。AI の分析用 */
+    val focusLog = mutableStateListOf<Pair<Long, Long>>()
+    /** 簡易モード（使用状況の許可なし）用：集中の画面から開いた「使えるアプリ」。ホームに戻ったら null */
+    var focusOpened: String? = null
+
+    private fun loadFocus() {
+        focusStart = prefs.getLong("focusStart", 0)
+        focusUntil = prefs.getLong("focusUntil", 0)
+        focusSeen = prefs.getLong("focusSeen", 0)
+        focusLastMin = prefs.getInt("focusLastMin", 50)
+        JSONArray(prefs.getString("focusApps", "[]")).let { a -> for (i in 0 until a.length()) focusApps.add(a.getString(i)) }
+        JSONArray(prefs.getString("focusLog", "[]")).let { a ->
+            for (i in 0 until a.length()) { val x = a.getJSONArray(i); focusLog.add(x.getLong(0) to x.getLong(1)) }
+        }
+    }
+
+    private fun saveFocus() {
+        val log = JSONArray(); focusLog.forEach { (a, b) -> log.put(JSONArray().put(a).put(b)) }
+        prefs.edit().putLong("focusStart", focusStart).putLong("focusUntil", focusUntil).putLong("focusSeen", focusSeen)
+            .putInt("focusLastMin", focusLastMin).putString("focusApps", JSONArray(focusApps.toList()).toString())
+            .putString("focusLog", log.toString()).apply()
+    }
+
+    fun focusActive(now: Long = System.currentTimeMillis()) = now < focusUntil
+
+    /** 終わったのに、まだ「おつかれさまでした」を見ていない（途中でやめたときは出さない） */
+    fun focusCelebrate(now: Long = System.currentTimeMillis()) = focusUntil in 1..now && focusSeen != focusUntil
+
+    fun startFocus(minutes: Int) {
+        val now = System.currentTimeMillis()
+        focusLastMin = minutes
+        focusStart = now
+        focusUntil = now + minutes * 60_000L
+        focusLog.add(now to focusUntil)
+        // 古い記録は400日分だけ残す
+        val keep = now - 400 * 86_400_000L
+        focusLog.removeAll { it.second < keep }
+        saveFocus()
+    }
+
+    /** 長押しで途中でやめる。集中した時間はやめた時刻までで記録する */
+    fun stopFocus() {
+        val now = System.currentTimeMillis()
+        if (!focusActive(now)) return
+        val i = focusLog.indexOfLast { it.first == focusStart }
+        if (i >= 0) focusLog[i] = focusStart to now
+        focusUntil = now
+        focusSeen = now
+        saveFocus()
+    }
+
+    fun dismissFocusCelebration() { focusSeen = focusUntil; saveFocus() }
+
+    /** 集中の画面が「時間になった」と知らせると増える。ホーム画面はこれを読んで、すぐにお祝いの画面に切り替える */
+    var focusEndSignal by mutableIntStateOf(0)
+        private set
+
+    fun focusTimeUp() { focusEndSignal++ }
+
+    fun setFocusApp(pkg: String, on: Boolean) {
+        focusApps.remove(pkg)
+        if (on) focusApps.add(pkg)
+        saveFocus()
+    }
+
+    /** 集中タイム中でも開いてよいアプリか */
+    fun focusAllows(pkg: String) = pkg in focusApps
+
+    /** その日に集中した分数（日をまたいだ集中は、それぞれの日に分ける。今の集中は今の時刻まで） */
+    fun focusMinutes(date: LocalDate): Int {
+        val zone = java.time.ZoneId.systemDefault()
+        val from = date.atStartOfDay(zone).toInstant().toEpochMilli()
+        val to = date.plusDays(1).atStartOfDay(zone).toInstant().toEpochMilli()
+        val now = System.currentTimeMillis()
+        val ms = focusLog.sumOf { (a, b) -> (minOf(b, now, to) - maxOf(a, from)).coerceAtLeast(0) }
+        return (ms / 60_000).toInt()
+    }
+
+    /** from 以降の集中（開始, 終了）。終わっていない集中は今の時刻まで */
+    fun focusSessionsSince(from: Long): List<Pair<Long, Long>> {
+        val now = System.currentTimeMillis()
+        return focusLog.filter { it.first >= from }.map { (a, b) -> a to minOf(b, now) }.filter { it.second > it.first }
     }
 
     // ---- 「今何してる？」の選択肢（登録・削除できる） ----

@@ -35,13 +35,13 @@ sleep 3; adb shell input keyevent KEYCODE_HOME; sleep 3; bash .github/e2e/skip_t
 adb shell appops set $PKG SYSTEM_ALERT_WINDOW allow
 key KEYCODE_HOME; sleep 3
 
-log "== 1. トップに今日の言葉、日記は習慣とタスクの間のページ"
+log "== 1. トップに今日の言葉、日記は目標とタスクの間のページ"
 snap top_ja
 expect_text "今日の言葉の部品" "今日の言葉"
 $UI see "振り返り日記" >/dev/null
 expect_no_text "トップに日記の部品は出ない" "振り返り日記"
 key KEYCODE_HOME
-for i in 1 2 3; do next_page; done; expect_text "3回進むと習慣" "習慣"
+for i in 1 2 3; do next_page; done; expect_text "3回進むと目標（2026-11-16 から習慣と入れ替え）" "目標"
 next_page; snap journal_page; expect_text "その次が日記" "振り返り日記"
 next_page; expect_text "その次がタスク" "タスク"
 lang en-US

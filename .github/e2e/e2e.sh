@@ -77,20 +77,20 @@ for i in 1 2 3 4; do [ "$(top | cut -d/ -f1)" = "$PKG" ] && break; key KEYCODE_B
 snap back_from_chrome
 expect_app "戻るボタンでLifeLauncherに戻る" $PKG; expect_text "アプリ一覧ではなくホーム画面" "残りの日数"
 
-log "== 6. 目標画面にいる状態でロック→解除"
-next_page; next_page; snap before_lock; expect_text "目標画面にいる" "目標"
+log "== 6. 目標画面にいる状態でロック→解除（アプリ一覧の右は習慣、その右が目標）"
+next_page; next_page; next_page; snap before_lock; expect_text "目標画面にいる" "目標"
 key KEYCODE_POWER; sleep 3; key KEYCODE_WAKEUP; adb shell wm dismiss-keyguard; sleep 3; snap after_unlock
 expect_app "解除後はLifeLauncher" $PKG; expect_text "解除後はホーム画面" "残りの日数"
 
 log "== 7. 目標の入力画面を開いたままホームボタン"
-next_page; next_page; $UI tap "追加" >/dev/null; sleep 1; snap goal_dialog_open
+next_page; next_page; next_page; $UI tap "追加" >/dev/null; sleep 1; snap goal_dialog_open
 key KEYCODE_HOME; snap home_while_dialog
 expect_no_text "入力画面が閉じる" "目標を追加"; expect_text "ホーム画面" "残りの日数"
 
 log "== 8. 7枚で一周"
 next_page; expect_text "1回目→アプリ" "アプリ"
-next_page; expect_text "2回目→目標" "目標"
-next_page; expect_text "3回目→習慣" "習慣"
+next_page; expect_text "2回目→習慣" "習慣"
+next_page; expect_text "3回目→目標" "目標"
 next_page; expect_text "4回目→日記" "振り返り日記"
 next_page; expect_text "5回目→タスク" "タスク"
 next_page; expect_text "6回目→身体の調子" "身体の調子"
@@ -115,7 +115,7 @@ expect_no_text "検索でも出ない" "Contacts"
 key KEYCODE_HOME
 
 log "== 11. 目標の追加"
-lang en-US; next_page; next_page; $UI tap "Add" >/dev/null; sleep 1; $UI tapclass android.widget.EditText >/dev/null; sleep 1; softword toeic; sleep 1; $UI tap "Save" >/dev/null; sleep 2; snap goal_added
+lang en-US; next_page; next_page; next_page; $UI tap "Add" >/dev/null; sleep 1; $UI tapclass android.widget.EditText >/dev/null; sleep 1; softword toeic; sleep 1; $UI tap "Save" >/dev/null; sleep 2; snap goal_added
 expect_text "目標が追加される" "toeic"; expect_text "目標画面のまま" "Goals"
 lang ja-JP
 key KEYCODE_HOME

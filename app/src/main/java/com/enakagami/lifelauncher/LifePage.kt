@@ -88,7 +88,7 @@ fun LifePage(store: Store, today: LocalDate, apps: List<AppInfo>, openSettings: 
                 }
                 Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                     LifeCards(store.birth, store.lifespan, today) { openSettings() }
-                    TopWidgets(store, today, openCondition)
+                    TopWidgets(store, today, apps, openCondition)
                 }
                 Column(
                     Modifier.fillMaxWidth().padding(bottom = 12.dp),

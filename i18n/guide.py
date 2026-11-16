@@ -1,4 +1,5 @@
 # 使い方の「毎日の記録」のページの文字（2026-11-06）。tasks.py と同じ形
+# ※ tut_more_journal は 2026-11-16 から focus.py の訳を使う（目標と習慣のページを入れ替えたため。ここに残っている訳は使われない）
 # 新しい機能を足したら、ここにも説明を足す
 KEYS = ["tut_more_title", "tut_more_body", "tut_more_journal", "tut_more_quote", "tut_more_tasks", "tut_more_tear_title", "tut_more_tear"]
 

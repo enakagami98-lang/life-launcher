@@ -32,6 +32,7 @@ import android.widget.Toast
  * ・リマインダー対象アプリの使用時間を数える／時間切れならホームに戻して延長を聞く
  * ・使えない時間帯ならアプリを閉じてホームに戻す
  * ・画面を消したらホームに戻す（次に画面をつけたとき寿命画面から始まる）
+ * ・集中タイム中は、電話と選んだアプリ以外を閉じてホームに戻す
  */
 class GuardService : Service() {
     private val handler = Handler(Looper.getMainLooper())
@@ -121,7 +122,6 @@ class GuardService : Service() {
         if (!getSystemService(PowerManager::class.java).isInteractive) { wasActive = false; return }
         // ロック解除の画面（パスワード入力中）は何もしない
         if (getSystemService(android.app.KeyguardManager::class.java).isKeyguardLocked) { wasActive = false; return }
-        ensureAnchor()
         Guard.addScreenTime(dt)
         // Play 版で定期購入が無いときは、使いすぎ防止・使えない時間・質問などは止める
         if (Billing.locked) { hideBar(); wasActive = true; return }
@@ -138,6 +138,20 @@ class GuardService : Service() {
             val away = if (usage) fg != null && fg != packageName && isBlockable(fg!!) else !Guard.launcherResumed
             if (away && !inCall()) openLauncher(null, "ask")
             return
+        }
+        // 集中タイム：電話・設定・選んだアプリ以外はホームに戻す（ホームには集中の画面が出ている）
+        if (Guard.focusActive()) {
+            if (!usage) {
+                // 簡易モードでは前面のアプリが分からないので、集中の画面から開いたアプリと電話だけ許す
+                if (!Guard.launcherResumed && Guard.focusOpened == null && !inCall() && now > Guard.allowUntil) {
+                    hideBar(); openLauncher(null, "lock"); return
+                }
+            } else {
+                val p = fg
+                if (p != null && p != packageName && isBlockable(p) && !Guard.focusAllows(p)) {
+                    hideBar(); openLauncher(p, "lock"); return
+                }
+            }
         }
         if (!usage) { simpleCheck(dt); return }
         val pkg = fg
@@ -215,8 +229,21 @@ class GuardService : Service() {
             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             .putExtra("guard_pkg", pkg)
             .putExtra("guard_reason", reason)
-        runCatching { startActivity(i) }
         fg = packageName
+        // 目印は、ホームを呼び出す間だけ置く（常に置くと「他のアプリの上に重ねて表示」の通知が出続けるため）
+        handler.removeCallbacks(dropAnchor)
+        if (anchor == null && ensureAnchor()) {
+            // 目印が画面に出てから呼び出す
+            handler.postDelayed({ runCatching { startActivity(i) } }, 300)
+        } else {
+            runCatching { startActivity(i) }
+        }
+        handler.postDelayed(dropAnchor, 5000)
+    }
+
+    private val dropAnchor = Runnable {
+        anchor?.let { runCatching { wm.removeView(it) } }
+        anchor = null
     }
 
     private fun label(pkg: String) = runCatching {
@@ -289,15 +316,17 @@ class GuardService : Service() {
     }
 
     /**
-     * 1ピクセルの透明な目印。新しいAndroidでは「画面に何か表示しているアプリ」しか
-     * 裏からホーム画面を呼び出せないため。
+     * 1ピクセルの透明な目印。新しいAndroid（15以降）では「画面に何か表示しているアプリ」しか
+     * 裏からホーム画面を呼び出せないため。ホームを呼び出すときだけ置き、5秒後に片づける（openLauncher）。
+     * 置いた（置けた）ら true
      */
-    private fun ensureAnchor() {
-        if (anchor != null || !Guard.hasOverlay(this)) return
+    private fun ensureAnchor(): Boolean {
+        if (anchor != null) return true
+        if (!Guard.hasOverlay(this)) return false
         val v = View(this)
-        runCatching {
+        return runCatching {
             wm.addView(v, overlayParams(1, 1, Gravity.TOP or Gravity.START, name = "LifeLauncherAnchor"))
             anchor = v
-        }
+        }.isSuccess
     }
 }

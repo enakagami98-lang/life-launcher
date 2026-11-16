@@ -375,7 +375,7 @@ private fun ColumnScope.StepWidgets(on: MutableList<String>) {
     }
 }
 
-// ---- 7 毎日の記録（日記・今日の言葉・タスクの期限・日めくり） ----
+// ---- 7 毎日の記録（習慣・集中タイム・日記・今日の言葉・タスクの期限・日めくり） ----
 @Composable
 private fun StepDaily() {
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState())) {
@@ -383,6 +383,8 @@ private fun StepDaily() {
         Title(R.string.tut_more_title)
         Body(R.string.tut_more_body)
         listOf(
+            R.string.page_habits to R.string.tut_more_habits,
+            R.string.w_focus to R.string.tut_more_focus,
             R.string.w_journal to R.string.tut_more_journal,
             R.string.w_quote to R.string.tut_more_quote,
             R.string.page_tasks to R.string.tut_more_tasks,
@@ -403,7 +405,7 @@ private fun StepDone() {
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState())) {
         Title(R.string.tut7_title)
         Body(R.string.tut7_body)
-        listOf(R.string.tut7_page_left, R.string.tut7_page_top, R.string.tut7_page_right, R.string.tut7_longpress).forEach { id ->
+        listOf(R.string.tut7_page_left, R.string.tut7_page_top, R.string.tut7_page_right, R.string.tut7_longpress, R.string.tut7_pages).forEach { id ->
             Text(stringResource(id), color = Ink, fontSize = 15.sp, lineHeight = 22.sp,
                 modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp).card().padding(16.dp))
         }

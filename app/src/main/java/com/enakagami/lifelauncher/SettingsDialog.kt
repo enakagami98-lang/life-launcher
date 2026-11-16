@@ -92,6 +92,7 @@ fun SettingsDialog(store: Store, apps: List<AppInfo>, onDismiss: () -> Unit, onT
                 }
 
                 ColorSection(store)
+                PagesSection(store)
                 ReminderSection(apps)
                 LockSection()
 
