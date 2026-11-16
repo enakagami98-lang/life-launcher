@@ -69,7 +69,7 @@ $UI tap "長押しで集中をやめる" >/dev/null; sleep 2
 expect_exact "短く押してもやめない" "集中タイム中"
 $UI hold "長押しで集中をやめる" 4000 >/dev/null; sleep 3; snap stopped
 expect_no_text "長押しでやめられる" "集中タイム中"
-expect_text "ホーム画面に戻る" "残りの日数"
+expect_exact "ホーム画面に戻る（集中タイムの部品が見える）" "集中を始める"
 clock; snap clock_after
 expect_app "やめた後は時計が使える" deskclock
 key KEYCODE_HOME
@@ -82,7 +82,7 @@ log "== 7. 習慣のページ（アプリ一覧の右隣）にチェックと続
 next_page; next_page; snap habits_page
 expect_exact "2回進むと習慣" "習慣"
 lang en-US; next_page; next_page
-$UI tap "Add" >/dev/null; sleep 1; $UI tapclass android.widget.EditText >/dev/null; sleep 1; softword run; sleep 1; $UI tap "Save" >/dev/null; sleep 2; snap habit_added
+$UI tap "Add" >/dev/null; sleep 1; $UI tapclass android.widget.EditText >/dev/null; sleep 5; softword run; sleep 1; $UI tap "Save" >/dev/null; sleep 2; snap habit_added
 expect_exact "習慣が追加される" "run"
 expect_text "0時に外れる説明" "0:00"
 $UI tap "Mark run as done" >/dev/null; sleep 2; snap habit_checked
