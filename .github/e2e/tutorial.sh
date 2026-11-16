@@ -70,7 +70,7 @@ next "次へ"
 log "== 7. 毎日の記録（日記など）"
 expect_text "毎日の記録のページ" "毎日を振り返る機能も使えます"
 expect_text "日記の説明" "振り返り日記"
-expect_text "日めくりの説明" "日めくり"
+$UI see "日めくり" >/dev/null; expect_text "日めくりの説明" "日めくり"
 snap daily
 next "次へ"
 

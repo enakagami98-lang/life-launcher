@@ -31,7 +31,8 @@ def center(n):
 
 def visible_center(text, exact=True):
     """画面外なら上にスクロールしてから中心座標を返す"""
-    for _ in range(10):
+    # 設定の画面が長くなった（2026-11-16 表示するページ）ので20回まで
+    for _ in range(20):
         n = find(text, exact)
         if n is None:
             adb("shell", "input", "swipe", "540", "1700", "540", "1000", "400"); time.sleep(1)
