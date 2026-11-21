@@ -1,12 +1,11 @@
 package com.enakagami.lifelauncher
 
+import android.content.Context
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,56 +13,46 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import java.time.LocalDate
 import java.time.LocalTime
 
 /**
- * ロック解除時の「今何してる？」。答えるまでホーム画面の代わりに出し続ける。
- * ① 今していること ② スマホを開いた理由 をボタンで選ぶ（無いときは文字で書く）。
- * ①を選んでから②のボタンを押すと、それだけで記録して閉じる（最短2タップ）。
- * 選択肢は「選択肢を編集」で登録・削除できる（Guard.doingOptions / purposeOptions）。
+ * ロック解除時の確認。答えるまでホーム画面の代わりに出し続ける。
+ * - 「理由を書く」（Guard.askMode = "write"）：① 今していること ② なぜ開くか を自分の言葉で書く。
+ *   「なんとなく」は受け付けない（無意識に触るのを減らすためのアプリなので）。答えは記録に残り、AI にも渡す
+ * - 「算数を解く」（"math"）：ちょっと頭を使う計算を1問解く（MathQuiz）
+ * どちらも、スマホの使用時間を減らすのではなく、無意識にスマホを触るのを減らして自由な時間を取り戻すためのもの。
  */
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun AskScreen(now: LocalTime) {
-    var doing by remember { mutableStateOf("") }
-    var doingOther by remember { mutableStateOf("") }
-    var purpose by remember { mutableStateOf("") }
-    var purposeOther by remember { mutableStateOf("") }
-    var editing by remember { mutableStateOf(false) }
-    val today = LocalDate.now()
-
     Column(
         Modifier
             .fillMaxSize()
@@ -72,150 +61,142 @@ fun AskScreen(now: LocalTime) {
             .verticalScroll(rememberScrollState())
             .padding(horizontal = 24.dp, vertical = 20.dp),
     ) {
+        val today = LocalDate.now()
         Text("%d:%02d".format(now.hour, now.minute), color = SubInk, fontSize = 16.sp, fontWeight = FontWeight.Bold)
-        Text(stringResource(R.string.ask_title), color = Ink, fontSize = 32.sp, fontWeight = FontWeight.Black)
+        Text(
+            stringResource(if (Guard.askMode == "math") R.string.math_title else R.string.ask_title),
+            color = Ink, fontSize = 32.sp, fontWeight = FontWeight.Black,
+        )
         Spacer(Modifier.height(4.dp))
         Text(
             stringResource(R.string.ask_today, durationText(Guard.screenMinutes(today)), Guard.unlockCount(today)),
             color = Blue, fontSize = 14.sp, fontWeight = FontWeight.Bold,
         )
-        Text(stringResource(R.string.ask_sub), color = SubInk, fontSize = 13.sp)
-
-        Spacer(Modifier.height(24.dp))
-        Text(stringResource(R.string.ask_q1), color = Ink, fontSize = 17.sp, fontWeight = FontWeight.Bold)
-        Spacer(Modifier.height(10.dp))
-        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            Guard.doingOptions.forEach { o ->
-                val label = optionLabel(o)
-                AnswerChip(label, doing == label && doingOther.isBlank()) { doing = label; doingOther = "" }
-            }
-        }
-        Spacer(Modifier.height(8.dp))
-        OtherField(stringResource(R.string.ask_other), doingOther) { doingOther = it; doing = it.trim() }
-
-        Spacer(Modifier.height(24.dp))
-        Text(stringResource(R.string.ask_q2), color = Ink, fontSize = 17.sp, fontWeight = FontWeight.Bold)
-        Spacer(Modifier.height(10.dp))
-        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            Guard.purposeOptions.forEach { o ->
-                val label = optionLabel(o)
-                AnswerChip(label, purpose == label && purposeOther.isBlank()) {
-                    purpose = label; purposeOther = ""
-                    // ①が決まっていれば、ここで記録して終わり
-                    if (doing.isNotBlank()) Guard.answer(doing, label)
-                }
-            }
-        }
-        Spacer(Modifier.height(8.dp))
-        OtherField(stringResource(R.string.ask_other), purposeOther) { purposeOther = it; purpose = it.trim() }
-
-        Spacer(Modifier.height(24.dp))
-        Button(
-            onClick = { Guard.answer(doing, purpose) },
-            enabled = doing.isNotBlank() && purpose.isNotBlank(),
-            modifier = Modifier.fillMaxWidth().height(54.dp),
-            shape = RoundedCornerShape(14.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Blue, contentColor = OnAccent),
-        ) { Text(stringResource(R.string.ask_submit), fontWeight = FontWeight.Bold, fontSize = 16.sp) }
-        Spacer(Modifier.height(8.dp))
-        MoreInfo(stringResource(R.string.ask_hint))
-        TextButton(onClick = { editing = true }) { Text(stringResource(R.string.opt_edit), fontWeight = FontWeight.Bold) }
+        if (Guard.askMode == "math") MathAsk() else WriteAsk()
         // 画面の一番下（ジェスチャーの場所）に重ならないよう余白を取る
         Spacer(Modifier.height(64.dp))
     }
-    if (editing) OptionsEditDialog { editing = false }
 }
 
-/** 「今何してる？」の選択肢を登録・削除する */
-@OptIn(ExperimentalLayoutApi::class)
-@Composable
-fun OptionsEditDialog(onDismiss: () -> Unit) {
-    var newDoing by remember { mutableStateOf("") }
-    var newPurpose by remember { mutableStateOf("") }
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        containerColor = Bg,
-        title = { Text(stringResource(R.string.opt_edit), fontWeight = FontWeight.Bold) },
-        text = {
-            Column(Modifier.verticalScroll(rememberScrollState())) {
-                Text(stringResource(R.string.opt_edit_hint), fontSize = 13.sp, color = SubInk, lineHeight = 19.sp)
-                Spacer(Modifier.height(12.dp))
-                OptionSection(stringResource(R.string.ask_q1), doing = true, newDoing, { newDoing = it })
-                Spacer(Modifier.height(16.dp))
-                OptionSection(stringResource(R.string.ask_q2), doing = false, newPurpose, { newPurpose = it })
-                Spacer(Modifier.height(8.dp))
-                TextButton(onClick = { Guard.resetOptions() }) { Text(stringResource(R.string.opt_reset), color = Danger) }
-            }
-        },
-        confirmButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.close), fontWeight = FontWeight.Bold) } },
-    )
+/** 「なんとなく」のような、理由になっていない答えか */
+private fun isVague(context: Context, text: String): Boolean {
+    val t = text.lowercase().replace(" ", "").replace("　", "")
+    if (t.isEmpty()) return false
+    // スマホの言語の言い方に加えて、日本語と英語の言い方はいつも見る
+    val words = (context.getString(R.string.ask_vague_words) + ",なんとなく,何となく,ナントナク,noreason,justbecause")
+        .split(",").map { it.lowercase().replace(" ", "").trim() }.filter { it.isNotEmpty() }
+    return words.any { t.contains(it) }
 }
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun OptionSection(title: String, doing: Boolean, input: String, onInput: (String) -> Unit) {
-    Text(title, fontSize = 15.sp, fontWeight = FontWeight.Bold, color = Ink)
+private fun WriteAsk() {
+    val context = LocalContext.current
+    var doing by remember { mutableStateOf("") }
+    var purpose by remember { mutableStateOf("") }
+    val vague = isVague(context, purpose)
+    Text(stringResource(R.string.ask_sub), color = SubInk, fontSize = 13.sp)
+
+    Spacer(Modifier.height(24.dp))
+    Text(stringResource(R.string.ask_q1), color = Ink, fontSize = 17.sp, fontWeight = FontWeight.Bold)
     Spacer(Modifier.height(8.dp))
-    FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
-        Guard.optionList(doing).toList().forEach { o ->
-            val label = optionLabel(o)
-            val remove = stringResource(R.string.opt_remove, label)
-            Row(
-                Modifier.clip(RoundedCornerShape(18.dp)).border(1.dp, SubInk, RoundedCornerShape(18.dp))
-                    .clickable { Guard.removeOption(doing, o) }
-                    .semantics { contentDescription = remove }
-                    .padding(start = 12.dp, end = 8.dp, top = 6.dp, bottom = 6.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Text(label, fontSize = 14.sp, color = Ink)
-                Spacer(Modifier.width(4.dp))
-                Icon(Icons.Filled.Close, null, tint = SubInk, modifier = Modifier.size(14.dp))
-            }
-        }
-    }
+    AnswerField(stringResource(R.string.ask_q1_hint), doing) { doing = it }
+
+    Spacer(Modifier.height(20.dp))
+    Text(stringResource(R.string.ask_q2), color = Ink, fontSize = 17.sp, fontWeight = FontWeight.Bold)
     Spacer(Modifier.height(8.dp))
-    Row(verticalAlignment = Alignment.CenterVertically) {
-        OutlinedTextField(
-            textStyle = userTextStyle(),
-            value = input,
-            onValueChange = { onInput(it.replace("\n", "").take(20)) },
-            placeholder = { Text(stringResource(R.string.opt_new)) },
-            singleLine = true,
-            modifier = Modifier.weight(1f),
-        )
-        TextButton(
-            onClick = { Guard.addOption(doing, input); onInput("") },
-            enabled = input.isNotBlank(),
-        ) { Text(stringResource(R.string.add), fontWeight = FontWeight.Bold) }
+    AnswerField(stringResource(R.string.ask_q2_hint), purpose) { purpose = it }
+    if (vague) {
+        Spacer(Modifier.height(6.dp))
+        Text(stringResource(R.string.ask_vague), color = Danger, fontSize = 13.sp, lineHeight = 19.sp)
     }
+
+    Spacer(Modifier.height(24.dp))
+    Button(
+        onClick = { Guard.answer(doing.trim(), purpose.trim()) },
+        enabled = doing.isNotBlank() && purpose.isNotBlank() && !vague,
+        modifier = Modifier.fillMaxWidth().height(54.dp),
+        shape = RoundedCornerShape(14.dp),
+        colors = ButtonDefaults.buttonColors(containerColor = Blue, contentColor = OnAccent),
+    ) { Text(stringResource(R.string.ask_submit), fontWeight = FontWeight.Bold, fontSize = 16.sp) }
+    Spacer(Modifier.height(8.dp))
+    MoreInfo(stringResource(R.string.ask_hint))
 }
 
 @Composable
-private fun AnswerChip(text: String, selected: Boolean, onClick: () -> Unit) {
-    Text(
-        text,
-        color = if (selected) OnAccent else Ink,
-        fontSize = 15.sp,
-        fontWeight = if (selected) FontWeight.Bold else FontWeight.Normal,
-        modifier = Modifier
-            .clip(RoundedCornerShape(20.dp))
-            .background(if (selected) Blue else Color.Transparent)
-            .border(1.dp, if (selected) Blue else SubInk, RoundedCornerShape(20.dp))
-            .clickable(onClick = onClick)
-            .padding(horizontal = 16.dp, vertical = 10.dp),
-    )
-}
-
-@Composable
-private fun OtherField(label: String, value: String, onChange: (String) -> Unit) {
+private fun AnswerField(label: String, value: String, onChange: (String) -> Unit) {
     OutlinedTextField(
         textStyle = userTextStyle(),
         value = value,
-        onValueChange = { onChange(it.replace("\n", "")) },
-        label = { Text(label) },
-        singleLine = true,
+        onValueChange = { onChange(it.replace("\n", "").take(100)) },
+        placeholder = { Text(label, color = SubInk) },
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(14.dp),
         colors = OutlinedTextFieldDefaults.colors(focusedContainerColor = CardBg, unfocusedContainerColor = CardBg),
     )
+}
+
+/** 算数を1問解く。数字は画面のボタンで入れる（キーボードを出さない）。3回まちがえたら別の問題にする */
+@Composable
+private fun MathAsk() {
+    var problem by remember { mutableStateOf(MathQuiz.make()) }
+    var input by remember { mutableStateOf("") }
+    var misses by remember { mutableIntStateOf(0) }
+    var wrong by remember { mutableStateOf(false) }
+    Text(stringResource(R.string.math_sub), color = SubInk, fontSize = 13.sp)
+
+    Spacer(Modifier.height(28.dp))
+    Text(
+        problem.text + " = ?",
+        color = Ink, fontSize = 34.sp, fontWeight = FontWeight.Black, textAlign = TextAlign.Center,
+        modifier = Modifier.fillMaxWidth(),
+    )
+    Spacer(Modifier.height(16.dp))
+    Box(
+        Modifier.fillMaxWidth().height(64.dp).clip(RoundedCornerShape(14.dp)).background(CardBg),
+        contentAlignment = Alignment.Center,
+    ) {
+        Text(input.ifEmpty { " " }, color = Ink, fontSize = 30.sp, fontWeight = FontWeight.Bold)
+    }
+    Spacer(Modifier.height(6.dp))
+    Text(
+        if (wrong) stringResource(R.string.math_wrong) else " ",
+        color = Danger, fontSize = 14.sp, fontWeight = FontWeight.Bold,
+        textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(),
+    )
+    Spacer(Modifier.height(10.dp))
+    val del = stringResource(R.string.math_delete)
+    val okText = stringResource(R.string.math_ok)
+    val rows = listOf(listOf("1", "2", "3"), listOf("4", "5", "6"), listOf("7", "8", "9"), listOf("⌫", "0", "OK"))
+    rows.forEach { row ->
+        Row(Modifier.fillMaxWidth().padding(vertical = 5.dp), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+            row.forEach { k ->
+                val ok = k == "OK"
+                Box(
+                    Modifier.weight(1f).height(58.dp).clip(RoundedCornerShape(14.dp))
+                        .background(if (ok) Blue else CardBg)
+                        .semantics { contentDescription = when (k) { "⌫" -> del; "OK" -> okText; else -> k } }
+                        .clickable {
+                            when (k) {
+                                "⌫" -> { input = input.dropLast(1); wrong = false }
+                                "OK" -> if (input.isNotEmpty()) {
+                                    if (input.toIntOrNull() == problem.answer) Guard.solvedMath()
+                                    else {
+                                        wrong = true; input = ""; misses++
+                                        if (misses >= 3) { problem = MathQuiz.make(); misses = 0 }
+                                    }
+                                }
+                                else -> if (input.length < 4) { input += k; wrong = false }
+                            }
+                        },
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Text(
+                        if (ok) okText else k,
+                        color = if (ok) OnAccent else Ink, fontSize = if (ok) 18.sp else 24.sp, fontWeight = FontWeight.Bold,
+                    )
+                }
+            }
+        }
+    }
 }

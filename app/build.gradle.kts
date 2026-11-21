@@ -49,7 +49,7 @@ android {
     }
 
     // 配る場所ごとに2種類作る
-    //  play  : Google Play 用。定期購入（3日間無料→年額）が無いと機能が止まる。アプリIDは新しい名前
+    //  play  : Google Play 用。アプリIDは新しい名前。定期購入（3日間無料→年額）の仕組み入り（今は PAYWALL=false で止めている）
     //  playtest: クローズドテスト用。play と同じアプリIDで課金なし
     //  github: いま GitHub のリリースで配っているもの（開発・テスト用）。課金なし。アプリIDは今のまま
     flavorDimensions += "store"
@@ -61,7 +61,9 @@ android {
         create("play") {
             dimension = "store"
             applicationId = "com.enakagami.loosen"
-            buildConfigField("boolean", "PAYWALL", "true")
+            // 2026-11-21：当面は無料で公開する（入社先が個人の収入を認めていないため）。課金の仕組みは残してあり、
+            // 有料にするときは "true" に戻す。そのときの「初年度半額」は Early.kt の使い始めた日で判定する
+            buildConfigField("boolean", "PAYWALL", "false")
         }
         // playtest: Google Play のクローズドテストに配る版。アプリIDは play と同じで、課金なし（14日間ずっと全部使える）
         create("playtest") {

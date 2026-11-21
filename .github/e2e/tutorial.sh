@@ -69,6 +69,7 @@ next "次へ"
 
 log "== 7. 毎日の記録（日記など）"
 expect_text "毎日の記録のページ" "毎日を振り返る機能も使えます"
+expect_text "開く前のひと呼吸の説明" "開く前のひと呼吸"
 expect_text "日記の説明" "振り返り日記"
 $UI see "日めくり" >/dev/null; expect_text "日めくりの説明" "日めくり"
 snap daily
@@ -77,6 +78,7 @@ next "次へ"
 log "== 8. 使い方"
 expect_text "最後のページ" "準備ができました"
 expect_text "ページの案内に日記がある" "習慣・目標・日記・タスク"
+$UI see "これからについて" >/dev/null; expect_text "有料化の予定の案内" "これからについて"
 snap done
 next "使いはじめる"
 

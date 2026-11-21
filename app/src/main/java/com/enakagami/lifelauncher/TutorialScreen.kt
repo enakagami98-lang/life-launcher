@@ -375,7 +375,7 @@ private fun ColumnScope.StepWidgets(on: MutableList<String>) {
     }
 }
 
-// ---- 7 毎日の記録（習慣・集中タイム・日記・今日の言葉・タスクの期限・日めくり） ----
+// ---- 7 毎日の記録（開く前のひと呼吸・習慣・集中タイム・日記・今日の言葉・タスクの期限・日めくり） ----
 @Composable
 private fun StepDaily() {
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState())) {
@@ -383,6 +383,7 @@ private fun StepDaily() {
         Title(R.string.tut_more_title)
         Body(R.string.tut_more_body)
         listOf(
+            R.string.tut_more_ask_title to R.string.tut_more_ask,
             R.string.page_habits to R.string.tut_more_habits,
             R.string.w_focus to R.string.tut_more_focus,
             R.string.w_journal to R.string.tut_more_journal,
@@ -408,6 +409,12 @@ private fun StepDone() {
         listOf(R.string.tut7_page_left, R.string.tut7_page_top, R.string.tut7_page_right, R.string.tut7_longpress, R.string.tut7_pages).forEach { id ->
             Text(stringResource(id), color = Ink, fontSize = 15.sp, lineHeight = 22.sp,
                 modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp).card().padding(16.dp))
+        }
+        // これからについて（今は無料。いずれ有料にする予定）
+        Column(Modifier.fillMaxWidth().padding(vertical = 4.dp).card().padding(16.dp)) {
+            Text(stringResource(R.string.pay_future_title), color = Blue, fontSize = 15.sp, fontWeight = FontWeight.Bold)
+            Spacer(Modifier.height(4.dp))
+            Text(stringResource(R.string.pay_future_body), color = Ink, fontSize = 15.sp, lineHeight = 22.sp)
         }
         Spacer(Modifier.height(12.dp))
         Text(stringResource(R.string.tut7_tip), color = SubInk, fontSize = 13.sp, lineHeight = 19.sp)

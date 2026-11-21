@@ -106,6 +106,12 @@ fun SettingsDialog(store: Store, apps: List<AppInfo>, onDismiss: () -> Unit, onT
                         }) { Text(stringResource(R.string.pay_manage)) }
                     }
                 }
+                // これからについて（今は無料。いずれ有料にする予定と、今から使っている人は初年度半額）
+                Column(Modifier.padding(horizontal = 20.dp, vertical = 8.dp).fillMaxWidth().card().padding(20.dp)) {
+                    Text(stringResource(R.string.pay_future_title), fontSize = 15.sp, fontWeight = FontWeight.Bold, color = Blue)
+                    Spacer(Modifier.height(6.dp))
+                    Text(stringResource(R.string.pay_future_body), fontSize = 14.sp, color = Ink, lineHeight = 21.sp)
+                }
                 // 使い方をもう一度
                 Column(Modifier.padding(horizontal = 20.dp, vertical = 8.dp).fillMaxWidth()) {
                     Button(

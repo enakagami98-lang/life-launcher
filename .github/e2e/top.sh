@@ -1,5 +1,5 @@
 #!/bin/bash
-# トップ画面（日付・残り日数・入れ替えできる部品）、支払い通知の読み取り、「今何してる？」の選択肢の編集、言語の切り替えの確認
+# トップ画面（日付・残り日数・入れ替えできる部品）、支払い通知の読み取り、ロック解除時の確認の選び方、言語の切り替えの確認
 PKG=com.enakagami.lifelauncher
 OUT=e2e-out; mkdir -p $OUT; R=$OUT/result.txt; : > $R
 UI="python3 .github/e2e/ui.py"
@@ -101,20 +101,12 @@ notify pay7 "支払い完了" "PayPay ローソンで300円 PayPayポイント3�
 key KEYCODE_HOME; snap after_paypay
 expect_text "ポイントの数ではなく支払額を読む" "¥2,220"
 
-log "== 5. 「今何してる？」の選択肢と編集"
-prev_page; $UI tap "今何してるを聞く" >/dev/null; sleep 1
-key KEYCODE_HOME; unlock; snap ask_options
-for t in 買い物 音楽を聴く ジム 読書 支払い; do expect_text "$t" "$t"; done
-$UI tap "選択肢を編集" >/dev/null; sleep 2; snap options_edit
-$UI tap "ジムを消す" >/dev/null; sleep 1
-key KEYCODE_BACK; snap removed_gym
-expect_no_text "消した選択肢は出ない" "ジム"
-$UI tap "選択肢を編集" >/dev/null; sleep 2
-$UI tap "最初の選択肢に戻す" >/dev/null; sleep 1
-key KEYCODE_BACK
-expect_text "元に戻すと復活" "ジム"
-$UI tap "買い物" >/dev/null; sleep 1; $UI tap "支払い" >/dev/null; sleep 2
-expect_no_text "答えると閉じる" "今何してる？"
+log "== 5. ロック解除時の確認は「理由を書く」「算数を解く」から選ぶ（選択肢の編集は無くなった）"
+prev_page; snap ask_modes
+expect_text "理由を書く" "理由を書く"
+expect_text "算数を解く" "算数を解く"
+expect_no_text "選択肢の編集は無い" "選択肢を編集"
+key KEYCODE_HOME
 
 log "== 6. スマホの言語が英語なら英語で出る"
 lang en-US; snap english

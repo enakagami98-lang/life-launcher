@@ -71,6 +71,12 @@ object Guard {
     var askPending by mutableStateOf(false)
         private set
     private var lastAnswerAt = 0L
+    /** ロック解除のときに出すもの："write"＝今していることと開く理由を書く、"math"＝算数を1問解く */
+    var askMode by mutableStateOf("write")
+        private set
+    /** 集中タイム中は電話以外の通知を止める（おやすみモード。FocusQuiet.kt） */
+    var focusQuiet by mutableStateOf(true)
+        private set
     val unlockLogs = mutableStateListOf<UnlockLog>()
 
     fun init(context: Context) {
@@ -95,13 +101,14 @@ object Guard {
         askEnabled = prefs.getBoolean("askEnabled", false)
         askPending = askEnabled && prefs.getBoolean("askPending", false)
         lastAnswerAt = prefs.getLong("lastAnswerAt", 0)
+        askMode = prefs.getString("askMode", "write")!!
+        focusQuiet = prefs.getBoolean("focusQuiet", true)
         JSONArray(prefs.getString("unlockLogs", "[]")).let { a ->
             for (i in 0 until a.length()) {
                 val o = a.getJSONObject(i)
                 unlockLogs.add(UnlockLog(o.getLong("t"), o.optString("doing"), o.optString("purpose")))
             }
         }
-        loadOptions()
         goalOn = prefs.getBoolean("goalOn", true)
         JSONObject(prefs.getString("dailyGoals", "{}")!!).let { o -> o.keys().forEach { dailyGoals[it] = o.getString(it) } }
         JSONArray(prefs.getString("goalDone", "[]")).let { a -> for (i in 0 until a.length()) goalDone.add(a.getString(i)) }
@@ -395,6 +402,17 @@ object Guard {
         return true
     }
 
+    fun updateAskMode(v: String) { askMode = v; prefs.edit().putString("askMode", v).apply() }
+    fun updateFocusQuiet(v: Boolean) { focusQuiet = v; prefs.edit().putBoolean("focusQuiet", v).apply() }
+
+    /** 算数を解いたとき。答えの記録は残さず、質問を閉じる（5分は聞かない） */
+    fun solvedMath() {
+        val now = System.currentTimeMillis()
+        lastAnswerAt = now
+        prefs.edit().putLong("lastAnswerAt", now).apply()
+        setPending(false)
+    }
+
     fun answer(doing: String, purpose: String) {
         val now = System.currentTimeMillis()
         lastAnswerAt = now
@@ -537,6 +555,7 @@ object Guard {
         val keep = now - 400 * 86_400_000L
         focusLog.removeAll { it.second < keep }
         saveFocus()
+        if (focusQuiet) FocusQuiet.on(appContext)
     }
 
     /** 長押しで途中でやめる。集中した時間はやめた時刻までで記録する */
@@ -548,6 +567,7 @@ object Guard {
         focusUntil = now
         focusSeen = now
         saveFocus()
+        FocusQuiet.off(appContext)
     }
 
     fun dismissFocusCelebration() { focusSeen = focusUntil; saveFocus() }
@@ -581,44 +601,6 @@ object Guard {
     fun focusSessionsSince(from: Long): List<Pair<Long, Long>> {
         val now = System.currentTimeMillis()
         return focusLog.filter { it.first >= from }.map { (a, b) -> a to minOf(b, now) }.filter { it.second > it.first }
-    }
-
-    // ---- 「今何してる？」の選択肢（登録・削除できる） ----
-    // 最初から入っている選択肢は "@キー" で保存し、表示するときにスマホの言語の文字にする
-    val DEFAULT_DOING = listOf("@study", "@work", "@class", "@commute", "@meal", "@break", "@relax", "@shopping", "@music", "@gym", "@reading", "@bedtime", "@wakeup")
-    val DEFAULT_PURPOSE = listOf("@contact", "@sns", "@video", "@search", "@pay", "@schedule", "@time", "@notice", "@game", "@idle")
-    val doingOptions = mutableStateListOf<String>()
-    val purposeOptions = mutableStateListOf<String>()
-
-    private fun loadOptions() {
-        fun load(key: String, def: List<String>) = prefs.getString(key, null)
-            ?.let { s -> JSONArray(s).let { a -> (0 until a.length()).map { a.getString(it) } } } ?: def
-        doingOptions.clear(); doingOptions.addAll(load("doingOpts", DEFAULT_DOING))
-        purposeOptions.clear(); purposeOptions.addAll(load("purposeOpts", DEFAULT_PURPOSE))
-    }
-
-    private fun saveOptions() {
-        prefs.edit()
-            .putString("doingOpts", JSONArray(doingOptions.toList()).toString())
-            .putString("purposeOpts", JSONArray(purposeOptions.toList()).toString())
-            .apply()
-    }
-
-    fun optionList(doing: Boolean) = if (doing) doingOptions else purposeOptions
-
-    fun addOption(doing: Boolean, text: String) {
-        val t = text.trim()
-        val list = optionList(doing)
-        if (t.isEmpty() || t in list) return
-        list.add(t); saveOptions()
-    }
-
-    fun removeOption(doing: Boolean, entry: String) { optionList(doing).remove(entry); saveOptions() }
-
-    fun resetOptions() {
-        doingOptions.clear(); doingOptions.addAll(DEFAULT_DOING)
-        purposeOptions.clear(); purposeOptions.addAll(DEFAULT_PURPOSE)
-        saveOptions()
     }
 
     // ---- 許可の確認 ----

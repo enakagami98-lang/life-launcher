@@ -117,6 +117,8 @@ class GuardService : Service() {
         val now = System.currentTimeMillis()
         val dt = (now - lastTick).coerceIn(0, 5000)
         lastTick = now
+        // 集中が時間どおりに終わったら、画面が消えていても通知を元に戻す
+        FocusQuiet.sync(this)
         // 歩数センサーは画面が消えていても聞き続ける（許可が出たらここで聞き始める）
         Steps.ensureListening(this)
         if (!getSystemService(PowerManager::class.java).isInteractive) { wasActive = false; return }

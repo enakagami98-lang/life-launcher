@@ -1,5 +1,5 @@
 #!/bin/bash
-# タスク・スマホ使用時間・ロック解除時の「今何してる？」の確認（簡易モード）
+# タスク・スマホ使用時間・ロック解除時の確認（理由を書く／算数を解く）の確認（簡易モード）
 PKG=com.enakagami.lifelauncher
 OUT=e2e-out; mkdir -p $OUT; R=$OUT/result.txt; : > $R
 UI="python3 .github/e2e/ui.py"
@@ -68,38 +68,67 @@ $UI tap "今何してるを聞く" >/dev/null; sleep 1; snap ask_on
 key KEYCODE_HOME
 unlock; snap ask_shown
 expect_app "解除後はLifeLauncher" $PKG
-expect_text "質問が出る" "今何してる？"
+expect_text "質問が出る" "なぜ開きますか？"
 expect_text "今日の使用時間も出る" "回目のロック解除"
 
 log "== 4. 答えずに他のアプリを開いても戻される"
 adb shell monkey -p com.android.chrome -c android.intent.category.LAUNCHER 1 >/dev/null; sleep 8; snap bounced
 expect_app "LifeLauncherに戻される" $PKG
-expect_text "質問のまま" "今何してる？"
+expect_text "質問のまま" "なぜ開きますか？"
 key KEYCODE_HOME
-expect_text "ホームボタンでも質問のまま" "今何してる？"
+expect_text "ホームボタンでも質問のまま" "なぜ開きますか？"
 
-log "== 5. 2タップで答える"
-$UI tap "勉強" >/dev/null; sleep 1; $UI tap "SNS" >/dev/null; sleep 2; snap answered
-expect_no_text "答えると質問が消える" "今何してる？"
+log "== 5. 自分の言葉で答える（選択肢は無い・「なんとなく」は不可）"
+expect_no_text "選択肢は無い" "なんとなく"
+expect_no_text "選択肢の編集も無い" "選択肢を編集"
+lang en-US; snap ask_en
+expect_text "英語の質問" "Why are you opening your phone?"
+$UI tapbelow "What are you doing now?" android.widget.EditText >/dev/null; sleep 4; softword study; sleep 1
+$UI tapbelow "Why are you opening your phone?" android.widget.EditText >/dev/null; sleep 3; softword idk; sleep 1; snap vague
+expect_text "なんとなくは記録できない" "Instead of \"no reason\", try putting your reason into words."
+for i in 1 2 3; do adb shell input keyevent KEYCODE_DEL; sleep 1; done
+softword line; sleep 1; key KEYCODE_BACK
+$UI tap "Save and use phone" >/dev/null; sleep 2; snap answered
+lang ja-JP
+expect_no_text "答えると質問が消える" "なぜ開きますか？"
 expect_text "ホーム画面に戻る" "まずは誕生日と寿命を設定"
 adb shell monkey -p com.android.chrome -c android.intent.category.LAUNCHER 1 >/dev/null; sleep 8
 expect_app "答えた後は他のアプリを使える" com.android.chrome
 key KEYCODE_HOME
 
 log "== 6. 記録が身体の調子に出る"
-prev_page; $UI tapp "勉強 → SNS" >/dev/null; sleep 1; snap log_shown
-expect_text "時刻つきの記録" "勉強 → SNS"
-expect_text "多かった理由" "多かった理由：SNS 1回"
+prev_page; $UI tapp "study → line" >/dev/null; sleep 1; snap log_shown
+expect_text "時刻つきの記録" "study → line"
+expect_text "多かった理由" "多かった理由：line 1回"
 
 log "== 7. 5分以内はもう一度聞かない"
 key KEYCODE_HOME; unlock; snap no_ask
-expect_no_text "5分以内は聞かない" "今何してる？"
+expect_no_text "5分以内は聞かない" "なぜ開きますか？"
 
-log "== 8. オフにすると聞かない"
+log "== 8. 算数を解く"
+prev_page; $UI tap "算数を解く" >/dev/null; sleep 1; snap math_mode
+key KEYCODE_HOME
+log "   (5分待ってから解除)"; sleep 300
+unlock; snap math_shown
+expect_text "算数の画面" "1問解いたら使えます"
+Q=$($UI texts | grep -m1 ' = ?' | sed 's/ = ?//')
+ANS=$(python3 -c "import sys; print(eval(sys.argv[1].replace('×','*').replace('÷','//').replace('−','-')))" "$Q")
+log "   問題: $Q = $ANS"
+if echo "$Q" | grep -q '[×÷]' && echo "$Q" | grep -q '[+−×÷].*[+−×÷]'; then ok "2つ以上の計算を組み合わせた問題"; else ng "問題の形: $Q"; fi
+enter() { n=$1; for ((i=0;i<${#n};i++)); do $UI tap "${n:$i:1}" >/dev/null; sleep 1; done; $UI tap "答える" >/dev/null; sleep 2; }
+enter $((ANS + 1)); snap math_wrong
+expect_text "まちがえると使えない" "ちがいます。もう一度"
+adb shell monkey -p com.android.chrome -c android.intent.category.LAUNCHER 1 >/dev/null; sleep 8
+expect_text "解くまでは他のアプリに行けない" "1問解いたら使えます"
+enter $ANS; snap math_solved
+expect_no_text "解くと閉じる" "1問解いたら使えます"
+expect_text "ホーム画面に戻る" "まずは誕生日と寿命を設定"
+
+log "== 9. オフにすると聞かない"
 prev_page; $UI tap "今何してるを聞く" >/dev/null; sleep 1
 key KEYCODE_HOME
 log "   (5分待ってから解除)"; sleep 300
 unlock; snap off_no_ask
-expect_no_text "オフなら聞かない" "今何してる？"
+expect_no_text "オフなら聞かない" "なぜ開きますか？"
 
 log "== 結果: PASS $(grep -c '^PASS' $R) / FAIL $(grep -c '^FAIL' $R)"

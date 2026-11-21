@@ -69,6 +69,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         Guard.init(this)
+        Early.firstSeen(this)
         Spend.init(this)
         Billing.init(this)
         val store = Store(this)

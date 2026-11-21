@@ -8,6 +8,9 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
 
+    <!-- 集中タイム中だけ、電話以外の通知を止める（Loosen 専用のおやすみモードのルール。FocusQuiet.kt） -->
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+
     <!-- ホーム画面の部品：歩数（天気は 2026-11-12 に削除。位置情報・ネットの許可も不要に） -->
     <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
 

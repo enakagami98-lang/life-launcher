@@ -305,6 +305,25 @@ private fun UnlockLogCard(date: LocalDate) {
             )
         }
         MoreInfo(stringResource(R.string.ul_note))
+        // 開く前にすること：理由を書く／算数を解く
+        Spacer(Modifier.height(8.dp))
+        Text(stringResource(R.string.ul_mode), fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Ink)
+        Spacer(Modifier.height(6.dp))
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            listOf("write" to R.string.ul_mode_write, "math" to R.string.ul_mode_math).forEach { (mode, label) ->
+                val sel = Guard.askMode == mode
+                Text(
+                    stringResource(label),
+                    color = if (sel) OnAccent else Ink, fontSize = 14.sp,
+                    fontWeight = if (sel) FontWeight.Bold else FontWeight.Normal,
+                    modifier = Modifier.clip(RoundedCornerShape(18.dp))
+                        .background(if (sel) Blue else Color.Transparent)
+                        .border(1.dp, if (sel) Blue else SubInk, RoundedCornerShape(18.dp))
+                        .clickable { Guard.updateAskMode(mode) }
+                        .padding(horizontal = 14.dp, vertical = 8.dp),
+                )
+            }
+        }
         if (Guard.askEnabled && !overlayOk) {
             Spacer(Modifier.height(6.dp))
             Text(

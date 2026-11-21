@@ -1,5 +1,7 @@
 package com.enakagami.lifelauncher
 
+import androidx.compose.material3.SwitchDefaults
+import androidx.compose.material3.Switch
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -278,6 +280,30 @@ fun FocusDialog(apps: List<AppInfo>, onDismiss: () -> Unit) {
                     }
                 }
                 TextButton(onClick = { picking = true }) { Text("＋ " + stringResource(R.string.focus_pick), color = Blue, fontWeight = FontWeight.Bold) }
+                if (FocusQuiet.supported) {
+                    // 集中中は電話以外の通知を止める（おやすみモード）
+                    val context = LocalContext.current
+                    val resume = LocalResumeSignal.current
+                    val granted = remember(resume) { FocusQuiet.granted(context) }
+                    Spacer(Modifier.height(8.dp))
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text(stringResource(R.string.focus_quiet), color = Ink, fontSize = 15.sp, fontWeight = FontWeight.Bold, modifier = Modifier.weight(1f))
+                        val quietDesc = stringResource(R.string.focus_quiet)
+                        Switch(
+                            checked = Guard.focusQuiet,
+                            onCheckedChange = { Guard.updateFocusQuiet(it) },
+                            modifier = Modifier.semantics { contentDescription = quietDesc },
+                            colors = SwitchDefaults.colors(checkedTrackColor = Blue, checkedThumbColor = OnAccent),
+                        )
+                    }
+                    Text(stringResource(R.string.focus_quiet_desc), color = SubInk, fontSize = 12.sp, lineHeight = 18.sp)
+                    if (Guard.focusQuiet && !granted) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Text(stringResource(R.string.focus_quiet_need), color = Danger, fontSize = 12.sp, lineHeight = 18.sp, modifier = Modifier.weight(1f))
+                            TextButton(onClick = { FocusQuiet.openPermission(context) }) { Text(stringResource(R.string.allow), fontWeight = FontWeight.Bold) }
+                        }
+                    }
+                }
                 Spacer(Modifier.height(8.dp))
                 Text(stringResource(R.string.focus_history), color = Ink, fontSize = 15.sp, fontWeight = FontWeight.Bold)
                 Spacer(Modifier.height(4.dp))

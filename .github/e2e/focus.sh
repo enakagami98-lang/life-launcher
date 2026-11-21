@@ -38,7 +38,11 @@ expect_exact "集中タイムの部品" "集中タイム"
 expect_text "まだ集中していない" "今日はまだ集中していません"
 
 log "== 2. 集中タイムの画面（長さと使えるアプリを選ぶ）"
+adb shell cmd notification allow_dnd $PKG >/dev/null 2>&1  # 「おやすみモードへのアクセス」を許可（通知を止めるため）
+zen() { adb shell settings get global zen_mode | tr -d ''; }
 $UI tap "集中を始める" >/dev/null; sleep 2; snap focus_dialog
+expect_text "通知を止める切り替え" "集中中は電話以外の通知を止める"
+[ "$(zen)" = "0" ] && ok "始める前はおやすみモードではない" || ng "始める前からおやすみモード（zen_mode=$(zen)）"
 expect_text "長さを選ぶ" "何分集中する？"
 expect_text "最初は電話だけ" "電話のほかに使えるアプリはありません"
 $UI tap "＋ 使えるアプリを選ぶ" >/dev/null; sleep 2; snap picker
@@ -51,6 +55,7 @@ expect_exact "集中の画面" "集中タイム中"
 expect_text "終わる時刻" "に終わります"
 expect_exact "電話のボタン" "電話をかける"
 expect_exact "使えるアプリのボタン" "Chrome"
+z=$(zen); [ "$z" = "1" ] && ok "集中中は電話以外の通知を止める（zen_mode=1）" || ng "集中中なのに通知が止まっていない（zen_mode=$z）"
 
 log "== 3. 使えないアプリは閉じられる"
 clock; snap clock_blocked
@@ -69,6 +74,7 @@ $UI tap "長押しで集中をやめる" >/dev/null; sleep 2
 expect_exact "短く押してもやめない" "集中タイム中"
 $UI hold "長押しで集中をやめる" 4000 >/dev/null; sleep 3; snap stopped
 expect_no_text "長押しでやめられる" "集中タイム中"
+z=$(zen); [ "$z" = "0" ] && ok "やめると通知が元に戻る（zen_mode=0）" || ng "やめても通知が止まったまま（zen_mode=$z）"
 expect_exact "ホーム画面に戻る（集中タイムの部品が見える）" "集中を始める"
 clock; snap clock_after
 expect_app "やめた後は時計が使える" deskclock
