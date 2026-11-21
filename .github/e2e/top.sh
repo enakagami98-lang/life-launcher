@@ -102,7 +102,7 @@ key KEYCODE_HOME; snap after_paypay
 expect_text "ポイントの数ではなく支払額を読む" "¥2,220"
 
 log "== 5. ロック解除時の確認は「理由を書く」「算数を解く」から選ぶ（選択肢の編集は無くなった）"
-prev_page; snap ask_modes
+prev_page; $UI see "算数を解く" >/dev/null; snap ask_modes
 expect_text "理由を書く" "理由を書く"
 expect_text "算数を解く" "算数を解く"
 expect_no_text "選択肢の編集は無い" "選択肢を編集"

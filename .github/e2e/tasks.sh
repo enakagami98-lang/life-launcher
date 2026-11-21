@@ -111,7 +111,8 @@ key KEYCODE_HOME
 log "   (5分待ってから解除)"; sleep 300
 unlock; snap math_shown
 expect_text "算数の画面" "1問解いたら使えます"
-Q=$($UI texts | grep -m1 ' = ?' | sed 's/ = ?//')
+Q=$($UI texts | sed 's/ | /
+/g' | grep -m1 ' = ?$' | sed 's/ = ?$//')
 ANS=$(python3 -c "import sys; print(eval(sys.argv[1].replace('×','*').replace('÷','//').replace('−','-')))" "$Q")
 log "   問題: $Q = $ANS"
 if echo "$Q" | grep -q '[×÷]' && echo "$Q" | grep -q '[+−×÷].*[+−×÷]'; then ok "2つ以上の計算を組み合わせた問題"; else ng "問題の形: $Q"; fi

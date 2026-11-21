@@ -221,3 +221,13 @@
 - 「他のアプリの上に重ねて表示されています」の通知：原因は常に置いていた1pxの目印。**ホームを呼び出す直前に置き、5秒後に片づける**（GuardService.openLauncher / dropAnchor、置いてから300ms待って呼ぶ）。e2e で時計アプリが閉じられること・何もしない間は目印が無いことを確認。ただし制限アプリ使用中の残り時間の線（フローティングバー）を出している間は、Android の仕様で通知が出る
 - 使い方：毎日の記録に「習慣」「集中タイム」のカード、ページ案内に「表示するページで隠せる」（tut7_pages）
 - e2e：`-f only=focus`（新規）33/33、journal 39/39。ui.py に hold（長押しの時間指定）、スクロールは20回まで（設定が長くなった）。設定の SwitchRow は文字を押しても切り替わる
+
+## 2026-11-21 開く前の確認（入力式・算数）・集中中の通知停止・課金オフ（v1.0.80）
+- アプリの目的（ユーザーの言葉）：**スマホの使用時間を減らすことではなく、無意識にスマホを触るのを減らして自由な時間を増やし、幸福を感じやすい生活を取り戻す**。機能を足すときはこれを基準にする
+- ロック解除時の確認：選択肢（Guard.doingOptions など）と「選択肢を編集」は削除。「今何してますか？」「なぜ開きますか？」を自分の言葉で書く（AskScreen.WriteAsk、100文字まで、userTextStyle）。**「なんとなく」は記録できない**（ask_vague_words＋日本語・英語の言い方を含むと赤い注意が出て押せない）。答えは今まで通り UnlockLog に残り AI に渡る（直近14日）。古い記録の "@idle" などは L10n の opt_ の文字で表示されるので opt_ の文字は消さない
+- 算数モード：Guard.askMode（"write"/"math"、prefs "askMode"）。身体の調子の画面のスイッチの下で選ぶ。MathQuiz.make は 8つの形（a×b+c、(a+b)×c、a×b−c÷d など）で答えは 1〜999、割り算は割り切れる。数字は画面のボタンで入れる。3回まちがえると別の問題。解いても記録は残さない（Guard.solvedMath、5分は聞かない）。単体テスト MathQuizTest（5000問）
+- 集中中の通知停止：FocusQuiet.kt。Loosen 専用の AutomaticZenRule（電話：誰でも＋2回目の着信、アラームは通す、音・画面の効果は全部止める）を startFocus でオン、stopFocus と GuardService の FocusQuiet.sync（画面オフでも毎回）でオフ。ユーザー自身のおやすみモードの設定は書き換えない。要「おやすみモードへのアクセス」（ACCESS_NOTIFICATION_POLICY）、Android 10 未満は切り替え自体を出さない。Guard.focusQuiet（既定オン）
+- 課金：play flavor の PAYWALL を false に（入社先が個人の収入を禁止しているため当面無料）。Billing.kt・PaywallScreen は残す。設定と使い方の最後に「これからについて」（pay_future_title/body）
+- 初年度半額の準備：Early.firstSeen（prefs "early"、記録とアプリを入れた日の早いほう）。有料にするときは Play Console で「デベロッパー指定」の特典（1年目10ドル）を作り、firstSeen が有料化の日より前の人だけ offerTag で出す
+- 使い方：毎日の記録の先頭に「開く前のひと呼吸」、集中タイムの説明に通知停止。文字は i18n/ask.py（build.py の extras の最後）。ページ名・AI ボタン名は各言語の実際の表記（page_condition・ai_title）にそろえた
+- e2e：tasks（書いて答える・なんとなく不可・算数）、top（方式の選択肢）、focus（zen_mode が 1→0、許可は `cmd notification allow_dnd`）、tutorial

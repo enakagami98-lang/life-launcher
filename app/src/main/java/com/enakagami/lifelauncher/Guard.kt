@@ -405,8 +405,14 @@ object Guard {
     fun updateAskMode(v: String) { askMode = v; prefs.edit().putString("askMode", v).apply() }
     fun updateFocusQuiet(v: Boolean) { focusQuiet = v; prefs.edit().putBoolean("focusQuiet", v).apply() }
 
+    /** 今出している算数の問題。解くまで変えない（アプリを行き来して問題を選び直せないように） */
+    private var mathNow: MathProblem? = null
+    fun currentMath(): MathProblem = mathNow ?: newMath()
+    fun newMath(): MathProblem = MathQuiz.make().also { mathNow = it }
+
     /** 算数を解いたとき。答えの記録は残さず、質問を閉じる（5分は聞かない） */
     fun solvedMath() {
+        mathNow = null
         val now = System.currentTimeMillis()
         lastAnswerAt = now
         prefs.edit().putLong("lastAnswerAt", now).apply()

@@ -139,7 +139,8 @@ private fun AnswerField(label: String, value: String, onChange: (String) -> Unit
 /** 算数を1問解く。数字は画面のボタンで入れる（キーボードを出さない）。3回まちがえたら別の問題にする */
 @Composable
 private fun MathAsk() {
-    var problem by remember { mutableStateOf(MathQuiz.make()) }
+    // 解くまでは同じ問題（他のアプリに行って戻されても、問題は変わらない）
+    var problem by remember { mutableStateOf(Guard.currentMath()) }
     var input by remember { mutableStateOf("") }
     var misses by remember { mutableIntStateOf(0) }
     var wrong by remember { mutableStateOf(false) }
@@ -183,7 +184,7 @@ private fun MathAsk() {
                                     if (input.toIntOrNull() == problem.answer) Guard.solvedMath()
                                     else {
                                         wrong = true; input = ""; misses++
-                                        if (misses >= 3) { problem = MathQuiz.make(); misses = 0 }
+                                        if (misses >= 3) { problem = Guard.newMath(); misses = 0 }
                                     }
                                 }
                                 else -> if (input.length < 4) { input += k; wrong = false }
