@@ -455,4 +455,10 @@
     <string name="pay_future_body">時期は未定ですが、今後すべての機能を有料（年20ドルほど）にする予定です。今から使い続けてくださった方は、初年度を半額にします。</string>
     <string name="tut_more_ask_title">開く前のひと呼吸</string>
     <string name="tut_more_ask">「身体の調子」の画面でオンにすると、ロック解除のたびに「今何をしているか・なぜ開くか」を書くか、算数を1問解いてから使うようになります。無意識にスマホを触ってしまうのを減らして、自由な時間を取り戻すための機能です。</string>
+    <string name="memo_hint">思いついたことをメモ（終わったら表示されます）</string>
+    <string name="memo_title_night">おやすみ中のメモ</string>
+    <string name="memo_title_focus">集中中のメモ</string>
+    <string name="memo_note">「閉じる」を押すと、このメモは消えます。</string>
+    <string name="tut_more_memo_title">おやすみ・集中中のメモ</string>
+    <string name="tut_more_memo">おやすみ時間や集中タイムの画面では、思いついたことをメモできます。その時間が終わると表示され、「閉じる」を押すまで消えません。</string>
 </resources>

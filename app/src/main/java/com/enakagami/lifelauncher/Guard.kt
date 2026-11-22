@@ -103,6 +103,8 @@ object Guard {
         lastAnswerAt = prefs.getLong("lastAnswerAt", 0)
         askMode = prefs.getString("askMode", "write")!!
         focusQuiet = prefs.getBoolean("focusQuiet", true)
+        memos["night"] = prefs.getString("memo_night", "")!!
+        memos["focus"] = prefs.getString("memo_focus", "")!!
         JSONArray(prefs.getString("unlockLogs", "[]")).let { a ->
             for (i in 0 until a.length()) {
                 val o = a.getJSONObject(i)
@@ -400,6 +402,18 @@ object Guard {
         if (activeLock() != null) return false
         setPending(true)
         return true
+    }
+
+    // ---- おやすみ時間・集中タイムの間のメモ（終わったら MemoScreen で見せる。「閉じる」で消す） ----
+    private val memos = mutableStateMapOf("night" to "", "focus" to "")
+    fun memo(kind: String) = memos[kind] ?: ""
+    fun setMemo(kind: String, text: String) { memos[kind] = text; prefs.edit().putString("memo_$kind", text).apply() }
+    fun clearMemo(kind: String) = setMemo(kind, "")
+    /** 見せるメモ（"night" か "focus"）。その時間が終わっていて、メモが書いてあれば */
+    fun memoDue(now: LocalDateTime = LocalDateTime.now()): String? = when {
+        memo("night").isNotBlank() && activeLock(now) == null -> "night"
+        memo("focus").isNotBlank() && !focusActive() -> "focus"
+        else -> null
     }
 
     fun updateAskMode(v: String) { askMode = v; prefs.edit().putString("askMode", v).apply() }

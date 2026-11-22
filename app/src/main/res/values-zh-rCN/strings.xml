@@ -455,4 +455,10 @@
     <string name="pay_future_body">时间还没定，但今后计划把所有功能改为付费（每年约 20 美元）。从现在开始一直使用的用户，第一年半价。</string>
     <string name="tut_more_ask_title">打开前的停顿</string>
     <string name="tut_more_ask">在“身体状态”页面开启后，每次解锁都要先写下“在做什么、为什么打开”，或者解一道算术题才能使用。这是为了减少无意识地拿起手机，找回自由的时间。</string>
+    <string name="memo_hint">把想到的事记下来（结束后显示）</string>
+    <string name="memo_title_night">睡眠时间的备忘</string>
+    <string name="memo_title_focus">专注时的备忘</string>
+    <string name="memo_note">点“关闭”后，这条备忘会被删除。</string>
+    <string name="tut_more_memo_title">睡眠·专注时的备忘</string>
+    <string name="tut_more_memo">在睡眠时间和专注时间的画面上，可以记下想到的事。时间结束后会显示出来，点“关闭”之前不会消失。</string>
 </resources>

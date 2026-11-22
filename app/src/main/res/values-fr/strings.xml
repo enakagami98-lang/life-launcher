@@ -450,4 +450,10 @@
     <string name="pay_future_body">La date n\'est pas encore fixée, mais nous prévoyons de rendre toutes les fonctions payantes (environ 20 dollars par an). Si vous continuez à utiliser Loosen dès maintenant, votre première année sera à moitié prix.</string>
     <string name="tut_more_ask_title">Une pause avant d\'ouvrir</string>
     <string name="tut_more_ask">Activez-la sur la page Forme : à chaque déverrouillage, vous écrirez ce que vous faites et pourquoi vous ouvrez votre téléphone, ou vous résoudrez un calcul. Cela aide à arrêter de toucher son téléphone sans y penser et à retrouver du temps libre.</string>
+    <string name="memo_hint">Notez ce qui vous vient à l\'esprit (affiché à la fin)</string>
+    <string name="memo_title_night">Note de la nuit</string>
+    <string name="memo_title_focus">Note de votre concentration</string>
+    <string name="memo_note">Cette note est supprimée quand vous touchez « Fermer ».</string>
+    <string name="tut_more_memo_title">Notes du coucher et de la concentration</string>
+    <string name="tut_more_memo">Sur les écrans du coucher et du temps de concentration, vous pouvez noter ce qui vous vient à l\'esprit. La note s\'affiche à la fin et reste jusqu\'à ce que vous touchiez « Fermer ».</string>
 </resources>

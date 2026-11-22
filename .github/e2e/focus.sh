@@ -69,12 +69,32 @@ key KEYCODE_HOME; snap home_during_focus
 expect_exact "ホームボタンでも集中の画面" "集中タイム中"
 next_page; expect_exact "スワイプしても集中の画面" "集中タイム中"
 
-log "== 5. 長押しでやめる"
+log "== 4b. 集中中にメモを書く（英字を打つ間だけ英語表示）"
+lang en-US
+$UI tapclass android.widget.EditText >/dev/null; sleep 5; softword milk; sleep 1; key KEYCODE_BACK
+lang ja-JP; snap memo_written
+expect_exact "集中の画面のまま" "集中タイム中"
+expect_exact "書いたメモが残る" "milk"
+
+log "== 5. 長押しでやめる → メモが出る（「閉じる」でしか消えない）"
 $UI tap "長押しで集中をやめる" >/dev/null; sleep 2
 expect_exact "短く押してもやめない" "集中タイム中"
 $UI hold "長押しで集中をやめる" 4000 >/dev/null; sleep 3; snap stopped
 expect_no_text "長押しでやめられる" "集中タイム中"
 z=$(zen); [ "$z" = "0" ] && ok "やめると通知が元に戻る（zen_mode=0）" || ng "やめても通知が止まったまま（zen_mode=$z）"
+expect_text "メモの画面が出る" "集中中のメモ"
+expect_exact "書いたメモが出る" "milk"
+adb shell input tap 1040 300; sleep 1; adb shell input tap 40 2000; sleep 1
+expect_text "画面の端を押しても消えない" "集中中のメモ"
+key KEYCODE_BACK
+expect_text "戻るボタンでも消えない" "集中中のメモ"
+key KEYCODE_HOME
+expect_text "ホームボタンでも消えない" "集中中のメモ"
+clock; snap memo_after_clock
+expect_app "閉じるまでは他のアプリに行けない" $PKG
+expect_text "メモの画面のまま" "集中中のメモ"
+$UI tap "閉じる" >/dev/null; sleep 2; snap memo_closed
+expect_no_text "閉じると消える" "集中中のメモ"
 expect_exact "ホーム画面に戻る（集中タイムの部品が見える）" "集中を始める"
 clock; snap clock_after
 expect_app "やめた後は時計が使える" deskclock

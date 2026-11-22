@@ -456,4 +456,10 @@
     <string name="pay_future_body">We haven\'t set a date yet, but we plan to make all features paid (about $20 a year). If you keep using Loosen from now on, your first year will be half price.</string>
     <string name="tut_more_ask_title">A pause before opening</string>
     <string name="tut_more_ask">Turn it on on the Condition page, and each time you unlock you\'ll either write what you\'re doing and why you\'re opening your phone, or solve one math problem. It helps you stop reaching for your phone without thinking, so you get your free time back.</string>
+    <string name="memo_hint">Jot down what comes to mind (shown when it ends)</string>
+    <string name="memo_title_night">Note from last night</string>
+    <string name="memo_title_focus">Note from your focus time</string>
+    <string name="memo_note">This note is deleted when you tap \"Close\".</string>
+    <string name="tut_more_memo_title">Notes during bedtime and focus</string>
+    <string name="tut_more_memo">On the bedtime and focus time screens, you can jot down what comes to mind. It\'s shown when the time ends and stays until you tap \"Close\".</string>
 </resources>

@@ -452,4 +452,10 @@
     <string name="pay_future_body">সময় এখনও ঠিক হয়নি, তবে সব ফিচার পেইড (বছরে প্রায় ২০ ডলার) করার পরিকল্পনা আছে। এখন থেকে যাঁরা ব্যবহার চালিয়ে যাবেন, তাঁদের প্রথম বছর অর্ধেক দামে।</string>
     <string name="tut_more_ask_title">খোলার আগে একটু থামা</string>
     <string name="tut_more_ask">শরীরের অবস্থা পাতায় চালু করুন, তারপর প্রতিবার আনলকে আপনি কী করছেন আর কেন ফোন খুলছেন লিখবেন, অথবা একটা অঙ্ক কষবেন। এতে না ভেবে ফোন ধরার অভ্যাস কমে আর অবসর সময় ফিরে আসে।</string>
+    <string name="memo_hint">যা মনে আসে নোট করুন (শেষ হলে দেখানো হবে)</string>
+    <string name="memo_title_night">রাতের নোট</string>
+    <string name="memo_title_focus">ফোকাসের সময়ের নোট</string>
+    <string name="memo_note">\"বন্ধ করুন\" চাপলে এই নোট মুছে যাবে।</string>
+    <string name="tut_more_memo_title">ঘুম ও ফোকাসের সময়ের নোট</string>
+    <string name="tut_more_memo">ঘুমের সময় ও ফোকাস সময়ের স্ক্রিনে যা মনে আসে নোট করতে পারেন। সময় শেষ হলে নোট দেখানো হয় এবং \"বন্ধ করুন\" না চাপা পর্যন্ত যায় না।</string>
 </resources>

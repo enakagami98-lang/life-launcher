@@ -450,4 +450,10 @@
     <string name="pay_future_body">Ainda não há data, mas planejamos tornar todas as funções pagas (cerca de 20 dólares por ano). Quem continuar usando o Loosen a partir de agora terá o primeiro ano pela metade do preço.</string>
     <string name="tut_more_ask_title">Uma pausa antes de abrir</string>
     <string name="tut_more_ask">Ative na página Condição e, a cada desbloqueio, você vai escrever o que está fazendo e por que abre o celular, ou resolver uma conta. Ajuda a parar de mexer no celular sem pensar e a recuperar seu tempo livre.</string>
+    <string name="memo_hint">Anote o que vier à cabeça (aparece ao terminar)</string>
+    <string name="memo_title_night">Nota da noite</string>
+    <string name="memo_title_focus">Nota do seu foco</string>
+    <string name="memo_note">Esta nota é apagada ao tocar em \"Fechar\".</string>
+    <string name="tut_more_memo_title">Notas na hora de dormir e no foco</string>
+    <string name="tut_more_memo">Nas telas da hora de dormir e do tempo de foco, você pode anotar o que vier à cabeça. A nota aparece ao terminar e só some quando você toca em \"Fechar\".</string>
 </resources>

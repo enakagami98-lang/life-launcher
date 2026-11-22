@@ -240,6 +240,9 @@ fun LauncherApp(
                 } else if (Billing.locked) {
                     // Play 版で定期購入が無いとき：機能は止めて、購入画面＋アプリ一覧
                     PaywallScreen(store, apps, query, onQuery = { query = it })
+                } else if (Guard.focusEndSignal >= 0 && Guard.memoDue(now) != null) {
+                    // おやすみ時間・集中タイムが終わった：その間に書いたメモ（「閉じる」でしか消えない）
+                    MemoScreen(Guard.memoDue(now)!!)
                 } else if (Guard.focusEndSignal >= 0 && Guard.focusCelebrate()) {
                     // （focusEndSignal を読むのは、集中の時間になった瞬間にここを描き直すため）
                     // 集中タイムが最後まで終わった：おつかれさまでした

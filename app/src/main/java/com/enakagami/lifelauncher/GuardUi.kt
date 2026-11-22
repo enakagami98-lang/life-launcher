@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -200,7 +201,7 @@ private fun NightLockScreen(name: String, until: String) {
         Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(NightTop, NightBottom))),
         contentAlignment = Alignment.Center,
     ) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.padding(32.dp)) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.imePadding().padding(32.dp)) {
             // 三日月：黄色い円から、少しずらした円をくり抜く
             Canvas(Modifier.size(72.dp).graphicsLayer { compositingStrategy = CompositingStrategy.Offscreen }) {
                 val r = size.minDimension / 2.2f
@@ -217,6 +218,9 @@ private fun NightLockScreen(name: String, until: String) {
             if (parts.size > 1 && parts[1].isNotBlank()) {
                 Text(parts[1].trim(), color = NightText.copy(alpha = 0.8f), fontSize = 16.sp, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center)
             }
+            // 夜の間に思いついたことのメモ（朝、おやすみ時間が終わったら表示する）
+            Spacer(Modifier.height(28.dp))
+            ModeMemoField("night", NightText)
         }
         Box(Modifier.align(Alignment.BottomCenter).padding(bottom = 120.dp)) {
             CallButton(NightText.copy(alpha = 0.85f)) { Guard.allowUntil = System.currentTimeMillis() + 10 * 60_000; dial(context) }

@@ -450,4 +450,10 @@
     <string name="pay_future_body">La data non è ancora decisa, ma prevediamo di rendere a pagamento tutte le funzioni (circa 20 dollari l\'anno). Chi continua a usare Loosen da adesso avrà il primo anno a metà prezzo.</string>
     <string name="tut_more_ask_title">Una pausa prima di aprire</string>
     <string name="tut_more_ask">Attivala nella pagina Forma fisica: a ogni sblocco scriverai cosa stai facendo e perché apri il telefono, oppure risolverai un calcolo. Aiuta a smettere di toccare il telefono senza pensarci e a riprenderti il tempo libero.</string>
+    <string name="memo_hint">Annota ciò che ti viene in mente (mostrato alla fine)</string>
+    <string name="memo_title_night">Nota della notte</string>
+    <string name="memo_title_focus">Nota della concentrazione</string>
+    <string name="memo_note">Questa nota viene eliminata quando tocchi \"Chiudi\".</string>
+    <string name="tut_more_memo_title">Note di notte e di concentrazione</string>
+    <string name="tut_more_memo">Nelle schermate dell\'ora di dormire e del tempo di concentrazione puoi annotare ciò che ti viene in mente. La nota appare alla fine e resta finché non tocchi \"Chiudi\".</string>
 </resources>

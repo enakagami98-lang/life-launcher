@@ -451,4 +451,10 @@
     <string name="pay_future_body">Tarih henüz belli değil ama tüm özellikleri ücretli (yılda yaklaşık 20 dolar) yapmayı planlıyoruz. Şu andan itibaren kullanmaya devam edenler için ilk yıl yarı fiyata olacak.</string>
     <string name="tut_more_ask_title">Açmadan önce bir duraklama</string>
     <string name="tut_more_ask">Vücut durumu sayfasından aç; her kilit açışta ne yaptığını ve telefonu neden açtığını yazacak ya da bir işlem çözeceksin. Telefona düşünmeden uzanmayı azaltıp boş zamanını geri kazanmana yardım eder.</string>
+    <string name="memo_hint">Aklına geleni not al (bitince gösterilir)</string>
+    <string name="memo_title_night">Geceden not</string>
+    <string name="memo_title_focus">Odak zamanından not</string>
+    <string name="memo_note">\"Kapat\"a dokununca bu not silinir.</string>
+    <string name="tut_more_memo_title">Uyku ve odak sırasında not</string>
+    <string name="tut_more_memo">Uyku saati ve odak zamanı ekranlarında aklına geleni not alabilirsin. Süre bitince gösterilir ve \"Kapat\"a dokunana kadar kaybolmaz.</string>
 </resources>

@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
@@ -144,7 +145,7 @@ fun FocusScreen(apps: List<AppInfo>) {
 
     Box(Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(FocusTop, FocusBottom)))) {
         Column(
-            Modifier.fillMaxSize().systemBarsPadding().verticalScroll(rememberScrollState()).padding(horizontal = 28.dp, vertical = 32.dp),
+            Modifier.fillMaxSize().systemBarsPadding().imePadding().verticalScroll(rememberScrollState()).padding(horizontal = 28.dp, vertical = 32.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(stringResource(R.string.focus_now), color = Mint, fontSize = 20.sp, fontWeight = FontWeight.Black)
@@ -182,7 +183,10 @@ fun FocusScreen(apps: List<AppInfo>) {
                     )
                 }
             }
-            Spacer(Modifier.height(48.dp))
+            Spacer(Modifier.height(28.dp))
+            // 集中している間に思いついたことのメモ（終わったら表示する）
+            ModeMemoField("focus", FocusText)
+            Spacer(Modifier.height(36.dp))
             StopButton()
             Spacer(Modifier.height(24.dp))
         }

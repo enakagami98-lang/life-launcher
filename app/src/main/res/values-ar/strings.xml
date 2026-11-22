@@ -452,4 +452,10 @@
     <string name="pay_future_body">لم يُحدَّد الموعد بعد، لكننا نخطط لجعل كل الميزات مدفوعة (نحو 20 دولارًا سنويًا). ومن يواصل استخدام Loosen من الآن ستكون سنته الأولى بنصف السعر.</string>
     <string name="tut_more_ask_title">وقفة قبل الفتح</string>
     <string name="tut_more_ask">فعّلها من صفحة حالة الجسم، وفي كل إلغاء قفل ستكتب ما تفعله ولماذا تفتح الهاتف، أو تحل مسألة حساب واحدة. يساعدك ذلك على التوقف عن لمس الهاتف دون وعي واستعادة وقتك الحر.</string>
+    <string name="memo_hint">دوّن ما يخطر ببالك (يظهر عند الانتهاء)</string>
+    <string name="memo_title_night">ملاحظة الليلة</string>
+    <string name="memo_title_focus">ملاحظة وقت التركيز</string>
+    <string name="memo_note">تُحذف هذه الملاحظة عند الضغط على \"إغلاق\".</string>
+    <string name="tut_more_memo_title">ملاحظات وقت النوم والتركيز</string>
+    <string name="tut_more_memo">في شاشتي وقت النوم ووقت التركيز يمكنك تدوين ما يخطر ببالك. تظهر الملاحظة عند انتهاء الوقت ولا تختفي حتى تضغط \"إغلاق\".</string>
 </resources>

@@ -452,4 +452,10 @@
     <string name="pay_future_body">Chưa có thời điểm cụ thể, nhưng chúng tôi dự định thu phí tất cả tính năng (khoảng 20 đô la mỗi năm). Ai tiếp tục dùng Loosen từ bây giờ sẽ được giảm nửa giá năm đầu.</string>
     <string name="tut_more_ask_title">Khoảng dừng trước khi mở</string>
     <string name="tut_more_ask">Bật ở trang Thể trạng, mỗi lần mở khóa bạn sẽ viết mình đang làm gì và vì sao mở điện thoại, hoặc giải một phép tính. Giúp bớt cầm điện thoại vô thức và lấy lại thời gian rảnh.</string>
+    <string name="memo_hint">Ghi lại điều chợt nghĩ ra (hiện khi kết thúc)</string>
+    <string name="memo_title_night">Ghi chú đêm qua</string>
+    <string name="memo_title_focus">Ghi chú lúc tập trung</string>
+    <string name="memo_note">Ghi chú này sẽ bị xóa khi bạn nhấn \"Đóng\".</string>
+    <string name="tut_more_memo_title">Ghi chú lúc ngủ và tập trung</string>
+    <string name="tut_more_memo">Trên màn hình giờ đi ngủ và thời gian tập trung, bạn có thể ghi lại điều chợt nghĩ ra. Ghi chú hiện ra khi hết giờ và không biến mất cho đến khi bạn nhấn \"Đóng\".</string>
 </resources>

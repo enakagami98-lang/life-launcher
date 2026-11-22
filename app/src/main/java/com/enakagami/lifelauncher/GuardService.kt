@@ -134,8 +134,8 @@ class GuardService : Service() {
         }
         val usage = Guard.hasUsageAccess(this)
         if (usage) updateForeground(now)
-        // 質問に答える・今日の目標を決めるまでは、電話以外のアプリを開いてもホーム画面に戻す
-        if (Guard.askPending || Guard.needGoal()) {
+        // 質問に答える・今日の目標を決める・終わった後のメモを閉じるまでは、電話以外のアプリを開いてもホーム画面に戻す
+        if (Guard.askPending || Guard.needGoal() || Guard.memoDue() != null) {
             hideBar()
             val away = if (usage) fg != null && fg != packageName && isBlockable(fg!!) else !Guard.launcherResumed
             if (away && !inCall()) openLauncher(null, "ask")

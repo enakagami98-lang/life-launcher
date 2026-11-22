@@ -451,4 +451,10 @@
     <string name="pay_future_body">Ein Termin steht noch nicht fest, aber wir planen, alle Funktionen kostenpflichtig zu machen (etwa 20 Dollar im Jahr). Wer Loosen ab jetzt weiter nutzt, zahlt im ersten Jahr nur die Hälfte.</string>
     <string name="tut_more_ask_title">Eine Pause vor dem Öffnen</string>
     <string name="tut_more_ask">Schalte es auf der Seite Verfassung ein: Bei jedem Entsperren schreibst du auf, was du machst und warum du dein Handy öffnest, oder löst eine Rechenaufgabe. So greifst du seltener gedankenlos zum Handy und gewinnst freie Zeit zurück.</string>
+    <string name="memo_hint">Notiere, was dir einfällt (wird am Ende gezeigt)</string>
+    <string name="memo_title_night">Notiz aus der Nacht</string>
+    <string name="memo_title_focus">Notiz aus der Fokuszeit</string>
+    <string name="memo_note">Diese Notiz wird gelöscht, wenn du auf „Schließen“ tippst.</string>
+    <string name="tut_more_memo_title">Notizen in Schlafens- und Fokuszeit</string>
+    <string name="tut_more_memo">Auf den Bildschirmen der Schlafenszeit und der Fokuszeit kannst du notieren, was dir einfällt. Die Notiz erscheint am Ende und bleibt, bis du auf „Schließen“ tippst.</string>
 </resources>

@@ -386,6 +386,7 @@ private fun StepDaily() {
             R.string.tut_more_ask_title to R.string.tut_more_ask,
             R.string.page_habits to R.string.tut_more_habits,
             R.string.w_focus to R.string.tut_more_focus,
+            R.string.tut_more_memo_title to R.string.tut_more_memo,
             R.string.w_journal to R.string.tut_more_journal,
             R.string.w_quote to R.string.tut_more_quote,
             R.string.page_tasks to R.string.tut_more_tasks,

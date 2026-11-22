@@ -452,4 +452,10 @@
     <string name="pay_future_body">Waktunya belum ditentukan, tetapi kami berencana membuat semua fitur berbayar (sekitar 20 dolar per tahun). Bagi yang terus memakai Loosen mulai sekarang, tahun pertama setengah harga.</string>
     <string name="tut_more_ask_title">Jeda sebelum membuka</string>
     <string name="tut_more_ask">Aktifkan di halaman Kondisi badan, lalu setiap membuka kunci kamu akan menulis apa yang sedang dilakukan dan kenapa membuka ponsel, atau mengerjakan satu soal hitung. Ini membantu mengurangi kebiasaan memegang ponsel tanpa sadar dan mengembalikan waktu luangmu.</string>
+    <string name="memo_hint">Catat yang terlintas (ditampilkan saat selesai)</string>
+    <string name="memo_title_night">Catatan dari semalam</string>
+    <string name="memo_title_focus">Catatan saat fokus</string>
+    <string name="memo_note">Catatan ini dihapus saat kamu mengetuk \"Tutup\".</string>
+    <string name="tut_more_memo_title">Catatan saat tidur dan fokus</string>
+    <string name="tut_more_memo">Di layar waktu tidur dan waktu fokus, kamu bisa mencatat yang terlintas. Catatan ditampilkan saat waktunya selesai dan tidak hilang sampai kamu mengetuk \"Tutup\".</string>
 </resources>

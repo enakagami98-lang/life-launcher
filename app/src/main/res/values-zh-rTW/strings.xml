@@ -455,4 +455,10 @@
     <string name="pay_future_body">時間還沒定，但今後計畫把所有功能改為付費（每年約 20 美元）。從現在開始一直使用的用戶，第一年半價。</string>
     <string name="tut_more_ask_title">打開前的停頓</string>
     <string name="tut_more_ask">在「身體狀態」頁面開啟後，每次解鎖都要先寫下「在做什麼、為什麼打開」，或者解一道算術題才能使用。這是為了減少無意識地拿起手機，找回自由的時間。</string>
+    <string name="memo_hint">把想到的事記下來（結束後顯示）</string>
+    <string name="memo_title_night">睡眠時間的備忘</string>
+    <string name="memo_title_focus">專注時的備忘</string>
+    <string name="memo_note">點「關閉」後，這則備忘會被刪除。</string>
+    <string name="tut_more_memo_title">睡眠·專注時的備忘</string>
+    <string name="tut_more_memo">在睡眠時間和專注時間的畫面上，可以記下想到的事。時間結束後會顯示出來，點「關閉」之前不會消失。</string>
 </resources>
