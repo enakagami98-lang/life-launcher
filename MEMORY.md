@@ -231,3 +231,10 @@
 - 初年度半額の準備：Early.firstSeen（prefs "early"、記録とアプリを入れた日の早いほう）。有料にするときは Play Console で「デベロッパー指定」の特典（1年目10ドル）を作り、firstSeen が有料化の日より前の人だけ offerTag で出す
 - 使い方：毎日の記録の先頭に「開く前のひと呼吸」、集中タイムの説明に通知停止。文字は i18n/ask.py（build.py の extras の最後）。ページ名・AI ボタン名は各言語の実際の表記（page_condition・ai_title）にそろえた
 - e2e：tasks（書いて答える・なんとなく不可・算数）、top（方式の選択肢）、focus（zen_mode が 1→0、許可は `cmd notification allow_dnd`）、tutorial
+
+## 2026-11-22 おやすみ・集中中のメモ（v1.0.82）／リポジトリ非公開
+- Memo.kt：夜の画面（NightLockScreen）と集中の画面（FocusScreen）に ModeMemoField。1文字ごとに保存（prefs "memo_night"/"memo_focus"、1000文字まで）
+- その時間が終わってメモがあれば Guard.memoDue() → MainActivity が MemoScreen を出す（集中の「おつかれさまでした」より先）。**「閉じる」でしか消えない**：BackHandler で戻るを無効、背景は押せない、ホームでも残る、GuardService が他のアプリからホームに戻す。閉じるとメモは消える
+- 夜のメモは仮想スマホで確認していない（夜の画面を出したまま設定を変えられないため）。集中のメモと同じ部品・同じ判定
+- e2e：focus 47/47（メモを書く→やめる→端・戻る・ホーム・他アプリでも残る→閉じるで消える）、tutorial 28/28（カードが増えたので see でスクロール）、tasks 38/38
+- 2026-11-22 リポジトリを非公開に。**Actions は月2000分の枠（kunexpo-bot と共有）**。e2e は1本10〜25分なので、変えたところだけ `-f only=` で回す。Releases の APK も GitHub にログインしないと落とせない
