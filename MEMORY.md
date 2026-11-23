@@ -238,3 +238,12 @@
 - 夜のメモは仮想スマホで確認していない（夜の画面を出したまま設定を変えられないため）。集中のメモと同じ部品・同じ判定
 - e2e：focus 47/47（メモを書く→やめる→端・戻る・ホーム・他アプリでも残る→閉じるで消える）、tutorial 28/28（カードが増えたので see でスクロール）、tasks 38/38
 - 2026-11-22 リポジトリを非公開に。**Actions は月2000分の枠（kunexpo-bot と共有）**。e2e は1本10〜25分なので、変えたところだけ `-f only=` で回す。Releases の APK も GitHub にログインしないと落とせない
+
+## 2026-11-23 習慣の時刻とお知らせ・アプリごとの使えない時間・言葉の入力欄
+- 習慣：Item に time（0:00 からの分、null＝決めない）。追加・編集は ItemsPage の HabitDialog（目標は今まで通り TextInputDialog）。行とトップの部品に時刻を出す
+- お知らせ：HabitRemind.kt。GuardService.check の先頭（画面オフでも）から呼び、20秒に1回 prefs "habits"/"habitDone" を読む。時刻を過ぎて未チェックなら1日1回（prefs "habitReminded"="日付|id,…"）。登録した時点で過ぎている時刻はその日は鳴らさない（onTimeSet）。チェックするとお知らせを消す。押すと習慣のページ（Intent extra "open_page"、MainActivity で 400ms 待ってからスクロール）
+  - POST_NOTIFICATIONS を追加。時刻つきで保存したときだけ許可を聞く（Android 13+）。許可を出すと見守りの常駐通知（IMPORTANCE_MIN）も通知欄の下に見えるようになる
+- アプリごとの使えない時間：Guard.appBlocks（prefs guard "appBlocks"={pkg:[開始,終了]}）、毎日・日付またぎ可（LockRange を流用）。アプリ一覧・お気に入りの長押しメニューに BlockItems/BlockChooser（最初は 5:00〜10:00）。GuardService は使用状況モード・簡易モードの両方で "block" でホームに戻し、MainActivity が BlockedDialog を出す。ホームから開こうとしたときも同じ
+- 今日の言葉：トップのカード・全画面・入力欄を quoteStyle()（19sp/28、太字斜体、中央、userTextStyle）と同じ横幅（外20dp＋内 QuoteSidePad 22dp）にそろえた。入力欄は BasicTextField＋VisualTransformation（QuoteMarks）で “ ” を付けて見せる（保存する文字には付けない）。**入力と表示で改行位置を同じにする**のがユーザーの依頼
+- 文字は i18n/remind.py（build.py の extras の最後）。tut_more_habits・tut_more_quote はここで上書き、使い方の毎日の記録に「アプリごとの使えない時間」のカード
+- e2e：focus.sh に習慣の編集の「Time / None」、journal.sh に入力欄の説明を追加。使えない時間は仮想スマホで時刻を合わせにくいので未テスト（実機確認待ち）
