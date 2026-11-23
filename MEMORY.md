@@ -247,3 +247,5 @@
 - 今日の言葉：トップのカード・全画面・入力欄を quoteStyle()（19sp/28、太字斜体、中央、userTextStyle）と同じ横幅（外20dp＋内 QuoteSidePad 22dp）にそろえた。入力欄は BasicTextField＋VisualTransformation（QuoteMarks）で “ ” を付けて見せる（保存する文字には付けない）。**入力と表示で改行位置を同じにする**のがユーザーの依頼
 - 文字は i18n/remind.py（build.py の extras の最後）。tut_more_habits・tut_more_quote はここで上書き、使い方の毎日の記録に「アプリごとの使えない時間」のカード
 - e2e：focus.sh に習慣の編集の「Time / None」、journal.sh に入力欄の説明を追加。使えない時間は仮想スマホで時刻を合わせにくいので未テスト（実機確認待ち）
+
+- 2026-11-23 リポジトリを公開に戻した（ユーザーの指示：Google Play に公開するまで公開のまま）。公開中は Actions の分数制限なし。APK はログイン不要
