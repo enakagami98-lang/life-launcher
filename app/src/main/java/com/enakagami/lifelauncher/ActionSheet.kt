@@ -20,13 +20,17 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -153,20 +157,89 @@ fun ReminderItems(pkg: String, onChoose: () -> Unit, close: (() -> Unit) -> Unit
     }
 }
 
+/** アプリごとの「使えない時間」の項目。決めてあれば変更とやめる */
+@Composable
+fun BlockItems(pkg: String, onChoose: () -> Unit, close: (() -> Unit) -> Unit) {
+    val now = Guard.appBlockText(pkg)
+    if (now == null) {
+        SheetItem(Icons.Filled.Lock, stringResource(R.string.ab_add), stringResource(R.string.ab_add_sub), onClick = onChoose)
+    } else {
+        SheetItem(Icons.Filled.Lock, stringResource(R.string.ab_change), stringResource(R.string.ab_now, now), onClick = onChoose)
+        SheetItem(Icons.Filled.Clear, stringResource(R.string.ab_remove), onClick = { close { Guard.removeAppBlock(pkg) } })
+    }
+}
+
+/** 使えない時間（何時から何時まで）を選ぶ。毎日同じ時間。日付をまたいでもよい（例 23:00〜7:00） */
+@Composable
+fun BlockChooser(pkg: String, onBack: () -> Unit, onDone: () -> Unit) {
+    val context = LocalContext.current
+    val current = Guard.appBlocks[pkg]
+    // 最初は朝（5:00〜10:00）
+    var start by remember { mutableStateOf(current?.first ?: (5 * 60)) }
+    var end by remember { mutableStateOf(current?.second ?: (10 * 60)) }
+    fun pick(initial: Int, set: (Int) -> Unit) {
+        android.app.TimePickerDialog(context, { _, h, m -> set(h * 60 + m) }, initial / 60, initial % 60,
+            android.text.format.DateFormat.is24HourFormat(context)).show()
+    }
+    Row(
+        Modifier.fillMaxWidth().clickable(onClick = onBack).padding(horizontal = 24.dp, vertical = 10.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Icon(Icons.Filled.ArrowBack, stringResource(R.string.back), tint = SubInk, modifier = Modifier.size(20.dp))
+        Spacer(Modifier.width(10.dp))
+        Text(stringResource(R.string.ab_title), color = Ink, fontSize = 17.sp, fontWeight = FontWeight.Bold)
+    }
+    Text(stringResource(R.string.ab_desc), color = SubInk, fontSize = 13.sp, lineHeight = 19.sp,
+        modifier = Modifier.padding(horizontal = 24.dp, vertical = 4.dp))
+    Spacer(Modifier.height(10.dp))
+    Row(Modifier.padding(horizontal = 20.dp), horizontalArrangement = Arrangement.spacedBy(10.dp), verticalAlignment = Alignment.CenterVertically) {
+        listOf(R.string.ab_from to start, R.string.ab_to to end).forEachIndexed { i, (label, value) ->
+            if (i == 1) Text(stringResource(R.string.ab_sep), color = Ink, fontSize = 22.sp, fontWeight = FontWeight.Black)
+            Column(
+                Modifier.weight(1f).clip(RoundedCornerShape(16.dp)).background(CardBg)
+                    .clickable { pick(value) { if (i == 0) start = it else end = it } }
+                    .padding(vertical = 14.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                Text(stringResource(label), color = SubInk, fontSize = 12.sp)
+                Text(HabitRemind.timeText(value), color = Ink, fontSize = 26.sp, fontWeight = FontWeight.Black)
+            }
+        }
+    }
+    Spacer(Modifier.height(16.dp))
+    Button(
+        onClick = { Guard.setAppBlock(pkg, start, end); onDone() },
+        enabled = start != end,
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp).height(52.dp),
+        shape = RoundedCornerShape(14.dp),
+        colors = ButtonDefaults.buttonColors(containerColor = Blue, contentColor = OnAccent),
+    ) { Text(stringResource(R.string.save), fontWeight = FontWeight.Black, fontSize = 16.sp) }
+}
+
+/** メニューの上の小さな説明（使いすぎ防止・使えない時間） */
+@Composable
+fun guardSubtitle(pkg: String): String? = listOfNotNull(
+    Guard.limits[pkg]?.let { stringResource(R.string.limit_badge, it) },
+    Guard.appBlockText(pkg)?.let { stringResource(R.string.ab_now, it) },
+).joinToString("　").ifEmpty { null }
+
 /** アプリ一覧で長押ししたときのメニュー */
 @Composable
 fun AppActionSheet(app: AppInfo, store: Store, onDismiss: () -> Unit) {
-    var choosing by remember { mutableStateOf(false) }
-    val limit = Guard.limits[app.pkg]
-    ActionSheet(app.label, if (limit != null) stringResource(R.string.limit_badge, limit) else null, onDismiss) { close ->
-        if (choosing) {
-            LimitChooser(app.pkg, onBack = { choosing = false }, onDone = { close {} })
+    // null＝メニュー、"limit"＝1日の時間を選ぶ、"block"＝使えない時間を選ぶ
+    var choosing by remember { mutableStateOf<String?>(null) }
+    ActionSheet(app.label, guardSubtitle(app.pkg), onDismiss) { close ->
+        if (choosing == "limit") {
+            LimitChooser(app.pkg, onBack = { choosing = null }, onDone = { close {} })
+        } else if (choosing == "block") {
+            BlockChooser(app.pkg, onBack = { choosing = null }, onDone = { close {} })
         } else {
             val fav = store.isFavorite(app.key)
             SheetItem(Icons.Filled.Star, stringResource(if (fav) R.string.fav_remove else R.string.fav_add), stringResource(R.string.fav_sub)) {
                 close { if (fav) store.removeFavorite(app.key) else store.addFavorite(app.key, app.label) }
             }
-            ReminderItems(app.pkg, onChoose = { choosing = true }, close = close)
+            ReminderItems(app.pkg, onChoose = { choosing = "limit" }, close = close)
+            BlockItems(app.pkg, onChoose = { choosing = "block" }, close = close)
             SheetItem(Icons.Filled.Close, stringResource(R.string.hide), stringResource(R.string.hide_sub), danger = true) {
                 close { store.hide(app.pkg) }
             }

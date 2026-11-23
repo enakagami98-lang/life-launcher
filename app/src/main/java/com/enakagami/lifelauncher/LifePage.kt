@@ -224,13 +224,16 @@ private fun FavoriteActionSheet(
     onDismiss: () -> Unit,
 ) {
     val pkg = fav.key.substringBefore('/')
-    var choosing by remember { mutableStateOf(false) }
-    ActionSheet(fav.label, Guard.limits[pkg]?.let { stringResource(R.string.limit_badge, it) }, onDismiss) { close ->
-        if (choosing) {
-            LimitChooser(pkg, onBack = { choosing = false }, onDone = { close {} })
+    var choosing by remember { mutableStateOf<String?>(null) }
+    ActionSheet(fav.label, guardSubtitle(pkg), onDismiss) { close ->
+        if (choosing == "limit") {
+            LimitChooser(pkg, onBack = { choosing = null }, onDone = { close {} })
+        } else if (choosing == "block") {
+            BlockChooser(pkg, onBack = { choosing = null }, onDone = { close {} })
         } else {
             SheetItem(Icons.Filled.Edit, stringResource(R.string.rename), stringResource(R.string.rename_sub)) { close(onRename) }
-            ReminderItems(pkg, onChoose = { choosing = true }, close = close)
+            ReminderItems(pkg, onChoose = { choosing = "limit" }, close = close)
+            BlockItems(pkg, onChoose = { choosing = "block" }, close = close)
             SheetItem(Icons.Filled.Close, stringResource(R.string.fav_remove), danger = true) { close(onRemove) }
         }
     }

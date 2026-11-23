@@ -633,7 +633,10 @@ private fun HabitsCard(store: Store, today: LocalDate) {
             CheckRow(
                 h.text, isDone,
                 desc = stringResource(if (isDone) R.string.task_undo else R.string.task_do, h.text),
-                trailing = if (streak > 0) stringResource(R.string.streak, streak) else null,
+                trailing = listOfNotNull(
+                    h.time?.let { HabitRemind.timeText(it) },
+                    if (streak > 0) stringResource(R.string.streak, streak) else null,
+                ).joinToString("・").ifEmpty { null },
             ) { store.toggleHabit(h.id, today) }
         }
     }

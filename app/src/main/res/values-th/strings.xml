@@ -400,7 +400,7 @@
     <string name="tut_more_title">มีฟีเจอร์สำหรับทบทวนแต่ละวันด้วย</string>
     <string name="tut_more_body">ใช้เฉพาะตอนที่อยากใช้ก็พอ</string>
     <string name="tut_more_journal">หน้าระหว่าง \"เป้าหมาย\" กับ \"งาน\" เขียนเฉพาะวันที่อยากเขียน บันทึกสิ่งที่เกิดขึ้นและเรื่องดี ๆ ของวันนี้</string>
-    <string name="tut_more_quote">บันทึกคำพูดหรือข้อความจากหนังสือที่ประทับใจ แล้วจะมีหนึ่งข้อความขึ้นบนหน้าจอหลักทุกวัน คำที่เป็นรายการโปรดจะแสดงบ่อยขึ้น และแตะคำที่บันทึกไว้แล้วเลือก \"แสดงวันนี้\" เพื่อเลือกคำของวันนี้ได้</string>
+    <string name="tut_more_quote">บันทึกถ้อยคำหรือข้อความจากหนังสือที่ประทับใจ แล้วทุกวันจะมีหนึ่งข้อความแสดงบนหน้าจอหลัก ช่องพิมพ์จะขึ้นบรรทัดแบบเดียวกับหน้าจอหลัก ถ้าตั้งเป็นรายการโปรดจะออกบ่อยขึ้น และกดที่ข้อความแล้วเลือก \"แสดงวันนี้\" เพื่อเลือกข้อความของวันนี้ได้</string>
     <string name="tut_more_tasks">กำหนดวันและเวลาครบกำหนด งานจะเรียงตามกำหนดที่ใกล้ที่สุด</string>
     <string name="tut_more_tear_title">ปฏิทินรายวัน</string>
     <string name="tut_more_tear">เมื่อเพิ่มเป้าหมายวันนี้หรืองานเป็นครั้งแรกของวัน ปฏิทินจะฉีกออกหนึ่งแผ่นและจำนวนวันที่เหลือจะลดลงหนึ่งวัน</string>
@@ -429,7 +429,7 @@
     <string name="focus_history">การโฟกัสล่าสุด</string>
     <string name="focus_desc">เมื่อเริ่มแล้ว จนกว่าจะจบจะเปิดได้แค่โทรศัพท์และ \"แอปที่ใช้ได้\" เวลาโฟกัสจะถูกบันทึกทุกวันและรวมอยู่ใน \"ถาม AI\"</string>
     <string name="dur_h">%1$d ชม.</string>
-    <string name="tut_more_habits">ติ๊กนิสัยประจำวันแล้วจะเห็นจำนวนวันที่ทำต่อเนื่อง เครื่องหมายถูกจะหายทุกวันตอน 0:00</string>
+    <string name="tut_more_habits">ติ๊กนิสัยประจำวันแล้วจะเห็นจำนวนวันที่ทำต่อเนื่อง ถ้ากำหนดเวลาไว้ เมื่อเลยเวลาแล้วยังไม่ได้ติ๊กจะมีการแจ้งเตือน เครื่องหมายติ๊กจะหายทุกวันตอน 0:00</string>
     <string name="tut_more_focus">เริ่ม \"เวลาโฟกัส\" จากหน้าจอหลัก แล้วจนกว่าจะจบจะใช้ได้แค่โทรศัพท์และแอปที่เลือก ปิดการแจ้งเตือนยกเว้นสายโทรเข้าได้ด้วย เวลาที่โฟกัสจะถูกบันทึกไว้</string>
     <string name="tut7_pages">ซ่อนหน้าที่ไม่ได้ใช้ได้ที่ \"หน้าที่แสดง\" ในการตั้งค่า (⚙)</string>
     <string name="ask_q1_hint">เช่น นั่งรถไฟอยู่</string>
@@ -458,4 +458,28 @@
     <string name="memo_note">บันทึกนี้จะถูกลบเมื่อกด \"ปิด\"</string>
     <string name="tut_more_memo_title">บันทึกช่วงนอนและโฟกัส</string>
     <string name="tut_more_memo">ในหน้าจอเวลานอนและเวลาโฟกัส คุณจดสิ่งที่นึกได้ไว้ได้ เมื่อหมดเวลาจะแสดงขึ้นมา และจะไม่หายไปจนกว่าจะกด \"ปิด\"</string>
+    <string name="hr_channel">การแจ้งเตือนนิสัย</string>
+    <string name="hr_body">คุณวางแผนทำนิสัยนี้ตอน %1$s ยังไม่ได้ติ๊ก</string>
+    <string name="hr_at">ตอน %1$s</string>
+    <string name="hr_time">เวลา</string>
+    <string name="hr_none">ไม่กำหนด</string>
+    <string name="hr_clear">ลบเวลา</string>
+    <string name="hr_note">ถ้ากำหนดเวลา เมื่อเลยเวลานั้นแล้วยังไม่ได้ติ๊ก จะมีการแจ้งเตือน</string>
+    <string name="ab_add">กำหนดเวลาห้ามใช้</string>
+    <string name="ab_add_sub">เช่น ไม่ให้เปิดแอปนี้ตอนเช้า</string>
+    <string name="ab_change">เปลี่ยนเวลาห้ามใช้</string>
+    <string name="ab_now">ห้ามใช้ %1$s</string>
+    <string name="ab_remove">ยกเลิกเวลาห้ามใช้</string>
+    <string name="ab_title">เวลาที่ใช้แอปนี้ไม่ได้</string>
+    <string name="ab_desc">ทุกวันในช่วงเวลานี้ ถ้าเปิดแอปนี้จะกลับไปที่หน้าจอหลัก ข้ามเที่ยงคืนได้ (เช่น 23:00–7:00)</string>
+    <string name="ab_from">ตั้งแต่</string>
+    <string name="ab_to">ถึง</string>
+    <string name="ab_sep">–</string>
+    <string name="ab_range">%1$s–%2$s</string>
+    <string name="ab_blocked">ตอนนี้ใช้แอปนี้ไม่ได้</string>
+    <string name="ab_blocked_sub">กดค้างที่แอปเพื่อเปลี่ยนหรือยกเลิกเวลา</string>
+    <string name="q_same_note">จะแสดงด้วยขนาดและการขึ้นบรรทัดเดียวกับบนหน้าจอหลัก</string>
+    <string name="q_text_hint">ถ้อยคำที่ประทับใจ</string>
+    <string name="tut_more_block_title">เวลาห้ามใช้ของแต่ละแอป</string>
+    <string name="tut_more_block">กดค้างที่แอปแล้วเลือก \"กำหนดเวลาห้ามใช้\" ทุกวันในช่วงเวลานั้นจะเปิดแอปนั้นไม่ได้ เช่น ไม่เล่นเกมตอนเช้า</string>
 </resources>

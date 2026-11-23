@@ -400,7 +400,7 @@
     <string name="tut_more_title">प्रत्येक दिवसाकडे मागे वळून पाहण्याच्या सुविधाही आहेत</string>
     <string name="tut_more_body">हवे तेव्हाच वापरा.</string>
     <string name="tut_more_journal">\"ध्येये\" आणि \"कामे\" यांच्या मधले पान. ज्या दिवशी वाटेल, आज काय झाले आणि काय चांगले झाले ते लिहून ठेवा.</string>
-    <string name="tut_more_quote">मनात राहिलेले शब्द किंवा पुस्तकातील उतारे जतन करा, दररोज त्यातील एक होम स्क्रीनवर दिसेल. आवडते शब्द जास्त वेळा दिसतात, आणि एखाद्यावर टॅप करून \"आज दाखवा\" निवडल्यास आजचे शब्द ठरवता येतात.</string>
+    <string name="tut_more_quote">मनात राहिलेले शब्द किंवा पुस्तकातील उतारे जतन करा, दररोज एक होम स्क्रीनवर दिसेल. लिहिण्याचा बॉक्स होम स्क्रीनसारख्याच ओळी मोडतो. आवडते जास्त वेळा येतात, आणि एखाद्यावर टॅप करून \"आज दाखवा\" निवडून आजचे शब्द ठरवू शकता.</string>
     <string name="tut_more_tasks">अंतिम तारीख आणि वेळ ठरवा, कामे जवळच्या मुदतीनुसार लावली जातील.</string>
     <string name="tut_more_tear_title">दैनिक कॅलेंडर</string>
     <string name="tut_more_tear">दिवसात पहिल्यांदा आजचे ध्येय किंवा काम जोडल्यावर कॅलेंडरचे पान फाटते आणि उरलेले दिवस एकने कमी होतात.</string>
@@ -429,7 +429,7 @@
     <string name="focus_history">अलीकडील फोकस</string>
     <string name="focus_desc">सुरू केल्यावर संपेपर्यंत फक्त कॉल आणि निवडलेली ॲप्स उघडतील. फोकस वेळ दररोज नोंदवला जातो आणि \"AI ला विचारा\" मध्येही जातो.</string>
     <string name="dur_h">%1$d तास</string>
-    <string name="tut_more_habits">रोजच्या सवयींवर खूण करा, सलग दिवसांची संख्या दिसेल. खुणा दररोज 0:00 वाजता निघतात.</string>
+    <string name="tut_more_habits">रोजच्या सवयींना टिक करा आणि सलग दिवस पाहा. वेळ ठरवल्यास, वेळ उलटूनही टिक नसेल तर आठवण करून दिली जाईल. टिक दररोज 0:00 ला निघतात.</string>
     <string name="tut_more_focus">होम स्क्रीनवरून \"फोकस वेळ\" सुरू करा, संपेपर्यंत फक्त कॉल आणि निवडलेली अ‍ॅप्स चालतील. कॉल सोडून सूचनाही बंद ठेवता येतात. तुमचा फोकस वेळ नोंदवला जातो.</string>
     <string name="tut7_pages">वापरत नसलेली पाने सेटिंग्ज (⚙) मधील \"दाखवायची पाने\" मध्ये लपवा.</string>
     <string name="ask_q1_hint">उदा. ट्रेनमध्ये आहे</string>
@@ -458,4 +458,28 @@
     <string name="memo_note">\"बंद करा\" दाबल्यावर ही नोंद पुसली जाईल.</string>
     <string name="tut_more_memo_title">झोप आणि फोकसच्या वेळच्या नोंदी</string>
     <string name="tut_more_memo">झोपेची वेळ आणि फोकस वेळ यांच्या स्क्रीनवर जे सुचेल ते नोंदवता येते. वेळ संपल्यावर नोंद दिसते आणि \"बंद करा\" दाबेपर्यंत जात नाही.</string>
+    <string name="hr_channel">सवयींची आठवण</string>
+    <string name="hr_body">ही सवय तुम्ही %1$s ला करायचे ठरवले होते. अजून टिक केलेली नाही.</string>
+    <string name="hr_at">%1$s ला</string>
+    <string name="hr_time">वेळ</string>
+    <string name="hr_none">नाही</string>
+    <string name="hr_clear">वेळ काढा</string>
+    <string name="hr_note">वेळ ठरवल्यास, ती वेळ उलटूनही टिक नसेल तर आठवण करून दिली जाईल.</string>
+    <string name="ab_add">बंदीची वेळ ठरवा</string>
+    <string name="ab_add_sub">उदा. सकाळी हे अ‍ॅप उघडू नये</string>
+    <string name="ab_change">बंदीची वेळ बदला</string>
+    <string name="ab_now">बंदी %1$s</string>
+    <string name="ab_remove">बंदीची वेळ काढा</string>
+    <string name="ab_title">हे अ‍ॅप कधी बंद राहील</string>
+    <string name="ab_desc">दररोज या वेळेत हे अ‍ॅप उघडल्यास तुम्ही होम स्क्रीनवर परत याल. वेळ मध्यरात्र ओलांडू शकते (उदा. 23:00–7:00).</string>
+    <string name="ab_from">पासून</string>
+    <string name="ab_to">पर्यंत</string>
+    <string name="ab_sep">–</string>
+    <string name="ab_range">%1$s–%2$s</string>
+    <string name="ab_blocked">आत्ता हे अ‍ॅप वापरता येणार नाही</string>
+    <string name="ab_blocked_sub">वेळ बदलण्यासाठी किंवा काढण्यासाठी अ‍ॅप दाबून धरा.</string>
+    <string name="q_same_note">होम स्क्रीनसारख्याच आकारात आणि त्याच ओळ-मोडीसह दिसेल.</string>
+    <string name="q_text_hint">मनात राहिलेले शब्द</string>
+    <string name="tut_more_block_title">प्रत्येक अ‍ॅपसाठी बंदीची वेळ</string>
+    <string name="tut_more_block">एखादे अ‍ॅप दाबून धरून \"बंदीची वेळ ठरवा\" निवडल्यास, दररोज त्या वेळेत ते अ‍ॅप उघडता येणार नाही. उदा. सकाळी गेम नाही.</string>
 </resources>

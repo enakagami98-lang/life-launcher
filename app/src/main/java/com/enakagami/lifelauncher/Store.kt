@@ -11,8 +11,8 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.time.LocalDate
 
-/** 目標・習慣の1行 */
-data class Item(val id: Long, val text: String)
+/** 目標・習慣の1行。time は習慣をやる時刻（0:00 からの分）。決めていなければ null */
+data class Item(val id: Long, val text: String, val time: Int? = null)
 
 /** トップ画面に置ける部品（id → 名前） */
 val ALL_WIDGETS = linkedMapOf(
@@ -73,6 +73,7 @@ data class Fav(val key: String, val label: String)
 
 /** スマホ内（SharedPreferences）にすべてのデータを保存する。外部送信はしない。 */
 class Store(context: Context) {
+    private val appCtx = context.applicationContext
     private val prefs = context.getSharedPreferences("life", Context.MODE_PRIVATE)
 
     var birth by mutableStateOf(
@@ -119,16 +120,19 @@ class Store(context: Context) {
     // ---- 目標・習慣 ----
     fun listFor(kind: String) = if (kind == "goals") goals else habits
 
-    fun addItem(kind: String, text: String) {
-        listFor(kind).add(Item(System.currentTimeMillis(), text))
+    fun addItem(kind: String, text: String, time: Int? = null) {
+        val item = Item(System.currentTimeMillis(), text, time)
+        listFor(kind).add(item)
         saveItems(kind)
+        if (kind == "habits") HabitRemind.onTimeSet(appCtx, item.id, time)
     }
 
-    fun updateItem(kind: String, id: Long, text: String) {
+    fun updateItem(kind: String, id: Long, text: String, time: Int? = null) {
         val list = listFor(kind)
         val i = list.indexOfFirst { it.id == id }
-        if (i >= 0) list[i] = list[i].copy(text = text)
+        if (i >= 0) list[i] = list[i].copy(text = text, time = time)
         saveItems(kind)
+        if (kind == "habits") HabitRemind.onTimeSet(appCtx, id, time)
     }
 
     fun deleteItem(kind: String, id: Long) {
@@ -147,13 +151,13 @@ class Store(context: Context) {
         val arr = JSONArray(prefs.getString(kind, "[]"))
         return (0 until arr.length()).map {
             val o = arr.getJSONObject(it)
-            Item(o.getLong("id"), o.getString("text"))
+            Item(o.getLong("id"), o.getString("text"), if (o.has("time")) o.getInt("time") else null)
         }
     }
 
     private fun saveItems(kind: String) {
         val arr = JSONArray()
-        listFor(kind).forEach { arr.put(JSONObject().put("id", it.id).put("text", it.text)) }
+        listFor(kind).forEach { arr.put(JSONObject().put("id", it.id).put("text", it.text).apply { it.time?.let { t -> put("time", t) } }) }
         prefs.edit().putString(kind, arr.toString()).apply()
     }
 
@@ -300,6 +304,8 @@ class Store(context: Context) {
         val o = JSONObject()
         habitDone.forEach { (k, v) -> if (habits.any { it.id == k }) o.put(k.toString(), JSONArray(v.sorted())) }
         prefs.edit().putString("habitDone", o.toString()).apply()
+        // チェックしたら、出ているお知らせを消す
+        if (isHabitDone(id, date)) HabitRemind.cancel(appCtx, id)
     }
 
     /** 何日連続でできているか（今日まだなら昨日から数える） */

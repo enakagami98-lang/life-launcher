@@ -400,7 +400,7 @@
     <string name="tut_more_title">Ada juga fitur untuk melihat kembali setiap hari</string>
     <string name="tut_more_body">Gunakan hanya saat kamu mau.</string>
     <string name="tut_more_journal">Halaman di antara Tujuan dan Tugas. Di hari yang kamu mau, tulis apa yang terjadi dan apa yang berjalan baik.</string>
-    <string name="tut_more_quote">Simpan kata-kata atau kutipan buku yang berkesan, dan satu akan muncul di layar utama setiap hari. Favorit lebih sering muncul, dan dengan mengetuk salah satu lalu memilih \"Tampilkan hari ini\", kamu bisa memilih kata hari ini.</string>
+    <string name="tut_more_quote">Simpan kata-kata atau kutipan buku yang membekas, dan setiap hari satu muncul di layar utama. Kotak isian memenggal baris sama seperti layar utama. Favorit lebih sering muncul, dan kamu bisa mengetuk salah satunya lalu memilih \"Tampilkan hari ini\" untuk menentukan kata hari ini.</string>
     <string name="tut_more_tasks">Tetapkan tanggal dan jam tenggat, dan tugas diurutkan dari yang paling dekat.</string>
     <string name="tut_more_tear_title">Kalender harian</string>
     <string name="tut_more_tear">Saat pertama kali menambahkan tujuan hari ini atau tugas setiap hari, lembar kalender tersobek dan sisa harimu berkurang satu.</string>
@@ -429,7 +429,7 @@
     <string name="focus_history">Fokus terbaru</string>
     <string name="focus_desc">Setelah dimulai, sampai selesai hanya telepon dan aplikasi yang diizinkan yang bisa dibuka. Waktunya dicatat setiap hari dan dimasukkan ke \"Tanya AI\".</string>
     <string name="dur_h">%1$d jam</string>
-    <string name="tut_more_habits">Centang kebiasaan harianmu untuk melihat jumlah hari berturut-turut. Centang hilang setiap hari pukul 0:00.</string>
+    <string name="tut_more_habits">Centang kebiasaan harianmu untuk melihat runtutan. Tetapkan waktu dan kamu akan diingatkan jika waktunya lewat dan kebiasaan belum dicentang. Centang hilang setiap hari pukul 0:00.</string>
     <string name="tut_more_focus">Mulai \"Waktu fokus\" dari layar utama, dan sampai selesai hanya telepon serta aplikasi pilihanmu yang bisa dipakai. Notifikasi selain telepon juga bisa dibisukan. Waktu fokusmu tercatat.</string>
     <string name="tut7_pages">Sembunyikan halaman yang tidak dipakai di \"Halaman yang ditampilkan\" di Pengaturan (⚙).</string>
     <string name="ask_q1_hint">mis. Di kereta</string>
@@ -458,4 +458,28 @@
     <string name="memo_note">Catatan ini dihapus saat kamu mengetuk \"Tutup\".</string>
     <string name="tut_more_memo_title">Catatan saat tidur dan fokus</string>
     <string name="tut_more_memo">Di layar waktu tidur dan waktu fokus, kamu bisa mencatat yang terlintas. Catatan ditampilkan saat waktunya selesai dan tidak hilang sampai kamu mengetuk \"Tutup\".</string>
+    <string name="hr_channel">Pengingat kebiasaan</string>
+    <string name="hr_body">Kamu merencanakan kebiasaan ini pukul %1$s. Belum dicentang.</string>
+    <string name="hr_at">Pukul %1$s</string>
+    <string name="hr_time">Waktu</string>
+    <string name="hr_none">Tidak ada</string>
+    <string name="hr_clear">Hapus waktu</string>
+    <string name="hr_note">Jika kamu menetapkan waktu, kamu akan diingatkan saat waktunya lewat dan kebiasaan belum dicentang.</string>
+    <string name="ab_add">Atur jam terkunci</string>
+    <string name="ab_add_sub">mis. Jangan buka aplikasi ini pagi hari</string>
+    <string name="ab_change">Ubah jam terkunci</string>
+    <string name="ab_now">Terkunci %1$s</string>
+    <string name="ab_remove">Hapus jam terkunci</string>
+    <string name="ab_title">Jam aplikasi ini terkunci</string>
+    <string name="ab_desc">Setiap hari pada jam ini, membuka aplikasi ini akan membawamu kembali ke layar utama. Bisa melewati tengah malam (mis. 23:00–7:00).</string>
+    <string name="ab_from">Dari</string>
+    <string name="ab_to">Sampai</string>
+    <string name="ab_sep">–</string>
+    <string name="ab_range">%1$s–%2$s</string>
+    <string name="ab_blocked">Aplikasi ini sedang terkunci</string>
+    <string name="ab_blocked_sub">Tekan lama aplikasi untuk mengubah atau menghapus jamnya.</string>
+    <string name="q_same_note">Ditampilkan dengan ukuran dan pemenggalan baris yang sama seperti di layar utama.</string>
+    <string name="q_text_hint">Kata-kata yang membekas</string>
+    <string name="tut_more_block_title">Jam terkunci per aplikasi</string>
+    <string name="tut_more_block">Tekan lama sebuah aplikasi dan pilih \"Atur jam terkunci\", maka setiap hari pada jam itu aplikasi tersebut tidak bisa dibuka. Misalnya, tidak main game di pagi hari.</string>
 </resources>

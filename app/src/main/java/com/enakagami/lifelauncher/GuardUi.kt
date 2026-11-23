@@ -244,3 +244,31 @@ fun CallButton(color: Color, onClick: () -> Unit) {
 fun dial(context: android.content.Context) {
     runCatching { context.startActivity(Intent(Intent.ACTION_DIAL).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) }
 }
+
+/** アプリごとの「使えない時間」に開こうとしたとき */
+@Composable
+fun BlockedDialog(pkg: String, label: String, onClose: () -> Unit) {
+    val range = Guard.appBlockText(pkg) ?: ""
+    Dialog(onDismissRequest = onClose) {
+        Column(
+            Modifier.fillMaxWidth()
+                .background(CardBg, RoundedCornerShape(32.dp))
+                .border(1.dp, SubInk.copy(alpha = 0.4f), RoundedCornerShape(32.dp))
+                .padding(26.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Text(label, color = SubInk, fontSize = 15.sp)
+            Spacer(Modifier.height(8.dp))
+            Text(range, color = Blue, fontSize = 34.sp, fontWeight = FontWeight.Black)
+            Spacer(Modifier.height(8.dp))
+            Text(stringResource(R.string.ab_blocked), color = Ink, fontSize = 18.sp, fontWeight = FontWeight.Bold,
+                lineHeight = 27.sp, textAlign = TextAlign.Center)
+            Spacer(Modifier.height(6.dp))
+            Text(stringResource(R.string.ab_blocked_sub), color = SubInk, fontSize = 13.sp, lineHeight = 19.sp, textAlign = TextAlign.Center)
+            Spacer(Modifier.height(20.dp))
+            OutlinedButton(onClick = onClose, modifier = Modifier.fillMaxWidth()) {
+                Text(stringResource(R.string.close), color = Ink, fontWeight = FontWeight.Bold)
+            }
+        }
+    }
+}

@@ -398,7 +398,7 @@
     <string name="tut_more_title">Funzioni per ripensare a ogni giornata</string>
     <string name="tut_more_body">Usale solo quando vuoi.</string>
     <string name="tut_more_journal">La pagina tra Obiettivi e Attività. Nei giorni in cui ti va, annota cosa è successo e cosa è andato bene.</string>
-    <string name="tut_more_quote">Salva parole o passi di libri che ti hanno colpito: ogni giorno uno apparirà nella schermata iniziale. Le preferite compaiono più spesso; tocca una frase e scegli «Mostra oggi» per decidere quella di oggi.</string>
+    <string name="tut_more_quote">Salva parole o passi di libri che ti hanno colpito, e ogni giorno uno appare nella schermata Home. Il campo di testo va a capo come la schermata Home. I preferiti escono più spesso, e puoi toccarne uno e scegliere \"Mostra oggi\" per decidere quello di oggi.</string>
     <string name="tut_more_tasks">Imposta data e ora di scadenza e le attività saranno ordinate dalla più vicina.</string>
     <string name="tut_more_tear_title">Calendario a strappo</string>
     <string name="tut_more_tear">La prima volta che aggiungi l\'obiettivo di oggi o un\'attività, un foglio del calendario si strappa e i giorni rimasti calano di uno.</string>
@@ -427,7 +427,7 @@
     <string name="focus_history">Concentrazione recente</string>
     <string name="focus_desc">Una volta avviata, fino alla fine si aprono solo le chiamate e le app consentite. Il tempo viene registrato ogni giorno e incluso in «Chiedi all\'IA».</string>
     <string name="dur_h">%1$d h</string>
-    <string name="tut_more_habits">Spunta le abitudini ogni giorno per vedere la tua serie. Le spunte si azzerano ogni giorno alle 0:00.</string>
+    <string name="tut_more_habits">Spunta le tue abitudini quotidiane per vedere la serie. Imposta un orario e riceverai un promemoria se passa e l\'abitudine non è spuntata. Le spunte si azzerano ogni giorno alle 0:00.</string>
     <string name="tut_more_focus">Avvia \"Tempo di concentrazione\" dalla schermata Home: fino alla fine funzionano solo le chiamate e le app scelte. Puoi anche silenziare le notifiche tranne le chiamate. Il tempo di concentrazione viene registrato.</string>
     <string name="tut7_pages">Nascondi le pagine che non usi in «Pagine visibili» nelle Impostazioni (⚙).</string>
     <string name="ask_q1_hint">es. In treno</string>
@@ -456,4 +456,28 @@
     <string name="memo_note">Questa nota viene eliminata quando tocchi \"Chiudi\".</string>
     <string name="tut_more_memo_title">Note di notte e di concentrazione</string>
     <string name="tut_more_memo">Nelle schermate dell\'ora di dormire e del tempo di concentrazione puoi annotare ciò che ti viene in mente. La nota appare alla fine e resta finché non tocchi \"Chiudi\".</string>
+    <string name="hr_channel">Promemoria delle abitudini</string>
+    <string name="hr_body">Avevi programmato questa abitudine alle %1$s. Non è ancora spuntata.</string>
+    <string name="hr_at">Alle %1$s</string>
+    <string name="hr_time">Orario</string>
+    <string name="hr_none">Nessuno</string>
+    <string name="hr_clear">Cancella orario</string>
+    <string name="hr_note">Se imposti un orario, riceverai un promemoria quando passa e l\'abitudine non è ancora spuntata.</string>
+    <string name="ab_add">Imposta orari bloccati</string>
+    <string name="ab_add_sub">es. Non aprire questa app al mattino</string>
+    <string name="ab_change">Cambia orari bloccati</string>
+    <string name="ab_now">Bloccata %1$s</string>
+    <string name="ab_remove">Rimuovi orari bloccati</string>
+    <string name="ab_title">Orari in cui questa app è bloccata</string>
+    <string name="ab_desc">Ogni giorno in questi orari, aprendo questa app tornerai alla schermata Home. Gli orari possono superare la mezzanotte (es. 23:00–7:00).</string>
+    <string name="ab_from">Dalle</string>
+    <string name="ab_to">Alle</string>
+    <string name="ab_sep">–</string>
+    <string name="ab_range">%1$s–%2$s</string>
+    <string name="ab_blocked">Questa app ora è bloccata</string>
+    <string name="ab_blocked_sub">Tieni premuta l\'app per cambiare o rimuovere gli orari.</string>
+    <string name="q_same_note">Viene mostrato con la stessa dimensione e gli stessi a capo della schermata Home.</string>
+    <string name="q_text_hint">Parole che ti hanno colpito</string>
+    <string name="tut_more_block_title">Orari bloccati per app</string>
+    <string name="tut_more_block">Tieni premuta un\'app e scegli \"Imposta orari bloccati\": ogni giorno in quegli orari non potrai aprirla. Per esempio, niente giochi al mattino.</string>
 </resources>

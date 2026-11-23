@@ -400,7 +400,7 @@
     <string name="tut_more_title">हर दिन पर नज़र डालने की सुविधाएँ भी हैं</string>
     <string name="tut_more_body">जब मन हो तभी इस्तेमाल करें।</string>
     <string name="tut_more_journal">\"लक्ष्य\" और \"काम\" के बीच का पेज। जिस दिन मन हो, आज क्या हुआ और क्या अच्छा रहा, लिख लें।</string>
-    <string name="tut_more_quote">दिल को छू गए शब्द या किताब के अंश सहेजें, हर दिन उनमें से एक होम स्क्रीन पर दिखेगा। पसंदीदा शब्द ज़्यादा बार दिखते हैं, और किसी पर टैप करके \"आज दिखाएँ\" चुनने से आज के शब्द तय कर सकते हैं।</string>
+    <string name="tut_more_quote">दिल को छूने वाले शब्द या किताब के अंश सहेजें, और हर दिन एक होम स्क्रीन पर दिखेगा। लिखने का बॉक्स होम स्क्रीन की तरह ही लाइन तोड़ता है। पसंदीदा ज़्यादा बार आते हैं, और किसी पर टैप करके \"आज दिखाएँ\" चुनकर आज के शब्द तय कर सकते हैं।</string>
     <string name="tut_more_tasks">समय सीमा की तारीख और समय तय करें, काम सबसे नज़दीकी समय सीमा के क्रम में दिखेंगे।</string>
     <string name="tut_more_tear_title">दैनिक कैलेंडर</string>
     <string name="tut_more_tear">दिन में पहली बार आज का लक्ष्य या काम जोड़ने पर कैलेंडर का एक पन्ना फटता है और बचे दिन एक कम हो जाते हैं।</string>
@@ -429,7 +429,7 @@
     <string name="focus_history">हाल का फ़ोकस</string>
     <string name="focus_desc">शुरू करने पर, खत्म होने तक सिर्फ़ कॉल और चुने हुए ऐप्स खुलेंगे। फ़ोकस समय हर दिन दर्ज होता है और \"AI से पूछें\" में भी जाता है।</string>
     <string name="dur_h">%1$d घंटे</string>
-    <string name="tut_more_habits">रोज़ की आदतों पर निशान लगाएं, लगातार दिनों की गिनती दिखेगी। निशान हर दिन 0:00 बजे हट जाते हैं।</string>
+    <string name="tut_more_habits">रोज़ की आदतों पर टिक करें और लगातार दिनों की गिनती देखें। समय तय करें, तो समय निकलने पर भी टिक न हो तो याद दिलाया जाएगा। टिक हर दिन 0:00 बजे हट जाते हैं।</string>
     <string name="tut_more_focus">होम स्क्रीन से \"फ़ोकस समय\" शुरू करें, खत्म होने तक सिर्फ़ कॉल और चुने हुए ऐप चलेंगे। कॉल के अलावा सूचनाएँ भी बंद कर सकते हैं। आपका फ़ोकस समय दर्ज होता है।</string>
     <string name="tut7_pages">जिन पेजों का उपयोग नहीं करते, उन्हें सेटिंग्स (⚙) के \"दिखाए जाने वाले पेज\" में छिपाएं।</string>
     <string name="ask_q1_hint">जैसे: ट्रेन में</string>
@@ -458,4 +458,28 @@
     <string name="memo_note">\"बंद करें\" दबाने पर यह नोट मिट जाएगा।</string>
     <string name="tut_more_memo_title">सोने और फ़ोकस के समय के नोट</string>
     <string name="tut_more_memo">सोने के समय और फ़ोकस समय की स्क्रीन पर आप जो सूझे वह नोट कर सकते हैं। समय खत्म होने पर नोट दिखता है और \"बंद करें\" दबाने तक नहीं हटता।</string>
+    <string name="hr_channel">आदत रिमाइंडर</string>
+    <string name="hr_body">आपने यह आदत %1$s पर करने की योजना बनाई थी। अभी तक टिक नहीं हुई है।</string>
+    <string name="hr_at">%1$s पर</string>
+    <string name="hr_time">समय</string>
+    <string name="hr_none">कोई नहीं</string>
+    <string name="hr_clear">समय हटाएँ</string>
+    <string name="hr_note">समय तय करने पर, वह समय निकल जाने के बाद भी टिक न हो तो आपको याद दिलाया जाएगा।</string>
+    <string name="ab_add">रोक का समय तय करें</string>
+    <string name="ab_add_sub">जैसे: सुबह यह ऐप न खुले</string>
+    <string name="ab_change">रोक का समय बदलें</string>
+    <string name="ab_now">रोक %1$s</string>
+    <string name="ab_remove">रोक का समय हटाएँ</string>
+    <string name="ab_title">जब यह ऐप बंद रहेगा</string>
+    <string name="ab_desc">हर दिन इस समय यह ऐप खोलने पर आप होम स्क्रीन पर लौट आएँगे। समय आधी रात पार कर सकता है (जैसे 23:00–7:00)।</string>
+    <string name="ab_from">से</string>
+    <string name="ab_to">तक</string>
+    <string name="ab_sep">–</string>
+    <string name="ab_range">%1$s–%2$s</string>
+    <string name="ab_blocked">अभी यह ऐप इस्तेमाल नहीं हो सकता</string>
+    <string name="ab_blocked_sub">समय बदलने या हटाने के लिए ऐप को देर तक दबाएँ।</string>
+    <string name="q_same_note">होम स्क्रीन जैसे ही आकार और उसी लाइन-ब्रेक के साथ दिखेगा।</string>
+    <string name="q_text_hint">दिल को छूने वाले शब्द</string>
+    <string name="tut_more_block_title">हर ऐप के लिए रोक का समय</string>
+    <string name="tut_more_block">किसी ऐप को देर तक दबाकर \"रोक का समय तय करें\" चुनें, तो हर दिन उस समय वह ऐप नहीं खुलेगा। जैसे, सुबह गेम नहीं।</string>
 </resources>

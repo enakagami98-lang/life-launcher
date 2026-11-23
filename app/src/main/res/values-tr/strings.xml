@@ -399,7 +399,7 @@
     <string name="tut_more_title">Her güne dönüp bakmak için özellikler de var</string>
     <string name="tut_more_body">Yalnızca istediğinde kullan.</string>
     <string name="tut_more_journal">Hedefler ile Görevler arasındaki sayfa. İstediğin günlerde bugün olanları ve iyi gidenleri yaz.</string>
-    <string name="tut_more_quote">Aklında kalan sözleri veya kitap alıntılarını kaydet, her gün biri ana ekranda görünsün. Favoriler daha sık çıkar; birine dokunup \"Bugün göster\"i seçerek bugünün sözünü belirleyebilirsin.</string>
+    <string name="tut_more_quote">Aklında kalan sözleri veya kitap alıntılarını kaydet, her gün biri ana ekranda görünsün. Yazma kutusu satırları ana ekranla aynı şekilde böler. Favoriler daha sık çıkar; birine dokunup \"Bugün göster\"i seçerek bugünün sözünü belirleyebilirsin.</string>
     <string name="tut_more_tasks">Son tarih ve saat belirle, görevler en yakın tarihe göre sıralansın.</string>
     <string name="tut_more_tear_title">Günlük takvim</string>
     <string name="tut_more_tear">Gün içinde ilk kez bugünün hedefini veya bir görev eklediğinde takvim yaprağı kopar ve kalan günlerin bir azalır.</string>
@@ -428,7 +428,7 @@
     <string name="focus_history">Son odak süreleri</string>
     <string name="focus_desc">Başlatınca bitene kadar yalnızca aramalar ve izin verdiğin uygulamalar açılır. Süre her gün kaydedilir ve \"Yapay zekâya sor\"a eklenir.</string>
     <string name="dur_h">%1$d sa</string>
-    <string name="tut_more_habits">Günlük alışkanlıklarını işaretle, kaç gündür sürdürdüğünü gör. İşaretler her gün 0:00\'da kalkar.</string>
+    <string name="tut_more_habits">Günlük alışkanlıklarını işaretle, serini gör. Bir saat belirlersen, o saat geçtiğinde işaretlenmemişse hatırlatırız. İşaretler her gün 0:00\'da kalkar.</string>
     <string name="tut_more_focus">Ana ekrandan \"Odak zamanı\"nı başlat; bitene kadar yalnızca aramalar ve seçtiğin uygulamalar çalışır. Aramalar dışındaki bildirimleri de susturabilirsin. Odak süren kaydedilir.</string>
     <string name="tut7_pages">Kullanmadığın sayfaları Ayarlar\'daki (⚙) \"Gösterilen sayfalar\"dan gizle.</string>
     <string name="ask_q1_hint">ör. Trendeyim</string>
@@ -457,4 +457,28 @@
     <string name="memo_note">\"Kapat\"a dokununca bu not silinir.</string>
     <string name="tut_more_memo_title">Uyku ve odak sırasında not</string>
     <string name="tut_more_memo">Uyku saati ve odak zamanı ekranlarında aklına geleni not alabilirsin. Süre bitince gösterilir ve \"Kapat\"a dokunana kadar kaybolmaz.</string>
+    <string name="hr_channel">Alışkanlık hatırlatıcıları</string>
+    <string name="hr_body">Bu alışkanlığı %1$s için planlamıştın. Henüz işaretlenmedi.</string>
+    <string name="hr_at">%1$s</string>
+    <string name="hr_time">Saat</string>
+    <string name="hr_none">Yok</string>
+    <string name="hr_clear">Saati sil</string>
+    <string name="hr_note">Bir saat belirlersen, o saat geçtiğinde alışkanlık hâlâ işaretlenmemişse hatırlatırız.</string>
+    <string name="ab_add">Engelli saatleri belirle</string>
+    <string name="ab_add_sub">örn. Bu uygulamayı sabahları açma</string>
+    <string name="ab_change">Engelli saatleri değiştir</string>
+    <string name="ab_now">Engelli %1$s</string>
+    <string name="ab_remove">Engelli saatleri kaldır</string>
+    <string name="ab_title">Bu uygulamanın engelli olduğu saatler</string>
+    <string name="ab_desc">Her gün bu saatlerde bu uygulamayı açmak seni ana ekrana geri götürür. Saatler gece yarısını geçebilir (örn. 23:00–7:00).</string>
+    <string name="ab_from">Başlangıç</string>
+    <string name="ab_to">Bitiş</string>
+    <string name="ab_sep">–</string>
+    <string name="ab_range">%1$s–%2$s</string>
+    <string name="ab_blocked">Bu uygulama şu an engelli</string>
+    <string name="ab_blocked_sub">Saatleri değiştirmek veya kaldırmak için uygulamaya uzun bas.</string>
+    <string name="q_same_note">Ana ekrandakiyle aynı boyutta ve aynı satır sonlarıyla gösterilir.</string>
+    <string name="q_text_hint">Aklında kalan sözler</string>
+    <string name="tut_more_block_title">Uygulama başına engelli saatler</string>
+    <string name="tut_more_block">Bir uygulamaya uzun basıp \"Engelli saatleri belirle\"yi seçersen, her gün o saatlerde açamazsın. Örneğin sabahları oyun yok.</string>
 </resources>

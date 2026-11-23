@@ -403,7 +403,7 @@
     <string name="tut_more_title">毎日を振り返る機能も使えます</string>
     <string name="tut_more_body">どれも、使いたいときだけで大丈夫です。</string>
     <string name="tut_more_journal">「目標」と「タスク」の間のページです。書きたい日だけ、今日あったことや良かったことを残せます。</string>
-    <string name="tut_more_quote">心に残った言葉や本の一節を登録すると、毎日1つトップ画面に出ます。お気に入りにすると出やすくなり、言葉を押して「今日表示する」を選べば今日の1つを決められます。</string>
+    <string name="tut_more_quote">心に残った言葉や本の一節を登録すると、毎日1つトップ画面に出ます。入力欄は、トップ画面と同じ形で改行されます。お気に入りにすると出やすくなり、言葉を押して「今日表示する」を選べば今日の1つを決められます。</string>
     <string name="tut_more_tasks">「何日の何時までに」と期限を決めると、期限が近い順に並びます。</string>
     <string name="tut_more_tear_title">日めくり</string>
     <string name="tut_more_tear">その日に初めて今日の目標かタスクを登録すると、カレンダーがめくれて残りの日数が1日減ります。</string>
@@ -432,7 +432,7 @@
     <string name="focus_history">最近の集中</string>
     <string name="focus_desc">始めると、終わるまで電話と「使えるアプリ」以外は開けなくなります。集中した時間は毎日記録され、「AIに分析してもらう」にも入ります。</string>
     <string name="dur_h">%1$d時間</string>
-    <string name="tut_more_habits">毎日の習慣にチェックを入れると、続けた日数が出ます。チェックは毎日0:00に外れます。</string>
+    <string name="tut_more_habits">毎日の習慣にチェックを入れると、続けた日数が出ます。やる時刻を決めておくと、その時刻を過ぎてもチェックが無いときにお知らせします。チェックは毎日0:00に外れます。</string>
     <string name="tut_more_focus">トップ画面の「集中タイム」から始めると、終わるまで電話と選んだアプリしか使えなくなります。電話以外の通知も止められます。集中した時間は記録に残ります。</string>
     <string name="tut7_pages">使わないページは、設定（⚙）の「表示するページ」で隠せます。</string>
     <string name="ask_q1_hint">例：電車で移動中</string>
@@ -461,4 +461,28 @@
     <string name="memo_note">「閉じる」を押すと、このメモは消えます。</string>
     <string name="tut_more_memo_title">おやすみ・集中中のメモ</string>
     <string name="tut_more_memo">おやすみ時間や集中タイムの画面では、思いついたことをメモできます。その時間が終わると表示され、「閉じる」を押すまで消えません。</string>
+    <string name="hr_channel">習慣のお知らせ</string>
+    <string name="hr_body">%1$s にやる習慣です。まだチェックが付いていません</string>
+    <string name="hr_at">%1$s にやる</string>
+    <string name="hr_time">やる時刻</string>
+    <string name="hr_none">決めない</string>
+    <string name="hr_clear">時刻を消す</string>
+    <string name="hr_note">時刻を決めると、その時刻を過ぎてもチェックが無いときにお知らせします。</string>
+    <string name="ab_add">使えない時間を決める</string>
+    <string name="ab_add_sub">例：朝はこのアプリを開けないようにする</string>
+    <string name="ab_change">使えない時間を変える</string>
+    <string name="ab_now">使えない時間 %1$s</string>
+    <string name="ab_remove">使えない時間をやめる</string>
+    <string name="ab_title">このアプリを使えない時間</string>
+    <string name="ab_desc">毎日この時間は、このアプリを開いてもホーム画面に戻ります。日付をまたぐ時間（例 23:00〜7:00）にもできます。</string>
+    <string name="ab_from">から</string>
+    <string name="ab_to">まで</string>
+    <string name="ab_sep">〜</string>
+    <string name="ab_range">%1$s〜%2$s</string>
+    <string name="ab_blocked">この時間は、このアプリを使えません</string>
+    <string name="ab_blocked_sub">アプリを長押しすると、時間を変えたりやめたりできます。</string>
+    <string name="q_same_note">トップ画面に出るときと同じ大きさ・同じ改行で表示されます。</string>
+    <string name="q_text_hint">心に残った言葉</string>
+    <string name="tut_more_block_title">アプリごとの使えない時間</string>
+    <string name="tut_more_block">アプリを長押しして「使えない時間を決める」を選ぶと、毎日その時間だけ、そのアプリを開けなくなります。朝はゲームを開かない、などに使えます。</string>
 </resources>

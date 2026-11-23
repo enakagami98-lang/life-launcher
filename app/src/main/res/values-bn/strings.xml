@@ -400,7 +400,7 @@
     <string name="tut_more_title">প্রতিটি দিন ফিরে দেখার সুবিধাও আছে</string>
     <string name="tut_more_body">যখন ইচ্ছা হবে তখনই ব্যবহার করুন।</string>
     <string name="tut_more_journal">\"লক্ষ্য\" আর \"কাজ\"-এর মাঝের পাতা। যেদিন ইচ্ছা হয়, আজ কী হলো আর কী ভালো গেল লিখে রাখুন।</string>
-    <string name="tut_more_quote">মনে দাগ কাটা কথা বা বইয়ের অংশ সংরক্ষণ করুন, প্রতিদিন একটি হোম স্ক্রিনে দেখাবে। প্রিয়গুলো বেশি দেখা যায়, আর কোনোটিতে ট্যাপ করে \"আজ দেখান\" বেছে নিলে আজকের কথা ঠিক করতে পারবেন।</string>
+    <string name="tut_more_quote">মনে থেকে যাওয়া কথা বা বইয়ের অংশ সংরক্ষণ করুন, প্রতিদিন একটি হোম স্ক্রিনে দেখা যাবে। লেখার বাক্স হোম স্ক্রিনের মতোই লাইন ভাঙে। প্রিয়গুলো বেশি আসে, আর কোনোটিতে ট্যাপ করে \"আজ দেখান\" বেছে আজকের কথা ঠিক করতে পারেন।</string>
     <string name="tut_more_tasks">শেষ তারিখ ও সময় ঠিক করলে কাজগুলো সবচেয়ে কাছের সময় অনুযায়ী সাজানো হবে।</string>
     <string name="tut_more_tear_title">দৈনিক ক্যালেন্ডার</string>
     <string name="tut_more_tear">দিনে প্রথমবার আজকের লক্ষ্য বা কাজ যোগ করলে ক্যালেন্ডারের একটি পাতা ছিঁড়ে যায় এবং বাকি দিন এক কমে।</string>
@@ -429,7 +429,7 @@
     <string name="focus_history">সাম্প্রতিক ফোকাস</string>
     <string name="focus_desc">শুরু করলে শেষ না হওয়া পর্যন্ত শুধু কল আর বাছাই করা অ্যাপ খুলবে। ফোকাসের সময় প্রতিদিন লেখা থাকে এবং \"AI-কে জিজ্ঞেস করুন\"-এ যোগ হয়।</string>
     <string name="dur_h">%1$d ঘণ্টা</string>
-    <string name="tut_more_habits">রোজকার অভ্যাসে টিক দিলে টানা কত দিন তা দেখা যাবে। টিক প্রতিদিন 0:00-তে মুছে যায়।</string>
+    <string name="tut_more_habits">রোজের অভ্যাসে টিক দিন, টানা দিনের সংখ্যা দেখুন। সময় ঠিক করলে সময় পার হওয়ার পরও টিক না থাকলে মনে করিয়ে দেওয়া হবে। টিক প্রতিদিন 0:00-এ মুছে যায়।</string>
     <string name="tut_more_focus">হোম স্ক্রিন থেকে \"ফোকাস সময়\" শুরু করুন, শেষ না হওয়া পর্যন্ত শুধু কল আর বেছে নেওয়া অ্যাপ চলবে। কল ছাড়া বিজ্ঞপ্তিও বন্ধ রাখা যায়। আপনার ফোকাস সময় লেখা থাকে।</string>
     <string name="tut7_pages">যে পাতা ব্যবহার করেন না, সেটিংস (⚙)-এর \"যে পাতাগুলো দেখাবে\" থেকে লুকান।</string>
     <string name="ask_q1_hint">যেমন: ট্রেনে আছি</string>
@@ -458,4 +458,28 @@
     <string name="memo_note">\"বন্ধ করুন\" চাপলে এই নোট মুছে যাবে।</string>
     <string name="tut_more_memo_title">ঘুম ও ফোকাসের সময়ের নোট</string>
     <string name="tut_more_memo">ঘুমের সময় ও ফোকাস সময়ের স্ক্রিনে যা মনে আসে নোট করতে পারেন। সময় শেষ হলে নোট দেখানো হয় এবং \"বন্ধ করুন\" না চাপা পর্যন্ত যায় না।</string>
+    <string name="hr_channel">অভ্যাসের রিমাইন্ডার</string>
+    <string name="hr_body">আপনি এই অভ্যাসটি %1$s-এ করার পরিকল্পনা করেছিলেন। এখনও টিক দেওয়া হয়নি।</string>
+    <string name="hr_at">%1$s-এ</string>
+    <string name="hr_time">সময়</string>
+    <string name="hr_none">নেই</string>
+    <string name="hr_clear">সময় মুছুন</string>
+    <string name="hr_note">সময় ঠিক করলে, সেই সময় পার হওয়ার পরও টিক না থাকলে মনে করিয়ে দেওয়া হবে।</string>
+    <string name="ab_add">বন্ধের সময় ঠিক করুন</string>
+    <string name="ab_add_sub">যেমন: সকালে এই অ্যাপ খোলা যাবে না</string>
+    <string name="ab_change">বন্ধের সময় বদলান</string>
+    <string name="ab_now">বন্ধ %1$s</string>
+    <string name="ab_remove">বন্ধের সময় সরান</string>
+    <string name="ab_title">এই অ্যাপ যখন বন্ধ থাকবে</string>
+    <string name="ab_desc">প্রতিদিন এই সময়ে এই অ্যাপ খুললে আপনি হোম স্ক্রিনে ফিরে যাবেন। সময় মধ্যরাত পার হতে পারে (যেমন 23:00–7:00)।</string>
+    <string name="ab_from">থেকে</string>
+    <string name="ab_to">পর্যন্ত</string>
+    <string name="ab_sep">–</string>
+    <string name="ab_range">%1$s–%2$s</string>
+    <string name="ab_blocked">এখন এই অ্যাপ ব্যবহার করা যাবে না</string>
+    <string name="ab_blocked_sub">সময় বদলাতে বা সরাতে অ্যাপটি চেপে ধরে রাখুন।</string>
+    <string name="q_same_note">হোম স্ক্রিনের মতোই একই আকারে ও একই লাইন ভাঙায় দেখানো হবে।</string>
+    <string name="q_text_hint">মনে থেকে যাওয়া কথা</string>
+    <string name="tut_more_block_title">প্রতিটি অ্যাপের বন্ধের সময়</string>
+    <string name="tut_more_block">কোনো অ্যাপ চেপে ধরে \"বন্ধের সময় ঠিক করুন\" বেছে নিলে, প্রতিদিন সেই সময়ে অ্যাপটি খোলা যাবে না। যেমন, সকালে গেম নয়।</string>
 </resources>

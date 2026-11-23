@@ -400,7 +400,7 @@
     <string name="tut_more_title">Còn có tính năng nhìn lại mỗi ngày</string>
     <string name="tut_more_body">Chỉ cần dùng khi bạn muốn.</string>
     <string name="tut_more_journal">Trang nằm giữa Mục tiêu và Việc cần làm. Vào những ngày muốn viết, hãy ghi lại chuyện đã xảy ra và điều tốt đẹp.</string>
-    <string name="tut_more_quote">Lưu những lời nói hoặc đoạn sách đọng lại trong bạn, mỗi ngày một câu sẽ hiện trên màn hình chính. Câu yêu thích sẽ xuất hiện thường hơn, và chạm vào một câu rồi chọn \"Hiện hôm nay\" để chọn câu của hôm nay.</string>
+    <string name="tut_more_quote">Lưu những lời nói hoặc đoạn sách đọng lại trong bạn, mỗi ngày một câu sẽ hiện trên màn hình chính. Ô nhập xuống dòng giống như màn hình chính. Câu yêu thích xuất hiện thường hơn, và bạn có thể chạm vào một câu rồi chọn \"Hiển thị hôm nay\" để chọn câu của hôm nay.</string>
     <string name="tut_more_tasks">Đặt ngày giờ hạn chót, công việc sẽ được xếp theo hạn gần nhất.</string>
     <string name="tut_more_tear_title">Lịch xé</string>
     <string name="tut_more_tear">Lần đầu trong ngày bạn thêm mục tiêu hôm nay hoặc công việc, một tờ lịch được xé đi và số ngày còn lại giảm một.</string>
@@ -429,7 +429,7 @@
     <string name="focus_history">Tập trung gần đây</string>
     <string name="focus_desc">Khi bắt đầu, cho đến khi kết thúc chỉ mở được cuộc gọi và ứng dụng được dùng. Thời gian được ghi lại mỗi ngày và đưa vào \"Hỏi AI\".</string>
     <string name="dur_h">%1$d giờ</string>
-    <string name="tut_more_habits">Đánh dấu thói quen hằng ngày để xem số ngày liên tiếp. Dấu tích được xóa mỗi ngày lúc 0:00.</string>
+    <string name="tut_more_habits">Đánh dấu thói quen hằng ngày để xem chuỗi ngày. Đặt giờ thì bạn sẽ được nhắc nếu qua giờ mà thói quen chưa được đánh dấu. Dấu sẽ xóa mỗi ngày lúc 0:00.</string>
     <string name="tut_more_focus">Bắt đầu \"Thời gian tập trung\" từ màn hình chính, cho đến khi kết thúc chỉ dùng được cuộc gọi và ứng dụng đã chọn. Cũng có thể tắt thông báo trừ cuộc gọi. Thời gian tập trung được ghi lại.</string>
     <string name="tut7_pages">Ẩn những trang không dùng trong \"Trang hiển thị\" ở Cài đặt (⚙).</string>
     <string name="ask_q1_hint">vd: Đang đi tàu</string>
@@ -458,4 +458,28 @@
     <string name="memo_note">Ghi chú này sẽ bị xóa khi bạn nhấn \"Đóng\".</string>
     <string name="tut_more_memo_title">Ghi chú lúc ngủ và tập trung</string>
     <string name="tut_more_memo">Trên màn hình giờ đi ngủ và thời gian tập trung, bạn có thể ghi lại điều chợt nghĩ ra. Ghi chú hiện ra khi hết giờ và không biến mất cho đến khi bạn nhấn \"Đóng\".</string>
+    <string name="hr_channel">Nhắc nhở thói quen</string>
+    <string name="hr_body">Bạn định làm thói quen này lúc %1$s. Vẫn chưa được đánh dấu.</string>
+    <string name="hr_at">Lúc %1$s</string>
+    <string name="hr_time">Giờ</string>
+    <string name="hr_none">Không đặt</string>
+    <string name="hr_clear">Xóa giờ</string>
+    <string name="hr_note">Nếu đặt giờ, bạn sẽ được nhắc khi qua giờ đó mà thói quen vẫn chưa được đánh dấu.</string>
+    <string name="ab_add">Đặt giờ bị chặn</string>
+    <string name="ab_add_sub">vd. Không cho mở ứng dụng này vào buổi sáng</string>
+    <string name="ab_change">Đổi giờ bị chặn</string>
+    <string name="ab_now">Bị chặn %1$s</string>
+    <string name="ab_remove">Bỏ giờ bị chặn</string>
+    <string name="ab_title">Giờ ứng dụng này bị chặn</string>
+    <string name="ab_desc">Mỗi ngày trong khoảng giờ này, mở ứng dụng này sẽ đưa bạn về màn hình chính. Có thể qua nửa đêm (vd. 23:00–7:00).</string>
+    <string name="ab_from">Từ</string>
+    <string name="ab_to">Đến</string>
+    <string name="ab_sep">–</string>
+    <string name="ab_range">%1$s–%2$s</string>
+    <string name="ab_blocked">Hiện không thể dùng ứng dụng này</string>
+    <string name="ab_blocked_sub">Nhấn giữ ứng dụng để đổi hoặc bỏ giờ.</string>
+    <string name="q_same_note">Hiển thị cùng cỡ chữ và cùng chỗ xuống dòng như trên màn hình chính.</string>
+    <string name="q_text_hint">Lời nói đọng lại trong bạn</string>
+    <string name="tut_more_block_title">Giờ bị chặn cho từng ứng dụng</string>
+    <string name="tut_more_block">Nhấn giữ một ứng dụng và chọn \"Đặt giờ bị chặn\", mỗi ngày trong khoảng giờ đó bạn sẽ không mở được nó. Ví dụ, không chơi game vào buổi sáng.</string>
 </resources>

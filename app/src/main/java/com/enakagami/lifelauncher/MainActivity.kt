@@ -62,6 +62,8 @@ class MainActivity : ComponentActivity() {
     private val resumeSignal = mutableIntStateOf(0)
     /** 見守りサービスから「待ち画面を出して」と頼まれた内容 */
     private val guardRequest = mutableStateOf<GuardRequest?>(null)
+    /** お知らせから開くページ（"habits" など）。開いたら null に戻す */
+    private val openPage = mutableStateOf<String?>(null)
     /** ホームボタンを押した回数（設定画面を閉じる合図） */
     private val homePress = mutableIntStateOf(0)
 
@@ -82,6 +84,8 @@ class MainActivity : ComponentActivity() {
                 homePress = homePress.intValue,
                 guardRequest = guardRequest.value,
                 setGuardRequest = { guardRequest.value = it },
+                openPage = openPage.value,
+                onPageOpened = { openPage.value = null },
             )
         }
     }
@@ -98,9 +102,11 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun handleGuardIntent(intent: Intent?) {
+        // 習慣のお知らせを押したとき：そのページを開く
+        intent?.getStringExtra("open_page")?.let { openPage.value = it; intent.removeExtra("open_page") }
         val pkg = intent?.getStringExtra("guard_pkg") ?: return
         val reason = intent.getStringExtra("guard_reason") ?: return
-        if (reason == "session") guardRequest.value = GuardRequest(pkg, null, reason)
+        if (reason == "session" || reason == "block") guardRequest.value = GuardRequest(pkg, null, reason)
         intent.removeExtra("guard_pkg")
     }
 
@@ -142,6 +148,8 @@ fun LauncherApp(
     homePress: Int,
     guardRequest: GuardRequest?,
     setGuardRequest: (GuardRequest?) -> Unit,
+    openPage: String? = null,
+    onPageOpened: () -> Unit = {},
 ) {
     val context = LocalContext.current
     val focus = LocalFocusManager.current
@@ -180,6 +188,14 @@ fun LauncherApp(
     }
 
     LaunchedEffect(homeSignal) { if (homeSignal > 0) goHome() }
+    // お知らせから開いたとき：寿命の画面に戻る処理が終わってから、そのページへ
+    LaunchedEffect(openPage) {
+        val target = openPage ?: return@LaunchedEffect
+        delay(400)
+        val i = pages.indexOf(target)
+        if (i >= 0) pager.scrollToPage(startPage + i)
+        onPageOpened()
+    }
     // アプリ一覧から離れたら検索欄を空にしてキーボードを閉じる
     LaunchedEffect(pager.settledPage) {
         if (pager.settledPage % count != 1) {
@@ -192,7 +208,8 @@ fun LauncherApp(
 
     val openApp: (String) -> Unit = { key ->
         val pkg = key.substringBefore('/')
-        if (!Billing.locked && Guard.isLimited(pkg) && !Guard.sessionActive(pkg)) setGuardRequest(GuardRequest(pkg, key, "open"))
+        if (!Billing.locked && Guard.appBlockedNow(pkg)) setGuardRequest(GuardRequest(pkg, key, "block"))
+        else if (!Billing.locked && Guard.isLimited(pkg) && !Guard.sessionActive(pkg)) setGuardRequest(GuardRequest(pkg, key, "open"))
         else launchApp(context, key)
     }
 
@@ -301,6 +318,7 @@ fun LauncherApp(
 @Composable
 private fun GuardDialogFor(req: GuardRequest, apps: List<AppInfo>, context: android.content.Context, setGuardRequest: (GuardRequest?) -> Unit) {
     val label = apps.firstOrNull { it.pkg == req.pkg }?.label ?: req.pkg
+    if (req.reason == "block") { BlockedDialog(req.pkg, label) { setGuardRequest(null) }; return }
     GuardDialog(
         req = req,
         label = label,

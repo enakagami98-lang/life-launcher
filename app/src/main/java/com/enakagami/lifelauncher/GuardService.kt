@@ -121,6 +121,8 @@ class GuardService : Service() {
         FocusQuiet.sync(this)
         // 歩数センサーは画面が消えていても聞き続ける（許可が出たらここで聞き始める）
         Steps.ensureListening(this)
+        // 習慣の時刻を過ぎてもチェックが無ければお知らせ（画面が消えていても調べる）
+        HabitRemind.check(this)
         if (!getSystemService(PowerManager::class.java).isInteractive) { wasActive = false; return }
         // ロック解除の画面（パスワード入力中）は何もしない
         if (getSystemService(android.app.KeyguardManager::class.java).isKeyguardLocked) { wasActive = false; return }
@@ -163,6 +165,10 @@ class GuardService : Service() {
         if (Guard.activeLock() != null && isBlockable(pkg)) {
             hideBar(); openLauncher(pkg, "lock"); return
         }
+        // アプリごとの使えない時間（例：朝はゲームを開けない）
+        if (Guard.appBlockedNow(pkg) && isBlockable(pkg)) {
+            hideBar(); openLauncher(pkg, "block"); return
+        }
         if (!Guard.isLimited(pkg)) { hideBar(); return }
 
         // リマインダー対象アプリ
@@ -191,6 +197,9 @@ class GuardService : Service() {
             return
         }
         val pkg = Guard.currentPkg ?: run { hideBar(); return }
+        if (Guard.appBlockedNow(pkg)) {
+            hideBar(); Guard.currentPkg = null; openLauncher(pkg, "block"); return
+        }
         if (!Guard.sessionActive(pkg) || Guard.remainingMs(pkg) < 30_000) {
             hideBar(); Guard.currentPkg = null; openLauncher(pkg, "session"); return
         }

@@ -398,7 +398,7 @@
     <string name="tut_more_title">Também há recursos para rever cada dia</string>
     <string name="tut_more_body">Use só quando quiser.</string>
     <string name="tut_more_journal">É a página entre Metas e Tarefas. Nos dias em que quiser, anote o que aconteceu e o que deu certo.</string>
-    <string name="tut_more_quote">Salve frases ou trechos de livros que marcaram você, e um deles aparece na tela inicial todos os dias. As favoritas aparecem mais vezes, e ao tocar numa e escolher \"Mostrar hoje\" você decide a de hoje.</string>
+    <string name="tut_more_quote">Salve palavras ou trechos de livros que marcaram você, e um aparece na tela inicial todo dia. A caixa de texto quebra as linhas do mesmo jeito que a tela inicial. Os favoritos aparecem mais vezes, e você pode tocar em um e escolher \"Mostrar hoje\" para decidir o de hoje.</string>
     <string name="tut_more_tasks">Defina data e hora de entrega, e as tarefas são ordenadas pela mais próxima.</string>
     <string name="tut_more_tear_title">Calendário diário</string>
     <string name="tut_more_tear">Na primeira vez que você adiciona a meta de hoje ou uma tarefa no dia, uma folha do calendário é arrancada e seus dias restantes diminuem em um.</string>
@@ -427,7 +427,7 @@
     <string name="focus_history">Foco recente</string>
     <string name="focus_desc">Ao começar, até o fim só abrem as ligações e seus apps permitidos. O tempo é registrado todo dia e incluído em \"Perguntar à IA\".</string>
     <string name="dur_h">%1$d h</string>
-    <string name="tut_more_habits">Marque seus hábitos diários para ver sua sequência. As marcações somem todo dia às 0:00.</string>
+    <string name="tut_more_habits">Marque seus hábitos diários para ver sua sequência. Defina um horário e você receberá um lembrete se ele passar e o hábito não estiver marcado. As marcas somem todo dia às 0:00.</string>
     <string name="tut_more_focus">Comece o \"Tempo de foco\" na tela inicial e, até terminar, só funcionam as ligações e os apps escolhidos. Você também pode silenciar as notificações exceto ligações. Seu tempo de foco fica registrado.</string>
     <string name="tut7_pages">Oculte as páginas que não usa em \"Páginas exibidas\" nas Configurações (⚙).</string>
     <string name="ask_q1_hint">ex.: No trem</string>
@@ -456,4 +456,28 @@
     <string name="memo_note">Esta nota é apagada ao tocar em \"Fechar\".</string>
     <string name="tut_more_memo_title">Notas na hora de dormir e no foco</string>
     <string name="tut_more_memo">Nas telas da hora de dormir e do tempo de foco, você pode anotar o que vier à cabeça. A nota aparece ao terminar e só some quando você toca em \"Fechar\".</string>
+    <string name="hr_channel">Lembretes de hábitos</string>
+    <string name="hr_body">Você planejou este hábito para as %1$s. Ainda não está marcado.</string>
+    <string name="hr_at">Às %1$s</string>
+    <string name="hr_time">Horário</string>
+    <string name="hr_none">Nenhum</string>
+    <string name="hr_clear">Limpar horário</string>
+    <string name="hr_note">Se você definir um horário, receberá um lembrete quando ele passar e o hábito ainda não estiver marcado.</string>
+    <string name="ab_add">Definir horário bloqueado</string>
+    <string name="ab_add_sub">ex. Não abrir este app de manhã</string>
+    <string name="ab_change">Alterar horário bloqueado</string>
+    <string name="ab_now">Bloqueado %1$s</string>
+    <string name="ab_remove">Remover horário bloqueado</string>
+    <string name="ab_title">Horário em que este app fica bloqueado</string>
+    <string name="ab_desc">Todos os dias, nesse horário, abrir este app leva você de volta à tela inicial. Pode passar da meia-noite (ex. 23:00–7:00).</string>
+    <string name="ab_from">De</string>
+    <string name="ab_to">Até</string>
+    <string name="ab_sep">–</string>
+    <string name="ab_range">%1$s–%2$s</string>
+    <string name="ab_blocked">Este app está bloqueado agora</string>
+    <string name="ab_blocked_sub">Toque e segure o app para alterar ou remover o horário.</string>
+    <string name="q_same_note">Aparece com o mesmo tamanho e as mesmas quebras de linha da tela inicial.</string>
+    <string name="q_text_hint">Palavras que marcaram você</string>
+    <string name="tut_more_block_title">Horário bloqueado por app</string>
+    <string name="tut_more_block">Toque e segure um app e escolha \"Definir horário bloqueado\", e você não poderá abri-lo nesse horário todos os dias. Por exemplo, nada de jogos de manhã.</string>
 </resources>

@@ -111,6 +111,10 @@ lang en-US; next_page; next_page
 $UI tap "Add" >/dev/null; sleep 1; $UI tapclass android.widget.EditText >/dev/null; sleep 5; softword run; sleep 1; $UI tap "Save" >/dev/null; sleep 2; snap habit_added
 expect_exact "習慣が追加される" "run"
 expect_text "0時に外れる説明" "0:00"
+$UI tap "run" >/dev/null; sleep 2; snap habit_edit
+expect_text "習慣の編集にやる時刻（2026-11-23）" "Time"
+expect_text "時刻は最初は決めない" "None"
+$UI tap "Cancel" >/dev/null; sleep 1
 $UI tap "Mark run as done" >/dev/null; sleep 2; snap habit_checked
 expect_exact "チェックすると続けた日数" "1-day streak"
 $UI tap "Mark run as not done" >/dev/null; sleep 2

@@ -400,7 +400,7 @@
     <string name="tut_more_title">هناك أيضًا ميزات لمراجعة كل يوم</string>
     <string name="tut_more_body">استخدمها فقط عندما تريد.</string>
     <string name="tut_more_journal">الصفحة بين «الأهداف» و«المهام». في الأيام التي ترغب فيها، دوّن ما حدث وما سار على ما يرام.</string>
-    <string name="tut_more_quote">احفظ الكلمات أو مقاطع الكتب التي أثرت فيك، وستظهر واحدة منها كل يوم على الشاشة الرئيسية. تظهر المفضلة أكثر، ويمكنك لمس عبارة واختيار «اعرضها اليوم» لتحديد كلمات اليوم.</string>
+    <string name="tut_more_quote">احفظ كلمات أو مقاطع من كتب بقيت في ذهنك، وستظهر واحدة على الشاشة الرئيسية كل يوم. مربع الكتابة يقسم الأسطر بنفس طريقة الشاشة الرئيسية. المفضلة تظهر أكثر، ويمكنك لمس إحداها واختيار \"اعرضها اليوم\" لتحديد كلمات اليوم.</string>
     <string name="tut_more_tasks">حدد تاريخ ووقت الاستحقاق، وستُرتَّب المهام حسب الأقرب موعدًا.</string>
     <string name="tut_more_tear_title">التقويم اليومي</string>
     <string name="tut_more_tear">عند إضافة هدف اليوم أو مهمة لأول مرة في اليوم، تتمزق ورقة من التقويم وينقص يوم من أيامك المتبقية.</string>
@@ -429,7 +429,7 @@
     <string name="focus_history">التركيز مؤخرًا</string>
     <string name="focus_desc">بعد البدء وحتى الانتهاء، لا تُفتح إلا المكالمات والتطبيقات المسموح بها. يُسجَّل وقت التركيز كل يوم ويُضاف إلى «اسأل الذكاء الاصطناعي».</string>
     <string name="dur_h">%1$d س</string>
-    <string name="tut_more_habits">ضع علامة على عاداتك اليومية لترى عدد الأيام المتتالية. تُزال العلامات كل يوم عند 0:00.</string>
+    <string name="tut_more_habits">حدِّد عاداتك اليومية لترى عدد الأيام المتتالية. إذا حددت وقتًا فستصلك تذكرة عندما يمر ولم تُحدَّد العادة. تُمسح العلامات كل يوم عند 0:00.</string>
     <string name="tut_more_focus">ابدأ \"وقت التركيز\" من الشاشة الرئيسية، وحتى ينتهي لا يعمل إلا الاتصال والتطبيقات التي اخترتها. يمكنك أيضًا إسكات الإشعارات عدا المكالمات. يُسجَّل وقت تركيزك.</string>
     <string name="tut7_pages">أخفِ الصفحات التي لا تستخدمها من «الصفحات المعروضة» في الإعدادات (⚙).</string>
     <string name="ask_q1_hint">مثال: في القطار</string>
@@ -458,4 +458,28 @@
     <string name="memo_note">تُحذف هذه الملاحظة عند الضغط على \"إغلاق\".</string>
     <string name="tut_more_memo_title">ملاحظات وقت النوم والتركيز</string>
     <string name="tut_more_memo">في شاشتي وقت النوم ووقت التركيز يمكنك تدوين ما يخطر ببالك. تظهر الملاحظة عند انتهاء الوقت ولا تختفي حتى تضغط \"إغلاق\".</string>
+    <string name="hr_channel">تذكيرات العادات</string>
+    <string name="hr_body">خططت لهذه العادة في %1$s. لم تُحدَّد بعد.</string>
+    <string name="hr_at">في %1$s</string>
+    <string name="hr_time">الوقت</string>
+    <string name="hr_none">بدون</string>
+    <string name="hr_clear">مسح الوقت</string>
+    <string name="hr_note">إذا حددت وقتًا، فستصلك تذكرة عندما يمر الوقت ولم تُحدَّد العادة بعد.</string>
+    <string name="ab_add">تحديد ساعات المنع</string>
+    <string name="ab_add_sub">مثال: عدم فتح هذا التطبيق صباحًا</string>
+    <string name="ab_change">تغيير ساعات المنع</string>
+    <string name="ab_now">ممنوع %1$s</string>
+    <string name="ab_remove">إزالة ساعات المنع</string>
+    <string name="ab_title">ساعات منع هذا التطبيق</string>
+    <string name="ab_desc">كل يوم في هذه الساعات، سيعيدك فتح هذا التطبيق إلى الشاشة الرئيسية. يمكن أن تتجاوز منتصف الليل (مثال 23:00–7:00).</string>
+    <string name="ab_from">من</string>
+    <string name="ab_to">حتى</string>
+    <string name="ab_sep">–</string>
+    <string name="ab_range">%1$s–%2$s</string>
+    <string name="ab_blocked">هذا التطبيق ممنوع الآن</string>
+    <string name="ab_blocked_sub">اضغط مطولًا على التطبيق لتغيير الساعات أو إزالتها.</string>
+    <string name="q_same_note">يُعرض بنفس الحجم ونفس فواصل الأسطر كما في الشاشة الرئيسية.</string>
+    <string name="q_text_hint">كلمات بقيت في ذهنك</string>
+    <string name="tut_more_block_title">ساعات المنع لكل تطبيق</string>
+    <string name="tut_more_block">اضغط مطولًا على تطبيق واختر \"تحديد ساعات المنع\"، فلن تتمكن من فتحه في تلك الساعات كل يوم. مثلًا: لا ألعاب في الصباح.</string>
 </resources>

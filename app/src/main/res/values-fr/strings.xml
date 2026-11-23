@@ -398,7 +398,7 @@
     <string name="tut_more_title">Des fonctions pour revenir sur chaque journée</string>
     <string name="tut_more_body">À utiliser seulement quand vous en avez envie.</string>
     <string name="tut_more_journal">La page entre Objectifs et Tâches. Les jours où vous en avez envie, notez ce qui s\'est passé et ce qui a bien marché.</string>
-    <string name="tut_more_quote">Enregistrez des mots ou des passages de livres qui vous ont marqué : l\'un d\'eux s\'affiche chaque jour sur l\'écran d\'accueil. Les favoris apparaissent plus souvent, et en touchant l\'un d\'eux puis « Afficher aujourd\'hui », vous choisissez celui du jour.</string>
+    <string name="tut_more_quote">Enregistrez des mots ou des passages de livres qui vous ont marqué, et l\'un d\'eux apparaît chaque jour sur l\'écran d\'accueil. La zone de saisie revient à la ligne comme l\'écran d\'accueil. Les favoris apparaissent plus souvent, et vous pouvez toucher un mot et choisir « Afficher aujourd\'hui » pour choisir celui du jour.</string>
     <string name="tut_more_tasks">Fixez une date et une heure limites : les tâches sont triées par échéance la plus proche.</string>
     <string name="tut_more_tear_title">Éphéméride</string>
     <string name="tut_more_tear">La première fois que vous ajoutez l\'objectif du jour ou une tâche, une page du calendrier se détache et vos jours restants baissent d\'un.</string>
@@ -427,7 +427,7 @@
     <string name="focus_history">Concentration récente</string>
     <string name="focus_desc">Une fois lancé, seuls les appels et vos applis autorisées s\'ouvrent jusqu\'à la fin. Le temps est enregistré chaque jour et inclus dans « Demander à l\'IA ».</string>
     <string name="dur_h">%1$d h</string>
-    <string name="tut_more_habits">Cochez vos habitudes chaque jour pour voir votre série. Les coches s\'effacent chaque jour à 0:00.</string>
+    <string name="tut_more_habits">Cochez vos habitudes quotidiennes pour voir votre série. Choisissez une heure et vous recevrez un rappel si elle passe sans que l\'habitude soit cochée. Les coches s\'effacent chaque jour à 0:00.</string>
     <string name="tut_more_focus">Lancez « Temps de concentration » depuis l\'écran d\'accueil : jusqu\'à la fin, seuls les appels et les apps choisies fonctionnent. Vous pouvez aussi couper les notifications sauf les appels. Votre temps de concentration est enregistré.</string>
     <string name="tut7_pages">Masquez les pages inutiles avec « Pages affichées » dans les Réglages (⚙).</string>
     <string name="ask_q1_hint">ex. Dans le train</string>
@@ -456,4 +456,28 @@
     <string name="memo_note">Cette note est supprimée quand vous touchez « Fermer ».</string>
     <string name="tut_more_memo_title">Notes du coucher et de la concentration</string>
     <string name="tut_more_memo">Sur les écrans du coucher et du temps de concentration, vous pouvez noter ce qui vous vient à l\'esprit. La note s\'affiche à la fin et reste jusqu\'à ce que vous touchiez « Fermer ».</string>
+    <string name="hr_channel">Rappels d\'habitudes</string>
+    <string name="hr_body">Vous aviez prévu cette habitude à %1$s. Elle n\'est pas encore cochée.</string>
+    <string name="hr_at">À %1$s</string>
+    <string name="hr_time">Heure</string>
+    <string name="hr_none">Aucune</string>
+    <string name="hr_clear">Effacer l\'heure</string>
+    <string name="hr_note">Si vous choisissez une heure, vous recevrez un rappel si elle passe sans que l\'habitude soit cochée.</string>
+    <string name="ab_add">Définir des heures bloquées</string>
+    <string name="ab_add_sub">ex. Ne pas ouvrir cette appli le matin</string>
+    <string name="ab_change">Modifier les heures bloquées</string>
+    <string name="ab_now">Bloquée %1$s</string>
+    <string name="ab_remove">Supprimer les heures bloquées</string>
+    <string name="ab_title">Heures où cette appli est bloquée</string>
+    <string name="ab_desc">Chaque jour pendant ces heures, ouvrir cette appli vous ramène à l\'écran d\'accueil. Les heures peuvent passer minuit (ex. 23:00–7:00).</string>
+    <string name="ab_from">De</string>
+    <string name="ab_to">À</string>
+    <string name="ab_sep">–</string>
+    <string name="ab_range">%1$s–%2$s</string>
+    <string name="ab_blocked">Cette appli est bloquée en ce moment</string>
+    <string name="ab_blocked_sub">Appuyez longuement sur l\'appli pour modifier ou supprimer les heures.</string>
+    <string name="q_same_note">Affiché avec la même taille et les mêmes retours à la ligne que sur l\'écran d\'accueil.</string>
+    <string name="q_text_hint">Des mots qui vous ont marqué</string>
+    <string name="tut_more_block_title">Heures bloquées par appli</string>
+    <string name="tut_more_block">Appuyez longuement sur une appli et choisissez « Définir des heures bloquées » : vous ne pourrez plus l\'ouvrir pendant ces heures, chaque jour. Par exemple, pas de jeux le matin.</string>
 </resources>

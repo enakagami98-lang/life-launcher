@@ -46,6 +46,8 @@ object Guard {
 
     /** パッケージ名 → 1日に使ってよい分数 */
     val limits = mutableStateMapOf<String, Int>()
+    /** パッケージ名 → そのアプリを使えない時間（0:00 からの分で 開始 to 終了。終了が開始より前なら日付をまたぐ） */
+    val appBlocks = mutableStateMapOf<String, Pair<Int, Int>>()
     // 開く前の待ち時間。最初は30秒（退屈な30秒で「やっぱりやめよう」と思ってもらう）
     var waitSec by mutableIntStateOf(30)
     var floatingBar by mutableStateOf(true)
@@ -85,6 +87,9 @@ object Guard {
         prefs = context.applicationContext.getSharedPreferences("guard", Context.MODE_PRIVATE)
         appContext = context.applicationContext
         JSONObject(prefs.getString("limits", "{}")!!).let { o -> o.keys().forEach { limits[it] = o.getInt(it) } }
+        JSONObject(prefs.getString("appBlocks", "{}")!!).let { o ->
+            o.keys().forEach { k -> val a = o.getJSONArray(k); appBlocks[k] = a.getInt(0) to a.getInt(1) }
+        }
         waitSec = prefs.getInt("waitSec", 30)
         floatingBar = prefs.getBoolean("floatingBar", true)
         homeOnScreenOff = prefs.getBoolean("homeOnScreenOff", true)
@@ -124,6 +129,23 @@ object Guard {
         val o = JSONObject(); limits.forEach { (k, v) -> o.put(k, v) }
         prefs.edit().putString("limits", o.toString()).apply()
     }
+    fun setAppBlock(pkg: String, start: Int, end: Int) { appBlocks[pkg] = start to end; saveAppBlocks() }
+    fun removeAppBlock(pkg: String) { appBlocks.remove(pkg); saveAppBlocks() }
+    private fun saveAppBlocks() {
+        val o = JSONObject(); appBlocks.forEach { (k, v) -> o.put(k, JSONArray(listOf(v.first, v.second))) }
+        prefs.edit().putString("appBlocks", o.toString()).apply()
+    }
+    /** そのアプリが今、使えない時間か（毎日同じ時間） */
+    fun appBlockedNow(pkg: String, now: LocalDateTime = LocalDateTime.now()): Boolean {
+        val (start, end) = appBlocks[pkg] ?: return false
+        return LockRange(true, start, end, (1..7).toSet()).activeAt(now)
+    }
+    /** 「5:00〜10:00」の形 */
+    fun appBlockText(pkg: String): String? = appBlocks[pkg]?.let { (a, b) ->
+        val x = HabitRemind.timeText(a); val y = HabitRemind.timeText(b)
+        appContext?.getString(R.string.ab_range, x, y) ?: "$x–$y"
+    }
+
     fun updateWaitSec(v: Int) { waitSec = v; prefs.edit().putInt("waitSec", v).apply() }
     fun updateFloatingBar(v: Boolean) { floatingBar = v; prefs.edit().putBoolean("floatingBar", v).apply() }
     fun updateHomeOnScreenOff(v: Boolean) { homeOnScreenOff = v; prefs.edit().putBoolean("homeOnScreenOff", v).apply() }

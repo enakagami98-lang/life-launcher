@@ -50,6 +50,7 @@ log "== 2. 今日の言葉を登録する"
 $UI tap "Today's words" >/dev/null; sleep 2; snap quote_empty
 expect_text "空のときの説明" "one shows here each day"
 $UI tap "＋ Add new" >/dev/null; sleep 2
+expect_text "入力欄はトップと同じ形の説明（2026-11-23）" "same line breaks"
 $UI tapbelow "Words" android.widget.EditText >/dev/null; check_field "言葉の欄" quote_text_kb; softword abc
 $UI tapbelow "Source (book, show, etc.)" android.widget.EditText >/dev/null; check_field "出どころの欄" quote_source_kb; softword bac
 $UI tapbelow "Context / notes" android.widget.EditText >/dev/null; check_field "メモの欄（一番下）" quote_note_kb; softword cab

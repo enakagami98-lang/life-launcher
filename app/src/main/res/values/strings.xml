@@ -404,7 +404,7 @@
     <string name="tut_more_title">Features for looking back on each day</string>
     <string name="tut_more_body">Use them only when you want to.</string>
     <string name="tut_more_journal">The page between Goals and Tasks. On days you feel like it, write down what happened and what went well.</string>
-    <string name="tut_more_quote">Save words or book passages that stayed with you, and one appears on the home screen each day. Favorites show up more often, and you can tap a saved one and choose \"Show today\" to pick today\'s words.</string>
+    <string name="tut_more_quote">Save words or book passages that stayed with you, and one appears on the home screen each day. The input box breaks lines the same way as the home screen. Favorites show up more often, and you can tap a saved one and choose \"Show today\" to pick today\'s words.</string>
     <string name="tut_more_tasks">Set a due date and time, and tasks are sorted by what\'s due first.</string>
     <string name="tut_more_tear_title">Daily calendar</string>
     <string name="tut_more_tear">The first time you add today\'s goal or a task each day, a calendar page tears off and your days left go down by one.</string>
@@ -433,7 +433,7 @@
     <string name="focus_history">Recent focus time</string>
     <string name="focus_desc">Once started, only calls and your allowed apps open until it ends. Your focus time is recorded every day and included in \"Ask AI\".</string>
     <string name="dur_h">%1$dh</string>
-    <string name="tut_more_habits">Check off your daily habits to see your streak. Checks clear every day at 0:00.</string>
+    <string name="tut_more_habits">Check off your daily habits to see your streak. Set a time and you\'ll get a reminder if it passes and the habit isn\'t checked yet. Checks clear every day at 0:00.</string>
     <string name="tut_more_focus">Start \"Focus time\" from the home screen, and only calls and the apps you chose work until it ends. You can also silence notifications except calls. Your focus time is recorded.</string>
     <string name="tut7_pages">Hide pages you don\'t use with \"Pages to show\" in Settings (⚙).</string>
     <string name="ask_q1_hint">e.g. On the train</string>
@@ -462,4 +462,28 @@
     <string name="memo_note">This note is deleted when you tap \"Close\".</string>
     <string name="tut_more_memo_title">Notes during bedtime and focus</string>
     <string name="tut_more_memo">On the bedtime and focus time screens, you can jot down what comes to mind. It\'s shown when the time ends and stays until you tap \"Close\".</string>
+    <string name="hr_channel">Habit reminders</string>
+    <string name="hr_body">You planned this habit for %1$s. It isn\'t checked yet.</string>
+    <string name="hr_at">At %1$s</string>
+    <string name="hr_time">Time</string>
+    <string name="hr_none">None</string>
+    <string name="hr_clear">Clear time</string>
+    <string name="hr_note">If you set a time, you\'ll get a reminder when it passes and the habit still isn\'t checked.</string>
+    <string name="ab_add">Set blocked hours</string>
+    <string name="ab_add_sub">e.g. Don\'t let me open this app in the morning</string>
+    <string name="ab_change">Change blocked hours</string>
+    <string name="ab_now">Blocked %1$s</string>
+    <string name="ab_remove">Remove blocked hours</string>
+    <string name="ab_title">Hours this app is blocked</string>
+    <string name="ab_desc">Every day during these hours, opening this app takes you back to the home screen. The hours can cross midnight (e.g. 23:00–7:00).</string>
+    <string name="ab_from">From</string>
+    <string name="ab_to">Until</string>
+    <string name="ab_sep">–</string>
+    <string name="ab_range">%1$s–%2$s</string>
+    <string name="ab_blocked">This app is blocked right now</string>
+    <string name="ab_blocked_sub">Long-press the app to change or remove the hours.</string>
+    <string name="q_same_note">Shown at the same size and with the same line breaks as on the home screen.</string>
+    <string name="q_text_hint">Words that stayed with you</string>
+    <string name="tut_more_block_title">Blocked hours for each app</string>
+    <string name="tut_more_block">Long-press an app and choose \"Set blocked hours\", and you won\'t be able to open it during those hours every day. For example, no games in the morning.</string>
 </resources>

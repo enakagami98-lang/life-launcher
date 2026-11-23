@@ -403,7 +403,7 @@
     <string name="tut_more_title">还有回顾每一天的功能</string>
     <string name="tut_more_body">只在想用的时候使用就好。</string>
     <string name="tut_more_journal">位于“目标”和“任务”之间的页面。只在想写的日子，记下今天发生的事和好事。</string>
-    <string name="tut_more_quote">保存打动你的话或书中的段落，每天会有一条显示在主屏幕上。收藏后会更常出现；点开一句并选择“今天显示”，就能决定今天显示哪一句。</string>
+    <string name="tut_more_quote">登记触动你的话或书中的段落，每天会有一句出现在主屏幕上。输入框的换行和主屏幕相同。设为收藏会更常出现，点开一句选“今天显示”就能决定今天的一句。</string>
     <string name="tut_more_tasks">设定截止日期和时间后，任务会按截止时间由近到远排列。</string>
     <string name="tut_more_tear_title">日历翻页</string>
     <string name="tut_more_tear">每天第一次添加今日目标或任务时，日历会翻过一页，剩余天数减少一天。</string>
@@ -432,7 +432,7 @@
     <string name="focus_history">最近的专注</string>
     <string name="focus_desc">开始后，在结束之前只能打开电话和“可以使用的应用”。专注时间每天都会记录，也会放进“让 AI 分析”。</string>
     <string name="dur_h">%1$d 小时</string>
-    <string name="tut_more_habits">给每天的习惯打勾，就会显示连续天数。每天 0:00 会清除勾选。</string>
+    <string name="tut_more_habits">给每天的习惯打勾，就会显示连续的天数。设定时间后，过了时间还没打勾就会提醒你。勾选每天 0:00 清除。</string>
     <string name="tut_more_focus">从主屏幕的“专注时间”开始后，结束前只能使用电话和你选的应用。也可以屏蔽电话以外的通知。专注时间会被记录下来。</string>
     <string name="tut7_pages">不用的页面可以在设置（⚙）的“显示的页面”中隐藏。</string>
     <string name="ask_q1_hint">例：在电车上</string>
@@ -461,4 +461,28 @@
     <string name="memo_note">点“关闭”后，这条备忘会被删除。</string>
     <string name="tut_more_memo_title">睡眠·专注时的备忘</string>
     <string name="tut_more_memo">在睡眠时间和专注时间的画面上，可以记下想到的事。时间结束后会显示出来，点“关闭”之前不会消失。</string>
+    <string name="hr_channel">习惯提醒</string>
+    <string name="hr_body">这个习惯计划在 %1$s 做，还没有打勾</string>
+    <string name="hr_at">%1$s 做</string>
+    <string name="hr_time">时间</string>
+    <string name="hr_none">不设定</string>
+    <string name="hr_clear">清除时间</string>
+    <string name="hr_note">设定时间后，过了这个时间还没打勾就会提醒你。</string>
+    <string name="ab_add">设定禁用时间</string>
+    <string name="ab_add_sub">例：早上不能打开这个应用</string>
+    <string name="ab_change">更改禁用时间</string>
+    <string name="ab_now">禁用时间 %1$s</string>
+    <string name="ab_remove">取消禁用时间</string>
+    <string name="ab_title">这个应用的禁用时间</string>
+    <string name="ab_desc">每天在这段时间里，打开这个应用会回到主屏幕。也可以跨过午夜（例 23:00–7:00）。</string>
+    <string name="ab_from">从</string>
+    <string name="ab_to">到</string>
+    <string name="ab_sep">–</string>
+    <string name="ab_range">%1$s–%2$s</string>
+    <string name="ab_blocked">现在不能使用这个应用</string>
+    <string name="ab_blocked_sub">长按应用可以更改或取消时间。</string>
+    <string name="q_same_note">会以和主屏幕上相同的大小和换行显示。</string>
+    <string name="q_text_hint">触动你的话</string>
+    <string name="tut_more_block_title">每个应用的禁用时间</string>
+    <string name="tut_more_block">长按应用并选择“设定禁用时间”，每天这段时间就不能打开这个应用。比如早上不玩游戏。</string>
 </resources>

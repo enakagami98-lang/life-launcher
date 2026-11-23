@@ -403,7 +403,7 @@
     <string name="tut_more_title">하루를 돌아보는 기능도 있어요</string>
     <string name="tut_more_body">쓰고 싶을 때만 쓰면 됩니다.</string>
     <string name="tut_more_journal">\'목표\'와 \'할 일\' 사이의 페이지입니다. 쓰고 싶은 날에만 오늘 있었던 일과 좋았던 일을 남기세요.</string>
-    <string name="tut_more_quote">마음에 남은 말이나 책의 한 구절을 저장하면 매일 하나씩 홈 화면에 나타납니다. 즐겨찾기하면 더 자주 나타나고, 말을 눌러 \'오늘 표시하기\'를 고르면 오늘의 말을 정할 수 있어요.</string>
+    <string name="tut_more_quote">마음에 남은 말이나 책의 한 구절을 등록하면 매일 하나가 홈 화면에 나와요. 입력란은 홈 화면과 같은 모양으로 줄이 바뀌어요. 즐겨찾기로 하면 더 자주 나오고, 말을 눌러 \'오늘 표시하기\'를 고르면 오늘의 말을 정할 수 있어요.</string>
     <string name="tut_more_tasks">기한(날짜와 시간)을 정하면 기한이 가까운 순서로 정렬됩니다.</string>
     <string name="tut_more_tear_title">달력 넘기기</string>
     <string name="tut_more_tear">그날 처음으로 오늘의 목표나 할 일을 등록하면 달력이 넘어가고 남은 날이 하루 줄어듭니다.</string>
@@ -432,7 +432,7 @@
     <string name="focus_history">최근 집중</string>
     <string name="focus_desc">시작하면 끝날 때까지 전화와 \'쓸 수 있는 앱\'만 열 수 있어요. 집중한 시간은 매일 기록되고 \'AI에게 분석 맡기기\'에도 들어갑니다.</string>
     <string name="dur_h">%1$d시간</string>
-    <string name="tut_more_habits">매일 습관에 체크하면 이어 온 날수가 나와요. 체크는 매일 0:00에 해제됩니다.</string>
+    <string name="tut_more_habits">매일의 습관에 체크하면 이어 온 날수가 나와요. 할 시간을 정해 두면, 그 시간이 지나도 체크가 없을 때 알려 드려요. 체크는 매일 0:00에 풀려요.</string>
     <string name="tut_more_focus">홈 화면의 \'집중 시간\'에서 시작하면 끝날 때까지 전화와 고른 앱만 쓸 수 있어요. 전화 외의 알림도 끌 수 있습니다. 집중한 시간은 기록에 남아요.</string>
     <string name="tut7_pages">쓰지 않는 페이지는 설정(⚙)의 \'표시할 페이지\'에서 숨길 수 있어요.</string>
     <string name="ask_q1_hint">예: 지하철로 이동 중</string>
@@ -461,4 +461,28 @@
     <string name="memo_note">\'닫기\'를 누르면 이 메모는 지워집니다.</string>
     <string name="tut_more_memo_title">잠자는 시간·집중 중의 메모</string>
     <string name="tut_more_memo">잠자는 시간과 집중 시간 화면에서는 떠오른 것을 메모할 수 있어요. 그 시간이 끝나면 표시되고, \'닫기\'를 누를 때까지 사라지지 않아요.</string>
+    <string name="hr_channel">습관 알림</string>
+    <string name="hr_body">%1$s에 하기로 한 습관이에요. 아직 체크되지 않았어요</string>
+    <string name="hr_at">%1$s에 하기</string>
+    <string name="hr_time">시간</string>
+    <string name="hr_none">정하지 않음</string>
+    <string name="hr_clear">시간 지우기</string>
+    <string name="hr_note">시간을 정하면, 그 시간이 지나도 체크가 없을 때 알려 드려요.</string>
+    <string name="ab_add">사용 금지 시간 정하기</string>
+    <string name="ab_add_sub">예: 아침에는 이 앱을 열 수 없게 하기</string>
+    <string name="ab_change">사용 금지 시간 바꾸기</string>
+    <string name="ab_now">사용 금지 %1$s</string>
+    <string name="ab_remove">사용 금지 시간 해제</string>
+    <string name="ab_title">이 앱을 쓸 수 없는 시간</string>
+    <string name="ab_desc">매일 이 시간에는 이 앱을 열어도 홈 화면으로 돌아갑니다. 자정을 넘기는 시간(예 23:00–7:00)도 가능해요.</string>
+    <string name="ab_from">부터</string>
+    <string name="ab_to">까지</string>
+    <string name="ab_sep">–</string>
+    <string name="ab_range">%1$s–%2$s</string>
+    <string name="ab_blocked">지금은 이 앱을 쓸 수 없어요</string>
+    <string name="ab_blocked_sub">앱을 길게 누르면 시간을 바꾸거나 해제할 수 있어요.</string>
+    <string name="q_same_note">홈 화면에 나올 때와 같은 크기, 같은 줄바꿈으로 보여요.</string>
+    <string name="q_text_hint">마음에 남은 말</string>
+    <string name="tut_more_block_title">앱별 사용 금지 시간</string>
+    <string name="tut_more_block">앱을 길게 누르고 \'사용 금지 시간 정하기\'를 고르면 매일 그 시간에는 그 앱을 열 수 없어요. 아침에는 게임을 하지 않기 같은 데 쓸 수 있어요.</string>
 </resources>

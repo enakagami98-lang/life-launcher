@@ -400,7 +400,7 @@
     <string name="tut_more_title">ہر دن پر نظر ڈالنے کی سہولتیں بھی ہیں</string>
     <string name="tut_more_body">جب دل چاہے تبھی استعمال کریں۔</string>
     <string name="tut_more_journal">\"اہداف\" اور \"کام\" کے درمیان والا صفحہ۔ جس دن دل چاہے، آج کیا ہوا اور کیا اچھا رہا، لکھ لیں۔</string>
-    <string name="tut_more_quote">دل کو چھو جانے والے الفاظ یا کتاب کے اقتباس محفوظ کریں، ہر روز ان میں سے ایک ہوم اسکرین پر نظر آئے گا۔ پسندیدہ الفاظ زیادہ بار دکھائی دیتے ہیں، اور کسی پر ٹیپ کر کے \"آج دکھائیں\" چن کر آج کے الفاظ طے کر سکتے ہیں۔</string>
+    <string name="tut_more_quote">دل میں رہ جانے والے الفاظ یا کتاب کے اقتباس محفوظ کریں، اور ہر دن ایک ہوم اسکرین پر دکھائی دے گا۔ لکھنے کا خانہ ہوم اسکرین کی طرح ہی سطر بدلتا ہے۔ پسندیدہ زیادہ بار آتے ہیں، اور کسی پر ٹیپ کر کے \"آج دکھائیں\" چن کر آج کے الفاظ طے کر سکتے ہیں۔</string>
     <string name="tut_more_tasks">آخری تاریخ اور وقت طے کریں، کام قریب ترین وقت کی ترتیب سے نظر آئیں گے۔</string>
     <string name="tut_more_tear_title">روزانہ کیلنڈر</string>
     <string name="tut_more_tear">دن میں پہلی بار آج کا ہدف یا کام شامل کرنے پر کیلنڈر کا ایک ورق پھٹتا ہے اور باقی دن ایک کم ہو جاتے ہیں۔</string>
@@ -429,7 +429,7 @@
     <string name="focus_history">حالیہ فوکس</string>
     <string name="focus_desc">شروع کرنے کے بعد ختم ہونے تک صرف کال اور چنی ہوئی ایپس کھلیں گی۔ فوکس کا وقت ہر روز درج ہوتا ہے اور \"AI سے پوچھیں\" میں بھی شامل ہوتا ہے۔</string>
     <string name="dur_h">%1$d گھنٹے</string>
-    <string name="tut_more_habits">روزانہ کی عادات پر نشان لگائیں تو مسلسل دنوں کی تعداد دکھے گی۔ نشان ہر روز 0:00 بجے ہٹ جاتے ہیں۔</string>
+    <string name="tut_more_habits">روز کی عادتوں پر نشان لگائیں اور مسلسل دنوں کی گنتی دیکھیں۔ وقت مقرر کریں تو وقت گزرنے پر بھی نشان نہ ہو تو یاد دلایا جائے گا۔ نشان ہر دن 0:00 بجے ہٹ جاتے ہیں۔</string>
     <string name="tut_more_focus">ہوم اسکرین سے \"فوکس وقت\" شروع کریں، ختم ہونے تک صرف کال اور چنی ہوئی ایپس چلیں گی۔ کال کے علاوہ اطلاعات بھی بند کر سکتے ہیں۔ آپ کا فوکس وقت درج ہوتا ہے۔</string>
     <string name="tut7_pages">جو صفحات استعمال نہیں کرتے انہیں سیٹنگز (⚙) کے \"دکھائے جانے والے صفحات\" میں چھپائیں۔</string>
     <string name="ask_q1_hint">مثلاً: ٹرین میں</string>
@@ -458,4 +458,28 @@
     <string name="memo_note">\"بند کریں\" دبانے پر یہ نوٹ مٹ جائے گا۔</string>
     <string name="tut_more_memo_title">سونے اور فوکس کے وقت کے نوٹ</string>
     <string name="tut_more_memo">سونے کے وقت اور فوکس وقت کی اسکرین پر آپ جو ذہن میں آئے نوٹ کر سکتے ہیں۔ وقت ختم ہونے پر نوٹ دکھتا ہے اور \"بند کریں\" دبانے تک نہیں ہٹتا۔</string>
+    <string name="hr_channel">عادت کی یاد دہانی</string>
+    <string name="hr_body">آپ نے یہ عادت %1$s پر کرنے کا سوچا تھا۔ ابھی تک نشان نہیں لگا۔</string>
+    <string name="hr_at">%1$s پر</string>
+    <string name="hr_time">وقت</string>
+    <string name="hr_none">کوئی نہیں</string>
+    <string name="hr_clear">وقت ہٹائیں</string>
+    <string name="hr_note">وقت مقرر کرنے پر، وقت گزر جانے کے بعد بھی نشان نہ لگا ہو تو یاد دلایا جائے گا۔</string>
+    <string name="ab_add">پابندی کا وقت مقرر کریں</string>
+    <string name="ab_add_sub">مثلاً: صبح یہ ایپ نہ کھلے</string>
+    <string name="ab_change">پابندی کا وقت بدلیں</string>
+    <string name="ab_now">پابندی %1$s</string>
+    <string name="ab_remove">پابندی کا وقت ہٹائیں</string>
+    <string name="ab_title">جب یہ ایپ بند رہے گی</string>
+    <string name="ab_desc">ہر دن اس وقت یہ ایپ کھولنے پر آپ ہوم اسکرین پر واپس آ جائیں گے۔ وقت آدھی رات پار کر سکتا ہے (مثلاً 23:00–7:00)۔</string>
+    <string name="ab_from">سے</string>
+    <string name="ab_to">تک</string>
+    <string name="ab_sep">–</string>
+    <string name="ab_range">%1$s–%2$s</string>
+    <string name="ab_blocked">ابھی یہ ایپ استعمال نہیں ہو سکتی</string>
+    <string name="ab_blocked_sub">وقت بدلنے یا ہٹانے کے لیے ایپ کو دیر تک دبائیں۔</string>
+    <string name="q_same_note">ہوم اسکرین جیسے ہی سائز اور اسی سطر بندی کے ساتھ دکھائی دے گا۔</string>
+    <string name="q_text_hint">دل میں رہ جانے والے الفاظ</string>
+    <string name="tut_more_block_title">ہر ایپ کے لیے پابندی کا وقت</string>
+    <string name="tut_more_block">کسی ایپ کو دیر تک دبا کر \"پابندی کا وقت مقرر کریں\" چنیں، تو ہر دن اس وقت وہ ایپ نہیں کھلے گی۔ مثلاً صبح گیم نہیں۔</string>
 </resources>

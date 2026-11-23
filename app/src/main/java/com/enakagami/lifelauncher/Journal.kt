@@ -45,6 +45,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Box
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -137,7 +139,7 @@ fun QuoteCard(store: Store, today: LocalDate) {
     val open = LocalOpenPanel.current
     val q = store.quoteOf(today)
     Column(
-        Modifier.fillMaxWidth().card().clickable { open("quote") }.padding(horizontal = 22.dp, vertical = 16.dp),
+        Modifier.fillMaxWidth().card().clickable { open("quote") }.padding(horizontal = QuoteSidePad, vertical = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(stringResource(R.string.w_quote), fontSize = 12.sp, fontWeight = FontWeight.Bold, color = SubInk, modifier = Modifier.fillMaxWidth())
@@ -145,15 +147,67 @@ fun QuoteCard(store: Store, today: LocalDate) {
         if (q == null) {
             Text(stringResource(R.string.q_empty), fontSize = 15.sp, color = SubInk, textAlign = TextAlign.Center)
         } else {
-            Text(
-                "“${q.text}”", fontSize = 18.sp, fontWeight = FontWeight.Bold, fontStyle = FontStyle.Italic,
-                color = Ink, textAlign = TextAlign.Center, lineHeight = 26.sp, style = userTextStyle(),
-                maxLines = 5, overflow = TextOverflow.Ellipsis,
-            )
+            Text("“${q.text}”", style = quoteStyle(), maxLines = 5, overflow = TextOverflow.Ellipsis)
             quoteCredit(q)?.let {
                 Spacer(Modifier.height(4.dp))
                 Text(it, fontSize = 13.sp, color = SubInk, textAlign = TextAlign.Center)
             }
+        }
+    }
+}
+
+/**
+ * 言葉の文字の形。トップのカード・全画面・入力欄で同じにする（2026-11-23 ユーザーの依頼：
+ * 入力と表示で改行の位置が違うと、どう表示されるか分からず改行しにくい）。
+ * 横幅も同じにするため、どれも「画面の端から20dp＋カードの内側 QuoteSidePad」にそろえる
+ */
+@Composable
+private fun quoteStyle(color: androidx.compose.ui.graphics.Color = Ink) = userTextStyle().merge(
+    androidx.compose.ui.text.TextStyle(
+        fontSize = 19.sp, lineHeight = 28.sp, fontWeight = FontWeight.Bold, fontStyle = FontStyle.Italic,
+        color = color, textAlign = TextAlign.Center,
+    )
+)
+
+private val QuoteSidePad = 22.dp
+
+/** 前後に “ ” を付けて見せる（保存する文字には付けない） */
+private object QuoteMarks : androidx.compose.ui.text.input.VisualTransformation {
+    override fun filter(text: androidx.compose.ui.text.AnnotatedString): androidx.compose.ui.text.input.TransformedText {
+        val len = text.length
+        return androidx.compose.ui.text.input.TransformedText(
+            androidx.compose.ui.text.AnnotatedString("“") + text + androidx.compose.ui.text.AnnotatedString("”"),
+            object : androidx.compose.ui.text.input.OffsetMapping {
+                override fun originalToTransformed(offset: Int) = offset + 1
+                override fun transformedToOriginal(offset: Int) = (offset - 1).coerceIn(0, len)
+            },
+        )
+    }
+}
+
+/** 言葉の入力欄。トップ画面に出るときと同じ大きさ・同じ幅・同じ改行で見える */
+@Composable
+private fun QuoteTextField(value: String, onChange: (String) -> Unit) {
+    Column {
+        Text(stringResource(R.string.q_text), fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Ink)
+        Spacer(Modifier.height(2.dp))
+        Text(stringResource(R.string.q_same_note), fontSize = 12.sp, color = SubInk, lineHeight = 17.sp)
+        Spacer(Modifier.height(6.dp))
+        Box(
+            Modifier.fillMaxWidth().card().border(1.5.dp, Blue.copy(alpha = 0.5f), CardShape)
+                .padding(horizontal = QuoteSidePad, vertical = 16.dp),
+            contentAlignment = Alignment.TopCenter,
+        ) {
+            if (value.isEmpty()) Text(stringResource(R.string.q_text_hint), style = quoteStyle(SubInk), modifier = Modifier.fillMaxWidth())
+            androidx.compose.foundation.text.BasicTextField(
+                value = value,
+                onValueChange = onChange,
+                textStyle = quoteStyle(),
+                visualTransformation = if (value.isEmpty()) androidx.compose.ui.text.input.VisualTransformation.None else QuoteMarks,
+                cursorBrush = androidx.compose.ui.graphics.SolidColor(Blue),
+                minLines = 3,
+                modifier = Modifier.fillMaxWidth(),
+            )
         }
     }
 }
@@ -293,9 +347,8 @@ fun QuoteScreen(store: Store, today: LocalDate, onClose: () -> Unit) {
             Text(stringResource(R.string.q_empty), fontSize = 15.sp, color = SubInk, lineHeight = 22.sp)
         } else {
             // 今日の言葉と、その詳しいこと（誰の言葉・出どころ・前後の文脈）
-            Column(Modifier.fillMaxWidth().card().padding(22.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-                Text("“${q.text}”", fontSize = 21.sp, fontWeight = FontWeight.Bold, fontStyle = FontStyle.Italic,
-                    color = Ink, textAlign = TextAlign.Center, lineHeight = 31.sp, style = userTextStyle())
+            Column(Modifier.fillMaxWidth().card().padding(horizontal = QuoteSidePad, vertical = 22.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                Text("“${q.text}”", style = quoteStyle())
             }
             listOf(R.string.q_by to q.by, R.string.q_source to q.source, R.string.q_note to q.note)
                 .filter { it.second.isNotBlank() }
@@ -365,7 +418,7 @@ private fun QuoteEditor(store: Store, initial: Quote, onDone: () -> Unit) {
                 Text(stringResource(R.string.q_fav_note, FAV_WEIGHT), fontSize = 13.sp, color = SubInk, lineHeight = 19.sp)
             }
         }
-        LabeledField(stringResource(R.string.q_text), text, minLines = 3) { text = it }
+        QuoteTextField(text) { text = it }
         LabeledField(stringResource(R.string.q_by), by, hint = stringResource(R.string.q_by_hint), minLines = 1) { by = it }
         LabeledField(stringResource(R.string.q_source), source, hint = stringResource(R.string.q_source_hint), minLines = 1) { source = it }
         LabeledField(stringResource(R.string.q_note), note, hint = stringResource(R.string.q_note_hint), minLines = 3) { note = it }

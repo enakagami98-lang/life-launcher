@@ -1,6 +1,20 @@
 package com.enakagami.lifelauncher
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.TextButton
+import androidx.compose.ui.platform.LocalContext
+import androidx.core.content.ContextCompat
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -51,6 +65,7 @@ import sh.calvin.reorderable.rememberReorderableLazyListState
  */
 @Composable
 fun ItemsPage(store: Store, kind: String) {
+    val context = LocalContext.current
     val goals = kind == "goals"
     // 開いたまま日付が変わっても、0:00 にチェックが外れて見えるよう、日付を読み直す
     var today by remember { mutableStateOf(LocalDate.now()) }
@@ -124,8 +139,13 @@ fun ItemsPage(store: Store, kind: String) {
                                 ) { if (done) Icon(Icons.Filled.Check, null, tint = OnAccent, modifier = Modifier.size(18.dp)) }
                             }
                             Spacer(Modifier.width(10.dp))
-                            Text(item.text, fontSize = 16.sp, fontWeight = FontWeight.Bold, color = if (done) SubInk else Ink,
-                                style = userTextStyle(), modifier = Modifier.weight(1f))
+                            Column(Modifier.weight(1f)) {
+                                Text(item.text, fontSize = 16.sp, fontWeight = FontWeight.Bold, color = if (done) SubInk else Ink,
+                                    style = userTextStyle())
+                                item.time?.let {
+                                    Text(stringResource(R.string.hr_at, HabitRemind.timeText(it)), fontSize = 12.sp, color = SubInk)
+                                }
+                            }
                             if (streak > 0) {
                                 Spacer(Modifier.width(8.dp))
                                 Text(stringResource(R.string.streak, streak), fontSize = 13.sp, fontWeight = FontWeight.Bold, color = Blue)
@@ -138,20 +158,94 @@ fun ItemsPage(store: Store, kind: String) {
     }
 
     if (adding) {
-        TextInputDialog(
-            title = stringResource(if (goals) R.string.goal_add else R.string.habit_add),
+        if (goals) TextInputDialog(
+            title = stringResource(R.string.goal_add),
             initial = "",
             onSave = { store.addItem(kind, it); adding = false },
+            onDismiss = { adding = false },
+        ) else HabitDialog(
+            title = stringResource(R.string.habit_add),
+            initial = null,
+            onSave = { text, time -> store.addItem(kind, text, time); adding = false },
             onDismiss = { adding = false },
         )
     }
     editing?.let { item ->
-        TextInputDialog(
-            title = stringResource(if (goals) R.string.goal_edit else R.string.habit_edit),
+        if (goals) TextInputDialog(
+            title = stringResource(R.string.goal_edit),
             initial = item.text,
             onSave = { store.updateItem(kind, item.id, it); editing = null },
             onDismiss = { editing = null },
             onDelete = { store.deleteItem(kind, item.id); editing = null },
+        ) else HabitDialog(
+            title = stringResource(R.string.habit_edit),
+            initial = item,
+            onSave = { text, time -> store.updateItem(kind, item.id, text, time); editing = null },
+            onDismiss = { editing = null },
+            onDelete = { store.deleteItem(kind, item.id); HabitRemind.cancel(context, item.id); editing = null },
         )
     }
+}
+
+/**
+ * 習慣の追加・編集。名前と「何時にやるか」（決めなくてもよい）。
+ * 時刻を決めると、その時刻を過ぎてもチェックが無いときにお知らせする（Android 13 以降は通知の許可を聞く）
+ */
+@Composable
+private fun HabitDialog(
+    title: String,
+    initial: Item?,
+    onSave: (String, Int?) -> Unit,
+    onDismiss: () -> Unit,
+    onDelete: (() -> Unit)? = null,
+) {
+    val context = LocalContext.current
+    var text by remember { mutableStateOf(initial?.text ?: "") }
+    var time by remember { mutableStateOf(initial?.time) }
+    val askNotify = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { }
+    fun pick() {
+        val start = time ?: (7 * 60)
+        android.app.TimePickerDialog(context, { _, h, m -> time = h * 60 + m }, start / 60, start % 60,
+            android.text.format.DateFormat.is24HourFormat(context)).show()
+    }
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        containerColor = Bg,
+        title = { Text(title, fontWeight = FontWeight.Bold) },
+        text = {
+            Column {
+                OutlinedTextField(textStyle = userTextStyle(), value = text, onValueChange = { text = it }, maxLines = 3, modifier = Modifier.fillMaxWidth())
+                Spacer(Modifier.height(14.dp))
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(stringResource(R.string.hr_time), fontSize = 15.sp, fontWeight = FontWeight.Bold, color = Ink, modifier = Modifier.weight(1f))
+                    Text(
+                        time?.let { HabitRemind.timeText(it) } ?: stringResource(R.string.hr_none),
+                        fontSize = 15.sp, fontWeight = FontWeight.Bold, color = if (time == null) SubInk else Blue,
+                        modifier = Modifier.clip(RoundedCornerShape(10.dp)).clickable { pick() }.padding(horizontal = 10.dp, vertical = 6.dp),
+                    )
+                    if (time != null) {
+                        IconButton(onClick = { time = null }) { Icon(Icons.Filled.Clear, stringResource(R.string.hr_clear), tint = SubInk) }
+                    }
+                }
+                Text(stringResource(R.string.hr_note), fontSize = 12.sp, color = SubInk, lineHeight = 17.sp)
+            }
+        },
+        confirmButton = {
+            TextButton(
+                onClick = {
+                    if (time != null && Build.VERSION.SDK_INT >= 33 &&
+                        ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED
+                    ) askNotify.launch(Manifest.permission.POST_NOTIFICATIONS)
+                    onSave(text.trim(), time)
+                },
+                enabled = text.isNotBlank(),
+            ) { Text(stringResource(R.string.save), fontWeight = FontWeight.Bold) }
+        },
+        dismissButton = {
+            Row {
+                if (onDelete != null) TextButton(onClick = onDelete) { Text(stringResource(R.string.delete), color = Danger) }
+                TextButton(onClick = onDismiss) { Text(stringResource(R.string.cancel)) }
+            }
+        },
+    )
 }

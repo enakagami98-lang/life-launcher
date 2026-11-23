@@ -399,7 +399,7 @@
     <string name="tut_more_title">Funktionen, um auf jeden Tag zurückzublicken</string>
     <string name="tut_more_body">Nutze sie nur, wenn du möchtest.</string>
     <string name="tut_more_journal">Die Seite zwischen Ziele und Aufgaben. An Tagen, an denen dir danach ist, schreib auf, was passiert ist und was gut lief.</string>
-    <string name="tut_more_quote">Speichere Worte oder Buchstellen, die dir im Kopf geblieben sind. Jeden Tag erscheint eine davon auf dem Startbildschirm. Favoriten erscheinen öfter. Tippe auf einen Eintrag und wähle „Heute anzeigen“, um die heutigen Worte festzulegen.</string>
+    <string name="tut_more_quote">Speichere Worte oder Buchstellen, die dich bewegt haben, und jeden Tag erscheint eine auf dem Startbildschirm. Das Eingabefeld bricht Zeilen genauso um wie der Startbildschirm. Favoriten erscheinen öfter, und du kannst eine antippen und „Heute anzeigen“ wählen, um die heutige festzulegen.</string>
     <string name="tut_more_tasks">Lege Datum und Uhrzeit fest, und die Aufgaben werden nach Fälligkeit sortiert.</string>
     <string name="tut_more_tear_title">Abreißkalender</string>
     <string name="tut_more_tear">Wenn du das Tagesziel oder eine Aufgabe zum ersten Mal am Tag einträgst, reißt ein Kalenderblatt ab und deine verbleibenden Tage sinken um einen.</string>
@@ -428,7 +428,7 @@
     <string name="focus_history">Letzte Fokuszeiten</string>
     <string name="focus_desc">Nach dem Start öffnen sich bis zum Ende nur Anrufe und deine erlaubten Apps. Die Zeit wird täglich gespeichert und in „KI fragen“ aufgenommen.</string>
     <string name="dur_h">%1$d Std.</string>
-    <string name="tut_more_habits">Hake deine täglichen Gewohnheiten ab, um deine Serie zu sehen. Häkchen werden jeden Tag um 0:00 entfernt.</string>
+    <string name="tut_more_habits">Hake deine täglichen Gewohnheiten ab, um deine Serie zu sehen. Mit einer Uhrzeit wirst du erinnert, wenn sie vorbei ist und die Gewohnheit noch nicht abgehakt ist. Die Haken verschwinden jeden Tag um 0:00.</string>
     <string name="tut_more_focus">Starte „Fokuszeit“ auf dem Startbildschirm, dann funktionieren bis zum Ende nur Anrufe und die gewählten Apps. Du kannst auch alle Benachrichtigungen außer Anrufen stummschalten. Deine Fokuszeit wird gespeichert.</string>
     <string name="tut7_pages">Nicht genutzte Seiten blendest du unter „Angezeigte Seiten“ in den Einstellungen (⚙) aus.</string>
     <string name="ask_q1_hint">z. B. Im Zug</string>
@@ -457,4 +457,28 @@
     <string name="memo_note">Diese Notiz wird gelöscht, wenn du auf „Schließen“ tippst.</string>
     <string name="tut_more_memo_title">Notizen in Schlafens- und Fokuszeit</string>
     <string name="tut_more_memo">Auf den Bildschirmen der Schlafenszeit und der Fokuszeit kannst du notieren, was dir einfällt. Die Notiz erscheint am Ende und bleibt, bis du auf „Schließen“ tippst.</string>
+    <string name="hr_channel">Gewohnheits-Erinnerungen</string>
+    <string name="hr_body">Du wolltest diese Gewohnheit um %1$s machen. Sie ist noch nicht abgehakt.</string>
+    <string name="hr_at">Um %1$s</string>
+    <string name="hr_time">Uhrzeit</string>
+    <string name="hr_none">Keine</string>
+    <string name="hr_clear">Uhrzeit löschen</string>
+    <string name="hr_note">Wenn du eine Uhrzeit festlegst, wirst du erinnert, sobald sie vorbei ist und die Gewohnheit noch nicht abgehakt ist.</string>
+    <string name="ab_add">Sperrzeit festlegen</string>
+    <string name="ab_add_sub">z. B. Diese App morgens nicht öffnen</string>
+    <string name="ab_change">Sperrzeit ändern</string>
+    <string name="ab_now">Gesperrt %1$s</string>
+    <string name="ab_remove">Sperrzeit entfernen</string>
+    <string name="ab_title">Sperrzeit dieser App</string>
+    <string name="ab_desc">Jeden Tag in dieser Zeit bringt dich das Öffnen dieser App zurück zum Startbildschirm. Die Zeit kann über Mitternacht gehen (z. B. 23:00–7:00).</string>
+    <string name="ab_from">Von</string>
+    <string name="ab_to">Bis</string>
+    <string name="ab_sep">–</string>
+    <string name="ab_range">%1$s–%2$s</string>
+    <string name="ab_blocked">Diese App ist gerade gesperrt</string>
+    <string name="ab_blocked_sub">Halte die App gedrückt, um die Zeit zu ändern oder zu entfernen.</string>
+    <string name="q_same_note">Wird in derselben Größe und mit denselben Zeilenumbrüchen wie auf dem Startbildschirm angezeigt.</string>
+    <string name="q_text_hint">Worte, die dich bewegt haben</string>
+    <string name="tut_more_block_title">Sperrzeiten pro App</string>
+    <string name="tut_more_block">Halte eine App gedrückt und wähle „Sperrzeit festlegen“ – dann kannst du sie jeden Tag in dieser Zeit nicht öffnen. Zum Beispiel morgens keine Spiele.</string>
 </resources>
